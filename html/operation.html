@@ -4,42 +4,64 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <title>运维箱安全监控平台</title> 
-  <link rel="stylesheet" type="text/css" href="css/operation.css">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <link rel="stylesheet" type="text/css" href="css/layui.css">
-  <script type="text/javascript" src="js/layui.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/operation.css">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <link rel="stylesheet" type="text/css" href="../css/layui.css">
+  <script type="text/javascript" src="../js/layui.js"></script>
 </head>
 <body>
     <!-- 顶部 -->
-    <div class="layui-header header">
-        <div class="layui-main">
-            <a href="#" class="logo"><img src="http://172.16.5.118:203/c8716ea5-ec11-4d66-952b-00b26156ae43.png" alt="" height="55">运维箱安全监控平台</a>
-            <!-- 显示隐藏菜单 -->
-            <a href="javascript:" class="iconfont hideMenu icon-menu1"></a>
-            <!-- 顶部右侧菜单 -->
-            <ul class="layui-nav top_menu">
-                <li class="layui-nav-item" mobile="">
-                    <a href="javascript:" class="mobileAddTab" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>设置</cite></a>
-                </li>
-                <li class="layui-nav-item" mobile="">
-                    <a href="/systemLogout" class="signOut"><i class="iconfont icon-loginout"></i> 退出</a>
-                </li>
-                <li class="layui-nav-item" pc="">
-                    <a href="javascript:">
-                        <img src="http://172.16.5.118:203/30574ad6-2991-4696-9907-5ebc23806648.png" class="layui-circle" width="35" height="35">
-                        <cite>TEST</cite>
-                    <span class="layui-nav-more"></span></a>
-                    <dl class="layui-nav-child layui-anim layui-anim-upbit">
-                        <dd><a href="javascript:" data-url="/admin/system/user/userinfo"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
-                        <dd><a href="javascript:" data-url="/admin/system/user/changePassword" id="changePWD_A"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
-                        <dd class="layui-hide"><a href="javascript:" class="changeSkin"><i class="iconfont icon-huanfu"></i><cite>更换皮肤</cite></a></dd>
-                        <dd><a href="/systemLogout" class="signOut"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
-                    </dl>
-                </li>
-            <span class="layui-nav-bar" style="left: 82.5px; top: 55px; width: 0px; opacity: 0;"></span></ul>
-        </div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a style="display:block;float:left;margin-left:-35px;margin-right:15px;" href="#"><img src="../img/logo.png" style="margin-top:3px;"></a>
+                <div class="nav-no-collapse header-nav">
+                    <ul class="nav pull-left">
 
-    </div>
+                        <li class="hidden-phone">
+                            <a id="btnDevView" class="btn" href="#" onclick="ShowNavBar(0,this)" style="background-color: #578ebe;">
+                                <span>终端总览</span>
+                            </a>
+                        </li>
+                        <li class="hidden-phone">
+                            <a id="btnServerSet" class="btn" href="#" onclick="ShowNavBar(1,this)" style="">
+                                <span>服务配置</span>
+                            </a>
+                        </li>
+                        <li class="hidden-phone">
+                            <a id="btnMapSet" class="btn" href="#" onclick="ShowNavBar(3,this)" style="">
+                                <span>地图配置</span>
+                            </a>
+                        </li>
+                        <li class="hidden-phone">
+                            <a id="btnDevSet" class="btn" href="#" onclick="ShowNavBar(2,this)" style="">
+                                <span>终端配置</span>
+                            </a>
+                        </li>
+                        <li class="hidden-phone">
+                            <a id="btnUserSet" class="btn" href="#" onclick="ShowNavBar(4,this)" style="">
+                                <span>用户管理</span>
+                            </a>
+                        </li>
+                        <li class="hidden-phone">
+                            <a id="btnAdminLog" class="btn" href="#" onclick="ShowNavBar(5,this)" style="">
+                                <span>操作日志</span>
+                            </a>
+                        </li>
+                        <li class="hidden-phone">
+                            <a id="btnUpdate" class="btn" href="#" onclick="ShowNavBar(6,this)" style="">
+                                <span>升级维护</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </div>
+                <a style="display:block;float:right;margin-top:15px;" href="#" onclick="QuitSys()">[退出登录]</a>
+                <span style="display:block;float:right;margin-top:15px;margin-right:20px;">当前用户：admin</span>
+            </div>
+            <div class="clearf"></div>
+        </div>
+    </div> 
 </body>
 </html>        
         

@@ -1,48 +1,56 @@
-.layui-header {
-    z-index: 1000;
-    height: 60px;
-    background-color: #23262E;
-    .layui-main{
-    	margin:0;
-    	.logo {
-		    color: #fff;
-		    float: left;
-		    line-height: 60px;
-		    font-size: 20px;
-		    padding: 0 25px;
-		    text-align: center;
-		    width: 300px;
-		}
-		.hideMenu {
-		    float: left;
-		    width: 20px;
-		    height: 20px;
-		    margin: 15px 15px 0 0;
-		    font-size: 17px;
-		    text-align: center;
-		    padding: 5px 5px;
-		    color: #fff;
-		    background-color: #1AA094;
-		}
-		.layui-nav {
-			background: 0 0;
-		    background-color: inherit !important;
-		}
-		.top_menu {
-		    position: absolute;
-		    right: 0;
-		    background: none;
-		    .layui-nav-item[mobile] {
-			    display: none;
+.navbar {
+    margin-bottom: 0px;
+    .navbar-inner {
+	    margin-bottom: 0px;
+	    min-height: 40px;
+	    padding-right: 20px;
+	    padding-left: 20px;
+	    background: #080808;
+	    filter: none;
+	    text-shadow: 1px 1px 1px #0a0c0e;
+	    border: none;
+	    color: #fff;
+	    border-radius: 0px;
+	    border-bottom: 1px solid #38383D;
+	    .container-fluid {
+		    padding-right: 20px;
+		    padding-left: 20px;
+		    a {
+			    color: #7b7b7b;
+			    text-shadow: 0 -1px 1px #0b090a;
+			    img {
+				    height: auto;
+				    max-width: 100%;
+				    vertical-align: middle;
+				    border: 0;
+				}
 			}
-			.layui-nav-bar {
-			    top: 60px !important;
-			    background-color: rgba(0,0,0,0.7);
-		        left: 82.5px;
-			    width: 0px;
-			    opacity: 0;
+			.header-nav {
+			    padding: 0px;
+			    color: #fff !important;
+			    background: #000 !important;
+			    .nav {
+		    		margin: 0px;
+				    position: relative;
+				    left: 0;
+				    display: block;
+				    float: left;
+				    li {
+					    float: left;
+					    line-height: 51px;
+					}
+					a.btn {
+					    color: #fff !important;
+					    text-shadow: none !important;
+					    padding: 15px 25px !important;
+					}
+					a{
+						span{
+						    margin-top: 2px;
+						}
+					}
+				}
 			}
 		}
-    }
-    
+	}
 }

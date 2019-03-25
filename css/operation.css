@@ -1,47 +1,54 @@
-.layui-header {
-  z-index: 1000;
-  height: 60px;
-  background-color: #23262E;
+.navbar {
+  margin-bottom: 0px;
 }
-.layui-header .layui-main {
-  margin: 0;
-}
-.layui-header .layui-main .logo {
+.navbar .navbar-inner {
+  margin-bottom: 0px;
+  min-height: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background: #080808;
+  filter: none;
+  text-shadow: 1px 1px 1px #0a0c0e;
+  border: none;
   color: #fff;
+  border-radius: 0px;
+  border-bottom: 1px solid #38383D;
+}
+.navbar .navbar-inner .container-fluid {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.navbar .navbar-inner .container-fluid a {
+  color: #7b7b7b;
+  text-shadow: 0 -1px 1px #0b090a;
+}
+.navbar .navbar-inner .container-fluid a img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+  border: 0;
+}
+.navbar .navbar-inner .container-fluid .header-nav {
+  padding: 0px;
+  color: #fff !important;
+  background: #000 !important;
+}
+.navbar .navbar-inner .container-fluid .header-nav .nav {
+  margin: 0px;
+  position: relative;
+  left: 0;
+  display: block;
   float: left;
-  line-height: 60px;
-  font-size: 20px;
-  padding: 0 25px;
-  text-align: center;
-  width: 300px;
 }
-.layui-header .layui-main .hideMenu {
+.navbar .navbar-inner .container-fluid .header-nav .nav li {
   float: left;
-  width: 20px;
-  height: 20px;
-  margin: 15px 15px 0 0;
-  font-size: 17px;
-  text-align: center;
-  padding: 5px 5px;
-  color: #fff;
-  background-color: #1AA094;
+  line-height: 51px;
 }
-.layui-header .layui-main .layui-nav {
-  background: 0 0;
-  background-color: inherit !important;
+.navbar .navbar-inner .container-fluid .header-nav .nav a.btn {
+  color: #fff !important;
+  text-shadow: none !important;
+  padding: 15px 25px !important;
 }
-.layui-header .layui-main .top_menu {
-  position: absolute;
-  right: 0;
-  background: none;
-}
-.layui-header .layui-main .top_menu .layui-nav-item[mobile] {
-  display: none;
-}
-.layui-header .layui-main .top_menu .layui-nav-bar {
-  top: 60px !important;
-  background-color: rgba(0, 0, 0, 0.7);
-  left: 82.5px;
-  width: 0px;
-  opacity: 0;
+.navbar .navbar-inner .container-fluid .header-nav .nav a span {
+  margin-top: 2px;
 }
