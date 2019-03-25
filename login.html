@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>系统后台</title> 
+  <link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+<body class="layui-bg-cyan">
+    <div class="login">
+        <h1>后台登录</h1>
+        <!-- 下拉框   管理员、运维管理 -->
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <select class="layui-input" id="layui-form-select" style="width: 104.5%;">
+                    <option value = "管理员">管理员</option>
+                    <option value = "运维管理">运维管理</option>
+                </select>
+            </div>
+            <div class="layui-form-item">
+                <input class="layui-input" name="username" placeholder="用户名" lay-verify="username" type="text" autocomplete="on" value="">
+            </div>
+            <div class="layui-form-item">
+                <input class="layui-input" name="password" placeholder="密码" lay-verify="password" type="password" autocomplete="on" value="">
+            </div>
+            <!-- 验证码 -->
+            <div class="login-captcha-innerbox layui-form-item">
+                <input autocomplete="off" id="captcha" class="layui-input" type="tel" placeholder="输入图片验证码" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+                <div id="captcha_img" class="cpatcha-img">
+                    <img id="captcha_img_true" src="" alt="" width="100%" height="28px">
+                </div>
+                <a id="aptcha_refresh" href="" style="cursor: pointer;">换一张</a>
+            </div>
+            <button class="layui-btn login_btn" lay-submit="" lay-filter="login" style="width: 104.5%;">登录</button>
+        </form>
+       
+    </div>
+</body>
+</html>        
+        
