@@ -6,6 +6,8 @@
   <title>系统后台</title> 
   <link rel="stylesheet" type="text/css" href="css/login.css">
   <link rel="stylesheet" type="text/css" href="css/index.css">
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="js/jQuery.md5.js"></script>
 </head>
 <body class="layui-bg-cyan">
     <div class="login">
@@ -21,11 +23,11 @@
             </div>
             <!-- 用户名 -->
             <div class="layui-form-item">
-                <input class="layui-input" name="username" placeholder="用户名" lay-verify="username" type="text" autocomplete="on" value="">
+                <input class="layui-input input_username" name="username" placeholder="用户名" lay-verify="username" type="text" autocomplete="on" value="">
             </div>
             <!-- 密码 -->
             <div class="layui-form-item">
-                <input class="layui-input" name="password" placeholder="密码" lay-verify="password" type="password" autocomplete="on" value="">
+                <input class="layui-input input_password" name="password" placeholder="密码" lay-verify="password" type="password" autocomplete="on" value="">
             </div>
             <!-- 验证码 -->
             <div class="login-captcha-innerbox layui-form-item">
@@ -46,6 +48,11 @@
         </form>
        
     </div>
+    <script>
+        var password = $('.input_password').val();
+        //加密成md5
+        var passwd = $.md5(password);
+    </script>
 </body>
 </html>        
         
