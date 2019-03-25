@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <title>系统后台</title> 
   <link rel="stylesheet" type="text/css" href="css/login.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body class="layui-bg-cyan">
     <div class="login">
@@ -17,9 +18,11 @@
                     <option value = "运维管理">运维管理</option>
                 </select>
             </div>
+            <!-- 用户名 -->
             <div class="layui-form-item">
                 <input class="layui-input" name="username" placeholder="用户名" lay-verify="username" type="text" autocomplete="on" value="">
             </div>
+            <!-- 密码 -->
             <div class="layui-form-item">
                 <input class="layui-input" name="password" placeholder="密码" lay-verify="password" type="password" autocomplete="on" value="">
             </div>
@@ -31,7 +34,14 @@
                 </div>
                 <a id="aptcha_refresh" href="" style="cursor: pointer;">换一张</a>
             </div>
-            <button class="layui-btn login_btn" lay-submit="" lay-filter="login" style="width: 104.5%;">登录</button>
+            <div class="bottom_login_btn layui-form-item" style="width: 105%;">
+                <button class="layui-btn login_btn" lay-submit="" lay-filter="login" style="width: 49%;">登录</button>
+                <button class="layui-btn login_btn" lay-submit="" lay-filter="login" style="width: 49%;">取消</button>
+            </div>
+            <div class="bottom_user_btn layui-form-item">
+                <a href="" class="userName"><input name="Fruit" type="checkbox" value="记住用户名" />记住用户名</a>
+                <a href="" class="forgetPwd">忘记密码？</a>
+            </div>
         </form>
        
     </div>
