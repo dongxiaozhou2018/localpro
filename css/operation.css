@@ -52,3 +52,10 @@
 .navbar .navbar-inner .container-fluid .header-nav .nav a span {
   margin-top: 2px;
 }
+.click_btn {
+  background-color: #578ebe;
+}
+#map {
+  width: 800px;
+  height: 600px;
+}

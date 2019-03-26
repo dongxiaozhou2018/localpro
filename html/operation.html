@@ -8,6 +8,9 @@
   <link rel="stylesheet" type="text/css" href="../css/index.css">
   <link rel="stylesheet" type="text/css" href="../css/layui.css">
   <script type="text/javascript" src="../js/layui.js"></script>
+  <script type="text/javascript" src="../js/echarts.min.js"></script>
+  <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../js/operation/operation.js"></script>
 </head>
 <body>
     <!-- 顶部 -->
@@ -17,39 +20,38 @@
                 <a style="display:block;float:left;margin-left:-35px;margin-right:15px;" href="#"><img src="../img/logo.png" style="margin-top:3px;"></a>
                 <div class="nav-no-collapse header-nav">
                     <ul class="nav pull-left">
-
                         <li class="hidden-phone">
-                            <a id="btnDevView" class="btn" href="#" onclick="ShowNavBar(0,this)" style="background-color: #578ebe;">
+                            <a id="btnDevView" class="btn click_btn" href="#">
                                 <span>终端总览</span>
                             </a>
                         </li>
                         <li class="hidden-phone">
-                            <a id="btnServerSet" class="btn" href="#" onclick="ShowNavBar(1,this)" style="">
+                            <a id="btnServerSet" class="btn" href="#">
                                 <span>服务配置</span>
                             </a>
                         </li>
                         <li class="hidden-phone">
-                            <a id="btnMapSet" class="btn" href="#" onclick="ShowNavBar(3,this)" style="">
+                            <a id="btnMapSet" class="btn" href="#">
                                 <span>地图配置</span>
                             </a>
                         </li>
                         <li class="hidden-phone">
-                            <a id="btnDevSet" class="btn" href="#" onclick="ShowNavBar(2,this)" style="">
+                            <a id="btnDevSet" class="btn" href="#">
                                 <span>终端配置</span>
                             </a>
                         </li>
                         <li class="hidden-phone">
-                            <a id="btnUserSet" class="btn" href="#" onclick="ShowNavBar(4,this)" style="">
+                            <a id="btnUserSet" class="btn" href="#">
                                 <span>用户管理</span>
                             </a>
                         </li>
                         <li class="hidden-phone">
-                            <a id="btnAdminLog" class="btn" href="#" onclick="ShowNavBar(5,this)" style="">
+                            <a id="btnAdminLog" class="btn" href="#">
                                 <span>操作日志</span>
                             </a>
                         </li>
                         <li class="hidden-phone">
-                            <a id="btnUpdate" class="btn" href="#" onclick="ShowNavBar(6,this)" style="">
+                            <a id="btnUpdate" class="btn" href="#">
                                 <span>升级维护</span>
                             </a>
                         </li>
@@ -62,6 +64,9 @@
             <div class="clearf"></div>
         </div>
     </div> 
+    <!-- 地图部分 -->
+    
+    <div id="map" style="width: 600px; height: 400px;"></div>
 </body>
 </html>        
         
