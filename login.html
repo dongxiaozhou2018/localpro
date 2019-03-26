@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">  -->
   <title>系统后台</title> 
+  <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
   <link rel="stylesheet" type="text/css" href="css/login.css">
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="js/globalvar.js"></script>
   <script type="text/javascript" src="js/jQuery.md5.js"></script>
 </head>
 <body class="layui-bg-cyan">
@@ -16,9 +19,10 @@
         <form class="layui-form">
             <div class="layui-form-item">
                 <select class="layui-input" id="layui-form-select" style="width: 104.5%;">
-                    <option value = "0">--请选择用户类型</option>
-                    <option value = "1">运维人员</option>
-                    <option value = "2">管理人员</option>
+                    <option value = "">--请选择用户类型</option>
+                    <option value = "0">管理员</option>
+                    <option value = "1">操作员</option>
+                    <option value = "2">维修员</option>
                 </select>
             </div>
             <!-- 用户名 -->
@@ -31,15 +35,15 @@
             </div>
             <!-- 验证码 -->
             <div class="login-captcha-innerbox layui-form-item">
-                <input autocomplete="off" id="captcha" class="layui-input" type="tel" placeholder="输入图片验证码" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+                <input autocomplete="off" id="captcha" class="layui-input" type="tel" placeholder="输入图片验证码" maxlength="6">
                 <div id="captcha_img" class="cpatcha-img">
-                    <img id="captcha_img_true" src="" alt="" width="100%" height="28px">
+                    <img id="captcha_img_true" src="" alt="" width="110%" height="auto">
                 </div>
-                <a id="aptcha_refresh" href="" style="cursor: pointer;">换一张</a>
+                <a id="aptcha_refresh" href="#" style="cursor: pointer;">换一张</a>
             </div>
             <div class="bottom_login_btn layui-form-item" style="width: 105%;">
-                <button class="layui-btn login_btn" lay-submit="" lay-filter="login" style="width: 49%;">登录</button>
-                <button class="layui-btn login_btn" lay-submit="" lay-filter="login" style="width: 49%;">取消</button>
+                <span class="layui-btn login_btn login_in_btn" lay-submit="" lay-filter="login">登录</span>
+                <span class="layui-btn login_btn login_out_btn" lay-submit="" lay-filter="login">取消</span>
             </div>
             <div class="bottom_user_btn layui-form-item">
                 <a href="" class="userName"><input name="Fruit" type="checkbox" value="记住用户名" />记住用户名</a>
@@ -48,10 +52,40 @@
         </form>
        
     </div>
+ 
     <script>
-        var password = $('.input_password').val();
-        //加密成md5
-        var passwd = $.md5(password);
+        function captcha(){
+            $.getJSON(global_path + "/rand", function(data) {
+                $('#captcha_img_true').attr('src',data.data);
+            })
+        }
+        captcha();
+        $('#aptcha_refresh').on('click',function(){
+            captcha();
+        })
+        $('.login').on('click','.login_in_btn',function(){
+            var password = $('.input_password').val();
+            //密码加密成md5
+            var passwd = $.md5(password);
+            var username = $('.input_username').val();
+            var role = $('#layui-form-select').val();
+            var vCode = $('#captcha').val();
+            var parms = {
+                'username':username,
+                'password':password,
+                'role':role,
+                'vCode':vCode
+            }
+            $.post(global_path + "/dologin",parms, function (data) {
+                localStorage.setItem('dologin',data);
+                if(data.code == 0){
+                    window.location.href = "html/operation.html";
+                }else{
+                    captcha();
+                    alert(data.msg);
+                }
+            });
+        });
     </script>
 </body>
 </html>        

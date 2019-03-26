@@ -63,16 +63,18 @@
   position: absolute;
   display: block;
   top: 0;
-  right: 0;
+  right: -8px;
   width: 66px;
   height: 40px;
   line-height: 40px;
   text-align: center;
   box-sizing: border-box;
   color: #f02828;
+  font-size: 14px;
 }
 .login .layui-btn {
   display: inline-block;
+  width: 35.5%;
   height: 38px;
   line-height: 38px;
   padding: 0 18px;
