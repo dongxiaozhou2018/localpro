@@ -42,12 +42,12 @@
                 <a id="aptcha_refresh" href="#" style="cursor: pointer;">换一张</a>
             </div>
             <div class="bottom_login_btn layui-form-item" style="width: 105%;">
-                <span class="layui-btn login_btn login_in_btn" lay-submit="" lay-filter="login">登录</span>
-                <span class="layui-btn login_btn login_out_btn" lay-submit="" lay-filter="login">取消</span>
+                <span class="layui-btn login_btn login_in_btn">登录</span>
+                <span class="layui-btn login_btn login_out_btn">取消</span>
             </div>
             <div class="bottom_user_btn layui-form-item">
-                <a href="" class="userName"><input name="Fruit" type="checkbox" value="记住用户名" />记住用户名</a>
-                <a href="" class="forgetPwd">忘记密码？</a>
+                <a href="#" class="userName"><input name="Fruit" type="checkbox" value="记住用户名" />记住用户名</a>
+                <a href="#" class="forgetPwd">忘记密码？</a>
             </div>
         </form>
        
@@ -63,7 +63,7 @@
         $('#aptcha_refresh').on('click',function(){
             captcha();
         })
-        $('.login').on('click','.login_in_btn',function(){
+        $('.login_in_btn').on('click',function(){
             var password = $('.input_password').val();
             //密码加密成md5
             var passwd = $.md5(password);
@@ -77,12 +77,11 @@
                 'vCode':vCode
             }
             $.post(global_path + "/dologin",parms, function (data) {
-                localStorage.setItem('dologin',data);
                 if(data.code == 0){
                     window.location.href = "html/operation.html";
                 }else{
-                    captcha();
                     alert(data.msg);
+                    captcha();
                 }
             });
         });
