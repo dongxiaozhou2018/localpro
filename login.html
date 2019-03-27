@@ -70,21 +70,32 @@
             var username = $('.input_username').val();
             var role = $('#layui-form-select').val();
             var vCode = $('#captcha').val();
-            var parms = {
-                'username':username,
-                'password':password,
-                'role':role,
-                'vCode':vCode
-            }
-            var url = global_path + "/dologin";
-            commonAjax(url,parms,function(data){
-                if(data.code == 0){
-                    window.location.href = "html/operation.html";
-                }else{
-                    alert(data.msg);
-                    captcha();
+            if(role == ''){
+                alert('请选择用户类型');
+            }else if(username == ''){
+                alert('请输入用户名');
+            }else if(password == ''){
+                alert('请输入密码');
+            }else if(vCode == ''){
+                alert('请输入验证吗');
+            }else{
+                var parms = {
+                    'username':username,
+                    'password':password,
+                    'role':role,
+                    'vCode':vCode,
+                    'isDel':0
                 }
-            })
+                var url = global_path + "/dologin";
+                commonAjax(url,parms,function(data){
+                    if(data.code == 0){
+                        window.location.href = "html/operation.html";
+                    }else{
+                        alert(data.msg);
+                        captcha();
+                    }
+                })
+            }
         });
     </script>
 </body>
