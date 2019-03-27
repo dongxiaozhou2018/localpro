@@ -1,59 +1,6 @@
-.navbar {
-  margin-bottom: 0px;
-}
-.navbar .navbar-inner {
-  margin-bottom: 0px;
-  min-height: 40px;
-  padding-right: 20px;
-  padding-left: 20px;
-  background: #080808;
-  filter: none;
-  text-shadow: 1px 1px 1px #0a0c0e;
-  border: none;
-  color: #fff;
-  border-radius: 0px;
-  border-bottom: 1px solid #38383D;
-}
-.navbar .navbar-inner .container-fluid {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.navbar .navbar-inner .container-fluid a {
-  color: #7b7b7b;
-  text-shadow: 0 -1px 1px #0b090a;
-}
-.navbar .navbar-inner .container-fluid a img {
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-  border: 0;
-}
-.navbar .navbar-inner .container-fluid .header-nav {
-  padding: 0px;
-  color: #fff !important;
-  background: #000 !important;
-}
-.navbar .navbar-inner .container-fluid .header-nav .nav {
-  margin: 0px;
-  position: relative;
-  left: 0;
-  display: block;
-  float: left;
-}
-.navbar .navbar-inner .container-fluid .header-nav .nav li {
-  float: left;
-  line-height: 51px;
-}
-.navbar .navbar-inner .container-fluid .header-nav .nav a.btn {
-  color: #fff !important;
-  text-shadow: none !important;
-  padding: 15px 25px !important;
-}
-.navbar .navbar-inner .container-fluid .header-nav .nav a span {
-  margin-top: 2px;
-}
 .click_btn {
-  background-color: #578ebe;
+  background-color: #009688;
+  color: #fff;
 }
 #map {
   width: 800px;
@@ -112,7 +59,7 @@
 #myalert .alertContent_box .alertPos #alertConfirm .fif-long-btn {
   border-radius: 6px;
   color: #fff;
-  background-color: #009688;
+  background-color: #393D49;
   line-height: 40px;
   height: 40px;
   width: 49%;
