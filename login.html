@@ -76,14 +76,15 @@
                 'role':role,
                 'vCode':vCode
             }
-            $.post(global_path + "/dologin",parms, function (data) {
+            var url = global_path + "/dologin";
+            commonAjax(url,parms,function(data){
                 if(data.code == 0){
                     window.location.href = "html/operation.html";
                 }else{
                     alert(data.msg);
                     captcha();
                 }
-            });
+            })
         });
     </script>
 </body>

@@ -10,6 +10,7 @@
   <script type="text/javascript" src="../js/layui.js"></script>
   <script type="text/javascript" src="../js/echarts.min.js"></script>
   <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../js/globalvar.js"></script>
   <script type="text/javascript" src="../js/operation/operation.js"></script>
 </head>
 <body>
@@ -58,7 +59,7 @@
                     </ul>
                     
                 </div>
-                <a style="display:block;float:right;margin-top:15px;" href="#" onclick="QuitSys()">[退出登录]</a>
+                <a style="display:block;float:right;margin-top:15px;" href="#" class="logout">[退出登录]</a>
                 <span style="display:block;float:right;margin-top:15px;margin-right:20px;">当前用户：admin</span>
             </div>
             <div class="clearf"></div>
@@ -67,6 +68,20 @@
     <!-- 地图部分 -->
     
     <div id="map" style="width: 600px; height: 400px;"></div>
+    <!-- 退出登录提示弹框 -->
+    <div id="myalert" style="display: none;">
+        <div class="mask"></div>
+        <div class="alertContent_box">
+            <div class="alertPos">
+                <div id="alertTips">提示</div>
+                <div id="alertContent">确认退出？</div>
+                <div id="alertConfirm">
+                    <a class="fif-long-btn fif-click-btn left">确定</a>
+                    <a class="fif-long-btn fif-click-btn right">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>        
         

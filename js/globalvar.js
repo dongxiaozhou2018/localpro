@@ -1,17 +1,9 @@
-var changeUrl = "/mocha_itom";
+
 var global_path = "http://" + "192.168.1.142" + ":8083";
-// var new_global_path = "https://" + returnCitySN["cip"] + ":8083";
-// var hostname_path = "https://" + window.location.hostname + changeUrl;
-// var new_hostname_path = "https://" + window.location.hostname;
-// var pathnameStr = window.location.pathname,
-//     pathnameArr = pathnameStr.split("/", 4);
-// pathnameStr = pathnameArr.join("/");
-// var dir_path = (new_hostname_path + pathnameStr).replace(/\/\w+\.html$/, "");
-// dir_path = dir_path.replace(/\/$/, "");
-// var ROOT_PATH = "https://" + window.location.hostname + changeUrl;
+
+// var global_path = "https://" + window.location.hostname + ":8083";
 
 function commonAjax(a, e, j, g) {
-    var f = l[0];
     var c = {
         url: a,
         data: e,
@@ -32,5 +24,15 @@ function commonAjax(a, e, j, g) {
         }
     };
     return $.ajax(c);
+}
+function isJSON(b) {
+    if (typeof b == "string") {
+        try {
+            JSON.parse(b);
+            return true
+        } catch (a) {
+            return false
+        }
+    }
 }
 
