@@ -55,25 +55,25 @@
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;" class="btn click_btn">终端总览</a>
+                        <a href="javascript:;" class="btn click_btn"  name="zdzl">终端总览</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="fw">服务配置</a>
+                        <a href="javascript:;" class="btn" name="fwpz">服务配置</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="dt">地图配置</a>
+                        <a href="javascript:;" class="btn" name="dtpz">地图配置</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="zd">终端配置</a>
+                        <a href="javascript:;" class="btn" name="zdpz">终端配置</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="yh">用户管理</a>
+                        <a href="javascript:;" class="btn" name="yhgl">用户管理</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="rz">操作日志</a>
+                        <a href="javascript:;" class="btn" name="czrz">操作日志</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="wh">升级维护</a>
+                        <a href="javascript:;" class="btn" name="sjwh">升级维护</a>
                     </li>
                 </ul>
             </div>
@@ -82,24 +82,19 @@
         <div class="layui-body">
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
-                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                <!-- <div id="main" style="width: 600px;height:400px;"></div> -->
-
-                <!-- layui   表格 -->
+                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM     数据部分-->
+                <div id="main" style="width: 600px;height:400px;"></div>
+                <!-- 地图部分 -->
+                <div id="mapid" style="display: none"></div>
+                <!-- layui   用户表格 -->
                 <table id="user" lay-filter="test" style="display: none"></table>
                  
   
             </div>
         </div>
 
-        <!-- <div class="layui-footer"> -->
-            <!-- 底部固定区域 -->
-            
-        <!-- </div> -->
     </div>
-    <!-- 地图部分 -->
     
-    <!-- <div id="mapid"></div> -->
     <!-- 退出登录提示弹框 -->
     <div id="myalert" style="display: none;">
         <div class="mask"></div>
