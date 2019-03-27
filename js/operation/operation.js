@@ -2,6 +2,10 @@ $(function(){
 	// 点击事件
     $('.layui-side-scroll').on('click','.btn',function(){		//左侧导航栏
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
+        if($(this).attr('name') == 'yh'){
+        	$('#user').show().siblings().hide();
+        	user();
+        }
     });
     $('.logout').on('click',function(){			//退出登录
     	$('#myalert').show();
@@ -18,29 +22,31 @@ $(function(){
         })
     });
 
-    layui.use('table', function(){
-	  	var table = layui.table;
-		  
-		  //第一个实例
-	  	table.render({
-		    elem: '#demo'
-		    ,height: 312
-		    ,url: '../js/data.js' //数据接口
-		    ,page: true //开启分页
-		    ,cols: [[ //表头
-		      {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-		      ,{field: 'username', title: '用户名', width:80}
-		      ,{field: 'sex', title: '性别', width:80, sort: true}
-		      ,{field: 'city', title: '城市', width:80} 
-		      ,{field: 'sign', title: '签名', width: 177}
-		      ,{field: 'experience', title: '积分', width: 80, sort: true}
-		      ,{field: 'score', title: '评分', width: 80, sort: true}
-		      ,{field: 'classify', title: '职业', width: 80}
-		      ,{field: 'wealth', title: '财富', width: 135, sort: true}
-		    ]]
+    function user(){
+    	layui.use('table', function(){
+	  		var table = layui.table;
+			  
+			  //第一个实例
+		  	table.render({
+			    elem: '#user'
+			    ,height: 312
+			    ,url: '../js/data.js' //数据接口
+			    ,page: true //开启分页
+			    ,cols: [[ //表头
+			      {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+			      ,{field: 'username', title: '用户名', width:80}
+			      ,{field: 'sex', title: '性别', width:80, sort: true}
+			      ,{field: 'city', title: '城市', width:80} 
+			      ,{field: 'sign', title: '签名', width: 177}
+			      ,{field: 'experience', title: '积分', width: 80, sort: true}
+			      ,{field: 'score', title: '评分', width: 80, sort: true}
+			      ,{field: 'classify', title: '职业', width: 80}
+			      ,{field: 'wealth', title: '财富', width: 135, sort: true}
+			    ]]
+			});
+			  
 		});
-		  
-	});
+    }
 //  地图
  //    var map = L.map('mapid', {
 	//     center: [51.505, -0.09],

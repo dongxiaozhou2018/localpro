@@ -58,22 +58,22 @@
                         <a href="javascript:;" class="btn click_btn">终端总览</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn">服务配置</a>
+                        <a href="javascript:;" class="btn" name="fw">服务配置</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn">地图配置</a>
+                        <a href="javascript:;" class="btn" name="dt">地图配置</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn">终端配置</a>
+                        <a href="javascript:;" class="btn" name="zd">终端配置</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn">用户管理</a>
+                        <a href="javascript:;" class="btn" name="yh">用户管理</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn">操作日志</a>
+                        <a href="javascript:;" class="btn" name="rz">操作日志</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn">升级维护</a>
+                        <a href="javascript:;" class="btn" name="wh">升级维护</a>
                     </li>
                 </ul>
             </div>
@@ -86,13 +86,7 @@
                 <!-- <div id="main" style="width: 600px;height:400px;"></div> -->
 
                 <!-- layui   表格 -->
-                <table id="demo" lay-filter="test"></table>
-
-                <script type="text/html" id="barDemo">
-                  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-                  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                </script>
+                <table id="user" lay-filter="test" style="display: none"></table>
                  
   
             </div>
