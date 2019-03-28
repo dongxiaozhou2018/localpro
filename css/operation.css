@@ -2,6 +2,9 @@
   background-color: #009688;
   color: #fff;
 }
+.layui-table-body {
+  height: auto!important;
+}
 #mapid {
   margin-left: 10px;
   margin-right: 10px;
