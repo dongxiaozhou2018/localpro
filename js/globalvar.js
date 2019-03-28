@@ -10,6 +10,8 @@ function commonAjax(a, e, j, g) {
         type: "post",
         dataType: "json",
         success: j,
+        // processData: false,
+        mimeType:"multipart/form-data",
         error: function (n, m) {
             var o = this;
             if (g) {

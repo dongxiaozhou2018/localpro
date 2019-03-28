@@ -121,33 +121,37 @@ $(function(){
 		  	//执行一个 table 实例
 		  	table.render({
 			    elem: '#demo'
-			    ,url: '../js/data.js' //数据接口
+			    ,url: global_path+'/manageUsers' //数据接口
 			    ,title: '用户表'
 			    ,page: true //开启分页
 			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-			    ,totalRow: true //开启合计行
+			    // ,totalRow: true //开启合计行
+			    ,parseData:function(data){
+			    	return{
+			    		'code': data.code,
+			    		'msg': data.msg,
+			    		'data': data.data.list
+			    	}
+			    }
 			    ,cols: [[ //表头
 			      {type: 'checkbox', fixed: 'left'}
-			      ,{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
-			      ,{field: 'username', title: '用户名', width:80, align:'center'}
-			      ,{field: 'experience', title: '积分', width: 90, sort: true, totalRow: true, align:'center'}
-			      ,{field: 'sex', title: '性别', width:100, sort: true, align:'center'}
-			      ,{field: 'score', title: '评分', width: 80, sort: true, totalRow: true, align:'center'}
-			      ,{field: 'city', title: '城市', width:150, align:'center'} 
-			      ,{field: 'sign', title: '签名', width: 200, align:'center'}
-			      ,{field: 'classify', title: '职业', width: 100, align:'center'}
-			      ,{field: 'wealth', title: '财富', width: 135, sort: true, totalRow: true, align:'center'}
-			      ,{fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
+			      ,{field: 'id', title: 'ID', width:120, sort: true, fixed: 'left'}
+			      ,{field: 'username', title: '用户名', width:150, align:'center'}
+			      ,{field: 'role', title: '类型', width: 100, sort: true,  align:'center'}
+			      ,{field: 'dept', title: '部门', width: 130, sort: true,  align:'center'}
+			      ,{field: 'telephone', title: '电话', width:200, align:'center'} 
+			      ,{field: 'remarks', title: '备注信息', width: 200, align:'center'}
+			      ,{field: 'url', title: '照片信息', width: 200, sort: true, align:'center', toolbar: '#imgUrl'}
+			      ,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
 			    ]]
 		  	});
-			  
 		  	//监听头工具栏事件
 		  	table.on('toolbar(test)', function(obj){
 			    var checkStatus = table.checkStatus(obj.config.id)
 			    ,data = checkStatus.data; //获取选中的数据
 			    switch(obj.event){
 		      		case 'add':
-		        		layer.msg('添加');
+		        		window.location.href = "./add.html";
 		      		break;
 	      			case 'update':
 			        	if(data.length === 0){

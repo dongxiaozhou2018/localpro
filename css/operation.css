@@ -50,7 +50,6 @@
   margin-top: 15px;
 }
 #myalert .alertContent_box .alertPos #alertContent {
-  max-height: 300px;
   overflow: auto;
   font-size: 13px;
   width: 70%;
@@ -66,7 +65,6 @@
   color: #fff;
   background-color: #393D49;
   line-height: 40px;
-  height: 40px;
   width: 49%;
   vertical-align: middle;
   display: table-cell;
