@@ -41,6 +41,8 @@
             }else{
                 alert(data.msg);
             }
+        },function(){
+            alert('请求失败');
         })
         
       });
