@@ -52,13 +52,15 @@
                 'role':data.field.role,
                 'remarks':data.field.remarks,
                 'dept':data.field.dept,
-                'telephone':data.field.telephone
+                'telephone':data.field.telephone,
+                'id':getQueryString('userID')
             }
             var url = global_path + "/updateUser";
             commonAjax(url,parms,function(data){
                 if(data.code == 0){
                     $('#myalert').show();
                     $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
+                        localStorage.removeItem('checkUser')
                         $('#myalert').hide();
                         window.location.href = "./operation.html";
                     });

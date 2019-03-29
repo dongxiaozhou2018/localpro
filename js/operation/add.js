@@ -7,7 +7,7 @@
             upload = layui.upload,
             layedit = layui.layedit,
             laydate = layui.laydate;
-            
+
         var uploadInst = upload.render({
             elem: '#test1',
             url: global_path + "/fileUpLoad",
@@ -21,6 +21,7 @@
                 //如果上传失败
                 if (res.code == 0) {
                     return layer.msg('上传成功');
+                    sessionStorage.setItem('fileId',res.fileId);
                 }else{
                     return layer.msg('上传失败');
                 }
@@ -42,13 +43,15 @@
                 'role':data.field.role,
                 'remarks':data.field.remarks,
                 'dept':data.field.dept,
-                'telephone':data.field.telephone
+                'telephone':data.field.telephone,
+                'fileId':sessionStorage.getItem('fileId');
             }
             var url = global_path + "/addUser";
             commonAjax(url,parms,function(data){
                 if(data.code == 0){
                     $('#myalert').show();
-                    $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
+                    $('#alertConfirm').on('click','a',function(){       //保存成功弹框取消按钮
+                        sessionStorage.removeItem('fileId');
                         $('#myalert').hide();
                         window.location.href = "./operation.html";
                     });
