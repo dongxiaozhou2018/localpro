@@ -59,18 +59,18 @@
     <legend>添加人员信息</legend>
   </fieldset>
   <form class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
-    <div class="layui-form-item">
+    <!-- <div class="layui-form-item">
       <label class="layui-form-label">用户ID</label>
       <div class="layui-input-inline">
         <input type="text" name="id" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
       </div>
-    </div>
+    </div> -->
     
     <div class="layui-form-item">
       <div class="layui-inline">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-inline">
-          <input type="text" name="username" autocomplete="off" class="layui-input">
+          <input type="text" name="username" autocomplete="off" class="layui-input username">
         </div>
       </div>
     </div>
@@ -78,7 +78,7 @@
       <div class="layui-inline">
           <label class="layui-form-label">密码框</label>
           <div class="layui-input-block">
-            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input password">
           </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
       <div class="layui-inline">
           <label class="layui-form-label">类型</label>
           <div class="layui-input-block">
-            <select name="role" lay-filter="aihao">
+            <select name="role" lay-filter="aihao" class="role">
               <option value=""></option>
               <option value="0">管理员</option>
               <option value="1">操作员</option>
@@ -99,7 +99,7 @@
       <div class="layui-inline">
         <label class="layui-form-label">部门</label>
         <div class="layui-input-inline">
-          <input type="text" name="dept" autocomplete="off" class="layui-input">
+          <input type="text" name="dept" autocomplete="off" class="layui-input dept">
         </div>
       </div>
     </div>
@@ -107,14 +107,14 @@
       <div class="layui-inline">
         <label class="layui-form-label">电话</label>
         <div class="layui-input-inline">
-          <input type="text" name="telephone" autocomplete="off" class="layui-input">
+          <input type="text" name="telephone" autocomplete="off" class="layui-input telephone">
         </div>
       </div>
     </div>
     <div class="layui-form-item layui-form-text">
       <label class="layui-form-label">备注信息</label>
       <div class="layui-input-block">
-        <textarea placeholder="请输入内容" class="layui-textarea" name="remarks" style="resize:none;"></textarea>
+        <textarea placeholder="请输入内容" class="layui-textarea remarks" name="remarks" style="resize:none;"></textarea>
       </div>
     </div>
       <div class="layui-form-item">
@@ -130,7 +130,7 @@
           </div>
       </div>
     <div class="layui-form-item" style="margin-left: 43%;">
-      <button class="layui-btn" lay-submit="" lay-filter="demo1" type="button">跳转式提交</button>
+      <button class="layui-btn" lay-submit="" lay-filter="demo1" type="button" id="submit_btn">跳转式提交</button>
     </div>
   </form>
 </div>
