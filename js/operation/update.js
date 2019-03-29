@@ -7,45 +7,32 @@
             ,laydate = layui.laydate
             ,upload = layui.upload
             ,element = layui.element;
-        upload.render({
-            elem: '#test8'
-            ,url: global_path + "/updateUser"
-            ,auto: false
-            ,accept:'images'
-            ,exts:'jpg|png|gif|bmp|jpeg'
-            ,bindAction: '#submit_btn'
-            ,before: function(obj){
-                this.data={
-                    'username':$('.username').val(),
-                    'role':$('.role').val(),
-                    'remarks':$('.remarks').val(),
-                    'dept':$('.dept').val(),
-                    'telephone':$('.telephone').val(),
-                    'id':getQueryString("userID")
-                };//关键代码
-            } 
-            ,choose: function(obj){
-                var files = obj.pushFile();
-                
-                obj.preview(function(index, file, result){
-                  $("#imgContent").attr('src',result);
+
+        var uploadInst = upload.render({
+            elem: '#test1',
+            url: global_path + "/fileUpLoad",
+            before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
                 });
-            }
-            ,done: function(res, index, upload){
-                //假设code=0代表上传成功
-                if(res.code == 0){
-                    $('#myalert').show();
-                    $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
-                        $('#myalert').hide();
-                        window.location.href = "./operation.html";
-                    });
+            },
+            done: function (res) {
+                //如果上传失败
+                if (res.code == 0) {
+                    return layer.msg('上传成功');
                 }else{
-                    alert(res.msg);
+                    return layer.msg('上传失败');
                 }
-                
-            }
-            ,error: function(index, upload){
-                // alert('请求失败');
+                //上传成功
+            },
+            error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
             }
         });
           //表单初始赋值
@@ -59,6 +46,28 @@
             ,"telephone": checkUser.telephone
             ,"remarks": checkUser.remarks
         })
+        form.on('submit(demo1)', function (data) {
+            var parms = {
+                'username':data.field.username,
+                'role':data.field.role,
+                'remarks':data.field.remarks,
+                'dept':data.field.dept,
+                'telephone':data.field.telephone
+            }
+            var url = global_path + "/updateUser";
+            commonAjax(url,parms,function(data){
+                if(data.code == 0){
+                    $('#myalert').show();
+                    $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
+                        $('#myalert').hide();
+                        window.location.href = "./operation.html";
+                    });
+                }else{
+                    alert(data.msg);
+                }
+            })
+
+        });
     });
 })();
 

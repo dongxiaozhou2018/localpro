@@ -144,29 +144,31 @@ $(function(){
 			      ,{field: 'url', title: '照片信息', width: 200, sort: true, align:'center', toolbar: '#imgUrl'}
 			      ,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
 			    ]]
+			    ,id: 'demo'
 		  	});
-	  	 	var $ = layui.$, active = {
-			    reload: function(){
-			      	var demoReload = $('#demoReload');
-			      
-			      //执行重载
-	      			table.reload('testReload', {
-				        page: {
-				          curr: 1 //重新从第 1 页开始
-				        }
-				        ,where: {
-				          key: {
-				            id: demoReload.val()
-				          }
-				        }
-			      	});
-			    }
-	  		};
+	  	 	var $ = layui.$,
+    			active = {
+			        reload: function () {
+			            var demoReload = $('#demoReload');
+
+			            //执行重载
+			            table.reload('demo', {
+			                page: {
+			                    curr: 1 //重新从第 1 页开始
+			                },
+			                where: {
+			                    key: {
+			                        id: demoReload.val()
+			                    }
+			                }
+			            });
+			        }
+			    };
 			  
-			  $('.demoTable .layui-btn').on('click', function(){
+			$('.demoTable .layui-btn').on('click', function () {
 			    var type = $(this).data('type');
 			    active[type] ? active[type].call(this) : '';
-			  });
+			});
 		  	//监听头工具栏事件
 		  	table.on('toolbar(test)', function(obj){
 			    var checkStatus = table.checkStatus(obj.config.id)
