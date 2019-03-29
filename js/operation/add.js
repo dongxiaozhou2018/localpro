@@ -1,5 +1,4 @@
 (function(){
-    var src;
     layui.use(['form', 'layedit', 'laydate',"jquery", "upload", "layer", "element"], function(){
         var $ = layui.$,
             form = layui.form,
@@ -30,7 +29,6 @@
                 var files = obj.pushFile();
                 
                 obj.preview(function(index, file, result){
-                    console.log($('.username').val())
                   $("#imgContent").attr('src',result);
                 });
             }
@@ -38,8 +36,12 @@
                 //假设code=0代表上传成功
                 if(res.code == 0){
                     $('#myalert').show();
+                    $('#alertConfirm').on('click','a',function(){          //退出登录弹框取消按钮
+                        $('#myalert').hide();
+                        window.location.href = "./operation.html";
+                    });
                 }else{
-                    alert(data.msg);
+                    alert(res.msg);
                 }
                 
             }
@@ -49,6 +51,5 @@
         });
       
     });
-    
-
 })();
+
