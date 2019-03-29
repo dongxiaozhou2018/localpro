@@ -11,6 +11,10 @@ function commonAjax(a, e, j, g) {
         dataType: "json",
         success: j,
         // processData: false,
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         mimeType:"multipart/form-data",
         error: function (n, m) {
             var o = this;
@@ -36,5 +40,14 @@ function isJSON(b) {
             return false
         }
     }
+}
+function getQueryString(b) {
+    var a = decodeURIComponent(window.location.search);
+    var c = new RegExp("(^|&)" + b + "=([^&]*)(&|$)", "i");
+    var d = a.substr(1).match(c);
+    if (d != null) {
+        return unescape(d[2])
+    }
+    return null
 }
 

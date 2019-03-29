@@ -10,7 +10,7 @@
       
          upload.render({
             elem: '#test8'
-            ,url: global_path + "/addUser"
+            ,url: global_path + "/updateUser"
             ,auto: false
             ,accept:'images'
             ,exts:'jpg|png|gif|bmp|jpeg'
@@ -18,11 +18,11 @@
             ,before: function(obj){
                 this.data={
                     'username':$('.username').val(),
-                    'password':$('.password').val(),
                     'role':$('.role').val(),
                     'remarks':$('.remarks').val(),
                     'dept':$('.dept').val(),
-                    'telephone':$('.telephone').val()
+                    'telephone':$('.telephone').val(),
+                    'id':getQueryString("userID")
                 };//关键代码
             } 
             ,choose: function(obj){
@@ -49,7 +49,18 @@
                 // alert('请求失败');
             }
         });
-      
+          //表单初始赋值
+        var checkUser = localStorage.getItem('checkUser');
+        checkUser = JSON.parse(checkUser);
+        form.render();
+        form.val("example", {
+            "username": checkUser.username // "name": "value"
+            ,"password": checkUser.password
+            ,"role": checkUser.role
+            ,"dept": checkUser.dept
+            ,"telephone": checkUser.telephone
+            ,"remarks": checkUser.remarks
+        })
     });
 })();
 

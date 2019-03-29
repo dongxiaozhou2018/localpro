@@ -181,14 +181,16 @@ $(function(){
 			        	} else if(data.length > 1){
 			          		layer.msg('只能同时编辑一个');
 	        			} else {
-			          		layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+	        				update(checkStatus.data[0].id);
 			        	}
 			      	break;
 			      	case 'delete':
 			       	 	if(data.length === 0){
 			          		layer.msg('请选择一行');
-			        	} else {
-			          		layer.msg('删除');
+			        	} else if(data.length > 1){
+			          		layer.msg('只能删除一个');
+	        			} else {
+			          		del(checkStatus.data[0].id);
 			        	}
 			      	break;
 			    };
@@ -198,24 +200,51 @@ $(function(){
 		  	table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
 			    var data = obj.data //获得当前行数据
 			    ,layEvent = obj.event; //获得 lay-event 对应的值
+			    // var checkStatus = table.checkStatus(obj.config.id)
 			    if(layEvent === 'detail'){
-			      	layer.msg('查看操作');
+			      	update(data.id,layEvent);
 			    } else if(layEvent === 'del'){
 			      	layer.confirm('真的删除行么', function(index){
 			        	obj.del(); //删除对应行（tr）的DOM结构
+			        	del(data.id);
 			        	layer.close(index);
 			        	//向服务端发送删除指令
 			      	});
 			    } else if(layEvent === 'edit'){
-			      	layer.msg('编辑操作');
+			      	update(data.id,layEvent);
 			    }
 		  	});
 			  
 		});
     }
 
-	
-
+	function update(id,layEvent){
+		var parms = {
+	        'id':id
+	    }
+	    var url = global_path + "/checkUser";
+	    commonAjax(url,parms,function(data){
+	        if(data.code == 0){
+	        	localStorage.setItem('checkUser',JSON.stringify(data));
+	        	window.location.href = "./update.html?layEvent="+layEvent+"&userID="+id;
+	        }else{
+	            alert(data.msg);
+	        }
+	    })
+	}
+	function del(id){
+		var parms = {
+	        'id':id
+	    }
+	    var url = global_path + "/deleteUser";
+	    commonAjax(url,parms,function(data){
+	        if(data.code == 0){
+	        	alert(data.msg);
+	        }else{
+	            alert(data.msg);
+	        }
+	    })
+	}
 
     
 })
