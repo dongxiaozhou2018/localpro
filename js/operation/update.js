@@ -1,14 +1,13 @@
 (function(){
     layui.use(['form', 'layedit', 'laydate',"jquery", "upload", "layer", "element"], function(){
-        var $ = layui.$,
-            form = layui.form,
-            element = layui.element,
-            layer = layui.layer,
-            upload = layui.upload,
-            layedit = layui.layedit,
-            laydate = layui.laydate;
-      
-         upload.render({
+        var $ = layui.$
+            ,form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,upload = layui.upload
+            ,element = layui.element;
+        upload.render({
             elem: '#test8'
             ,url: global_path + "/updateUser"
             ,auto: false
@@ -51,8 +50,7 @@
         });
           //表单初始赋值
         var checkUser = localStorage.getItem('checkUser');
-        checkUser = JSON.parse(checkUser);
-        form.render();
+        checkUser = JSON.parse(checkUser).data;
         form.val("example", {
             "username": checkUser.username // "name": "value"
             ,"password": checkUser.password
