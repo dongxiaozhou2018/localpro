@@ -42,9 +42,9 @@
                 </div>
                 <a id="aptcha_refresh" href="#" style="cursor: pointer;">换一张</a>
             </div>
-            <div class="bottom_login_btn layui-form-item" style="width: 105%;">
+            <div class="bottom_login_btn layui-form-item">
                 <span class="layui-btn login_btn login_in_btn">登录</span>
-                <span class="layui-btn login_btn login_out_btn">取消</span>
+                <!-- <span class="layui-btn login_btn login_out_btn">取消</span> -->
             </div>
             <div class="bottom_user_btn layui-form-item">
                 <a href="#" class="userName"><input name="Fruit" type="checkbox" value="记住用户名" />记住用户名</a>
@@ -90,6 +90,7 @@
                 var url = global_path + "/dologin";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
+                        sessionStorage.setItem('HTlogin',JSON.stringify(data));
                         // Setcookie('dologin',JSON.stringify(data))
                         Setcookie("dologin", JSON.stringify(data));
                         window.location.href = "html/operation.html";

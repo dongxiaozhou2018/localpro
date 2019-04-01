@@ -1,4 +1,11 @@
 $(function(){
+	// 用户名渲染
+	var HTlogin = sessionStorage.getItem('HTlogin');
+	if(HTlogin){
+		HTlogin = JSON.parse(HTlogin);
+		$('.loginName').html(HTlogin.data.username);
+	}
+	
 	// 点击事件
     $('.layui-side-scroll').on('click','.btn',function(){		//左侧导航栏
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
@@ -16,18 +23,60 @@ $(function(){
         }
     });
     $('.logout').on('click',function(){			//退出登录
-    	$('#myalert').show();
+    	$('.loginOut').show();
     });
-    $('#alertConfirm').on('click','.right',function(){			//退出登录弹框取消按钮
-    	$('#myalert').hide();
+    $('.loginOut').on('click','.right',function(){			//退出登录弹框取消按钮
+    	$('.loginOut').hide();
     });
-    $('#alertConfirm').on('click','.left',function(){			//退出登录弹框确认按钮
-    	$('#myalert').hide();
+    $('.loginOut').on('click','.left',function(){			//退出登录弹框确认按钮
+    	$('.loginOut').hide();
         $.getJSON(global_path + "/logout", function(data) {
         	if(data.code == 0){
+        		sessionStorage.removeItem('HTlogin');
         		window.location.href = "../login.html";
         	}
         })
+    });
+    // 修改密码
+    $('.changePwd').on('click',function(){
+        $('.changePassword').show();
+    })
+    $('.changePassword').on('click','.right',function(){          //修改密码弹框取消按钮
+        $('.changePassword').hide();
+    });
+    $('.changePassword').on('click','.left',function(){           //修改密码弹框确认按钮
+
+        var oldPwd = $('.oldPwd').val();        		//旧密码
+        var newPwd = $('.newPwd').val();       			//新密码
+        var confirmPwd = $('.confirmPwd').val();        // 确认新密码
+        if(oldPwd == ''){
+            alert('请输入您现在的密码');
+            return;
+        }else if(newPwd == ''){
+            alert('请输入新密码');
+            return;
+        }else if(confirmPwd == ''){
+            alert('确认密码不能为空');
+            return;
+        }else if(newPwd != confirmPwd){
+            alert('请输入相同密码');
+            return;
+        }else{
+            var parms = {
+                'passwordOld':oldPwd,
+                'passwordNew':newPwd
+            }
+            var url = global_path + "/changePassword";
+            commonAjax(url,parms,function(data){
+                if(data.code == 0){
+                    $('.changePassword').hide();
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                    captcha();
+                }
+            })
+        }
     });
     // 数据部分
     function echart(){

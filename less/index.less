@@ -20,3 +20,66 @@ li{
 .darkgray{
     color: darkgray;
 }
+#myalert{
+	.mask{
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: #000;
+		opacity:0.5;
+		z-index: 190;
+	}
+	.alertContent_box{
+		background:transparent;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 1000;
+		padding:10px;
+		.alertPos{
+			position: absolute;
+		    top: 31%;
+		    left: 40%;
+		    z-index: 1000;
+		    width: 20%;
+		    background-color: #f8f8f8;
+		    text-align: center;
+		    border-radius: 6px;
+		    box-sizing: border-box;
+		    .alertWkxPos{
+		    	#alertTips{
+		    		font-size: 18px;
+		    		padding: 22px 0 14px;
+		    	}
+		    }
+		    #alertTips{
+		    	margin-top: 15px;
+		    }
+		    #alertContent{
+		    	overflow: auto;
+		    	font-size: 13px;
+		    	width: 70%;
+		    	margin: 20px auto;
+		    }
+		    #alertConfirm{
+				margin: 16px auto 24px;
+				width: 98%;
+				padding-bottom: 20px;
+				.fif-long-btn{
+					border-radius: 6px;
+				    color: #fff;
+				    background-color: #393D49;
+				    line-height: 40px;
+				    width: 49%;
+				    vertical-align: middle;
+				    display: table-cell;
+			        cursor: pointer;
+				}
+		    }
+		}
+	}
+}

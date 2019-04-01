@@ -39,13 +39,14 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        贤心
+                        <span class="loginName">贤心</span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">基本资料</a></dd>
                         <dd><a href="javascript:;">安全设置</a></dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item"><a href="javascript:;" class="changePwd">修改密码</a></li>
                 <li class="layui-nav-item"><a href="javascript:;" class="logout">退出登录</a></li>
             </ul>
         </div>
@@ -112,7 +113,7 @@
 
     </div>
     <!-- 退出登录提示弹框 -->
-    <div id="myalert" style="display: none;">
+    <div id="myalert" class="loginOut" style="display: none;">
         <div class="mask"></div>
         <div class="alertContent_box">
             <div class="alertPos">
@@ -120,6 +121,33 @@
                 <div id="alertContent">确认退出？</div>
                 <div id="alertConfirm">
                     <a class="fif-long-btn fif-click-btn left">确定</a>
+                    <a class="fif-long-btn fif-click-btn right">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修改密码 -->
+    <div id="myalert" class="changePassword" style="display: none;">
+        <div class="mask"></div>
+        <div class="alertContent_box">
+            <div class="alertPos" style="width: 30%;top: 37%;left: 36%;">
+                <div id="alertTips">修改密码</div>
+                <div id="alertContent">
+                    <div class="pwd">
+                        <span>旧密码</span>
+                        <input type="password" name="" class="oldPwd">
+                    </div>
+                    <div  class="pwd">
+                        <span>新密码</span>
+                        <input type="password" name="" class="newPwd">
+                    </div>
+                    <div  class="pwd">
+                        <span>确认新密码</span>
+                        <input type="password" name="" class="confirmPwd">
+                    </div>
+                </div>
+                <div id="alertConfirm">
+                    <a class="fif-long-btn fif-click-btn left">保存</a>
                     <a class="fif-long-btn fif-click-btn right">取消</a>
                 </div>
             </div>

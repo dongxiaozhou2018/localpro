@@ -72,9 +72,13 @@
   color: #f02828;
   font-size: 14px;
 }
+.login .changePwd a {
+  font-size: 14px;
+  color: #aaa;
+}
 .login .layui-btn {
   display: inline-block;
-  width: 35.5%;
+  width: 90%;
   height: 38px;
   line-height: 38px;
   padding: 0 18px;
