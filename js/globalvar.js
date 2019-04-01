@@ -51,9 +51,12 @@ function getQueryString(b) {
     return null
 }
 // 用户名渲染
-var HTlogin = sessionStorage.getItem('HTlogin');
-if(HTlogin){
-    HTlogin = JSON.parse(HTlogin);
-    $('.loginName').html(HTlogin.data.username);
+function loginName(){
+    var HTlogin = sessionStorage.getItem('HTlogin');
+    if(HTlogin){
+        HTlogin = JSON.parse(HTlogin);
+        $('.loginName').html(HTlogin.data.username);
+    }
 }
+
 

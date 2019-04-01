@@ -45,12 +45,8 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        <span class="loginName">贤心</span>
+                        <span class="loginName"></span>
                     </a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">基本资料</a></dd>
-                        <dd><a href="javascript:;">安全设置</a></dd>
-                    </dl>
                 </li>
                 <li class="layui-nav-item"><a href="javascript:;" class="logout">退出登录</a></li>
             </ul>
@@ -78,7 +74,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" autocomplete="off" class="layui-input username">
+                    <input type="text" name="username" autocomplete="off" class="layui-input username" placeholder="请输入用户名">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -101,13 +97,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">部门</label>
                 <div class="layui-input-block">
-                    <input type="text" name="dept" autocomplete="off" class="layui-input dept">
+                    <input type="text" name="dept" autocomplete="off" class="layui-input dept" placeholder="请输入部门">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-block">
-                    <input type="text" name="telephone" autocomplete="off" class="layui-input telephone">
+                    <input type="text" name="telephone" autocomplete="off" class="layui-input telephone"  placeholder="请输入电话">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -135,6 +131,9 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        loginName();
+    </script>
 </body>
 
 </html>

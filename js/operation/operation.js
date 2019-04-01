@@ -68,7 +68,6 @@ $(function(){
                     alert(data.msg);
                 }else{
                     alert(data.msg);
-                    captcha();
                 }
             })
         }
@@ -188,30 +187,27 @@ $(function(){
 			      ,{field: 'url', title: '照片信息', width: 200, sort: true, align:'center', toolbar: '#imgUrl'}
 			      ,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
 			    ]]
-			    ,id: 'demo'
 		  	});
-	  	 	var $ = layui.$,
-    			active = {
-			        reload: function () {
-			            var demoReload = $('#demoReload');
-
-			            //执行重载
-			            table.reload('demo', {
-			                page: {
-			                    curr: 1 //重新从第 1 页开始
-			                },
-			                where: {
-			                    key: {
-			                        id: demoReload.val()
-			                    }
-			                }
-			            });
-			        }
-			    };
-			  
-			$('.demoTable .layui-btn').on('click', function () {
-			    var type = $(this).data('type');
-			    active[type] ? active[type].call(this) : '';
+			//渲染搜索列表
+			 function searchCity() {
+				var searchCityName = $("#demoReload").val();
+				if(searchCityName == "") {
+					$("tr").show();
+				} else {
+					$("td").each(function() {
+						if($(this).attr('data-field') == 'id'){
+							var id = $(this).find('.layui-table-cell').text();
+							if(id.indexOf(searchCityName) != -1) {
+								$(this).parents('tr').show();
+							} else {
+								$(this).parents('tr').hide();
+							}
+						}
+					});
+				}
+			}
+			$('#demoReload').bind('input', function() {
+				searchCity();
 			});
 		  	//监听头工具栏事件
 		  	table.on('toolbar(test)', function(obj){
