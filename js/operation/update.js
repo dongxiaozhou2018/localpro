@@ -21,6 +21,7 @@
                 //如果上传失败
                 if (res.code == 0) {
                     return layer.msg('上传成功');
+                    sessionStorage.setItem('fileId',res.fileId);
                 }else{
                     return layer.msg('上传失败');
                 }
@@ -47,13 +48,15 @@
             ,"remarks": checkUser.remarks
         })
         form.on('submit(demo1)', function (data) {
+            var fileId = sessionStorage.getItem('fileId');
             var parms = {
                 'username':data.field.username,
                 'role':data.field.role,
                 'remarks':data.field.remarks,
                 'dept':data.field.dept,
                 'telephone':data.field.telephone,
-                'id':getQueryString('userID')
+                'id':getQueryString('userID'),
+                'fileId':fileId ? fileId : ''
             }
             var url = global_path + "/updateUser";
             commonAjax(url,parms,function(data){

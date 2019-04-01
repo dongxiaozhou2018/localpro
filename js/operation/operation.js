@@ -1,10 +1,5 @@
 $(function(){
-	// 用户名渲染
-	var HTlogin = sessionStorage.getItem('HTlogin');
-	if(HTlogin){
-		HTlogin = JSON.parse(HTlogin);
-		$('.loginName').html(HTlogin.data.username);
-	}
+	
 	
 	// 点击事件
     $('.layui-side-scroll').on('click','.btn',function(){		//左侧导航栏

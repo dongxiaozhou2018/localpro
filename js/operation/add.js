@@ -37,6 +37,7 @@
             }
         });
         form.on('submit(demo1)', function (data) {
+            var fileId = sessionStorage.getItem('fileId');
             var parms = {
                 'username':data.field.username,
                 'password':data.field.password,
@@ -44,7 +45,7 @@
                 'remarks':data.field.remarks,
                 'dept':data.field.dept,
                 'telephone':data.field.telephone,
-                'fileId':sessionStorage.getItem('fileId');
+                'fileId':fileId ? fileId : ''
             }
             var url = global_path + "/addUser";
             commonAjax(url,parms,function(data){
