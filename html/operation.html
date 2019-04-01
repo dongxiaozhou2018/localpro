@@ -83,11 +83,11 @@
         <div class="layui-body">
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
-                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM     数据部分-->
+                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM     终端总览-->
                 <div id="main" style="width: 600px;height:400px;"></div>
-                <!-- 地图部分 -->
+                <!-- 地图配置 -->
                 <div id="mapid" style="display: none"></div>
-                <!-- layui   用户表格 -->
+                <!-- layui   用户管理 -->
                 <div id="user" style="display: none">
                     <div class="demoTable" style="margin-left: 1%;">
                       请输入用户ID：
@@ -107,6 +107,27 @@
                       <img src="{{ d.url }}" width="100px" >
                     </script>
                      
+                </div>
+                <!-- 操作日志 -->
+                <div id="oplog" style="display: none;">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend>查询条件</legend>
+                    </fieldset>
+                    <div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label" style="font-size: 15px;">时间范围</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="startTime" placeholder="yyyy-MM-dd HH:mm:ss" style="width: auto;display: inline-block;height: 30px;">
+                                <span>--</span>
+                                <input type="text" class="layui-input" id="endTime" placeholder="yyyy-MM-dd HH:mm:ss" style="width: auto;display: inline-block;height: 30px;">
+                            </div>
+                        </div>
+                        <button class="query layui-btn" type="button" style="height: 30px;line-height: 30px;margin-top: -8px;">查询</button>
+                    </div>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend>查询结果</legend>
+                    </fieldset>
+                    <table class="layui-hide" id="test"></table>
                 </div>
             </div>
         </div>

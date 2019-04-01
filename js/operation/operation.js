@@ -16,6 +16,10 @@ $(function(){
         	$('#main').show().siblings().hide();
         	echart();
         }
+        if($(this).attr('name') == 'czrz'){
+        	$('#oplog').show().siblings().hide();
+        	oplog();
+        }
     });
     $('.logout').on('click',function(){			//退出登录
     	$('.loginOut').show();
@@ -259,7 +263,7 @@ $(function(){
 			  
 		});
     }
-
+    // 编辑用户信息
 	function update(id,layEvent){
 		var parms = {
 	        'id':id
@@ -274,6 +278,7 @@ $(function(){
 	        }
 	    })
 	}
+	// 删除用户信息
 	function del(id){
 		var parms = {
 	        'id':id
@@ -287,7 +292,60 @@ $(function(){
 	        }
 	    })
 	}
-
-    
+	// 操作日志
+    function oplog(){
+    	function showLog(startTime1,endTime1){
+    		layui.use('table', function(){
+			  var table = layui.table;
+			  
+			  table.render({
+			    elem: '#test'
+			    ,url: global_path + "/selectRecordInfo"
+			    ,where: {startTime: startTime1, endTime: endTime1} 
+			    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+			    ,title: '操作日志'
+			    ,page: true //开启分页
+			    // ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+			    // ,totalRow: true //开启合计行
+			    ,parseData:function(res){
+			    	return{
+			    		'code': res.code,
+			    		'msg': res.msg,
+			    		'data': res.data.list
+			    	}
+			    }
+			    ,cols: [[
+			      ,{field:'information', width:800, title: '操作内容'}
+			      ,{field:'username', width:500, title: '用户名'}
+			      ,{field:'createTime', width:500, title: '时间'}
+			    ]]
+			  });
+			});
+    	}
+    	showLog('','');
+    	//日期时间选择器
+    	layui.use('laydate', function(){
+	    	var laydate = layui.laydate;
+			laydate.render({
+			    elem: '#startTime',
+			    type: 'datetime'
+			});
+			laydate.render({
+			    elem: '#endTime',
+			    type: 'datetime'
+			});
+		});
+		$('.query').on('click',function(){
+			var startTime = $('#startTime').val();
+			var endTime = $('#endTime').val();
+			if(startTime == ''){
+				alert('请选择起始时间');
+			}else if(endTime == ''){
+				alert('请选择结束时间');
+			}else{
+				showLog(startTime,endTime);
+			}
+		})
+    }
 })
 
