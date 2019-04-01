@@ -174,6 +174,17 @@ $(function(){
 			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 			    // ,totalRow: true //开启合计行
 			    ,parseData:function(data){
+			    	if(data.code == '0'){
+			    		for(var i = 0;i<data.data.list.length;i++){
+			    			if(data.data.list[i].role == 0){
+			    				data.data.list[i].role = '管理员';
+			    			}else if(data.data.list[i].role == 1){
+			    				data.data.list[i].role = '操作员';
+			    			}else if(data.data.list[i].role == 2){
+			    				data.data.list[i].role = '维修员';
+			    			}
+			    		}
+			    	}
 			    	return{
 			    		'code': data.code,
 			    		'msg': data.msg,
