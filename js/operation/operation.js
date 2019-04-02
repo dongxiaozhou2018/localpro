@@ -148,7 +148,7 @@ $(function(){
 		  	//执行一个 table 实例
 		  	table.render({
 			    elem: '#service'
-			    ,url: global_path+'/selectFunction' //数据接口
+			    ,url: '' //数据接口
 			    ,title: '服务配置'
 			    ,page: true //开启分页
 			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -414,7 +414,7 @@ $(function(){
 		  	//执行一个 table 实例
 		  	table.render({
 			    elem: '#permission'
-			    ,url: global_path+'/selectFunction' //数据接口
+			    ,url: '' //数据接口
 			    ,title: '权限'
 			    ,page: true //开启分页
 			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -567,7 +567,7 @@ $(function(){
 		  	//执行一个 table 实例
 		  	table.render({
 			    elem: '#upgrade'
-			    ,url: global_path+'/selectFunction' //数据接口
+			    ,url: '' //数据接口
 			    ,title: '升级维护'
 			    ,page: true //开启分页
 			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
