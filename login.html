@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">  -->
-  <title>系统后台</title> 
-  <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
-  <link rel="stylesheet" type="text/css" href="css/login.css">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="js/globalvar.js"></script>
-  <script type="text/javascript" src="js/jQuery.md5.js"></script>
-  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*.ttlsa.com">
+    <title>系统后台</title> 
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/globalvar.js"></script>
+    <script type="text/javascript" src="js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
 </head>
 <body class="layui-bg-cyan">
     <div class="login">
@@ -67,7 +67,7 @@
         $('.login_in_btn').on('click',function(){
             var password = $('.input_password').val();
             //密码加密成md5
-            var passwd = $.md5(password);
+            // var passwd = $.md5(password);
             var username = $('.input_username').val();
             var role = $('#layui-form-select').val();
             var vCode = $('#captcha').val();
@@ -82,7 +82,7 @@
             }else{
                 var parms = {
                     'username':username,
-                    'password':password,
+                    'password':$.md5(password),
                     'role':role,
                     'vCode':vCode,
                     'isDel':0

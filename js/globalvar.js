@@ -4,16 +4,23 @@ var global_path = "http://" + "192.168.1.142" + ":8083";
 // var global_path = "https://" + window.location.hostname + ":8083";
 
 function commonAjax(a, e, j, g) {
+    var HTlogin = sessionStorage.getItem('HTlogin');
+    if(HTlogin){
+        e.at = JSON.parse(HTlogin).token;
+    }
     var c = {
         url: a,
         contentType: 'application/json',
         data: JSON.stringify(e),
+
+        // data: e,
+        crossDomain: true,
         type: "post",
         dataType: "json",
         success: j,
-        // processData: false,
+        crossDomain: true,  
         xhrFields: {
-            withCredentials: true
+            withCredentials: false
         },
         crossDomain: true,
         mimeType:"multipart/form-data",
