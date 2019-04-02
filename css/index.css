@@ -28,7 +28,7 @@ li {
   right: 0;
   background: #000;
   opacity: 0.5;
-  z-index: 190;
+  z-index: 1000;
 }
 #myalert .alertContent_box {
   background: transparent;

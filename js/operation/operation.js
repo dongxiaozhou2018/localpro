@@ -20,6 +20,14 @@ $(function(){
         	$('#oplog').show().siblings().hide();
         	oplog();
         }
+        if($(this).attr('name') == 'fwpz'){
+        	$('#serviceConfiguration').show().siblings().hide();
+        	serviceConfiguration();
+        }
+        if($(this).attr('name') == 'sjwh'){
+        	$('#upgradeMaintenance').show().siblings().hide();
+        	upgradeMaintenance();
+        }
     });
     $('.userInformation').on('click',function(){			// 用户信息
     	$('#userInformation').show().siblings().hide();
@@ -132,6 +140,85 @@ $(function(){
     }
     echart();
 
+    // 服务配置
+	function serviceConfiguration(){
+		layui.use('table', function(){
+	  		table = layui.table //表格
+			  
+		  	//执行一个 table 实例
+		  	table.render({
+			    elem: '#service'
+			    ,url: global_path+'/selectFunction' //数据接口
+			    ,title: '服务配置'
+			    ,page: true //开启分页
+			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+			    // ,totalRow: true //开启合计行
+			    ,parseData:function(data){
+			    	return{
+			    		'code': data.code,
+			    		'msg': data.msg,
+			    		// 'data': data.data.list
+			    	}
+			    }
+			    ,cols: [[ //表头
+			      	// {type: 'checkbox', fixed: 'left'}
+			      	{field: 'username', title: '服务器IP', width:'16.6%', align:'center'}
+			      	,{field: 'remarks', title: '客户端口', width:'12.6%', align:'center'}
+			      	,{field: 'remarks', title: '设备端口', width:'12.6%', align:'center'}
+			      	,{field: 'remarks', title: '接入终端数量', width:'8%', align:'center'}
+			      	,{field: 'remarks', title: '备注', width:'39.33%', align:'center'}
+			      	,{field: 'url', title: '操作', width:'10.9%', align:'center', toolbar: '#service_operation'}
+			    ]]
+		  	});
+		  	//监听头工具栏事件
+		  	table.on('toolbar(test)', function(obj){
+			    var checkStatus = table.checkStatus(obj.config.id)
+			    ,data = checkStatus.data; //获取选中的数据
+			    switch(obj.event){
+		      		case 'add':
+		        		window.location.href = "./add.html";
+		      		break;
+	      			case 'update':
+			        	if(data.length === 0){
+			          		layer.msg('请选择一行');
+			        	} else if(data.length > 1){
+			          		layer.msg('只能同时编辑一个');
+	        			} else {
+	        				update(checkStatus.data[0].id);
+			        	}
+			      	break;
+			      	case 'delete':
+			       	 	if(data.length === 0){
+			          		layer.msg('请选择一行');
+			        	} else if(data.length > 1){
+			          		layer.msg('只能删除一个');
+	        			} else {
+			          		del(checkStatus.data[0].id);
+			        	}
+			      	break;
+			    };
+		  	});
+			  
+		  	//监听行工具事件
+		  	table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+			    var data = obj.data //获得当前行数据
+			    ,layEvent = obj.event; //获得 lay-event 对应的值
+			    // var checkStatus = table.checkStatus(obj.config.id)
+			    if(layEvent === 'del'){
+			      	layer.confirm('真的删除行么', function(index){
+			        	// obj.del(); //删除对应行（tr）的DOM结构
+			        	del(data.id);
+			        	layer.close(index);
+			        	//向服务端发送删除指令
+			      	});
+			    } else if(layEvent === 'edit'){
+			      	update(data.id,layEvent);
+			    }
+		  	});
+			  
+		});
+	}
+
     // 地图配置
     function map(){
     	var cities = L.layerGroup();
@@ -209,14 +296,14 @@ $(function(){
 			    }
 			    ,cols: [[ //表头
 			     	{type: 'checkbox', fixed: 'left'}
-			     	,{field: 'id', title: 'ID', width:120, sort: true, fixed: 'left'}
-			     	,{field: 'username', title: '用户名', width:150, align:'center'}
-			     	,{field: 'role', title: '类型', width: 100, sort: true,  align:'center'}
-			     	,{field: 'dept', title: '部门', width: 130, sort: true,  align:'center'}
-			     	,{field: 'telephone', title: '电话', width:200, align:'center'} 
-			     	,{field: 'remarks', title: '备注信息', width: 200, align:'center'}
-			     	,{field: 'url', title: '照片信息', width: 200, sort: true, align:'center', toolbar: '#imgUrl'}
-			     	,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
+			     	,{field: 'id', title: 'ID', width:'5%', sort: true, fixed: 'left', align:'center'}
+			     	,{field: 'username', title: '用户名', width:'12.5%', align:'center'}
+			     	,{field: 'role', title: '类型', width: '12.5%', sort: true,  align:'center'}
+			     	,{field: 'dept', title: '部门', width: '12.5%', sort: true,  align:'center'}
+			     	,{field: 'telephone', title: '电话', width:'12.5%', align:'center'} 
+			     	,{field: 'remarks', title: '备注信息', width: '14.5%', align:'center'}
+			     	,{field: 'url', title: '照片信息', width: '15.5%', sort: true, align:'center', toolbar: '#imgUrl'}
+			     	,{fixed: 'right', title: '操作', width: '12.5%', align:'center', toolbar: '#barDemo'}
 			    ]]
 		  	});
 			//渲染搜索列表
@@ -343,7 +430,7 @@ $(function(){
 			      	// {type: 'checkbox', fixed: 'left'}
 			      	{field: 'username', title: '用户名', width:'33.33%', align:'center'}
 			      	,{field: 'remarks', title: '备注', width:'33.33%', align:'center'}
-			      	,{field: 'url', title: '操作', width:'33.33%', align:'center', toolbar: '#barDemo'}
+			      	,{field: 'url', title: '操作', width:'33.33%', align:'center', toolbar: '#permission_operation'}
 			    ]]
 		  	});
 			//渲染搜索列表
@@ -472,5 +559,81 @@ $(function(){
 			}
 		})
     }
+    // 升级维护
+	function upgradeMaintenance(){
+		layui.use('table', function(){
+	  		table = layui.table //表格
+			  
+		  	//执行一个 table 实例
+		  	table.render({
+			    elem: '#upgrade'
+			    ,url: global_path+'/selectFunction' //数据接口
+			    ,title: '升级维护'
+			    ,page: true //开启分页
+			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+			    // ,totalRow: true //开启合计行
+			    ,parseData:function(data){
+			    	return{
+			    		'code': data.code,
+			    		'msg': data.msg,
+			    		// 'data': data.data.list
+			    	}
+			    }
+			    ,cols: [[ //表头
+			      	// {type: 'checkbox', fixed: 'left'}
+			      	{field: 'username', title: '版本名称', width:'15%', align:'center'}
+			      	,{field: 'remarks', title: '上传时间', width:'20%', align:'center'}
+			      	,{field: 'remarks', title: '版本说明', width:'50%', align:'center'}
+			      	,{field: 'url', title: '操作', width:'15%', align:'center', toolbar: '#service_operation'}
+			    ]]
+		  	});
+		  	//监听头工具栏事件
+		  	table.on('toolbar(test)', function(obj){
+			    var checkStatus = table.checkStatus(obj.config.id)
+			    ,data = checkStatus.data; //获取选中的数据
+			    switch(obj.event){
+		      		case 'add':
+		        		window.location.href = "./add.html";
+		      		break;
+	      			case 'update':
+			        	if(data.length === 0){
+			          		layer.msg('请选择一行');
+			        	} else if(data.length > 1){
+			          		layer.msg('只能同时编辑一个');
+	        			} else {
+	        				update(checkStatus.data[0].id);
+			        	}
+			      	break;
+			      	case 'delete':
+			       	 	if(data.length === 0){
+			          		layer.msg('请选择一行');
+			        	} else if(data.length > 1){
+			          		layer.msg('只能删除一个');
+	        			} else {
+			          		del(checkStatus.data[0].id);
+			        	}
+			      	break;
+			    };
+		  	});
+			  
+		  	//监听行工具事件
+		  	table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+			    var data = obj.data //获得当前行数据
+			    ,layEvent = obj.event; //获得 lay-event 对应的值
+			    // var checkStatus = table.checkStatus(obj.config.id)
+			    if(layEvent === 'del'){
+			      	layer.confirm('真的删除行么', function(index){
+			        	// obj.del(); //删除对应行（tr）的DOM结构
+			        	del(data.id);
+			        	layer.close(index);
+			        	//向服务端发送删除指令
+			      	});
+			    } else if(layEvent === 'edit'){
+			      	update(data.id,layEvent);
+			    }
+		  	});
+			  
+		});
+	}
 })
 
