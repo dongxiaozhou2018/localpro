@@ -208,15 +208,15 @@ $(function(){
 			    	}
 			    }
 			    ,cols: [[ //表头
-			      {type: 'checkbox', fixed: 'left'}
-			      ,{field: 'id', title: 'ID', width:120, sort: true, fixed: 'left'}
-			      ,{field: 'username', title: '用户名', width:150, align:'center'}
-			      ,{field: 'role', title: '类型', width: 100, sort: true,  align:'center'}
-			      ,{field: 'dept', title: '部门', width: 130, sort: true,  align:'center'}
-			      ,{field: 'telephone', title: '电话', width:200, align:'center'} 
-			      ,{field: 'remarks', title: '备注信息', width: 200, align:'center'}
-			      ,{field: 'url', title: '照片信息', width: 200, sort: true, align:'center', toolbar: '#imgUrl'}
-			      ,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
+			     	{type: 'checkbox', fixed: 'left'}
+			     	,{field: 'id', title: 'ID', width:120, sort: true, fixed: 'left'}
+			     	,{field: 'username', title: '用户名', width:150, align:'center'}
+			     	,{field: 'role', title: '类型', width: 100, sort: true,  align:'center'}
+			     	,{field: 'dept', title: '部门', width: 130, sort: true,  align:'center'}
+			     	,{field: 'telephone', title: '电话', width:200, align:'center'} 
+			     	,{field: 'remarks', title: '备注信息', width: 200, align:'center'}
+			     	,{field: 'url', title: '照片信息', width: 200, sort: true, align:'center', toolbar: '#imgUrl'}
+			     	,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
 			    ]]
 		  	});
 			//渲染搜索列表
@@ -336,18 +336,14 @@ $(function(){
 			    	return{
 			    		'code': data.code,
 			    		'msg': data.msg,
-			    		'data': data.data.list
+			    		// 'data': data.data.list
 			    	}
 			    }
 			    ,cols: [[ //表头
-			      // {type: 'checkbox', fixed: 'left'}
-			      {field: 'username', title: '用户名', width:550, align:'center'}
-			      // ,{field: 'role', title: '类型', width: 100, sort: true,  align:'center'}
-			      // ,{field: 'dept', title: '部门', width: 130, sort: true,  align:'center'}
-			      // ,{field: 'telephone', title: '电话', width:200, align:'center'} 
-			      ,{field: 'remarks', title: '备注', width: 550, align:'center'}
-			      ,{field: 'url', title: '操作', width: 550, align:'center', toolbar: '#barDemo'}
-			      // ,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
+			      	// {type: 'checkbox', fixed: 'left'}
+			      	{field: 'username', title: '用户名', width:'33.33%', align:'center'}
+			      	,{field: 'remarks', title: '备注', width:'33.33%', align:'center'}
+			      	,{field: 'url', title: '操作', width:'33.33%', align:'center', toolbar: '#barDemo'}
 			    ]]
 		  	});
 			//渲染搜索列表
@@ -426,14 +422,15 @@ $(function(){
 			  var table = layui.table;
 			  
 			  table.render({
-			    elem: '#test'
-			    ,url: global_path + "/selectRecordInfo"
+			  	elem: '#test'
+			    ,url: global_path+'/selectRecordInfo' //数据接口
 			    ,where: {startTime: startTime1, endTime: endTime1} 
-			    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
 			    ,title: '操作日志'
 			    ,page: true //开启分页
-			    // ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 			    // ,totalRow: true //开启合计行
+			    // ,width : '90%'
+			    ,cellMinWidth: 80
 			    ,parseData:function(res){
 			    	return{
 			    		'code': res.code,
@@ -441,10 +438,11 @@ $(function(){
 			    		'data': res.data.list
 			    	}
 			    }
-			    ,cols: [[
-			      ,{field:'information', width:800, title: '操作内容'}
-			      ,{field:'username', width:500, title: '用户名'}
-			      ,{field:'createTime', width:500, title: '时间'}
+			    ,cols: [[ //表头
+		      		// {type: 'checkbox', fixed: 'left'}
+		      		{field: 'information', title: '操作内容', width:'33.33%'}
+		      		,{field: 'username', title: '用户名', width:'33.33%'}
+		      		,{field: 'createTime', title: '时间', width:'33.33%'}
 			    ]]
 			  });
 			});
