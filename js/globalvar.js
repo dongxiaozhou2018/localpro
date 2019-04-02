@@ -6,7 +6,8 @@ var global_path = "http://" + "192.168.1.142" + ":8083";
 function commonAjax(a, e, j, g) {
     var c = {
         url: a,
-        data: e,
+        contentType: 'application/json',
+        data: JSON.stringify(e),
         type: "post",
         dataType: "json",
         success: j,
