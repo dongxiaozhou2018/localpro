@@ -14,6 +14,11 @@
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../js/globalvar.js"></script>
     <script type="text/javascript" src="../js/operation/operation.js"></script>
+    <style type="text/css">
+        .layui-nav-bar{
+            display: none!important;
+        }
+    </style>
 </head>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
@@ -41,13 +46,13 @@
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                         <span class="loginName">贤心</span>
                     </a>
-                    <dl class="layui-nav-child">
+                    <!-- <dl class="layui-nav-child">
                         <dd><a href="javascript:;">基本资料</a></dd>
                         <dd><a href="javascript:;">安全设置</a></dd>
-                    </dl>
+                    </dl> -->
                 </li>
                 <li class="layui-nav-item"><a href="javascript:;" class="changePwd">修改密码</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" class="logout">退出登录</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="logout" style="font-size: 12px!important;">[ 退出登录 ]</a></li>
             </ul>
         </div>
 
@@ -69,6 +74,10 @@
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;" class="btn" name="yhgl">用户管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" class="userInformation">用户信息</a></dd>
+                            <dd><a href="javascript:;" class="permissionAssignment">权限分配</a></dd>
+                        </dl>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;" class="btn" name="czrz">操作日志</a>
@@ -87,8 +96,8 @@
                 <div id="main" style="width: 600px;height:400px;"></div>
                 <!-- 地图配置 -->
                 <div id="mapid" style="display: none"></div>
-                <!-- layui   用户管理 -->
-                <div id="user" style="display: none">
+                <!-- layui   用户信息 -->
+                <div id="userInformation" style="display: none">
                     <div class="demoTable" style="margin-left: 1%;">
                       请输入用户ID：
                       <div class="layui-inline">
@@ -100,6 +109,26 @@
             
                     <script type="text/html" id="barDemo">
                       <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    </script>
+                    <script type="text/html" id="imgUrl">
+                      <img src="{{ d.url }}" width="100px" >
+                    </script>
+                     
+                </div>
+                <!-- layui   权限分配 -->
+                <div id="permissionAssignment" style="display: none">
+                    <!-- <div class="demoTable" style="margin-left: 1%;">
+                      请输入用户ID：
+                      <div class="layui-inline">
+                        <input name="id" class="layui-input" id="demoReload" autocomplete="off">
+                      </div>
+                    </div> -->
+                    <table class="layui-hide" id="permission" lay-filter="test"></table>
+            
+                    <script type="text/html" id="barDemo">
+                      <!-- <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a> -->
                       <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                     </script>

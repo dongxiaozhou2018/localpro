@@ -19,3 +19,7 @@
   width: 66px;
   margin-right: 20px;
 }
+div,
+a {
+  font-size: 13px!important;
+}

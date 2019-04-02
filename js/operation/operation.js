@@ -4,10 +4,10 @@ $(function(){
 	// 点击事件
     $('.layui-side-scroll').on('click','.btn',function(){		//左侧导航栏
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
-        if($(this).attr('name') == 'yhgl'){
-        	$('#user').show().siblings().hide();
-        	user();
-        }
+        // if($(this).attr('name') == 'yhgl'){
+        // 	$('#user').show().siblings().hide();
+        // 	user();
+        // }
         if($(this).attr('name') == 'dtpz'){
         	$('#mapid').show().siblings().hide();
         	map();
@@ -20,6 +20,15 @@ $(function(){
         	$('#oplog').show().siblings().hide();
         	oplog();
         }
+    });
+    $('.userInformation').on('click',function(){			// 用户信息
+    	$('#userInformation').show().siblings().hide();
+    	userInformation();
+    });
+    
+    $('.permissionAssignment').on('click',function(){			// 权限分配
+    	$('#permissionAssignment').show().siblings().hide();
+    	permissionAssignment();
     });
     $('.logout').on('click',function(){			//退出登录
     	$('.loginOut').show();
@@ -39,6 +48,9 @@ $(function(){
     // 修改密码
     $('.changePwd').on('click',function(){
         $('.changePassword').show();
+        $('.oldPwd').val('');        		//旧密码
+        $('.newPwd').val('');       			//新密码
+        $('.confirmPwd').val(''); 
     })
     $('.changePassword').on('click','.right',function(){          //修改密码弹框取消按钮
         $('.changePassword').hide();
@@ -52,13 +64,10 @@ $(function(){
             alert('请输入您现在的密码');
             return;
         }else if(newPwd == ''){
-            alert('请输入新密码');
-            return;
-        }else if(confirmPwd == ''){
-            alert('确认密码不能为空');
+            alert('请输入用户新密码');
             return;
         }else if(newPwd != confirmPwd){
-            alert('请输入相同密码');
+            alert('两次输入的密码不一致');
             return;
         }else{
             var parms = {
@@ -76,7 +85,7 @@ $(function(){
             })
         }
     });
-    // 数据部分
+    // 终端总览
     function echart(){
 	 	// 基于准备好的dom，初始化echarts实例
 	    var myChart = echarts.init(document.getElementById('main'));
@@ -123,7 +132,7 @@ $(function(){
     }
     echart();
 
-    // 地图部分
+    // 地图配置
     function map(){
     	var cities = L.layerGroup();
 
@@ -160,8 +169,15 @@ $(function(){
 		L.control.layers(baseLayers, overlays).addTo(map);
     }
     
-    // 用户部分
+    // 用户管理
     function user(){
+    	layui.use('element', function(){
+    		var element = layui.element;
+    	});
+    }
+    user();
+    // 用户信息
+    function userInformation(){
 		layui.use('table', function(){
 	  		table = layui.table //表格
 			  
@@ -302,6 +318,106 @@ $(function(){
 	            alert(data.msg);
 	        }
 	    })
+	}
+	// 权限分配
+	function permissionAssignment(){
+		layui.use('table', function(){
+	  		table = layui.table //表格
+			  
+		  	//执行一个 table 实例
+		  	table.render({
+			    elem: '#permission'
+			    ,url: global_path+'/selectFunction' //数据接口
+			    ,title: '权限'
+			    ,page: true //开启分页
+			    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+			    // ,totalRow: true //开启合计行
+			    ,parseData:function(data){
+			    	return{
+			    		'code': data.code,
+			    		'msg': data.msg,
+			    		'data': data.data.list
+			    	}
+			    }
+			    ,cols: [[ //表头
+			      // {type: 'checkbox', fixed: 'left'}
+			      {field: 'username', title: '用户名', width:550, align:'center'}
+			      // ,{field: 'role', title: '类型', width: 100, sort: true,  align:'center'}
+			      // ,{field: 'dept', title: '部门', width: 130, sort: true,  align:'center'}
+			      // ,{field: 'telephone', title: '电话', width:200, align:'center'} 
+			      ,{field: 'remarks', title: '备注', width: 550, align:'center'}
+			      ,{field: 'url', title: '操作', width: 550, align:'center', toolbar: '#barDemo'}
+			      // ,{fixed: 'right', width: 250, align:'center', toolbar: '#barDemo'}
+			    ]]
+		  	});
+			//渲染搜索列表
+			//  function searchCity() {
+			// 	var searchCityName = $("#demoReload").val();
+			// 	if(searchCityName == "") {
+			// 		$("tr").show();
+			// 	} else {
+			// 		$("td").each(function() {
+			// 			if($(this).attr('data-field') == 'id'){
+			// 				var id = $(this).find('.layui-table-cell').text();
+			// 				if(id.indexOf(searchCityName) != -1) {
+			// 					$(this).parents('tr').show();
+			// 				} else {
+			// 					$(this).parents('tr').hide();
+			// 				}
+			// 			}
+			// 		});
+			// 	}
+			// }
+			// $('#demoReload').bind('input', function() {
+			// 	searchCity();
+			// });
+		  	//监听头工具栏事件
+		  	table.on('toolbar(test)', function(obj){
+			    var checkStatus = table.checkStatus(obj.config.id)
+			    ,data = checkStatus.data; //获取选中的数据
+			    switch(obj.event){
+		      		case 'add':
+		        		window.location.href = "./add.html";
+		      		break;
+	      			case 'update':
+			        	if(data.length === 0){
+			          		layer.msg('请选择一行');
+			        	} else if(data.length > 1){
+			          		layer.msg('只能同时编辑一个');
+	        			} else {
+	        				update(checkStatus.data[0].id);
+			        	}
+			      	break;
+			      	case 'delete':
+			       	 	if(data.length === 0){
+			          		layer.msg('请选择一行');
+			        	} else if(data.length > 1){
+			          		layer.msg('只能删除一个');
+	        			} else {
+			          		del(checkStatus.data[0].id);
+			        	}
+			      	break;
+			    };
+		  	});
+			  
+		  	//监听行工具事件
+		  	table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+			    var data = obj.data //获得当前行数据
+			    ,layEvent = obj.event; //获得 lay-event 对应的值
+			    // var checkStatus = table.checkStatus(obj.config.id)
+			    if(layEvent === 'del'){
+			      	layer.confirm('真的删除行么', function(index){
+			        	// obj.del(); //删除对应行（tr）的DOM结构
+			        	del(data.id);
+			        	layer.close(index);
+			        	//向服务端发送删除指令
+			      	});
+			    } else if(layEvent === 'edit'){
+			      	update(data.id,layEvent);
+			    }
+		  	});
+			  
+		});
 	}
 	// 操作日志
     function oplog(){
