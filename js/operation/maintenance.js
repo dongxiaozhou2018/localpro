@@ -347,7 +347,6 @@ $(function () {
                    { name: '信息技术（Information Techology）', max: 30000},
                    { name: '客服（Customer Support）', max: 38000},
                    { name: '研发（Development）', max: 52000},
-                   { name: '市场（Marketing）', max: 25000}
                 ]
             },
             series: [{
@@ -356,11 +355,11 @@ $(function () {
                 // areaStyle: {normal: {}},
                 data : [
                     {
-                        value : [4300, 10000, 28000, 35000, 50000, 19000],
+                        value : [4300, 10000, 28000, 35000, 50000],
                         name : '预算分配（Allocated Budget）'
                     },
                      {
-                        value : [5000, 14000, 28000, 31000, 42000, 21000],
+                        value : [5000, 14000, 28000, 31000, 42000],
                         name : '实际开销（Actual Spending）'
                     }
                 ]
@@ -388,11 +387,6 @@ $(function () {
             },
             legend: {
                 data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
             },
             grid: {
                 left: '3%',
