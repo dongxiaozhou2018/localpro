@@ -322,8 +322,10 @@ $(function () {
             subdomains:"1234"
         });
         map.addLayer(layer);
-        var marker = new L.marker([39.99, 116.3]);
-        //marker.addTo(map);
+        var marker = new L.marker([39.1410912411,117.0073575633]);
+        marker.addTo(map);
+        marker.bindPopup("<b>天津</b><br>西青区.")
+		// marker.openPopup();
         // var wmsLayer= L.tileLayer.wms("http://localhost:8080/geoserver/cite/wms?", {
         //     layers: 'cite:bou2_4p',//需要加载的图层
         //     format: 'image/png',//返回的数据格式
