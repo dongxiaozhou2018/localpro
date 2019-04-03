@@ -91,7 +91,12 @@
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         sessionStorage.setItem('HTlogin',JSON.stringify(data));
-                        window.location.href = "html/operation.html";
+                        if(role == '0'){
+                            window.location.href = "html/operation.html";
+                        }else if(role == '1'){
+                            window.location.href = "html/maintenance.html";
+                        }
+                        
                     }else{
                         alert(data.msg);
                         captcha();
