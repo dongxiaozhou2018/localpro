@@ -55,6 +55,7 @@
     </div>
  
     <script>
+        sessionStorage.removeItem('HTlogin');
         function captcha(){
             $.getJSON(global_path + "/rand", function(data) {
                 $('#captcha_img_true').attr('src',data.data);
