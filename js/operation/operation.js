@@ -271,62 +271,66 @@ $(function () {
 
     // 地图配置
     function map() {
-        var cities = L.layerGroup();
+        // var cities = L.layerGroup();
 
-        L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(cities),
-            L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(cities),
-            L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(cities),
-            L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(cities);
+        // L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(cities),
+        //     L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(cities),
+        //     L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(cities),
+        //     L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(cities);
 
 
-        var mbAttr = '',
-            mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+        // var mbAttr = '',
+        //     mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
-        var grayscale = L.tileLayer(mbUrl, {
-                id: 'mapbox.light',
-                attribution: mbAttr
-            }),
-            streets = L.tileLayer(mbUrl, {
-                id: 'mapbox.streets',
-                attribution: mbAttr
-            });
+        // var grayscale = L.tileLayer(mbUrl, {
+        //         id: 'mapbox.light',
+        //         attribution: mbAttr
+        //     }),
+        //     streets = L.tileLayer(mbUrl, {
+        //         id: 'mapbox.streets',
+        //         attribution: mbAttr
+        //     });
 
-        var map = L.map('mapid', {
-            center: [39.0851000000,117.1993700000],
-            zoom: 10,
-            layers: [grayscale, cities],
-            zoomControl: true,
-            zoomSnap: 0.25
+        // var map = L.map('mapid', {
+        //     center: [39.0851000000,117.1993700000],
+        //     zoom: 10,
+        //     layers: [grayscale, cities],
+        //     zoomControl: true,
+        //     zoomSnap: 0.25
+        // });
+        // map.zoomControl.setPosition('topleft');
+        // map.invalidateSize(true);
+        // var baseLayers = {
+        //     "Grayscale": grayscale,
+        //     "Streets": streets
+        // };
+
+        // var overlays = {
+        //     "Cities": cities
+        // };
+
+        // L.control.layers(baseLayers, overlays).addTo(map);
+
+
+        var map = new L.Map("mapid", {
+            zoom: 8,
+            center: [39.0850853357,117.1993482089],
+            boxZoom: true, 
         });
-        map.zoomControl.setPosition('topleft');
-        map.invalidateSize(true);
-        var baseLayers = {
-            "Grayscale": grayscale,
-            "Streets": streets
-        };
-
-        var overlays = {
-            "Cities": cities
-        };
-
-        L.control.layers(baseLayers, overlays).addTo(map);
-
-
-
-        
-        //  var map = new L.Map('mapid');
-	    // var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-	    // var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18});
-
-	    // map.addLayer(osm);
-	    // map.setView(new L.LatLng(39.0851000000,117.1993700000),11);
-
-
-	    // var map = L.map('mapid').setView([39.0851000000,117.1993700000], 11);
-	    // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-	    //     maxZoom: 18,
-	    //     id: 'mapbox.streets'
-	    // }).addTo(map);
+        var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
+        var layer = new L.TileLayer(url, {
+            subdomains:"1234"
+        });
+        map.addLayer(layer);
+        var marker = new L.marker([39.99, 116.3]);
+        //marker.addTo(map);
+        // var wmsLayer= L.tileLayer.wms("http://localhost:8080/geoserver/cite/wms?", {
+        //     layers: 'cite:bou2_4p',//需要加载的图层
+        //     format: 'image/png',//返回的数据格式
+        //     transparent: true,
+        //     //crs: L.CRS.EPSG4326
+        // });
+        // map.addLayer(wmsLayer);
     }
 
     // 用户管理
