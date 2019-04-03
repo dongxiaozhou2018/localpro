@@ -292,7 +292,7 @@ $(function () {
             });
 
         var map = L.map('mapid', {
-            center: [39.73, -104.99],
+            center: [39.0851000000,117.1993700000],
             zoom: 10,
             layers: [grayscale, cities],
             zoomControl: true,
@@ -310,6 +310,23 @@ $(function () {
         };
 
         L.control.layers(baseLayers, overlays).addTo(map);
+
+
+
+        
+        //  var map = new L.Map('mapid');
+	    // var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	    // var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18});
+
+	    // map.addLayer(osm);
+	    // map.setView(new L.LatLng(39.0851000000,117.1993700000),11);
+
+
+	    // var map = L.map('mapid').setView([39.0851000000,117.1993700000], 11);
+	    // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+	    //     maxZoom: 18,
+	    //     id: 'mapbox.streets'
+	    // }).addTo(map);
     }
 
     // 用户管理
@@ -510,6 +527,7 @@ $(function () {
         var url = global_path + "/deleteUser";
         commonAjax(url, parms, function (data) {
             if (data.code == 0) {
+            	userInformation();
                 alert(data.msg);
             } else {
                 alert(data.msg);
