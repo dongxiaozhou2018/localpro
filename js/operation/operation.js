@@ -441,13 +441,22 @@ $(function () {
             //渲染搜索列表
             function searchCity() {
                 var searchCityName = $("#demoReload").val();
-                if (searchCityName == "") {
+                var select_type = $('.select_type').val();
+                if (searchCityName == "" && select_type == '') {
                     $("tr").show();
                 } else {
                     $("td").each(function () {
                         if ($(this).attr('data-field') == 'id') {
                             var id = $(this).find('.layui-table-cell').text();
                             if (id.indexOf(searchCityName) != -1) {
+                                $(this).parents('tr').show();
+                            } else {
+                                $(this).parents('tr').hide();
+                            }
+                        }
+                        if ($(this).attr('data-field') == 'role') {
+                            var role = $(this).find('.layui-table-cell').text();
+                            if (role.indexOf(select_type) != -1) {
                                 $(this).parents('tr').show();
                             } else {
                                 $(this).parents('tr').hide();

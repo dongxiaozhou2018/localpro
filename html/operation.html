@@ -121,9 +121,19 @@
                 <!-- layui   用户信息 -->
                 <div id="userInformation" style="display: none">
                     <div class="demoTable">
-                        <div class="layui-inline">
+                        <div class="layui-inline left">
                             <input name="id" class="layui-input" id="demoReload" autocomplete="off" placeholder="请输入用户ID" style="width: auto;height: 30px;">
                         </div>
+                        <div class="layui-inline left select_type_box">
+                            <label class="select_type">用户类型：</label>
+                            <select name="role" class="role right">
+                                <option value="">请选择类型</option>
+                                <option value="管理员">管理员</option>
+                                <option value="操作员">操作员</option>
+                                <option value="维修员">维修员</option>
+                            </select>
+                        </div>
+                        <div class="clearf"></div>
                     </div>
                     <table class="layui-hide" id="demo" lay-filter="test"></table>
 
