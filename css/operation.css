@@ -40,3 +40,13 @@ a {
   border: none;
   margin-top: 4px;
 }
+.btn-primary {
+  border-radius: 3px;
+  background-color: #1ab394;
+  border-color: #1ab394;
+  color: #FFFFFF;
+  padding: 6px 12px;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+}

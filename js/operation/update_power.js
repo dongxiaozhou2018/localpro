@@ -31,7 +31,7 @@
                     'username':data.field.username,
                     'remarks':data.field.remarks,
                 }
-                var url = global_path + "/insertFunction";
+                var url = global_path + "/updateFunction";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         $('#myalert').show();

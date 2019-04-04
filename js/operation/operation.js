@@ -572,7 +572,7 @@ $(function () {
                 title: '权限',
                 page: true //开启分页
                     ,
-                toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                toolbar: '#addBtn' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                     // ,totalRow: true //开启合计行
                     ,
                 parseData: function (data) {
@@ -613,24 +613,6 @@ $(function () {
                     case 'add':
                         window.location.href = "./add_power.html";
                         break;
-                    case 'update':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能同时编辑一个');
-                        } else {
-                            update(checkStatus.data[0].id);
-                        }
-                        break;
-                    case 'delete':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能删除一个');
-                        } else {
-                            del(checkStatus.data[0].id);
-                        }
-                        break;
                 };
             });
 
@@ -643,12 +625,35 @@ $(function () {
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
                         // obj.del(); //删除对应行（tr）的DOM结构
-                        del(data.id);
+                        // del(data.id);
+                        var parms = {
+                            'id': data.id
+                        }
+                        var url = global_path + "/deleteOne";
+                        commonAjax(url, parms, function (data) {
+                            if (data.code == 0) {
+                                permissionAssignment();
+                                alert(data.msg);
+                            } else {
+                                alert(data.msg);
+                            }
+                        })
                         layer.close(index);
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    update(data.id, layEvent);
+                    var parms = {
+                        'id': data.id
+                    }
+                    var url = global_path + "/deleteOne";
+                    commonAjax(url, parms, function (data) {
+                        if (data.code == 0) {
+                            permissionAssignment();
+                            alert(data.msg);
+                        } else {
+                            alert(data.msg);
+                        }
+                    })
                 }
             });
 
