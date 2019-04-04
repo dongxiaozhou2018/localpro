@@ -89,7 +89,7 @@
                         $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
                             localStorage.removeItem('checkUser')
                             $('#myalert').hide();
-                            window.location.href = "./operation.html?modular=userInformation";
+                            window.location.href = "./mange.html?modular=userInformation";
                         });
                     }else{
                         alert(data.msg);

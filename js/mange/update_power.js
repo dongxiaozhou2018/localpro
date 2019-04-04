@@ -38,7 +38,7 @@
                         $('#alertConfirm').on('click','a',function(){          //添加成功弹框取消按钮
                             localStorage.removeItem('powerUser');
                             $('#myalert').hide();
-                            window.location.href = "./operation.html?modular=permissionAssignment";
+                            window.location.href = "./mange.html?modular=permissionAssignment";
                         });
                     }else{
                         alert(data.msg);
