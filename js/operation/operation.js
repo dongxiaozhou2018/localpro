@@ -474,7 +474,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_user.html";
                         break;
                     case 'update':
                         if (data.length === 0) {
@@ -595,34 +595,13 @@ $(function () {
                     }
 			    ]]
             });
-            //渲染搜索列表
-            //  function searchCity() {
-            // 	var searchCityName = $("#demoReload").val();
-            // 	if(searchCityName == "") {
-            // 		$("tr").show();
-            // 	} else {
-            // 		$("td").each(function() {
-            // 			if($(this).attr('data-field') == 'id'){
-            // 				var id = $(this).find('.layui-table-cell').text();
-            // 				if(id.indexOf(searchCityName) != -1) {
-            // 					$(this).parents('tr').show();
-            // 				} else {
-            // 					$(this).parents('tr').hide();
-            // 				}
-            // 			}
-            // 		});
-            // 	}
-            // }
-            // $('#demoReload').bind('input', function() {
-            // 	searchCity();
-            // });
             //监听头工具栏事件
             table.on('toolbar(test)', function (obj) {
                 var checkStatus = table.checkStatus(obj.config.id),
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_power.html";
                         break;
                     case 'update':
                         if (data.length === 0) {
