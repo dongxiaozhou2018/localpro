@@ -7,9 +7,15 @@
 
         $.getJSON(global_path + "/selectFunction", function(data) {
             for(var i = 0;i<data.length;i++){
-                var choiceInput = "<input type='checkbox' name='id["+data[i].id+"]' title='"+data[i].functionName+"'>";
+                var choiceInput = "<input type='checkbox' name='id["+data[i].id+"]' title='"+data[i].functionName+"' checked="+data[i].functionCheck+">";
                 $('.choice_power').append(choiceInput);
             }
+        })
+        var powerUser = localStorage.getItem('powerUser');
+        powerUser = JSON.parse(powerUser).data;
+        form.val("example", {
+            "username": powerUser.username // "name": "value"
+            ,"remarks": powerUser.remarks
         })
         form.on('submit(demo1)', function (data) {
             var username = $('.username').val();
@@ -30,6 +36,7 @@
                     if(data.code == 0){
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){          //添加成功弹框取消按钮
+                            localStorage.removeItem('powerUser');
                             $('#myalert').hide();
                             window.location.href = "./operation.html?modular=permissionAssignment";
                         });
