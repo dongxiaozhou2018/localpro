@@ -323,7 +323,7 @@ $(function () {
 
 
         var map = new L.Map("mapid", {
-            zoom: 8,
+            zoom: 9,
             center: [39.0850853357,117.1993482089],
             boxZoom: true, 
         });
@@ -334,7 +334,12 @@ $(function () {
         map.addLayer(layer);
         var marker = new L.marker([39.1410912411,117.0073575633]);
         marker.addTo(map);
-        marker.bindPopup("<b>天津</b><br>西青区.")
+        marker.bindPopup("<b>天津</b><br>西青区.");
+
+        var marker = new L.marker([39.0850853357,117.1993482089]);
+        marker.addTo(map);
+        marker.bindPopup("<b>天津</b>");
+
 		// marker.openPopup();
         // var wmsLayer= L.tileLayer.wms("http://localhost:8080/geoserver/cite/wms?", {
         //     layers: 'cite:bou2_4p',//需要加载的图层
