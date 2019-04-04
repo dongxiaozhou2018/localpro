@@ -645,7 +645,7 @@ $(function () {
                     var parms = {
                         'id': data.id
                     }
-                    var url = global_path + "/deleteOne";
+                    var url = global_path + "/selectOne";
                     commonAjax(url, parms, function (data) {
                         if (data.code == 0) {
                             permissionAssignment();
