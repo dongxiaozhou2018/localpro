@@ -579,27 +579,39 @@ $(function () {
                     return {
                         'code': data.code,
                         'msg': data.msg,
-                        // 'data': data.data.list
+                        'data': data.data.list
                     }
                 },
                 cols: [[ //表头
 			      	// {type: 'checkbox', fixed: 'left'}
                     {
+                        field: 'id',
+                        title: 'ID',
+                        width: '20%',
+                        align: 'center'
+                    }
+                    , {
                         field: 'username',
-                        title: '用户名',
-                        width: '33.33%',
+                        title: '角色',
+                        width: '20%',
                         align: 'center'
                     }
 			      	, {
                         field: 'remarks',
                         title: '备注',
-                        width: '33.33%',
+                        width: '20%',
+                        align: 'center'
+                    }
+                    , {
+                        field: 'functionName',
+                        title: '权限',
+                        width: '20%',
                         align: 'center'
                     }
 			      	, {
                         field: 'url',
                         title: '操作',
-                        width: '33.33%',
+                        width: '20%',
                         align: 'center',
                         toolbar: '#permission_operation'
                     }
