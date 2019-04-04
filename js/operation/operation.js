@@ -528,7 +528,7 @@ $(function () {
         commonAjax(url, parms, function (data) {
             if (data.code == 0) {
                 localStorage.setItem('checkUser', JSON.stringify(data));
-                window.location.href = "./update.html?layEvent=" + layEvent + "&userID=" + id;
+                window.location.href = "./update_user.html?layEvent=" + layEvent + "&userID=" + id;
             } else {
                 alert(data.msg);
             }
