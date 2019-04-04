@@ -1,6 +1,16 @@
 $(function () {
-
-
+    // 判断渲染模块
+    function showModular(){
+        var modular = getQueryString("modular");
+        if(modular == 'userInformation'){
+            $('#userInformation').show().siblings().hide();
+        }else if(modular == 'permissionAssignment'){
+            $('#permissionAssignment').show().siblings().hide();
+        }else{
+            $('#terminalData').show().siblings().hide();
+        }
+    }
+    showModular();
     // 点击事件
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
