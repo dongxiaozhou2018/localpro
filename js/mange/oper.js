@@ -598,9 +598,9 @@ $(function () {
                 title: '服务配置',
                 page: true //开启分页
                     ,
-                toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                // toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                     // ,totalRow: true //开启合计行
-                    ,
+                    // ,
                 parseData: function (data) {
                     return {
                         'code': data.code,
@@ -639,21 +639,21 @@ $(function () {
                 ]]
             });
             //监听头工具栏事件
-            table.on('toolbar(test)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id),
-                    data = checkStatus.data; //获取选中的数据
-                switch (obj.event) {
-                    case 'update':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能同时编辑一个');
-                        } else {
-                            update(checkStatus.data[0].id);
-                        }
-                        break;
-                };
-            });
+            // table.on('toolbar(test)', function (obj) {
+            //     var checkStatus = table.checkStatus(obj.config.id),
+            //         data = checkStatus.data; //获取选中的数据
+            //     switch (obj.event) {
+            //         case 'update':
+            //             if (data.length === 0) {
+            //                 layer.msg('请选择一行');
+            //             } else if (data.length > 1) {
+            //                 layer.msg('只能同时编辑一个');
+            //             } else {
+            //                 update(checkStatus.data[0].id);
+            //             }
+            //             break;
+            //     };
+            // });
 
             //监听行工具事件
             table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
