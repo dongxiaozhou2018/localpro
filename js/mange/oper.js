@@ -626,10 +626,12 @@ $(function () {
                         width: '33.33%',
                         align: 'center',
                         formatter : function(value, row, index) {
-                            if (value == '0') {
-                                return '<span class="label label-danger">禁用</span>';
-                            } else if (value == '1') {
-                                return '<span class="label label-primary">正常</span>';
+                            if (value == '0') {         //  高
+                                return '<span class="layui-btn layui-btn-danger">警告</span>';
+                            } else if (value == '1') {      //  低
+                                return '<span class="layui-btn">正常</span>';
+                            }else{                  //  中
+                                return '<span class="layui-btn layui-btn-warm">暖色</span>';
                             }
                         }
                     }
@@ -752,13 +754,13 @@ $(function () {
 
             table.render({
                 elem: '#terminal',
-                url: global_path + '/selectRecordInfo' //数据接口
+                url: '' //数据接口
                     ,
                 // where: {
                 //     startTime: startTime1,
                 //     endTime: endTime1
                 // },
-                title: '操作日志',
+                title: '终端配置',
                 page: true //开启分页
                     ,
                 // toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -1072,7 +1074,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_power.html";
                         break;
                     case 'update':
                         if (data.length === 0) {
