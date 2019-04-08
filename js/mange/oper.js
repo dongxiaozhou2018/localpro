@@ -629,7 +629,7 @@ $(function () {
                             if (value == '0') {         //  高
                                 return '<span class="layui-btn layui-btn-danger">警告</span>';
                             } else if (value == '1') {      //  低
-                                return '<span class="layui-btn">正常</span>';
+                                return '<span class="layui-btn layui-btn-normal">百搭</span>';
                             }else{                  //  中
                                 return '<span class="layui-btn layui-btn-warm">暖色</span>';
                             }
@@ -1153,12 +1153,12 @@ $(function () {
                             title: '操作内容',
                             width: '33.33%'
                         }
-		      		, {
+		      		  , {
                             field: 'username',
                             title: '用户名',
                             width: '33.33%'
                         }
-		      		, {
+		      		  , {
                             field: 'createTime',
                             title: '时间',
                             width: '33.33%'
