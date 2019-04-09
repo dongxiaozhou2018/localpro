@@ -35,13 +35,13 @@
                 <input class="layui-input input_password" name="password" placeholder="密码" lay-verify="password" type="password" autocomplete="on" value="">
             </div>
             <!-- 验证码 -->
-            <div class="login-captcha-innerbox layui-form-item">
+            <!-- <div class="login-captcha-innerbox layui-form-item">
                 <input autocomplete="off" id="captcha" class="layui-input" type="tel" placeholder="输入图片验证码" maxlength="6">
                 <div id="captcha_img" class="cpatcha-img">
                     <img id="captcha_img_true" src="" alt="" width="110%" height="auto">
                 </div>
                 <a id="aptcha_refresh" href="#" style="cursor: pointer;">换一张</a>
-            </div>
+            </div> -->
             <div class="bottom_login_btn layui-form-item">
                 <span class="layui-btn login_btn login_in_btn">登录</span>
                 <!-- <span class="layui-btn login_btn login_out_btn">取消</span> -->
@@ -61,7 +61,7 @@
                 $('#captcha_img_true').attr('src',data.data);
             })
         }
-        captcha();
+        // captcha();
         $('#aptcha_refresh').on('click',function(){
             captcha();
         })
@@ -71,21 +71,23 @@
             // var passwd = $.md5(password);
             var username = $('.input_username').val();
             var role = $('#layui-form-select').val();
-            var vCode = $('#captcha').val();
+            // var vCode = $('#captcha').val();
             if(role == ''){
                 alert('请选择用户类型');
             }else if(username == ''){
                 alert('请输入用户名');
             }else if(password == ''){
                 alert('请输入密码');
-            }else if(vCode == ''){
-                alert('请输入验证吗');
-            }else{
+            }
+            // else if(vCode == ''){
+            //     alert('请输入验证吗');
+            // }
+            else{
                 var parms = {
                     'username':username,
                     'password':$.md5(password),
                     'role':role,
-                    'vCode':vCode,
+                    // 'vCode':vCode,
                     'isDel':0
                 }
                 var url = global_path + "/dologin";
@@ -93,7 +95,7 @@
                     if(data.code == 0){
                         var res = {
                             'username':data.data.username,
-                            'token':data。token
+                            'token':data.token
                         }
                         sessionStorage.setItem('HTlogin',JSON.stringify(res));
                         if(role == '0'){
@@ -104,7 +106,7 @@
                         
                     }else{
                         alert(data.msg);
-                        captcha();
+                        // captcha();
                     }
                 })
             }
