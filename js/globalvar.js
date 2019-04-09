@@ -64,6 +64,8 @@ function loginName(){
     if(HTlogin){
         HTlogin = JSON.parse(HTlogin);
         $('.loginName').html(HTlogin.data.username);
+    }else{
+        window.location.href = '../login.html';
     }
 }
 
