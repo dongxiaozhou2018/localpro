@@ -116,6 +116,16 @@ $(function () {
             })
         }
     });
+
+    // 管理界面渲染
+    function user() {
+        layui.use('element', function () {
+            var element = layui.element;        //导航的hover效果、二级菜单等功能，需要依赖element模块
+        });
+    }
+    user();
+
+
     // 终端总览
     function echart() {
         // 基于准备好的dom，初始化echarts实例
@@ -506,13 +516,7 @@ $(function () {
         });
     }
 
-    // 用户管理
-    function user() {
-        layui.use('element', function () {
-            var element = layui.element;
-        });
-    }
-    user();
+    
     // 用户信息
     function userInformation() {
         layui.use('table', function () {
