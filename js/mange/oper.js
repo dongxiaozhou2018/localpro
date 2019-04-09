@@ -546,7 +546,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_power.html";
                         break;
                     case 'update':
                         if (data.length === 0) {
@@ -935,7 +935,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_power.html";
                         break;
                     case 'update':
                         if (data.length === 0) {
@@ -989,7 +989,7 @@ $(function () {
         commonAjax(url, parms, function (data) {
             if (data.code == 0) {
                 localStorage.setItem('checkUser', JSON.stringify(data));
-                window.location.href = "./update.html?layEvent=" + layEvent + "&userID=" + id;
+                window.location.href = "./update_power.html?layEvent=" + layEvent + "&userID=" + id;
             } else {
                 alert(data.msg);
             }
@@ -1259,7 +1259,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_power.html";
                         break;
                     case 'update':
                         if (data.length === 0) {

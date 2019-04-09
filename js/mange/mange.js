@@ -258,7 +258,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_user.html";
                         break;
                     case 'update':
                         if (data.length === 0) {
@@ -969,7 +969,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add.html";
+                        window.location.href = "./add_user.html";
                         break;
                     case 'update':
                         if (data.length === 0) {
