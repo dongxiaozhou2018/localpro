@@ -359,6 +359,27 @@ $(function () {
                     }
                 ]]
             });
+            //渲染搜索列表
+            function searchCity() {
+                var police_role = $('.police_role').val();
+                if (police_role == '') {
+                    $("tr").show();
+                } else {
+                    $("td").each(function () {
+                        if ($(this).attr('data-field') == 'role') {
+                            var role = $(this).find('.layui-table-cell').text();
+                            if (role.indexOf(police_role) != -1) {
+                                $(this).parents('tr').show();
+                            } else {
+                                $(this).parents('tr').hide();
+                            }
+                        }
+                    });
+                }
+            }
+            $('.query').on('click', function () {
+                searchCity();
+            });
             //监听头工具栏事件
             // table.on('toolbar(test)', function (obj) {
             //     var checkStatus = table.checkStatus(obj.config.id),
