@@ -54,10 +54,12 @@
             }else if(realName == ''){
                 alert('请输入姓名');
                 return;
-            }else if(password == ''){
-                alert('请输入用户密码');
-                return;
-            }else if(role == ''){
+            }
+            // else if(password == ''){
+            //     alert('请输入用户密码');
+            //     return;
+            // }
+            else if(role == ''){
                 alert('请选择用户类型');
                 return;
             }else if(dept == ''){
@@ -70,6 +72,9 @@
                 alert('请输入用户备注信息');
                 return;
             }else{
+                if(password == ''){
+                    password = '111111';
+                }
                 var parms = {
                     'realName':data.field.realName,
                     'username':data.field.username,
