@@ -51,7 +51,7 @@
         <form class="layui-form layui-form-pane" action="" enctype="multipart/form-data" lay-filter="example">
 
             <div class="layui-form-item">
-                <label class="layui-form-label">用户名</label>
+                <label class="layui-form-label"><span style="color: red;">*</span> 用户名</label>
                 <div class="layui-input-block">
                     <input type="text" name="username" lay-verify="title" autocomplete="off" class="layui-input username" placeholder="请输入用户名">
                 </div>
@@ -59,11 +59,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">密码框</label>
                 <div class="layui-input-block">
-                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input password darkgray" readonly="readonly">
+                    <input type="password" name="password" placeholder="" autocomplete="off" class="layui-input password darkgray" readonly="readonly">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">类型</label>
+                <label class="layui-form-label"><span style="color: red;">*</span> 类型</label>
                 <div class="layui-input-block">
                     <select name="role" lay-filter="aihao" class="role">
                         <option value=""></option>
@@ -74,19 +74,19 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">部门</label>
+                <label class="layui-form-label"><span style="color: red;">*</span> 部门</label>
                 <div class="layui-input-block">
                     <input type="text" name="dept" autocomplete="off" class="layui-input dept" placeholder="请输入部门">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">电话</label>
+                <label class="layui-form-label"><span style="color: red;">*</span> 电话</label>
                 <div class="layui-input-block">
                     <input type="text" name="telephone" autocomplete="off" class="layui-input telephone" placeholder="请输入电话">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">备注信息</label>
+                <label class="layui-form-label"><span style="color: red;">*</span> 备注信息</label>
                 <div class="layui-input-block">
                     <textarea placeholder="请输入内容" class="layui-textarea remarks" name="remarks" style="resize:none;"></textarea>
                 </div>
@@ -115,7 +115,9 @@
     if(getQueryString("layEvent") == 'detail'){
         $('#submit_btn').hide();
         $('input').each(function(){
-            $(this).attr('readonly',"readonly");
+            if(!$(this).attr('readonly')){
+                $(this).attr('readonly',"readonly");
+            }
         })
         $('select').attr("disabled","disabled");
         $('textarea').attr('readonly',"readonly");
