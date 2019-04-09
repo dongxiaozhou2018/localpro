@@ -2,6 +2,9 @@ $(function () {
 
 
     // 点击事件
+    $('.personal').on('click',function(){
+        window.location.href = "./personal.html";
+    });
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         // if($(this).attr('name') == 'yhgl'){
