@@ -40,6 +40,7 @@
         var checkUser = localStorage.getItem('checkUser');
         checkUser = JSON.parse(checkUser).data;
         form.val("example", {
+            "realName": checkUser.realName
             "username": checkUser.username // "name": "value"
             ,"password": checkUser.password
             ,"role": checkUser.role
@@ -60,6 +61,9 @@
             }else if(username == ''){
                 alert('请输入用户名');
                 return;
+            }else if(realName == ''){
+                alert('请输入姓名');
+                return;
             }else if(role == ''){
                 alert('请选择用户类型');
                 return;
@@ -74,6 +78,7 @@
                 return;
             }else{
                 var parms = {
+                    'realName':data.field.realName,
                     'username':data.field.username,
                     'role':data.field.role,
                     'remarks':data.field.remarks,

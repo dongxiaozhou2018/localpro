@@ -79,8 +79,8 @@
 .login .layui-btn {
   display: inline-block;
   width: 90%;
-  height: 30px;
-  line-height: 30px;
+  height: 38px;
+  line-height: 38px;
   padding: 0 18px;
   background-color: #009688;
   color: #fff;
@@ -91,39 +91,15 @@
   border-radius: 2px;
   cursor: pointer;
 }
-.login .layui-btn-primary {
-  border: 1px solid #C9C9C9;
-  background-color: #fff;
-  color: #555;
-}
-.login .login_username {
-  display: inline-block;
-  width: 35%;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 18px;
-  white-space: nowrap;
-  text-align: center;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
+.login .userName {
+  padding-left: 10px;
+  color: #fff;
   font-size: 14px;
+  text-align: top;
 }
-.login .login_nickname {
-  display: inline-block;
-  width: 35%;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 18px;
-  white-space: nowrap;
-  text-align: center;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-  font-size: 14px;
+.login .forgetPwd {
   float: right;
-}
-.choice_login {
-  background-color: #009688!important;
-  color: #fff!important;
+  padding-left: 10px;
+  color: #fff;
+  font-size: 14px;
 }

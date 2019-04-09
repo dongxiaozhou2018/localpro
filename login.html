@@ -18,10 +18,6 @@
         <h1>后台登录</h1>
         <!-- 下拉框   管理员、运维管理 -->
         <form class="layui-form">
-            <div class="bottom_user_btn layui-form-item" style="width: 104.5%;">
-                <a href="#" class="layui-btn-primary login_username choice_login" loginName='username'>用户名登录</a>
-                <a href="#" class="layui-btn-primary login_nickname" loginName='nickname'>昵称登录</a>
-            </div>
             <div class="layui-form-item">
                 <select class="layui-input" id="layui-form-select" style="width: 104.5%;">
                     <option value = "">--请选择用户类型</option>
@@ -29,10 +25,6 @@
                     <option value = "1">操作员</option>
                     <option value = "2">维修员</option>
                 </select>
-            </div>
-            <!-- 昵称 -->
-            <div class="layui-form-item" style="display: none;">
-                <input class="layui-input input_nickname" name="nickname" placeholder="昵称" lay-verify="nickname" type="text" autocomplete="on" value="">
             </div>
             <!-- 用户名 -->
             <div class="layui-form-item">
@@ -54,7 +46,12 @@
                 <span class="layui-btn login_btn login_in_btn">登录</span>
                 <!-- <span class="layui-btn login_btn login_out_btn">取消</span> -->
             </div>
+            <!-- <div class="bottom_user_btn layui-form-item">
+                <a href="#" class="userName"><input name="Fruit" type="checkbox" value="记住用户名" />记住用户名</a>
+                <a href="#" class="forgetPwd">忘记密码？</a>
+            </div> -->
         </form>
+       
     </div>
  
     <script>
@@ -68,44 +65,19 @@
         $('#aptcha_refresh').on('click',function(){
             captcha();
         })
-        $('.bottom_user_btn').on('click','a',function(){
-            $(this).addClass('choice_login').siblings().removeClass('choice_login');
-            if($(this).attr('loginName') == 'username'){
-                $('.input_nickname').parent('div').hide();
-                $('.input_username').parent('div').show();
-            }
-            if($(this).attr('loginName') == 'nickname'){
-                $('.input_nickname').parent('div').show();
-                $('.input_username').parent('div').hide();
-            }
-        })
         $('.login_in_btn').on('click',function(){
             var password = $('.input_password').val();
             //密码加密成md5
             // var passwd = $.md5(password);
             var username = $('.input_username').val();
-            var nickname = $('.input_nickname').val();
             var role = $('#layui-form-select').val();
             // var vCode = $('#captcha').val();
             if(role == ''){
                 alert('请选择用户类型');
-                return;
-            }
-            if($('.choice_login').attr('loginName') == 'username'){
-                if(username == ''){
-                    alert('请输入用户名');
-                    return;
-                }
-            }
-            if($('.choice_login').attr('loginName') == 'nickname'){
-                if(nickname == ''){
-                    alert('请输入昵称');
-                    return;
-                }
-            }
-            if(password == ''){
+            }else if(username == ''){
+                alert('请输入用户名');
+            }else if(password == ''){
                 alert('请输入密码');
-                return;
             }
             // else if(vCode == ''){
             //     alert('请输入验证吗');
@@ -113,7 +85,6 @@
             else{
                 var parms = {
                     'username':username,
-                    'nickname':nickname,
                     'password':$.md5(password),
                     'role':role,
                     // 'vCode':vCode,

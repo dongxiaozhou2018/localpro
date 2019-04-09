@@ -44,15 +44,15 @@
             var dept = $('.dept').val();
             var telephone = $('.telephone').val();
             var remarks = $('.remarks').val();
-            var nickname = $('.nickname').val();
+            var realName = $('.realName').val();
             if(!fileId || fileId == ''){
                 alert('请选择图片');
                 return;
-            }else if(nickname == ''){
-                alert('请输入昵称');
-                return;
             }else if(username == ''){
                 alert('请输入用户名');
+                return;
+            }else if(realName == ''){
+                alert('请输入姓名');
                 return;
             }else if(password == ''){
                 alert('请输入用户密码');
@@ -71,7 +71,7 @@
                 return;
             }else{
                 var parms = {
-                    'nickname':data.field.nickname,
+                    'realName':data.field.realName,
                     'username':data.field.username,
                     'password':data.field.password,
                     'role':data.field.role,
