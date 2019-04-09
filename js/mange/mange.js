@@ -615,15 +615,15 @@ $(function () {
             });
             //渲染搜索列表
             function searchCity() {
-                var searchCityName = $("#demoReload").val();
+                var username = $("#demoReload").val().toUpperCase();
                 var select_role = $('.select_role').val();
-                if (searchCityName == "" && select_role == '') {
+                if (username == "" && select_role == '') {
                     $("tr").show();
                 } else {
                     $("td").each(function () {
-                        if ($(this).attr('data-field') == 'id') {
-                            var id = $(this).find('.layui-table-cell').text();
-                            if (id.indexOf(searchCityName) != -1) {
+                        if ($(this).attr('data-field') == 'username') {
+                            var name = $(this).find('.layui-table-cell').text().toUpperCase();
+                            if (name.indexOf(username) != -1) {
                                 $(this).parents('tr').show();
                             } else {
                                 $(this).parents('tr').hide();

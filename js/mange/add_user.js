@@ -44,8 +44,12 @@
             var dept = $('.dept').val();
             var telephone = $('.telephone').val();
             var remarks = $('.remarks').val();
+            var nickname = $('.nickname').val();
             if(!fileId || fileId == ''){
                 alert('请选择图片');
+                return;
+            }else if(nickname == ''){
+                alert('请输入昵称');
                 return;
             }else if(username == ''){
                 alert('请输入用户名');
@@ -67,6 +71,7 @@
                 return;
             }else{
                 var parms = {
+                    'nickname':data.field.nickname,
                     'username':data.field.username,
                     'password':data.field.password,
                     'role':data.field.role,
