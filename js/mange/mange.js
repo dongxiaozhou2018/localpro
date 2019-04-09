@@ -22,6 +22,10 @@ $(function () {
             $('#mapid').show().siblings().hide();
             map();
         }
+        if ($(this).attr('name') == 'zdpz') {
+            $('#terminalConfigure').show().siblings().hide();
+            terminalConfigure();
+        }
         if ($(this).attr('name') == 'zdzl') {
             $('#terminalData').show().siblings().hide();
             echart();
@@ -450,6 +454,56 @@ $(function () {
         //     //crs: L.CRS.EPSG4326
         // });
         // map.addLayer(wmsLayer);
+    }
+
+    // 终端配置
+    function terminalConfigure(){
+        layui.use('table', function () {
+            var table = layui.table;
+
+            table.render({
+                elem: '#terminal',
+                url: '' //数据接口
+                    ,
+                // where: {
+                //     startTime: startTime1,
+                //     endTime: endTime1
+                // },
+                title: '终端配置',
+                page: true //开启分页
+                    ,
+                // toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                    // ,totalRow: true //开启合计行
+                    // ,width : '90%'
+                    // ,
+                cellMinWidth: 80,
+                parseData: function (res) {
+                    return {
+                        'code': res.code,
+                        'msg': res.msg,
+                        // 'data': res.data.list
+                    }
+                },
+                cols: [[ //表头
+                // {type: 'checkbox', fixed: 'left'}
+                    {
+                        field: 'information',
+                        title: '操作内容',
+                        width: '33.33%'
+                    }
+                , {
+                        field: 'username',
+                        title: '用户名',
+                        width: '33.33%'
+                    }
+                , {
+                        field: 'createTime',
+                        title: '时间',
+                        width: '33.33%'
+                    }
+            ]]
+            });
+        });
     }
 
     // 用户管理
