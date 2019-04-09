@@ -30,14 +30,23 @@ $(function () {
             $('#oplog').show().siblings().hide();
             oplog();
         }
-        if ($(this).attr('name') == 'fwpz') {
-            $('#serviceConfiguration').show().siblings().hide();
-            serviceConfiguration();
-        }
+        // if ($(this).attr('name') == 'fwpz') {
+        //     $('#serviceConfiguration').show().siblings().hide();
+        //     serviceConfiguration();
+        // }
         if ($(this).attr('name') == 'sjwh') {
             $('#upgradeMaintenance').show().siblings().hide();
             upgradeMaintenance();
         }
+    });
+    $('.server').on('click', function () { // 接入服务器配置
+        $('#server').show().siblings().hide();
+        server();
+    });
+
+    $('.police').on('click', function () { // 报警等级设定
+        $('#police').show().siblings().hide();
+        police();
     });
     $('.userInformation').on('click', function () { // 用户信息
         $('#userInformation').show().siblings().hide();
@@ -165,8 +174,8 @@ $(function () {
     }
     echart();
 
-    // 服务配置
-    function serviceConfiguration() {
+    // 服务配置---------------接入服务器配置
+    function server() {
         layui.use('table', function () {
             table = layui.table //表格
 
@@ -189,45 +198,45 @@ $(function () {
                     }
                 },
                 cols: [[ //表头
-			      	// {type: 'checkbox', fixed: 'left'}
+                    // {type: 'checkbox', fixed: 'left'}
                     {
                         field: 'username',
                         title: '服务器IP',
                         width: '16.6%',
                         align: 'center'
                     }
-			      	, {
+                    , {
                         field: 'remarks',
                         title: '客户端口',
                         width: '12.6%',
                         align: 'center'
                     }
-			      	, {
+                    , {
                         field: 'remarks',
                         title: '设备端口',
                         width: '12.6%',
                         align: 'center'
                     }
-			      	, {
+                    , {
                         field: 'remarks',
                         title: '接入终端数量',
                         width: '8%',
                         align: 'center'
                     }
-			      	, {
+                    , {
                         field: 'remarks',
                         title: '备注',
                         width: '39.33%',
                         align: 'center'
                     }
-			      	, {
+                    , {
                         field: 'url',
                         title: '操作',
                         width: '10.9%',
                         align: 'center',
                         toolbar: '#service_operation'
                     }
-			    ]]
+                ]]
             });
             //监听头工具栏事件
             table.on('toolbar(test)', function (obj) {
@@ -278,6 +287,99 @@ $(function () {
 
         });
     }
+    // 服务配置---------------报警等级设定
+    function police() {
+        layui.use('table', function () {
+            table = layui.table //表格
+
+            //执行一个 table 实例
+            table.render({
+                elem: '#police',
+                url: '' //数据接口
+                    ,
+                title: '服务配置',
+                page: true //开启分页
+                    ,
+                // toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                    // ,totalRow: true //开启合计行
+                    // ,
+                parseData: function (data) {
+                    return {
+                        'code': data.code,
+                        'msg': data.msg,
+                        // 'data': data.data.list
+                    }
+                },
+                cols: [[ //表头
+                    // {type: 'checkbox', fixed: 'left'}
+                    {
+                        field: 'username',
+                        title: '报警类型',
+                        width: '33.33%',
+                        align: 'center'
+                    }
+                    , {
+                        field: 'remarks',
+                        title: '报警等级',
+                        width: '33.33%',
+                        align: 'center',
+                        formatter : function(value, row, index) {
+                            if (value == '0') {         //  高
+                                return '<span class="layui-btn layui-btn-danger">警告</span>';
+                            } else if (value == '1') {      //  低
+                                return '<span class="layui-btn layui-btn-normal">百搭</span>';
+                            }else{                  //  中
+                                return '<span class="layui-btn layui-btn-warm">暖色</span>';
+                            }
+                        }
+                    }
+                    , {
+                        field: 'url',
+                        title: '操作',
+                        width: '33.33%',
+                        align: 'center',
+                        toolbar: '#police_operation'
+                    }
+                ]]
+            });
+            //监听头工具栏事件
+            // table.on('toolbar(test)', function (obj) {
+            //     var checkStatus = table.checkStatus(obj.config.id),
+            //         data = checkStatus.data; //获取选中的数据
+            //     switch (obj.event) {
+            //         case 'update':
+            //             if (data.length === 0) {
+            //                 layer.msg('请选择一行');
+            //             } else if (data.length > 1) {
+            //                 layer.msg('只能同时编辑一个');
+            //             } else {
+            //                 update(checkStatus.data[0].id);
+            //             }
+            //             break;
+            //     };
+            // });
+
+            //监听行工具事件
+            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,
+                    layEvent = obj.event; //获得 lay-event 对应的值
+                // var checkStatus = table.checkStatus(obj.config.id)
+                if (layEvent === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        // obj.del(); //删除对应行（tr）的DOM结构
+                        del(data.id);
+                        layer.close(index);
+                        //向服务端发送删除指令
+                    });
+                } else if (layEvent === 'edit') {
+                    update(data.id, layEvent);
+                }
+            });
+
+        });
+    }
+
 
     // 地图配置
     function map() {

@@ -68,6 +68,10 @@
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;" class="btn" name="fwpz">服务配置</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" class="server">接入服务器配置</a></dd>
+                            <dd><a href="javascript:;" class="police">报警等级设定</a></dd>
+                        </dl>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;" class="btn" name="dtpz">地图配置</a>
@@ -100,8 +104,8 @@
                     <div id="cake" style="width: 600px;height:400px;"></div>
                     <div id="brokenLine" style="width: 600px;height:400px;"></div>
                 </div>
-                <!-- layui   服务配置 -->
-                <div id="serviceConfiguration" style="display: none">
+                <!-- layui   服务配置 ----------接入服务器配置  -->
+                <div id="server" style="display: none">
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                         <legend style="font-size: 13px;">接入服务器配置</legend>
                     </fieldset>
@@ -114,6 +118,22 @@
                     <script type="text/html" id="imgUrl">
                         <img src="{{ d.url }}" width="100px">
                     </script>
+
+                </div>
+                <!-- layui   服务配置 ----------报警等级设定  -->
+                <div id="police" style="display: none">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend style="font-size: 13px;">报警等级设定</legend>
+                    </fieldset>
+                    <table class="layui-hide" id="police" lay-filter="test"></table>
+
+                    <script type="text/html" id="police_operation">
+                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                        <!-- <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> -->
+                    </script>
+                    <!-- <script type="text/html" id="imgUrl">
+                        <img src="{{ d.url }}" width="100px">
+                    </script> -->
 
                 </div>
                 <!-- 地图配置 -->
