@@ -902,7 +902,8 @@ $(function () {
             //渲染搜索列表
             function searchCity() {
                 var searchCityName = $("#demoReload").val();
-                if (searchCityName == "") {
+                var select_role = $('.select_role').val();
+                if (searchCityName == "" && select_role == '') {
                     $("tr").show();
                 } else {
                     $("td").each(function () {
@@ -914,10 +915,18 @@ $(function () {
                                 $(this).parents('tr').hide();
                             }
                         }
+                        if ($(this).attr('data-field') == 'role') {
+                            var role = $(this).find('.layui-table-cell').text();
+                            if (role.indexOf(select_role) != -1) {
+                                $(this).parents('tr').show();
+                            } else {
+                                $(this).parents('tr').hide();
+                            }
+                        }
                     });
                 }
             }
-            $('#demoReload').bind('input', function () {
+            $('.query').on('click', function () {
                 searchCity();
             });
             //监听头工具栏事件
