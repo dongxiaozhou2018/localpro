@@ -122,11 +122,7 @@
                 var url = global_path + "/dologin";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
-                        var res = {
-                            'username':data.data.username,
-                            'token':data.token
-                        }
-                        sessionStorage.setItem('HTlogin',JSON.stringify(res));
+                        sessionStorage.setItem('HTlogin',JSON.stringify(data));
                         if(role == '0'){
                             window.location.href = "html/mange.html";
                         }else if(role == '1'){
