@@ -63,8 +63,7 @@ function loginName(){
     var HTlogin = sessionStorage.getItem('HTlogin');
     if(HTlogin){
         HTlogin = JSON.parse(HTlogin);
-        $('.loginName').html(HTlogin.username);
+        $('.loginName').html(HTlogin.data.username);
     }
 }
-
 
