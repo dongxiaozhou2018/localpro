@@ -40,6 +40,13 @@
         //         });
         //     }
         // });
+          //表单初始赋值
+        var checkPolice = sessionStorage.getItem('checkPolice');
+        checkPolice = JSON.parse(checkPolice).data;
+        form.val("example", {
+            "alarmType": checkPolice.alarmType
+            ,"alarmLevel": checkPolice.alarmLevel // "name": "value"
+        })
         form.on('submit(demo1)', function (data) {
             // var fileId = sessionStorage.getItem('fileId');
             var alarmType = $('.alarmType').val();
@@ -59,7 +66,12 @@
                     'alarmType':data.field.alarmType,
                     'alarmLevel':data.field.alarmLevel,
                 }
-                var url = global_path + "/alarmlevel/add_alarmlevel";
+                if(getQueryString('type') == 'add'){
+                    var url = global_path + "/alarmlevel/add_alarmlevel";
+                }else if(getQueryString('type') == 'update'){
+                    var url = global_path + "/alarmlevel/update_alarmllevel";
+                }
+                
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         $('#myalert').show();
