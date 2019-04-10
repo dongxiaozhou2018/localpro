@@ -991,26 +991,37 @@ $(function () {
     }
     // 升级维护
     function upgradeMaintenance() {
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
+        }
         layui.use('table', function () {
             table = layui.table //表格
 
             //执行一个 table 实例
             table.render({
                 elem: '#upgrade',
-                url: global_path + '/selectVersionInfo' //数据接口
-                    ,
+                url: global_path + '/manage/version/selectVersionInfo', //数据接口
+                where : {
+                    'at':at
+                },
                 title: '升级维护',
                 page: true //开启分页
                     ,
                 toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                     // ,totalRow: true //开启合计行
                     ,
-                parseData: function (data) {
-                    return {
-                        'code': data.code,
-                        'msg': data.msg,
-                        // 'data': data.data.list
+                parseData: function (res) {
+                    if(res.code == 0){
+                        return {
+                            'code': res.code,
+                            'msg': res.msg,
+                            'data': res.data.list
+                        }
+                    }else if (res.code == 401){
+                        unauthorized(res.code);
                     }
+                    
                 },
                 cols: [[ //表头
 			      	{type: 'checkbox', fixed: 'left'},
