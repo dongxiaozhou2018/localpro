@@ -11,26 +11,26 @@
         //表单初始赋值
         var HTlogin = sessionStorage.getItem('HTlogin');
         if(HTlogin){
-            HTlogin = JSON.parse(HTlogin).data;
+            HTlogin = JSON.parse(HTlogin);
             form.val("example", {
-                "nickname": HTlogin.data.nickname
-                ,"username": HTlogin.data.username // "name": "value"
+                "username": HTlogin.data.username // "name": "value"
+                ,"realName": HTlogin.data.realName
                 ,"password": HTlogin.data.password
                 ,"dept": HTlogin.data.dept
                 ,"telephone": HTlogin.data.telephone
             })
         }
         form.on('submit(demo1)', function (data) {
-            var nickname = $('.nickname').val();
+            var realName = $('.realName').val();
             var username = $('.username').val();
             var password = $('.password').val();
             var dept = $('.dept').val();
             var telephone = $('.telephone').val();
-            if(nickname == ''){
-                alert('请输入昵称');
-                return;
-            }else if(username == ''){
+            if(username == ''){
                 alert('请输入用户名');
+                return;
+            }else if(realName == ''){
+                alert('请输入姓名');
                 return;
             }else if(dept == ''){
                 alert('请输入用户部门');
@@ -39,19 +39,27 @@
                 alert('请输入用户电话');
                 return;
             }else{
+                if(password == ''){
+                    password = '111111';
+                }
                 var parms = {
-                    'nickname':data.field.nickname,
+                    'realName':data.field.realName,
                     'username':data.field.username,
-                    'password':data.field.password,
+                    'password':$.md5(password),
                     'dept':data.field.dept,
                     'telephone':data.field.telephone
                 }
                 var url = global_path + "/updateUser";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
+                        HTlogin.data.realName = parms.realName;
+                        HTlogin.data.username = parms.username;
+                        HTlogin.data.password = parms.password;
+                        HTlogin.data.dept = parms.dept;
+                        HTlogin.data.telephone = parms.telephone;
+                        sessionStorage.setItem('HTlogin',JSON.stringify(HTlogin));
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
-                            sessionStorage.removeItem('HTlogin')
                             $('#myalert').hide();
                             window.location.href = "./mange.html";
                         });
@@ -60,8 +68,10 @@
                     }
                 })
             }
-            
-
+        });
+        form.on('submit(demo2)', function (data) {
+            sessionStorage.removeItem('fileId');
+            window.location.href = "./mange.html";
         });
     });
 })();

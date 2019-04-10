@@ -791,7 +791,7 @@ $(function () {
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        var url = global_path + "/manage/user/deleteUser?id="+id+'&at='+at;
+        var url = global_path + "manage/user/restPassword?id="+id+'&at='+at;
         $.getJSON(url, function(data) {
             if(data.code == 0){
                 alert(data.msg);
