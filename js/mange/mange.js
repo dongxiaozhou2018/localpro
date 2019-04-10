@@ -1026,7 +1026,6 @@ $(function () {
                     
                 },
                 cols: [[ //表头
-			      	{type: 'checkbox', fixed: 'left'},
                     {
                         field: 'id',
                         title: 'ID',
