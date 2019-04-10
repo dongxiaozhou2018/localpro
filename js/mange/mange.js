@@ -18,6 +18,14 @@ $(function () {
                 }
             })
             permissionAssignment();
+        }else if(modular == 'police'){
+            $('#police_box').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'fwpz'){
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
+                }
+            })
+            police();
         }else if(modular == 'upgrade'){
             $('#upgradeMaintenance').show().siblings().hide();
             $('.btn').each(function(){
@@ -409,6 +417,9 @@ $(function () {
                 searchCity();
             });
         });
+        $('#police_btn').on('click',function(){
+            window.location.href = "./add_police.html";
+        })
     }
 
 

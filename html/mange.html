@@ -31,7 +31,7 @@
         #userInformation .layui-table-fixed{
             display: none;
         }
-        #police_box .layui-btn{
+        .layui-table-box .layui-btn{
             height: 20px;
             line-height: 20px;
         }
@@ -133,6 +133,9 @@
                             </select>
                         </div>
                         <button class="layui-btn police_query" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;">查询</button>
+                        <div id="police_btn" class="right">
+                            <button class="layui-btn" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;">添加</button>
+                        </div>
                         <div class="clearf"></div>
                     </div>
                     <table class="layui-hide" id="police" lay-filter="test"></table>
