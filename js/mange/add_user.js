@@ -103,6 +103,8 @@
                             $('#myalert').hide();
                             window.location.href = "./mange.html?modular=userInformation";
                         });
+                    }else if(data.code == 401){
+                        unauthorized(data.code);
                     }else{
                         alert(data.msg);
                     }

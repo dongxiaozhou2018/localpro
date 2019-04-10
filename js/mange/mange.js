@@ -756,6 +756,8 @@ $(function () {
             if (data.code == 0) {
                 localStorage.setItem('checkUser', JSON.stringify(data));
                 window.location.href = "./update_user.html?layEvent=" + layEvent + "&userID=" + id;
+            } else if(data.code == 401){
+                unauthorized(data.code);
             } else {
                 alert(data.msg);
             }
@@ -769,8 +771,12 @@ $(function () {
         }
         var url = global_path + "/manage/user/deleteUser?id="+id+'&at='+at;
         $.getJSON(url, function(data) {
-            alert(data.msg);
-            userInformation();
+            if(data.code == 0){
+                alert(data.msg);
+                userInformation();
+            }else if(data.code == 401){
+                unauthorized(data.code);
+            }
         })
         
     }
