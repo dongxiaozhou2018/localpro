@@ -6,7 +6,7 @@ var global_path = "http://" + "192.168.1.142" + ":8083";
 function commonAjax(a, e, j, g) {
     var HTlogin = sessionStorage.getItem('HTlogin');
     if(HTlogin){
-        e.at = JSON.parse(HTlogin).token;
+        var at = JSON.parse(HTlogin).data.token;
     }
     var c = {
         url: a,
@@ -21,6 +21,9 @@ function commonAjax(a, e, j, g) {
         crossDomain: true,  
         xhrFields: {
             withCredentials: false
+        },
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("at",at);
         },
         crossDomain: true,
         mimeType:"multipart/form-data",

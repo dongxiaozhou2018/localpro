@@ -7,15 +7,24 @@
             upload = layui.upload,
             layedit = layui.layedit,
             laydate = layui.laydate;
-
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
+        }
         var uploadInst = upload.render({
             elem: '#test1',
-            url: global_path + "/fileUpLoad",
+            url: global_path + "/manage/user/fileUpLoad",
+            // where : {
+            //     'at':at
+            // },
             before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#demo1').attr('src', result); //图片链接（base64）
                 });
+                this.data = {
+                    'at':at
+                }
             },
             done: function (res) {
                 //如果上传失败
@@ -78,14 +87,14 @@
                 var parms = {
                     'realName':data.field.realName,
                     'username':data.field.username,
-                    'password':data.field.password,
+                    'password':$.md5(password),
                     'role':data.field.role,
                     'remarks':data.field.remarks,
                     'dept':data.field.dept,
                     'telephone':data.field.telephone,
                     'fileId':fileId ? fileId : ''
                 }
-                var url = global_path + "/addUser";
+                var url = global_path + "/manage/user/addUser";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         $('#myalert').show();
@@ -99,8 +108,10 @@
                     }
                 })
             }
-            
-
+        });
+        form.on('submit(demo2)', function (data) {
+            sessionStorage.removeItem('fileId');
+            window.location.href = "./mange.html?modular=userInformation";
         });
     });
 })();

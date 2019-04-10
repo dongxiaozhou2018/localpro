@@ -4,10 +4,18 @@ $(function () {
         var modular = getQueryString("modular");
         if(modular == 'userInformation'){
             $('#userInformation').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'yhgl'){
+                    $(this).addClass('click_btn');
+                }
+            })
+            userInformation();
         }else if(modular == 'permissionAssignment'){
             $('#permissionAssignment').show().siblings().hide();
+            permissionAssignment();
         }else{
             $('#terminalData').show().siblings().hide();
+            echart();
         }
     }
     showModular();
@@ -543,14 +551,20 @@ $(function () {
     
     // 用户信息
     function userInformation() {
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
+        }
         layui.use('table', function () {
             table = layui.table //表格
 
             //执行一个 table 实例
             table.render({
                 elem: '#demo',
-                url: global_path + '/manageUsers' //数据接口
-                    ,
+                url: global_path + '/manage/user/manageUsers', //数据接口
+                where : {
+                    'at':at
+                },
                 title: '用户表',
                 page: true //开启分页
                     ,
@@ -569,8 +583,8 @@ $(function () {
                             }
                         }
                         return {
-                            'code': data.code,
-                            'msg': data.msg,
+                            'code': res.code,
+                            'msg': res.msg,
                             'data': res.data.list
                         }
                     }
@@ -594,17 +608,23 @@ $(function () {
                         width: '12.5%',
                         align: 'center'
                     }
+                    , {
+                        field: 'realName',
+                        title: '姓名',
+                        width: '12.5%',
+                        align: 'center'
+                    }
 			     	, {
                         field: 'role',
                         title: '类型',
-                        width: '12.5%',
+                        width: '10.5%',
                         sort: true,
                         align: 'center'
                     }
 			     	, {
                         field: 'dept',
                         title: '部门',
-                        width: '12.5%',
+                        width: '10.5%',
                         sort: true,
                         align: 'center'
                     }
@@ -708,8 +728,8 @@ $(function () {
                     layer.confirm('真的删除行么', function (index) {
                         // obj.del(); //删除对应行（tr）的DOM结构
                         del(data.id);
-                        layer.close(index);
-                        //向服务端发送删除指令
+                        layer.close(index); //向服务端发送删除指令
+                        // userInformation();
                     });
                 } else if (layEvent === 'edit') {
                     update(data.id, layEvent);
@@ -723,7 +743,7 @@ $(function () {
         var parms = {
             'id': id
         }
-        var url = global_path + "/checkUser";
+        var url = global_path + "/manage/user/checkUser";
         commonAjax(url, parms, function (data) {
             if (data.code == 0) {
                 localStorage.setItem('checkUser', JSON.stringify(data));
@@ -735,18 +755,16 @@ $(function () {
     }
     // 删除用户信息
     function del(id) {
-        var parms = {
-            'id': id
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
         }
-        var url = global_path + "/deleteUser";
-        commonAjax(url, parms, function (data) {
-            if (data.code == 0) {
-            	userInformation();
-                alert(data.msg);
-            } else {
-                alert(data.msg);
-            }
+        var url = global_path + "/manage/user/deleteUser?id="+id+'&at='+at;
+        $.getJSON(url, function(data) {
+            alert(data.msg);
+            userInformation();
         })
+        
     }
     // 权限分配
     function permissionAssignment() {
@@ -943,7 +961,7 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#upgrade',
-                url: '' //数据接口
+                url: global_path + '/selectVersionInfo' //数据接口
                     ,
                 title: '升级维护',
                 page: true //开启分页
@@ -959,21 +977,27 @@ $(function () {
                     }
                 },
                 cols: [[ //表头
-			      	// {type: 'checkbox', fixed: 'left'}
+			      	{type: 'checkbox', fixed: 'left'},
                     {
-                        field: 'username',
+                        field: 'id',
+                        title: 'ID',
+                        width: '15%',
+                        align: 'center'
+                    },
+                    {
+                        field: 'version',
                         title: '版本名称',
                         width: '15%',
                         align: 'center'
                     }
 			      	, {
-                        field: 'remarks',
+                        field: 'createTime',
                         title: '上传时间',
                         width: '20%',
                         align: 'center'
                     }
 			      	, {
-                        field: 'remarks',
+                        field: 'versioninfo',
                         title: '版本说明',
                         width: '50%',
                         align: 'center'
