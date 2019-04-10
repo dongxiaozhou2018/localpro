@@ -523,6 +523,7 @@ $(function () {
 
     
     // 用户信息
+    var page=1,limit=10;
     function userInformation(page,limit) {
         var HTlogin = sessionStorage.getItem('HTlogin');
         if(HTlogin){
@@ -640,14 +641,14 @@ $(function () {
                     laypage.render({
                         elem:'user_laypage'
                         ,count:count
-                        ,curr:curnum
-                        ,limit:limitcount
+                        ,curr:page
+                        ,limit:limit
                         ,layout: ['prev', 'page', 'next', 'skip','count']
                         ,jump:function (obj,first) {
                             if(!first){
-                                curnum = obj.curr;
-                                limitcount = obj.limit;
-                                police(curnum,limitcount);
+                                page = obj.curr;
+                                limit = obj.limit;
+                                userInformation(page,limit);
                             }
                         }
                     })
