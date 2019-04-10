@@ -759,7 +759,7 @@ $(function () {
         var url = global_path + "/manage/user/checkUser?id="+id+'&at='+at;
         $.getJSON(url, function(data) {
             if (data.code == 0) {
-                localStorage.setItem('checkUser', JSON.stringify(data));
+                sessionStorage.setItem('checkUser', JSON.stringify(data));
                 window.location.href = "./update_user.html?layEvent=" + layEvent + "&userID=" + id;
             } else if(data.code == 401){
                 unauthorized(data.code);

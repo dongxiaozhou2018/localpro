@@ -37,7 +37,7 @@
             }
         });
           //表单初始赋值
-        var checkUser = localStorage.getItem('checkUser');
+        var checkUser = sessionStorage.getItem('checkUser');
         checkUser = JSON.parse(checkUser).data;
         form.val("example", {
             "realName": checkUser.realName
@@ -92,7 +92,7 @@
                     if(data.code == 0){
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
-                            localStorage.removeItem('checkUser');
+                            sessionStorage.removeItem('checkUser');
                             $('#myalert').hide();
                             window.location.href = "./mange.html?modular=userInformation";
                         });
@@ -106,7 +106,7 @@
         });
         form.on('submit(demo2)', function (data) {
             sessionStorage.removeItem('fileId');
-            localStorage.removeItem('checkUser');
+            sessionStorage.removeItem('checkUser');
             window.location.href = "./mange.html?modular=userInformation";
         });
     });

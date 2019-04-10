@@ -11,7 +11,7 @@
                 $('.choice_power').append(choiceInput);
             }
         })
-        var powerUser = localStorage.getItem('powerUser');
+        var powerUser = sessionStorage.getItem('powerUser');
         powerUser = JSON.parse(powerUser).data;
         form.val("example", {
             "username": powerUser.username // "name": "value"
@@ -36,7 +36,7 @@
                     if(data.code == 0){
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){          //添加成功弹框取消按钮
-                            localStorage.removeItem('powerUser');
+                            sessionStorage.removeItem('powerUser');
                             $('#myalert').hide();
                             window.location.href = "./mange.html?modular=permissionAssignment";
                         });

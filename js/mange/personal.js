@@ -15,7 +15,6 @@
             form.val("example", {
                 "username": HTlogin.data.username // "name": "value"
                 ,"realName": HTlogin.data.realName
-                ,"password": HTlogin.data.password
                 ,"dept": HTlogin.data.dept
                 ,"telephone": HTlogin.data.telephone
             })
@@ -23,7 +22,6 @@
         form.on('submit(demo1)', function (data) {
             var realName = $('.realName').val();
             var username = $('.username').val();
-            var password = $('.password').val();
             var dept = $('.dept').val();
             var telephone = $('.telephone').val();
             if(username == ''){
@@ -39,13 +37,9 @@
                 alert('请输入用户电话');
                 return;
             }else{
-                if(password == ''){
-                    password = '111111';
-                }
                 var parms = {
                     'realName':data.field.realName,
                     'username':data.field.username,
-                    'password':$.md5(password),
                     'dept':data.field.dept,
                     'telephone':data.field.telephone
                 }

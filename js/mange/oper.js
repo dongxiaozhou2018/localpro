@@ -991,7 +991,7 @@ $(function () {
         var url = global_path + "/checkUser";
         commonAjax(url, parms, function (data) {
             if (data.code == 0) {
-                localStorage.setItem('checkUser', JSON.stringify(data));
+                sessionStorage.setItem('checkUser', JSON.stringify(data));
                 window.location.href = "./update_power.html?layEvent=" + layEvent + "&userID=" + id;
             } else {
                 alert(data.msg);
