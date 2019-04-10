@@ -71,4 +71,12 @@ function loginName(){
         window.location.href = '../login.html';
     }
 }
+// 登录超时
+function unauthorized(code){
+    if(code == 401){
+        sessionStorage.removeItem('HTlogin');
+        alert('登录超时，请重新登陆');
+        window.location.href = '../login.html';;
+    }
+}
 

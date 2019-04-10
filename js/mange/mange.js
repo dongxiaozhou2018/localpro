@@ -592,6 +592,8 @@ $(function () {
                             'msg': res.msg,
                             'data': res.data.list
                         }
+                    }else{
+                        unauthorized(res.code);
                     }
                 },
                 cols: [[ //表头
@@ -745,11 +747,12 @@ $(function () {
     }
     // 编辑用户信息
     function update(id, layEvent) {
-        var parms = {
-            'id': id
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
         }
-        var url = global_path + "/manage/user/checkUser";
-        commonAjax(url, parms, function (data) {
+        var url = global_path + "/manage/user/checkUser?id="+id+'&at='+at;
+        $.getJSON(url, function(data) {
             if (data.code == 0) {
                 localStorage.setItem('checkUser', JSON.stringify(data));
                 window.location.href = "./update_user.html?layEvent=" + layEvent + "&userID=" + id;

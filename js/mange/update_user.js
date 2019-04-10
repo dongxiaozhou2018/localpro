@@ -41,7 +41,7 @@
         checkUser = JSON.parse(checkUser).data;
         form.val("example", {
             "realName": checkUser.realName
-            "username": checkUser.username // "name": "value"
+            ,"username": checkUser.username // "name": "value"
             ,"password": checkUser.password
             ,"role": checkUser.role
             ,"dept": checkUser.dept
@@ -92,7 +92,7 @@
                     if(data.code == 0){
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
-                            localStorage.removeItem('checkUser')
+                            localStorage.removeItem('checkUser');
                             $('#myalert').hide();
                             window.location.href = "./mange.html?modular=userInformation";
                         });
@@ -101,8 +101,11 @@
                     }
                 })
             }
-            
-
+        });
+        form.on('submit(demo2)', function (data) {
+            sessionStorage.removeItem('fileId');
+            localStorage.removeItem('checkUser');
+            window.location.href = "./mange.html?modular=userInformation";
         });
     });
 })();
