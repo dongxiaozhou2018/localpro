@@ -6,12 +6,17 @@ $(function () {
             $('#userInformation').show().siblings().hide();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'yhgl'){
-                    $(this).addClass('click_btn');
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
                 }
             })
             userInformation();
         }else if(modular == 'permissionAssignment'){
             $('#permissionAssignment').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'yhgl'){
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
+                }
+            })
             permissionAssignment();
         }else{
             $('#terminalData').show().siblings().hide();
