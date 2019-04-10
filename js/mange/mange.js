@@ -658,7 +658,7 @@ $(function () {
 			     	, {
                         fixed: 'right',
                         title: '操作',
-                        width: '12.5%',
+                        width: '15.5%',
                         align: 'center',
                         toolbar: '#barDemo'
                     }
@@ -740,6 +740,11 @@ $(function () {
                     });
                 } else if (layEvent === 'edit') {
                     update(data.id, layEvent);
+                }else if (layEvent === 'pwd') {
+                    layer.confirm('真的重置密码吗？', function (index) {
+                        resetPwd(data.id);
+                        layer.close(index);
+                    });
                 }
             });
 
@@ -765,6 +770,23 @@ $(function () {
     }
     // 删除用户信息
     function del(id) {
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
+        }
+        var url = global_path + "/manage/user/deleteUser?id="+id+'&at='+at;
+        $.getJSON(url, function(data) {
+            if(data.code == 0){
+                alert(data.msg);
+                userInformation();
+            }else if(data.code == 401){
+                unauthorized(data.code);
+            }
+        })
+        
+    }
+    // 重置密码
+    function resetPwd(id) {
         var HTlogin = sessionStorage.getItem('HTlogin');
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
