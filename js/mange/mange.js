@@ -334,24 +334,39 @@ $(function () {
         });
     }
     // 服务配置---------------报警等级设定
-    function police() {
+    var limitcount = 10;
+    var curnum = 1;
+    function police(pageNum,pageSize) {
+        
         var HTlogin = sessionStorage.getItem('HTlogin');
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        layui.use('table', function () {
-            table = layui.table //表格
+        layui.use(['table','laypage','laydate'], function () {
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage;
 
             //执行一个 table 实例
             table.render({
                 elem: '#police',
                 url: global_path + '/alarmlevel/select_all_alarmlevel', //数据接口
-                where : {
-                    'at':at
+                method: 'post',
+                headers: {
+                    'at': at
+                },
+                contentType : "application/json",
+                loading:true,
+                request: {
+                    pageName: 'pageNum' //页码的参数名称，默认：page
+                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                },
+                where:{
+                    'pageNum':pageNum,
+                    'pageSize':pageSize
                 },
                 title: '报警等级',
-                page: true //开启分页
-                    ,
+                page: false,
                 parseData: function (res) {
                     if(res.code == 0){
                         for(var i=0;i<res.data.list.length;i++){
@@ -366,6 +381,7 @@ $(function () {
                         return {
                             'code': res.code,
                             'msg': res.msg,
+                            "count": res.data.total,
                             'data': res.data.list
                         }
                     }else if(res.code == 401){
@@ -393,8 +409,28 @@ $(function () {
                         align: 'center',
                         toolbar: '#police_operation'
                     }
-                ]]
+                ]],
+                done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem:'laypage'
+                        ,count:count
+                        ,curr:curnum
+                        ,limit:limitcount
+                        ,layout: ['prev', 'page', 'next', 'skip','count']
+                        ,jump:function (obj,first) {
+                            console.log(first)
+                            if(!first){
+                                curnum = obj.curr;
+                                limitcount = obj.limit;
+                                police(curnum,limitcount);
+                            }
+                        }
+                    })
+                }
             });
+
             //渲染搜索列表
             function searchCity() {
                 var police_role = $('.police_role').val();
