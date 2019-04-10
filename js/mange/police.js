@@ -42,11 +42,14 @@
         // });
           //表单初始赋值
         var checkPolice = sessionStorage.getItem('checkPolice');
-        checkPolice = JSON.parse(checkPolice).data;
-        form.val("example", {
-            "alarmType": checkPolice.alarmType
-            ,"alarmLevel": checkPolice.alarmLevel // "name": "value"
-        })
+        if(checkPolice){
+            checkPolice = JSON.parse(checkPolice).data;
+            form.val("example", {
+                "alarmType": checkPolice.alarmType
+                ,"alarmLevel": checkPolice.alarmLevel // "name": "value"
+            })
+        }
+        
         form.on('submit(demo1)', function (data) {
             // var fileId = sessionStorage.getItem('fileId');
             var alarmType = $('.alarmType').val();
