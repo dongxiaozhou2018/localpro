@@ -11,14 +11,12 @@
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
+       // 上传文件
         var uploadInst = upload.render({
             elem: '#test1',
+            exts: 'txt',
             url: global_path + "/manage/user/fileUpLoad",
             before: function (obj) {
-                //预读本地文件示例，不支持ie8
-                obj.preview(function (index, file, result) {
-                    $('#demo1').attr('src', result); //图片链接（base64）
-                });
                 this.data = {
                     'at':at
                 }
@@ -44,57 +42,30 @@
         });
         form.on('submit(demo1)', function (data) {
             var fileId = sessionStorage.getItem('fileId');
-            var username = $('.username').val();
-            var password = $('.password').val();
-            var role = $('.role').val();
-            var dept = $('.dept').val();
-            var telephone = $('.telephone').val();
-            var remarks = $('.remarks').val();
-            var realName = $('.realName').val();
-            if(!fileId || fileId == ''){
-                alert('请选择图片');
+            var version = $('.version').val();
+            var versionInfo = $('.versionInfo').val();
+            if(!fileId){
+                alert('请上传文件');
                 return;
-            }else if(username == ''){
-                alert('请输入用户名');
+            }else if(version == ''){
+                alert('请输入版本号');
                 return;
-            }else if(realName == ''){
-                alert('请输入姓名');
-                return;
-            }
-            else if(role == ''){
-                alert('请选择用户类型');
-                return;
-            }else if(dept == ''){
-                alert('请输入用户部门');
-                return;
-            }else if(telephone == ''){
-                alert('请输入用户电话');
-                return;
-            }else if(remarks == ''){
-                alert('请输入用户备注信息');
+            }else if(versionInfo == ''){
+                alert('请输入版本信息');
                 return;
             }else{
-                if(password == ''){
-                    password = '111111';
-                }
                 var parms = {
-                    'realName':data.field.realName,
-                    'username':data.field.username,
-                    'password':$.md5(password),
-                    'role':data.field.role,
-                    'remarks':data.field.remarks,
-                    'dept':data.field.dept,
-                    'telephone':data.field.telephone,
-                    'fileId':fileId ? fileId : ''
+                    'version':data.field.version,
+                    'versionInfo':data.field.versionInfo,
                 }
-                var url = global_path + "/manage/user/addUser";
+                var url = global_path + "/manage/version/insertVersionInfo";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){       //保存成功弹框取消按钮
                             sessionStorage.removeItem('fileId');
                             $('#myalert').hide();
-                            window.location.href = "./mange.html?modular=userInformation";
+                            window.location.href = "./mange.html?modular=upgrade";
                         });
                     }else if(data.code == 401){
                         unauthorized(data.code);
@@ -106,7 +77,7 @@
         });
         form.on('submit(demo2)', function (data) {
             sessionStorage.removeItem('fileId');
-            window.location.href = "./mange.html?modular=userInformation";
+            window.location.href = "./mange.html?modular=upgrade";
         });
     });
 })();

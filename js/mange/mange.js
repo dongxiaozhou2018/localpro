@@ -18,6 +18,14 @@ $(function () {
                 }
             })
             permissionAssignment();
+        }else if(modular == 'upgrade'){
+            $('#upgradeMaintenance').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'sjwh'){
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
+                }
+            })
+            upgradeMaintenance();
         }else{
             $('#terminalData').show().siblings().hide();
             echart();
@@ -612,19 +620,19 @@ $(function () {
 			     	, {
                         field: 'username',
                         title: '用户名',
-                        width: '12.5%',
+                        width: '6.5%',
                         align: 'center'
                     }
                     , {
                         field: 'realName',
                         title: '姓名',
-                        width: '12.5%',
+                        width: '8.5%',
                         align: 'center'
                     }
 			     	, {
                         field: 'role',
                         title: '类型',
-                        width: '10.5%',
+                        width: '8.5%',
                         sort: true,
                         align: 'center'
                     }
@@ -651,7 +659,6 @@ $(function () {
                         field: 'url',
                         title: '照片信息',
                         width: '15.5%',
-                        sort: true,
                         align: 'center',
                         toolbar: '#imgUrl'
                     }
@@ -728,15 +735,12 @@ $(function () {
                 var data = obj.data //获得当前行数据
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
-                // var checkStatus = table.checkStatus(obj.config.id)
                 if (layEvent === 'detail') {
                     update(data.id, layEvent);
                 } else if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        // obj.del(); //删除对应行（tr）的DOM结构
                         del(data.id);
                         layer.close(index); //向服务端发送删除指令
-                        // userInformation();
                     });
                 } else if (layEvent === 'edit') {
                     update(data.id, layEvent);
@@ -791,7 +795,7 @@ $(function () {
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        var url = global_path + "manage/user/restPassword?id="+id+'&at='+at;
+        var url = global_path + "/manage/user/restPassword?id="+id+'&at='+at;
         $.getJSON(url, function(data) {
             if(data.code == 0){
                 alert(data.msg);
@@ -995,7 +999,8 @@ $(function () {
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        layui.use('table', function () {
+        layui.use(['table', 'upload'], function () {
+            var upload = layui.upload;
             table = layui.table //表格
 
             //执行一个 table 实例
@@ -1008,15 +1013,12 @@ $(function () {
                 title: '升级维护',
                 page: true //开启分页
                     ,
-                toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    // ,totalRow: true //开启合计行
-                    ,
                 parseData: function (res) {
                     if(res.code == 0){
                         return {
                             'code': res.code,
                             'msg': res.msg,
-                            'data': res.data.list
+                            'data': res.data
                         }
                     }else if (res.code == 401){
                         unauthorized(res.code);
@@ -1044,67 +1046,17 @@ $(function () {
                         align: 'center'
                     }
 			      	, {
-                        field: 'versioninfo',
+                        field: 'versionInfo',
                         title: '版本说明',
                         width: '50%',
                         align: 'center'
                     }
-			      	, {
-                        field: 'url',
-                        title: '操作',
-                        width: '15%',
-                        align: 'center',
-                        toolbar: '#service_operation'
-                    }
 			    ]]
-            });
-            //监听头工具栏事件
-            table.on('toolbar(test)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id),
-                    data = checkStatus.data; //获取选中的数据
-                switch (obj.event) {
-                    case 'add':
-                        window.location.href = "./add_user.html";
-                        break;
-                    case 'update':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能同时编辑一个');
-                        } else {
-                            update(checkStatus.data[0].id);
-                        }
-                        break;
-                    case 'delete':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能删除一个');
-                        } else {
-                            del(checkStatus.data[0].id);
-                        }
-                        break;
-                };
-            });
-
-            //监听行工具事件
-            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-                var data = obj.data //获得当前行数据
-                    ,
-                    layEvent = obj.event; //获得 lay-event 对应的值
-                // var checkStatus = table.checkStatus(obj.config.id)
-                if (layEvent === 'del') {
-                    layer.confirm('真的删除行么', function (index) {
-                        // obj.del(); //删除对应行（tr）的DOM结构
-                        del(data.id);
-                        layer.close(index);
-                        //向服务端发送删除指令
-                    });
-                } else if (layEvent === 'edit') {
-                    update(data.id, layEvent);
-                }
             });
 
         });
+        $('#equipment_btn').on('click',function(){
+            window.location.href = "./add_equipment.html";
+        })
     }
 })

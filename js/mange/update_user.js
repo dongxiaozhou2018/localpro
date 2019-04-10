@@ -7,15 +7,21 @@
             ,laydate = layui.laydate
             ,upload = layui.upload
             ,element = layui.element;
-
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
+        }
         var uploadInst = upload.render({
             elem: '#test1',
-            url: global_path + "/fileUpLoad",
+            url: global_path + "/manage/user/fileUpLoad",
             before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#demo1').attr('src', result); //图片链接（base64）
                 });
+                this.data = {
+                    'at':at
+                }
             },
             done: function (res) {
                 //如果上传失败
@@ -51,6 +57,7 @@
         form.on('submit(demo1)', function (data) {
             var fileId = sessionStorage.getItem('fileId');
             var username = $('.username').val();
+            var realName = $('.realName').val();
             var role = $('.role').val();
             var dept = $('.dept').val();
             var telephone = $('.telephone').val();
@@ -87,7 +94,7 @@
                     'id':getQueryString('userID'),
                     'fileId':fileId ? fileId : ''
                 }
-                var url = global_path + "/updateUser";
+                var url = global_path + "/manage/user/updateUser";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         $('#myalert').show();

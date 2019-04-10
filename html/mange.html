@@ -22,6 +22,15 @@
         .layui-nav-bar {
             display: none !important;
         }
+        .layui-table-cell{
+            height: auto!important;
+        }
+        .layui-table-cell img{
+            max-width: 50px!important;
+        }
+        #userInformation .layui-table-fixed{
+            display: none;
+        }
     </style>
 </head>
 
@@ -230,18 +239,13 @@
                 </div>
                 <!-- layui   升级维护 -->
                 <div id="upgradeMaintenance" style="display: none">
+                    <div id="equipment_btn">
+                        <button class="layui-btn">添加</button>
+                    </div>
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                         <legend style="font-size: 13px;">设备升级库</legend>
                     </fieldset>
                     <table class="layui-hide" id="upgrade" lay-filter="test"></table>
-
-                    <script type="text/html" id="upgrade_operation">
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                    </script>
-                    <script type="text/html" id="imgUrl">
-                        <img src="{{ d.url }}" width="100px">
-                    </script>
 
                 </div>
             </div>
