@@ -414,13 +414,12 @@ $(function () {
                     //如果是异步请求数据方式，res即为你接口返回的信息。
                     //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                     laypage.render({
-                        elem:'laypage'
+                        elem:'police_laypage'
                         ,count:count
                         ,curr:curnum
                         ,limit:limitcount
                         ,layout: ['prev', 'page', 'next', 'skip','count']
                         ,jump:function (obj,first) {
-                            console.log(first)
                             if(!first){
                                 curnum = obj.curr;
                                 limitcount = obj.limit;
@@ -524,26 +523,30 @@ $(function () {
 
     
     // 用户信息
-    function userInformation() {
+    function userInformation(page,limit) {
         var HTlogin = sessionStorage.getItem('HTlogin');
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        layui.use('table', function () {
-            table = layui.table //表格
+        layui.use(['table','laypage','laydate'], function () {
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage;
 
             //执行一个 table 实例
             table.render({
                 elem: '#demo',
                 url: global_path + '/manage/user/manageUsers', //数据接口
-                where : {
-                    'at':at
+                headers: {
+                    'at': at
                 },
                 title: '用户表',
-                page: true //开启分页
-                    ,
-                toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    ,
+                page: false, //开启分页
+                toolbar: 'default', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                where:{
+                    'page':page,
+                    'limit':limit
+                },
                 parseData: function (res) {
                     if (res.code == '0') {
                         for (var i = 0; i < res.data.list.length; i++) {
@@ -558,6 +561,7 @@ $(function () {
                         return {
                             'code': res.code,
                             'msg': res.msg,
+                            "count": res.data.total,
                             'data': res.data.list
                         }
                     }else{
@@ -629,7 +633,25 @@ $(function () {
                         align: 'center',
                         toolbar: '#barDemo'
                     }
-			    ]]
+			    ]],
+                done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem:'user_laypage'
+                        ,count:count
+                        ,curr:curnum
+                        ,limit:limitcount
+                        ,layout: ['prev', 'page', 'next', 'skip','count']
+                        ,jump:function (obj,first) {
+                            if(!first){
+                                curnum = obj.curr;
+                                limitcount = obj.limit;
+                                police(curnum,limitcount);
+                            }
+                        }
+                    })
+                }
             });
             //渲染搜索列表
             function searchCity() {
