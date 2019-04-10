@@ -73,7 +73,7 @@ $(function () {
     });
 
     $('.police').on('click', function () { // 报警等级设定
-        $('#police').show().siblings().hide();
+        $('#police_box').show().siblings().hide();
         police();
     });
     $('.userInformation').on('click', function () { // 用户信息
@@ -327,49 +327,56 @@ $(function () {
     }
     // 服务配置---------------报警等级设定
     function police() {
+        var HTlogin = sessionStorage.getItem('HTlogin');
+        if(HTlogin){
+            var at = JSON.parse(HTlogin).data.token;
+        }
         layui.use('table', function () {
             table = layui.table //表格
 
             //执行一个 table 实例
             table.render({
                 elem: '#police',
-                url: '' //数据接口
-                    ,
-                title: '服务配置',
+                url: global_path + '/alarmlevel/select_all_alarmlevel', //数据接口
+                where : {
+                    'at':at
+                },
+                title: '报警等级',
                 page: true //开启分页
                     ,
-                // toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    // ,totalRow: true //开启合计行
-                    // ,
-                parseData: function (data) {
-                    return {
-                        'code': data.code,
-                        'msg': data.msg,
-                        // 'data': data.data.list
+                parseData: function (res) {
+                    if(res.code == 0){
+                        for(var i=0;i<res.data.list.length;i++){
+                            if(res.data.list[i].alarmLevel == 1){       //  低
+                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-normal">低</span>';
+                            }else if(res.data.list[i].alarmLevel == 2){        // 中
+                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-warm">中</span>';
+                            }else if(res.data.list[i].alarmLevel == 3){         //高
+                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-danger">高</span>';
+                            }
+                        }
+                        return {
+                            'code': res.code,
+                            'msg': res.msg,
+                            'data': res.data.list
+                        }
+                    }else if(res.code == 401){
+                        unauthorized(res.code);
                     }
+                    
                 },
                 cols: [[ //表头
-                    // {type: 'checkbox', fixed: 'left'}
                     {
-                        field: 'username',
+                        field: 'alarmType',
                         title: '报警类型',
                         width: '33.33%',
                         align: 'center'
                     }
                     , {
-                        field: 'remarks',
+                        field: 'alarmLevel',
                         title: '报警等级',
                         width: '33.33%',
-                        align: 'center',
-                        formatter : function(value, row, index) {
-                            if (value == '0') {         //  高
-                                return '<span class="layui-btn layui-btn-danger">警告</span>';
-                            } else if (value == '1') {      //  低
-                                return '<span class="layui-btn layui-btn-normal">百搭</span>';
-                            }else{                  //  中
-                                return '<span class="layui-btn layui-btn-warm">暖色</span>';
-                            }
-                        }
+                        align: 'center'
                     }
                     , {
                         field: 'url',
@@ -387,9 +394,9 @@ $(function () {
                     $("tr").show();
                 } else {
                     $("td").each(function () {
-                        if ($(this).attr('data-field') == 'role') {
-                            var role = $(this).find('.layui-table-cell').text();
-                            if (role.indexOf(police_role) != -1) {
+                        if ($(this).attr('data-field') == 'alarmLevel') {
+                            var alarmLevel = $(this).find('.layui-btn').text();
+                            if (alarmLevel.indexOf(police_role) != -1) {
                                 $(this).parents('tr').show();
                             } else {
                                 $(this).parents('tr').hide();
@@ -398,91 +405,15 @@ $(function () {
                     });
                 }
             }
-            $('.query').on('click', function () {
+            $('.police_query').on('click', function () {
                 searchCity();
             });
-            //监听头工具栏事件
-            // table.on('toolbar(test)', function (obj) {
-            //     var checkStatus = table.checkStatus(obj.config.id),
-            //         data = checkStatus.data; //获取选中的数据
-            //     switch (obj.event) {
-            //         case 'update':
-            //             if (data.length === 0) {
-            //                 layer.msg('请选择一行');
-            //             } else if (data.length > 1) {
-            //                 layer.msg('只能同时编辑一个');
-            //             } else {
-            //                 update(checkStatus.data[0].id);
-            //             }
-            //             break;
-            //     };
-            // });
-
-            //监听行工具事件
-            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-                var data = obj.data //获得当前行数据
-                    ,
-                    layEvent = obj.event; //获得 lay-event 对应的值
-                // var checkStatus = table.checkStatus(obj.config.id)
-                if (layEvent === 'del') {
-                    layer.confirm('真的删除行么', function (index) {
-                        // obj.del(); //删除对应行（tr）的DOM结构
-                        del(data.id);
-                        layer.close(index);
-                        //向服务端发送删除指令
-                    });
-                } else if (layEvent === 'edit') {
-                    update(data.id, layEvent);
-                }
-            });
-
         });
     }
 
 
     // 地图配置
     function map() {
-        // var cities = L.layerGroup();
-
-        // L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(cities),
-        //     L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(cities),
-        //     L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(cities),
-        //     L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(cities);
-
-
-        // var mbAttr = '',
-        //     mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-
-        // var grayscale = L.tileLayer(mbUrl, {
-        //         id: 'mapbox.light',
-        //         attribution: mbAttr
-        //     }),
-        //     streets = L.tileLayer(mbUrl, {
-        //         id: 'mapbox.streets',
-        //         attribution: mbAttr
-        //     });
-
-        // var map = L.map('mapid', {
-        //     center: [39.0851000000,117.1993700000],
-        //     zoom: 10,
-        //     layers: [grayscale, cities],
-        //     zoomControl: true,
-        //     zoomSnap: 0.25
-        // });
-        // map.zoomControl.setPosition('topleft');
-        // map.invalidateSize(true);
-        // var baseLayers = {
-        //     "Grayscale": grayscale,
-        //     "Streets": streets
-        // };
-
-        // var overlays = {
-        //     "Cities": cities
-        // };
-
-        // L.control.layers(baseLayers, overlays).addTo(map);
-
-
         var map = new L.Map("mapid", {
             zoom: 9,
             center: [39.0850853357,117.1993482089],
@@ -501,14 +432,6 @@ $(function () {
         marker.addTo(map);
         marker.bindPopup("<b>天津</b>");
 
-		// marker.openPopup();
-        // var wmsLayer= L.tileLayer.wms("http://localhost:8080/geoserver/cite/wms?", {
-        //     layers: 'cite:bou2_4p',//需要加载的图层
-        //     format: 'image/png',//返回的数据格式
-        //     transparent: true,
-        //     //crs: L.CRS.EPSG4326
-        // });
-        // map.addLayer(wmsLayer);
     }
 
     // 终端配置
@@ -520,17 +443,9 @@ $(function () {
                 elem: '#terminal',
                 url: '' //数据接口
                     ,
-                // where: {
-                //     startTime: startTime1,
-                //     endTime: endTime1
-                // },
                 title: '终端配置',
                 page: true //开启分页
                     ,
-                // toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    // ,totalRow: true //开启合计行
-                    // ,width : '90%'
-                    // ,
                 cellMinWidth: 80,
                 parseData: function (res) {
                     return {
@@ -540,7 +455,6 @@ $(function () {
                     }
                 },
                 cols: [[ //表头
-                // {type: 'checkbox', fixed: 'left'}
                     {
                         field: 'information',
                         title: '操作内容',
@@ -582,7 +496,6 @@ $(function () {
                 page: true //开启分页
                     ,
                 toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    // ,totalRow: true //开启合计行
                     ,
                 parseData: function (res) {
                     if (res.code == '0') {
@@ -820,7 +733,6 @@ $(function () {
                 page: true //开启分页
                     ,
                 toolbar: '#addBtn' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    // ,totalRow: true //开启合计行
                     ,
                 parseData: function (data) {
                     return {
@@ -880,11 +792,8 @@ $(function () {
                 var data = obj.data //获得当前行数据
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
-                // var checkStatus = table.checkStatus(obj.config.id)
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        // obj.del(); //删除对应行（tr）的DOM结构
-                        // del(data.id);
                         var parms = {
                             'id': data.id
                         }
@@ -936,8 +845,6 @@ $(function () {
                     page: true //开启分页
                         ,
                     toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                        // ,totalRow: true //开启合计行
-                        // ,width : '90%'
                         ,
                     cellMinWidth: 80,
                     parseData: function (res) {
@@ -948,7 +855,6 @@ $(function () {
                         }
                     },
                     cols: [[ //表头
-		      		// {type: 'checkbox', fixed: 'left'}
                         {
                             field: 'information',
                             title: '操作内容',

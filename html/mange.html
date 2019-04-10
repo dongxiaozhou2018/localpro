@@ -22,14 +22,18 @@
         .layui-nav-bar {
             display: none !important;
         }
-        .layui-table-cell{
+        #userInformation .layui-table-cell{
             height: auto!important;
         }
-        .layui-table-cell img{
+        #userInformation .layui-table-cell img{
             max-width: 50px!important;
         }
         #userInformation .layui-table-fixed{
             display: none;
+        }
+        #police_box .layui-btn{
+            height: 20px;
+            line-height: 20px;
         }
     </style>
 </head>
@@ -40,30 +44,12 @@
             <div class="layui-logo">
                 <a style="display:block;float:left;margin-left:-35px;margin-right:15px;" href="javascript:;"><img src="../img/logo.png" style="margin:3px 0 0 35px;" width="90%;"></a>
             </div>
-            <!-- 头部区域（可配合layui已有的水平导航） -->
-            <!--  <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a href="javascript:;">控制台</a></li>
-                <li class="layui-nav-item"><a href="javascript:;">商品管理</a></li>
-                <li class="layui-nav-item"><a href="javascript:;">用户</a></li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">其它系统</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">邮件管理</a></dd>
-                        <dd><a href="javascript:;">消息管理</a></dd>
-                        <dd><a href="javascript:;">授权管理</a></dd>
-                    </dl>
-                </li>
-            </ul> -->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="personal">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                         <span class="loginName">贤心</span>
                     </a>
-                    <!-- <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">基本资料</a></dd>
-                        <dd><a href="javascript:;">安全设置</a></dd>
-                    </dl> -->
                 </li>
                 <li class="layui-nav-item"><a href="javascript:;" class="changePwd">修改密码</a></li>
                 <li class="layui-nav-item"><a href="javascript:;" class="logout" style="font-size: 12px!important;">[ 退出登录 ]</a></li>
@@ -132,7 +118,7 @@
 
                 </div>
                 <!-- layui   服务配置 ----------报警等级设定  -->
-                <div id="police" style="display: none">
+                <div id="police_box" style="display: none">
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                         <legend style="font-size: 13px;">报警等级设定</legend>
                     </fieldset>
@@ -146,18 +132,14 @@
                                 <option value="低">低</option>
                             </select>
                         </div>
-                        <button class="layui-btn query" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;">查询</button>
+                        <button class="layui-btn police_query" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;">查询</button>
                         <div class="clearf"></div>
                     </div>
                     <table class="layui-hide" id="police" lay-filter="test"></table>
 
                     <script type="text/html" id="police_operation">
                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <!-- <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> -->
                     </script>
-                    <!-- <script type="text/html" id="imgUrl">
-                        <img src="{{ d.url }}" width="100px">
-                    </script> -->
 
                 </div>
                 <!-- 地图配置 -->
