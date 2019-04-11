@@ -11,39 +11,10 @@
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-       // 上传文件
-        // var uploadInst = upload.render({
-        //     elem: '#test1',
-        //     exts: 'txt',
-        //     url: global_path + "/manage/user/fileUpLoad",
-        //     before: function (obj) {
-        //         this.data = {
-        //             'at':at
-        //         }
-        //     },
-        //     done: function (res) {
-        //         //如果上传失败
-        //         if (res.code == 0) {
-        //             sessionStorage.setItem('fileId',res.data);
-        //             return layer.msg('上传成功');
-        //         }else{
-        //             return layer.msg('上传失败');
-        //         }
-        //         //上传成功
-        //     },
-        //     error: function () {
-        //         //演示失败状态，并实现重传
-        //         var demoText = $('#demoText');
-        //         demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-        //         demoText.find('.demo-reload').on('click', function () {
-        //             uploadInst.upload();
-        //         });
-        //     }
-        // });
           //表单初始赋值
         var checkPolice = sessionStorage.getItem('checkPolice');
         if(checkPolice){
-            checkPolice = JSON.parse(checkPolice).data;
+            checkPolice = JSON.parse(checkPolice).data[0];
             form.val("example", {
                 "alarmType": checkPolice.alarmType
                 ,"alarmName": checkPolice.alarmName

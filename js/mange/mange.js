@@ -342,7 +342,7 @@ $(function () {
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        layui.use(['table','laypage','laydate'], function () {
+        layui.use(["table","laypage","laydate"], function () {
             var table = layui.table,
                 laydate=layui.laydate,
                 laypage = layui.laypage;
@@ -437,7 +437,29 @@ $(function () {
                     })
                 }
             });
-
+            table.on('tool(police)', function (obj) { 
+                var data = obj.data //获得当前行数据
+                    ,
+                    layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        del(data.id);
+                        layer.close(index); //向服务端发送删除指令
+                    });
+                } else if (layEvent === 'edit') {
+                    var police_url = global_path + '/alarmlevel/select_update_alarmllevel';
+                    var police_parms = {
+                        'alarmType':data.alarmType
+                    }
+                    console.log(police_parms)
+                    commonAjax(police_url,police_parms,function(res){
+                        if(res.code == 0){
+                            sessionStorage.setItem('checkPolice',JSON.stringify(res));
+                            window.location.href = "./police.html?type=update";
+                        }
+                    })
+                }
+            });
             //渲染搜索列表
             function searchCity() {
                 var police_role = $('.police_role').val();
@@ -458,16 +480,6 @@ $(function () {
             }
             $('.police_query').on('click', function () {
                 searchCity();
-            });
-            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-                var data = obj.data //获得当前行数据
-                    ,
-                    layEvent = obj.event; //获得 lay-event 对应的值
-                if (layEvent === 'edit') {
-                    window.location.href = "./police.html?type=update";
-                }else if (layEvent === 'del') {
-                    
-                }
             });
         });
         $('#police_btn').on('click',function(){
