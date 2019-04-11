@@ -44,7 +44,7 @@ function commonAjax(a, e, j, g) {
 function getAjax(a, j, g) {
     var c = {
         url: a,
-
+        contentType: 'application/json',
         // data: e,
         crossDomain: true,
         type: "get",
