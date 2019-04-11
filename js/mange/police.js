@@ -53,7 +53,7 @@
                     if(data.code == 0){
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){       //保存成功弹框取消按钮
-                            sessionStorage.removeItem('fileId');
+                            sessionStorage.removeItem('checkPolice');
                             $('#myalert').hide();
                             window.location.href = "./mange.html?modular=police";
                         });
@@ -66,7 +66,7 @@
             }
         });
         form.on('submit(demo2)', function (data) {
-            sessionStorage.removeItem('fileId');
+            sessionStorage.removeItem('checkPolice');
             window.location.href = "./mange.html?modular=police";
         });
     });

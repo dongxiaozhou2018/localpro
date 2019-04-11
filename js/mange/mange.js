@@ -443,7 +443,6 @@ $(function () {
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        del(data.id);
                         layer.close(index); //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
