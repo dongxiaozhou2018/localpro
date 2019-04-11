@@ -14,20 +14,30 @@
         var uploadInst = upload.render({
             elem: '#test1',
             url: global_path + "/manage/user/fileUpLoad",
+            headers: {
+                'at': at
+            },
             before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#demo1').attr('src', result); //图片链接（base64）
                 });
-                this.data = {
-                    'at':at
+                var file = sessionStorage.getItem('file');
+                if(file){
+                    file = JSON.parse(file).data;
+                    this.data = {
+                        'filename':file.filename
+                    }
                 }
+                
             },
             done: function (res) {
                 //如果上传失败
                 if (res.code == 0) {
                     sessionStorage.setItem('file',JSON.stringify(res));
                     return layer.msg('上传成功');
+                }else if(res.code == 401){
+                    unauthorized(res.code);
                 }else{
                     return layer.msg('上传失败');
                 }
