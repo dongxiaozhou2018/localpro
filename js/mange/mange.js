@@ -101,7 +101,7 @@ $(function () {
     });
     $('.loginOut').on('click', '.left', function () { //退出登录弹框确认按钮
         $('.loginOut').hide();
-        $.getJSON(global_path + "/logout", function (data) {
+        getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
                 window.location.href = "../login.html";
@@ -342,7 +342,7 @@ $(function () {
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        layui.use(["table","laypage","laydate"], function () {
+        layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
                 laypage = layui.laypage;
@@ -443,9 +443,9 @@ $(function () {
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        var string_parms = "alarmName="+data.alarmName+'&alarmType='+data.alarmType+'&at='+at;
+                        var string_parms = "alarmName="+data.alarmName+'&alarmType='+data.alarmType;
                         var url = global_path + "/alarmlevel/delete_alarmltype?"+string_parms;
-                        $.getJSON(url, function(res) {
+                        getAjax(url, function(res) {
                             alert(res.msg);
                             if(res.code == 0){
                                 police(curnum,limitcount);
@@ -778,12 +778,8 @@ $(function () {
     }
     // 编辑用户信息
     function update(id, layEvent) {
-        var HTlogin = sessionStorage.getItem('HTlogin');
-        if(HTlogin){
-            var at = JSON.parse(HTlogin).data.token;
-        }
-        var url = global_path + "/manage/user/checkUser?id="+id+'&at='+at;
-        $.getJSON(url, function(data) {
+        var url = global_path + "/manage/user/checkUser?id="+id;
+        getAjax(url, function(data) {
             if (data.code == 0) {
                 sessionStorage.setItem('checkUser', JSON.stringify(data));
                 window.location.href = "./user.html?layEvent=" + layEvent + "&userID=" + id;
@@ -796,12 +792,8 @@ $(function () {
     }
     // 删除用户信息
     function del(id) {
-        var HTlogin = sessionStorage.getItem('HTlogin');
-        if(HTlogin){
-            var at = JSON.parse(HTlogin).data.token;
-        }
-        var url = global_path + "/manage/user/deleteUser?id="+id+'&at='+at;
-        $.getJSON(url, function(data) {
+        var url = global_path + "/manage/user/deleteUser?id="+id;
+        getAjax(url, function(data) {
             if(data.code == 0){
                 alert(data.msg);
                 userInformation(page,limit);
@@ -813,12 +805,8 @@ $(function () {
     }
     // 重置密码
     function resetPwd(id) {
-        var HTlogin = sessionStorage.getItem('HTlogin');
-        if(HTlogin){
-            var at = JSON.parse(HTlogin).data.token;
-        }
-        var url = global_path + "/manage/user/restPassword?id="+id+'&at='+at;
-        $.getJSON(url, function(data) {
+        var url = global_path + "/manage/user/restPassword?id="+id;
+        getAjax(url, function(data) {
             if(data.code == 0){
                 alert(data.msg);
                 userInformation();

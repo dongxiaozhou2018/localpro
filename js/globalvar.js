@@ -42,6 +42,43 @@ function commonAjax(a, e, j, g) {
     };
     return $.ajax(c);
 }
+function getAjax(a, j, g) {
+    var HTlogin = sessionStorage.getItem('HTlogin');
+    if(HTlogin){
+        var at = JSON.parse(HTlogin).data.token;
+    }
+    var c = {
+        url: a,
+
+        // data: e,
+        crossDomain: true,
+        type: "get",
+        dataType: "json",
+        success: j,
+        crossDomain: true,  
+        xhrFields: {
+            withCredentials: false
+        },
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("at",at);
+        },
+        crossDomain: true,
+        mimeType:"multipart/form-data",
+        error: function (n, m) {
+            var o = this;
+            if (g) {
+                g.apply(o, arguments)
+            }
+        },
+        complete: function (m) {
+            var n = m.responseText;
+            if (isJSON(n)) {
+                n = JSON.parse(n)
+            }
+        }
+    };
+    return $.ajax(c);
+}
 function isJSON(b) {
     if (typeof b == "string") {
         try {
