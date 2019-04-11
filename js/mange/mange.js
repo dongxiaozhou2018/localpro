@@ -583,13 +583,17 @@ $(function () {
                 headers: {
                     'at': at
                 },
+                request: {
+                    pageName: 'pageNum' //页码的参数名称，默认：page
+                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                },
+                where:{
+                    'pageNum':page,
+                    'pageSize':limit
+                },
                 title: '用户表',
                 page: false, //开启分页
                 toolbar: 'default', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                where:{
-                    'page':page,
-                    'limit':limit
-                },
                 parseData: function (res) {
                     if (res.code == '0') {
                         for (var i = 0; i < res.data.list.length; i++) {

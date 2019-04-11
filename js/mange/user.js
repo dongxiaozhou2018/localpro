@@ -75,10 +75,11 @@
             var telephone = $('.telephone').val();
             var remarks = $('.remarks').val();
             var password = $('.password').val();
-            if(!file || file == ''){
-                alert('请选择图片');
-                return;
-            }else if(username == ''){
+            // if(!file || file == ''){
+            //     alert('请选择图片');
+            //     return;
+            // }else 
+            if(username == ''){
                 alert('请输入用户名');
                 return;
             }else if(realName == ''){
@@ -97,19 +98,20 @@
                 alert('请输入用户备注信息');
                 return;
             }else{
-                file = JSON.parse(file).data;
                 var parms = {
                     'realName':data.field.realName,
                     'username':data.field.username,
                     'role':data.field.role,
                     'remarks':data.field.remarks,
                     'dept':data.field.dept,
-                    'telephone':data.field.telephone,
-                    'id':getQueryString('userID'),
-                    'filename':file.filename,
-                    'filetype':file.filetype,
-                    'suffix':file.suffix,
-                    'url':file.url,
+                    'telephone':data.field.telephone
+                }
+                if(getQueryString('userID')){
+                    parms.id = getQueryString('userID');
+                }
+                if(file){
+                    file = JSON.parse(file).data;
+                    parms.filename = file.filename;
                 }
                 if(getQueryString("layEvent") == 'edit'){
 
