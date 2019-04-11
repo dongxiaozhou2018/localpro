@@ -1,12 +1,12 @@
 (function(){
     layui.use(['form', 'layedit', 'laydate',"jquery", "upload", "layer", "element"], function(){
-        var $ = layui.$,
-            form = layui.form,
-            element = layui.element,
-            layer = layui.layer,
-            upload = layui.upload,
-            layedit = layui.layedit,
-            laydate = layui.laydate;
+        var $ = layui.$
+            ,form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,upload = layui.upload
+            ,element = layui.element;
         var HTlogin = sessionStorage.getItem('HTlogin');
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
@@ -42,15 +42,29 @@
                 });
             }
         });
+          //表单初始赋值
+        var checkUser = sessionStorage.getItem('checkUser');
+        if(checkUser){
+            checkUser = JSON.parse(checkUser).data;
+            form.val("example", {
+                "realName": checkUser.realName
+                ,"username": checkUser.username // "name": "value"
+                ,"password": checkUser.password
+                ,"role": checkUser.role
+                ,"dept": checkUser.dept
+                ,"telephone": checkUser.telephone
+                ,"remarks": checkUser.remarks
+            })
+        }
         form.on('submit(demo1)', function (data) {
             var fileId = sessionStorage.getItem('fileId');
             var username = $('.username').val();
-            var password = $('.password').val();
+            var realName = $('.realName').val();
             var role = $('.role').val();
             var dept = $('.dept').val();
             var telephone = $('.telephone').val();
             var remarks = $('.remarks').val();
-            var realName = $('.realName').val();
+            var password = $('.password').val();
             if(!fileId || fileId == ''){
                 alert('请选择图片');
                 return;
@@ -60,8 +74,7 @@
             }else if(realName == ''){
                 alert('请输入姓名');
                 return;
-            }
-            else if(role == ''){
+            }else if(role == ''){
                 alert('请选择用户类型');
                 return;
             }else if(dept == ''){
@@ -74,24 +87,32 @@
                 alert('请输入用户备注信息');
                 return;
             }else{
-                if(password == ''){
-                    password = '111111';
-                }
                 var parms = {
                     'realName':data.field.realName,
                     'username':data.field.username,
-                    'password':$.md5(password),
                     'role':data.field.role,
                     'remarks':data.field.remarks,
                     'dept':data.field.dept,
                     'telephone':data.field.telephone,
+                    'id':getQueryString('userID'),
                     'fileId':fileId ? fileId : ''
                 }
-                var url = global_path + "/manage/user/addUser";
+                if(getQueryString("layEvent") == 'edit'){
+
+                    var url = global_path + "/manage/user/updateUser";
+
+                }else if(getQueryString("layEvent") == 'add'){
+                    if(password == ''){
+                        parms.password = '111111';
+                    }
+                    var url = global_path + "/manage/user/addUser";
+
+                }
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         $('#myalert').show();
-                        $('#alertConfirm').on('click','a',function(){       //保存成功弹框取消按钮
+                        $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
+                            sessionStorage.removeItem('checkUser');
                             sessionStorage.removeItem('fileId');
                             $('#myalert').hide();
                             window.location.href = "./mange.html?modular=userInformation";
@@ -106,6 +127,7 @@
         });
         form.on('submit(demo2)', function (data) {
             sessionStorage.removeItem('fileId');
+            sessionStorage.removeItem('checkUser');
             window.location.href = "./mange.html?modular=userInformation";
         });
     });

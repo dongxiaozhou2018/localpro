@@ -698,7 +698,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./add_user.html";
+                        window.location.href = "./user.html?layEvent=add";
                         break;
                     case 'update':
                         if (data.length === 0) {
@@ -755,7 +755,7 @@ $(function () {
         $.getJSON(url, function(data) {
             if (data.code == 0) {
                 sessionStorage.setItem('checkUser', JSON.stringify(data));
-                window.location.href = "./update_user.html?layEvent=" + layEvent + "&userID=" + id;
+                window.location.href = "./user.html?layEvent=" + layEvent + "&userID=" + id;
             } else if(data.code == 401){
                 unauthorized(data.code);
             } else {
