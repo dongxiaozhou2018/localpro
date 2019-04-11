@@ -702,14 +702,14 @@ $(function () {
             });
             //渲染搜索列表
             function searchCity() {
-                var username = $(".username").val();
+                var username = $(".username").val().toUpperCase();
                 var select_role = $('.select_role').val();
                 if (username == "" && select_role == '') {
                     $("tr").show();
                 } else if(username != "" && select_role == ''){
                     $("td").each(function () {
                         if ($(this).attr('data-field') == 'username') {
-                            var name = $(this).find('.layui-table-cell').text();
+                            var name = $(this).find('.layui-table-cell').text().toUpperCase();
                             if (name.indexOf(username) != -1) {
                                 $(this).parents('tr').show();
                             } else {
@@ -733,7 +733,7 @@ $(function () {
                     $("tr").each(function () {
                         $("td").each(function () {
                             if ($(this).attr('data-field') == 'username') {
-                                name = $(this).find('.layui-table-cell').text();
+                                name = $(this).find('.layui-table-cell').text().toUpperCase();
                                 if (name.indexOf(username) != -1) {
                                     $(this).parents('tr').show();
                                 } else {
