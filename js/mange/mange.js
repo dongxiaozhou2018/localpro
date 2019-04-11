@@ -443,9 +443,12 @@ $(function () {
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        var string_parms = "alarmName="+data.alarmName+'&alarmType='+data.alarmType;
-                        var url = global_path + "/alarmlevel/delete_alarmltype?"+string_parms;
-                        getAjax(url, function(res) {
+                        var parms = {
+                            "alarmName":data.alarmName,
+                            'alarmType':data.alarmType
+                        }
+                        var url = global_path + "/alarmlevel/delete_alarmltype";
+                        commonAjax(url,parms, function(res) {
                             alert(res.msg);
                             if(res.code == 0){
                                 police(curnum,limitcount);
