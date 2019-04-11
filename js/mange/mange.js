@@ -465,6 +465,8 @@ $(function () {
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'edit') {
                     window.location.href = "./police.html?type=update";
+                }else if (layEvent === 'del') {
+                    
                 }
             });
         });
@@ -522,17 +524,17 @@ $(function () {
                         title: '操作内容',
                         width: '33.33%'
                     }
-                , {
+                    , {
                         field: 'username',
                         title: '用户名',
                         width: '33.33%'
                     }
-                , {
+                    , {
                         field: 'createTime',
                         title: '时间',
                         width: '33.33%'
                     }
-            ]]
+                ]]
             });
         });
     }
