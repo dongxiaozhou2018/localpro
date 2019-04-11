@@ -2,12 +2,11 @@
 var global_path = "http://" + "192.168.1.142" + ":8083";
 
 // var global_path = "https://" + window.location.hostname + ":8083";
-
+var HTlogin = sessionStorage.getItem('HTlogin');
+if(HTlogin){
+    var at = JSON.parse(HTlogin).data.token;
+}
 function commonAjax(a, e, j, g) {
-    var HTlogin = sessionStorage.getItem('HTlogin');
-    if(HTlogin){
-        var at = JSON.parse(HTlogin).data.token;
-    }
     var c = {
         url: a,
         contentType: 'application/json',
@@ -43,10 +42,6 @@ function commonAjax(a, e, j, g) {
     return $.ajax(c);
 }
 function getAjax(a, j, g) {
-    var HTlogin = sessionStorage.getItem('HTlogin');
-    if(HTlogin){
-        var at = JSON.parse(HTlogin).data.token;
-    }
     var c = {
         url: a,
 
