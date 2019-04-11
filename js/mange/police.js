@@ -46,19 +46,21 @@
             checkPolice = JSON.parse(checkPolice).data;
             form.val("example", {
                 "alarmType": checkPolice.alarmType
+                ,"alarmName": checkPolice.alarmName
                 ,"alarmLevel": checkPolice.alarmLevel // "name": "value"
             })
         }
         
         form.on('submit(demo1)', function (data) {
             // var fileId = sessionStorage.getItem('fileId');
+            
+            var alarmName = $('.alarmName').val();
             var alarmType = $('.alarmType').val();
             var alarmLevel = $('.alarmLevel').val();
-            // if(!fileId){
-            //     alert('请上传文件');
-            //     return;
-            // }else 
-            if(alarmType == ''){
+            if(alarmName == ''){
+                alert('请上传文件');
+                return;
+            }else if(alarmType == ''){
                 alert('请输入报警类型');
                 return;
             }else if(alarmLevel == ''){
@@ -66,6 +68,7 @@
                 return;
             }else{
                 var parms = {
+                    'alarmName':data.field.alarmName,
                     'alarmType':data.field.alarmType,
                     'alarmLevel':data.field.alarmLevel,
                 }

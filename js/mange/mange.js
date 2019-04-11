@@ -393,21 +393,29 @@ $(function () {
                     {
                         field: 'alarmType',
                         title: '报警类型',
+                        width: '20%',
+                        align: 'center'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '报警名称',
                         width: '33.33%',
                         align: 'center'
                     }
+                    
                     , {
                         field: 'alarmLevel',
                         title: '报警等级',
-                        width: '33.33%',
+                        width: '23.33%',
                         align: 'center'
                     }
                     , {
                         field: 'url',
                         title: '操作',
-                        width: '33.33%',
+                        width: '23.33%',
                         align: 'center',
                         toolbar: '#police_operation'
+
                     }
                 ]],
                 done: function(res, curr, count){
