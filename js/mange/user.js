@@ -26,7 +26,7 @@
             done: function (res) {
                 //如果上传失败
                 if (res.code == 0) {
-                    sessionStorage.setItem('fileId',res.data);
+                    sessionStorage.setItem('file',JSON.stringify(res));
                     return layer.msg('上传成功');
                 }else{
                     return layer.msg('上传失败');
@@ -57,7 +57,7 @@
             })
         }
         form.on('submit(demo1)', function (data) {
-            var fileId = sessionStorage.getItem('fileId');
+            var file = sessionStorage.getItem('file');
             var username = $('.username').val();
             var realName = $('.realName').val();
             var role = $('.role').val();
@@ -65,7 +65,7 @@
             var telephone = $('.telephone').val();
             var remarks = $('.remarks').val();
             var password = $('.password').val();
-            if(!fileId || fileId == ''){
+            if(!file || file == ''){
                 alert('请选择图片');
                 return;
             }else if(username == ''){
@@ -87,6 +87,7 @@
                 alert('请输入用户备注信息');
                 return;
             }else{
+                file = JSON.parse(file).data;
                 var parms = {
                     'realName':data.field.realName,
                     'username':data.field.username,
@@ -95,7 +96,10 @@
                     'dept':data.field.dept,
                     'telephone':data.field.telephone,
                     'id':getQueryString('userID'),
-                    'fileId':fileId ? fileId : ''
+                    'filename':file.filename,
+                    'filetype':file.filetype,
+                    'suffix':file.suffix,
+                    'url':file.url,
                 }
                 if(getQueryString("layEvent") == 'edit'){
 

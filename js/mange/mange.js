@@ -443,6 +443,16 @@ $(function () {
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
+                        var string_parms = "alarmName="+data.alarmName+'&alarmType='+data.alarmType+'&at='+at;
+                        var url = global_path + "/alarmlevel/delete_alarmltype?"+string_parms;
+                        $.getJSON(url, function(res) {
+                            alert(res.msg);
+                            if(res.code == 0){
+                                police(curnum,limitcount);
+                            }else if(res.code == 401){
+                                unauthorized(res.code);
+                            }
+                        })
                         layer.close(index); //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
@@ -558,7 +568,7 @@ $(function () {
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        layui.use(['table','laypage','laydate'], function () {
+        layui.use(["table","laypage","laydate"], function () {
             var table = layui.table,
                 laydate=layui.laydate,
                 laypage = layui.laypage;
@@ -794,7 +804,7 @@ $(function () {
         $.getJSON(url, function(data) {
             if(data.code == 0){
                 alert(data.msg);
-                userInformation();
+                userInformation(page,limit);
             }else if(data.code == 401){
                 unauthorized(data.code);
             }
