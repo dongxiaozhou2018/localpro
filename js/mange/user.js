@@ -112,6 +112,9 @@
                 if(file){
                     file = JSON.parse(file).data;
                     parms.filename = file.filename;
+                    parms.filetype = file.filetype;
+                    parms.suffix = file.suffix;
+                    parms.url = file.url;
                 }
                 if(getQueryString("layEvent") == 'edit'){
 
@@ -129,7 +132,7 @@
                         $('#myalert').show();
                         $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
                             sessionStorage.removeItem('checkUser');
-                            sessionStorage.removeItem('fileId');
+                            sessionStorage.removeItem('file');
                             $('#myalert').hide();
                             window.location.href = "./mange.html?modular=userInformation";
                         });

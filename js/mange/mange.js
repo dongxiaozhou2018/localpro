@@ -571,7 +571,7 @@ $(function () {
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
         }
-        layui.use(["table","laypage","laydate"], function () {
+        layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
                 laypage = layui.laypage;
@@ -702,20 +702,23 @@ $(function () {
             });
             //渲染搜索列表
             function searchCity() {
-                var username = $("#demoReload").val().toUpperCase();
+                var username = $(".username").val();
                 var select_role = $('.select_role').val();
                 if (username == "" && select_role == '') {
                     $("tr").show();
-                } else {
+                } else if(username != "" && select_role == ''){
                     $("td").each(function () {
                         if ($(this).attr('data-field') == 'username') {
-                            var name = $(this).find('.layui-table-cell').text().toUpperCase();
+                            var name = $(this).find('.layui-table-cell').text();
                             if (name.indexOf(username) != -1) {
                                 $(this).parents('tr').show();
                             } else {
                                 $(this).parents('tr').hide();
                             }
                         }
+                    });
+                } else if(username == "" && select_role != ''){
+                    $("td").each(function () {
                         if ($(this).attr('data-field') == 'role') {
                             var role = $(this).find('.layui-table-cell').text();
                             if (role.indexOf(select_role) != -1) {
@@ -724,6 +727,28 @@ $(function () {
                                 $(this).parents('tr').hide();
                             }
                         }
+                    });
+                }else{
+                    var name
+                    $("tr").each(function () {
+                        $("td").each(function () {
+                            if ($(this).attr('data-field') == 'username') {
+                                name = $(this).find('.layui-table-cell').text();
+                                if (name.indexOf(username) != -1) {
+                                    $(this).parents('tr').show();
+                                } else {
+                                    $(this).parents('tr').hide();
+                                }
+                            }
+                            if ($(this).attr('data-field') == 'role') {
+                                var role = $(this).find('.layui-table-cell').text();
+                                if (name.indexOf(username) != -1&&role.indexOf(select_role) != -1) {
+                                    $(this).parents('tr').show();
+                                } else {
+                                    $(this).parents('tr').hide();
+                                }
+                            }
+                        });
                     });
                 }
             }
