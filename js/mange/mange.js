@@ -1093,7 +1093,7 @@ $(function () {
             });
 
         });
-        $('#equipment_btn').on('click',function(){
+        $('#equipment_btn').on('click','.layui-btn',function(){
             window.location.href = "./add_equipment.html";
         })
     }
