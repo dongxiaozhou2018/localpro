@@ -111,22 +111,8 @@
     </div>
 </body>
 <script type="text/javascript">
-    if(getQueryString("layEvent") == 'detail'){
-        $('#submit_btn').hide();
-        $('input').each(function(){
-            if(!$(this).attr('readonly')){
-                $(this).attr('readonly',"readonly");
-            }
-        })
-        $('select').attr("disabled","disabled");
-        $('textarea').attr('readonly',"readonly");
-        $('#test1').attr('disabled',"disabled");
-        $('#cancel_btn').html('返回');
-    }else{
-        $('#submit_btn').show();
-        if(getQueryString("layEvent") == 'edit'){
-            $('.pwd').hide();
-        }
+    if(getQueryString("layEvent") == 'edit'){
+        $('.pwd').hide();
     }
 </script>
 </html>

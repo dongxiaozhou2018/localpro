@@ -627,7 +627,7 @@ $(function () {
 			     	, {
                         field: 'id',
                         title: 'ID',
-                        width: '5%',
+                        width: '5.3%',
                         sort: true,
                         fixed: 'left',
                         align: 'center'
@@ -793,9 +793,7 @@ $(function () {
                 var data = obj.data //获得当前行数据
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
-                if (layEvent === 'detail') {
-                    update(data.id, layEvent);
-                } else if (layEvent === 'del') {
+                if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
                         del(data.id);
                         layer.close(index); //向服务端发送删除指令

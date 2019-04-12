@@ -41,9 +41,10 @@
                     'realName':data.field.realName,
                     'username':data.field.username,
                     'dept':data.field.dept,
-                    'telephone':data.field.telephone
+                    'telephone':data.field.telephone,
+                    'id':HTlogin.data.id
                 }
-                var url = global_path + "/updateUser";
+                var url = global_path + "/manage/user/editPersonalInfo";
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         HTlogin.data.realName = parms.realName;
