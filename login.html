@@ -57,6 +57,9 @@
     <script>
         sessionStorage.removeItem('HTlogin');
         sessionStorage.removeItem('modular');
+        sessionStorage.removeItem('checkPolice');
+        sessionStorage.removeItem('checkUser');
+        sessionStorage.removeItem('file');
         function captcha(){
             $.getJSON(global_path + "/rand", function(data) {
                 $('#captcha_img_true').attr('src',data.data);

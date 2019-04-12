@@ -463,7 +463,8 @@ $(function () {
                     commonAjax(police_url,police_parms,function(res){
                         if(res.code == 0){
                             sessionStorage.setItem('checkPolice',JSON.stringify(res));
-                            window.location.href = "./police.html?type=update";
+                            var url = "police.html?type=update";
+                            frame('编辑报警类型',url,'police');
                         }
                     })
                 }
@@ -491,7 +492,8 @@ $(function () {
             });
         });
         $('#police_btn').on('click',function(){
-            window.location.href = "./police.html?type=add";
+            var url = "police.html?type=add";
+            frame('添加报警类型',url,'police');
         })
     }
 
@@ -830,6 +832,7 @@ $(function () {
                     layer.setTop(layero); //重点2
                 },
                 cancel: function(){ 
+                    sessionStorage.removeItem('checkPolice');
                     sessionStorage.removeItem('checkUser');
                     sessionStorage.removeItem('file');
                 }

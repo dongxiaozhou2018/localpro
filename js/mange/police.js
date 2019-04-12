@@ -29,7 +29,7 @@
             var alarmType = $('.alarmType').val();
             var alarmLevel = $('.alarmLevel').val();
             if(alarmName == ''){
-                alert('请上传文件');
+                alert('请输入报警名称');
                 return;
             }else if(alarmType == ''){
                 alert('请输入报警类型');
@@ -51,12 +51,13 @@
                 
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
-                        $('#myalert').show();
-                        $('#alertConfirm').on('click','a',function(){       //保存成功弹框取消按钮
-                            sessionStorage.removeItem('checkPolice');
-                            $('#myalert').hide();
-                            window.location.href = "./mange.html?modular=police";
-                        });
+
+                        sessionStorage.removeItem('checkPolice');
+                        parent.layer.msg(data.msg);
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                        parent.layer.close(index);
+
                     }else if(data.code == 401){
                         unauthorized(data.code);
                     }else{
