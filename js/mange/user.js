@@ -150,5 +150,20 @@
             window.location.href = "./mange.html?modular=userInformation";
         });
     });
+    pushHistory();
+    window.addEventListener("popstate", function (e) {
+        sessionStorage.removeItem('file');
+        sessionStorage.removeItem('checkUser');
+        window.location.href = "./mange.html?modular=userInformation";
+    }, false);
+
+    function pushHistory() {
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+    }
+
 })();
 
