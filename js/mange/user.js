@@ -131,13 +131,13 @@
                 }
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
-                        $('#myalert').show();
-                        $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
-                            sessionStorage.removeItem('checkUser');
-                            sessionStorage.removeItem('file');
-                            $('#myalert').hide();
-                            window.location.href = "./mange.html?modular=userInformation";
-                        });
+                        sessionStorage.removeItem('checkUser');
+                        sessionStorage.removeItem('file');
+
+                        parent.layer.msg(data.msg);
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                        parent.layer.close(index);
                     }else if(data.code == 401){
                         unauthorized(data.code);
                     }else{
@@ -149,7 +149,7 @@
         form.on('submit(demo2)', function (data) {
             sessionStorage.removeItem('file');
             sessionStorage.removeItem('checkUser');
-            window.location.href = "./mange.html?modular=userInformation";
+            // window.location.href = "./mange.html?modular=userInformation";
         });
     });
 

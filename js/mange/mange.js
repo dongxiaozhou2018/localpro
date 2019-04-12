@@ -5,15 +5,7 @@ $(function () {
     // 判断渲染模块
     function showModular(){
         var modular = getQueryString("modular");
-        if(modular == 'userInformation'){
-            $('#userInformation').show().siblings().hide();
-            $('.btn').each(function(){
-                if($(this).attr('name') == 'yhgl'){
-                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
-                }
-            })
-            userInformation();
-        }else if(modular == 'permissionAssignment'){
+        if(modular == 'permissionAssignment'){
             $('#permissionAssignment').show().siblings().hide();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'yhgl'){
@@ -40,6 +32,16 @@ $(function () {
         }else{
             $('#terminalData').show().siblings().hide();
             echart();
+        }
+        var modular1 = sessionStorage.getItem('modular');
+        if(modular1 == 'userInformation'){
+            $('#userInformation').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'yhgl'){
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
+                }
+            })
+            userInformation();
         }
     }
     showModular();
@@ -765,7 +767,8 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        window.location.href = "./user.html?layEvent=add";
+                        var url = "user.html?layEvent=add";
+                        frame('添加用户信息',url);
                         break;
                     case 'update':
                         if (data.length === 0) {
@@ -810,13 +813,47 @@ $(function () {
 
         });
     }
+    // 弹出层
+    function frame(tit,url){
+        layui.use('layer', function(){ //独立版的layer无需执行这一句
+            var $ = layui.jquery, layer = layui.layer;
+            layer.open({
+                type: 2 //此处以iframe举例
+                    ,
+                title: tit,
+                area: ['800px', '600px'],
+                shade: 0,
+                resize: false,
+                content: url,
+                yes: function (index,layero) {
+                    var body = layer.getChildFrame('body', index);
+                    var w = $(layero).find("iframe")[0].contentWindow;
+                    console.log(body);
+                    console.log(w);
+                    console.log(index);
+                    console.log(body.find('.username').val());
+                },
+
+                zIndex: layer.zIndex, //重点1
+                success: function (layero) {
+                    layer.setTop(layero); //重点2
+                },
+                cancel: function(){ 
+                    sessionStorage.removeItem('checkUser');
+                    sessionStorage.removeItem('file');
+                }
+            });
+        })
+    }
     // 编辑用户信息
     function update(id, layEvent) {
         var url = global_path + "/manage/user/checkUser?id="+id;
         getAjax(url, function(data) {
             if (data.code == 0) {
                 sessionStorage.setItem('checkUser', JSON.stringify(data));
-                window.location.href = "./user.html?layEvent=" + layEvent + "&userID=" + id;
+                var url = "user.html?layEvent=" + layEvent + "&userID=" + id;
+                sessionStorage.setItem('modular','userInformation');
+                frame('编辑用户信息',url);
             } else if(data.code == 401){
                 unauthorized(data.code);
             } else {
