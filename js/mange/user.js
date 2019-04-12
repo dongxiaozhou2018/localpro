@@ -122,7 +122,7 @@
 
                 }else if(getQueryString("layEvent") == 'add'){
                     if(password == ''){
-                        parms.password = $.md5(111111);
+                        parms.password = $.md5('111111');
                     }else{
                         parms.password = $.md5(password);
                     }
