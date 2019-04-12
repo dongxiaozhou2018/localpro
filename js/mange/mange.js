@@ -4,8 +4,8 @@ $(function () {
     sessionStorage.removeItem('checkUser');
     // 判断渲染模块
     function showModular(){
-        var modular = getQueryString("modular");
-        if(modular == 'permissionAssignment'){
+        var modular = sessionStorage.getItem('modular');
+        if(modular == 'permissionAssignment'){          //用户信息
             $('#permissionAssignment').show().siblings().hide();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'yhgl'){
@@ -13,7 +13,7 @@ $(function () {
                 }
             })
             permissionAssignment();
-        }else if(modular == 'police'){
+        }else if(modular == 'police'){              //报警级别
             $('#police_box').show().siblings().hide();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'fwpz'){
@@ -21,7 +21,7 @@ $(function () {
                 }
             })
             police();
-        }else if(modular == 'upgrade'){
+        }else if(modular == 'upgrade'){         //升级维护
             $('#upgradeMaintenance').show().siblings().hide();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'sjwh'){
@@ -32,16 +32,6 @@ $(function () {
         }else{
             $('#terminalData').show().siblings().hide();
             echart();
-        }
-        var modular1 = sessionStorage.getItem('modular');
-        if(modular1 == 'userInformation'){
-            $('#userInformation').show().siblings().hide();
-            $('.btn').each(function(){
-                if($(this).attr('name') == 'yhgl'){
-                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
-                }
-            })
-            userInformation();
         }
     }
     showModular();
@@ -1129,7 +1119,8 @@ $(function () {
 
         });
         $('#equipment_btn').on('click','.layui-btn',function(){
-            window.location.href = "./add_equipment.html";
+            var url = "add_equipment.html";
+            frame('添加升级设备信息',url,'upgrade');
         })
     }
 })

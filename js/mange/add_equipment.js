@@ -24,7 +24,7 @@
             done: function (res) {
                 //如果上传失败
                 if (res.code == 0) {
-                    sessionStorage.setItem('fileId',res.data);
+                    sessionStorage.setItem('file',JSON.stringify(res));
                     return layer.msg('上传成功');
                 }else{
                     return layer.msg('上传失败');
@@ -41,10 +41,10 @@
             }
         });
         form.on('submit(demo1)', function (data) {
-            var fileId = sessionStorage.getItem('fileId');
+            var file = sessionStorage.getItem('file');
             var version = $('.version').val();
             var versionInfo = $('.versionInfo').val();
-            if(!fileId){
+            if(!file){
                 alert('请上传文件');
                 return;
             }else if(version == ''){
@@ -60,13 +60,15 @@
                 }
                 var url = global_path + "/manage/version/insertVersionInfo";
                 commonAjax(url,parms,function(data){
+                    
                     if(data.code == 0){
-                        $('#myalert').show();
-                        $('#alertConfirm').on('click','a',function(){       //保存成功弹框取消按钮
-                            sessionStorage.removeItem('fileId');
-                            $('#myalert').hide();
-                            window.location.href = "./mange.html?modular=upgrade";
-                        });
+                        
+                        sessionStorage.removeItem('file');
+                        parent.layer.msg(data.msg);
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                        parent.layer.close(index);
+
                     }else if(data.code == 401){
                         unauthorized(data.code);
                     }else{
@@ -74,10 +76,6 @@
                     }
                 })
             }
-        });
-        form.on('submit(demo2)', function (data) {
-            sessionStorage.removeItem('fileId');
-            window.location.href = "./mange.html?modular=upgrade";
         });
     });
 })();
