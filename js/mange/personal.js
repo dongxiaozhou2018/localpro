@@ -53,20 +53,17 @@
                         HTlogin.data.dept = parms.dept;
                         HTlogin.data.telephone = parms.telephone;
                         sessionStorage.setItem('HTlogin',JSON.stringify(HTlogin));
-                        $('#myalert').show();
-                        $('#alertConfirm').on('click','a',function(){          //保存成功弹框取消按钮
-                            $('#myalert').hide();
-                            window.location.href = "./mange.html";
-                        });
+
+                        parent.layer.msg(data.msg);
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                        parent.layer.close(index);
+
                     }else{
                         alert(data.msg);
                     }
                 })
             }
-        });
-        form.on('submit(demo2)', function (data) {
-            sessionStorage.removeItem('fileId');
-            window.location.href = "./mange.html";
         });
     });
 })();
