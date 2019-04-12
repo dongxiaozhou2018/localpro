@@ -122,7 +122,9 @@
 
                 }else if(getQueryString("layEvent") == 'add'){
                     if(password == ''){
-                        parms.password = '111111';
+                        parms.password = $.md5(111111);
+                    }ele{
+                        parms.password = $.md5(password);
                     }
                     var url = global_path + "/manage/user/addUser";
 
