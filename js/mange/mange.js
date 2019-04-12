@@ -768,7 +768,7 @@ $(function () {
                 switch (obj.event) {
                     case 'add':
                         var url = "user.html?layEvent=add";
-                        frame('添加用户信息',url);
+                        frame('添加用户信息',url,'userInformation');
                         break;
                     case 'update':
                         if (data.length === 0) {
@@ -814,7 +814,7 @@ $(function () {
         });
     }
     // 弹出层
-    function frame(tit,url){
+    function frame(tit,url,modular){
         layui.use('layer', function(){ //独立版的layer无需执行这一句
             var $ = layui.jquery, layer = layui.layer;
             layer.open({
@@ -836,6 +836,7 @@ $(function () {
 
                 zIndex: layer.zIndex, //重点1
                 success: function (layero) {
+                    sessionStorage.setItem('modular',modular);
                     layer.setTop(layero); //重点2
                 },
                 cancel: function(){ 
@@ -852,8 +853,7 @@ $(function () {
             if (data.code == 0) {
                 sessionStorage.setItem('checkUser', JSON.stringify(data));
                 var url = "user.html?layEvent=" + layEvent + "&userID=" + id;
-                sessionStorage.setItem('modular','userInformation');
-                frame('编辑用户信息',url);
+                frame('编辑用户信息',url,'userInformation');
             } else if(data.code == 401){
                 unauthorized(data.code);
             } else {

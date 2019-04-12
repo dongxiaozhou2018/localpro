@@ -149,7 +149,6 @@
         form.on('submit(demo2)', function (data) {
             sessionStorage.removeItem('file');
             sessionStorage.removeItem('checkUser');
-            // window.location.href = "./mange.html?modular=userInformation";
         });
     });
 
