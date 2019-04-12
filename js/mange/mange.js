@@ -1,4 +1,7 @@
 $(function () {
+    // 删除暂存session数据
+    sessionStorage.removeItem('file');
+    sessionStorage.removeItem('checkUser');
     // 判断渲染模块
     function showModular(){
         var modular = getQueryString("modular");

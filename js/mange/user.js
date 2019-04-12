@@ -150,20 +150,17 @@
             window.location.href = "./mange.html?modular=userInformation";
         });
     });
-    pushHistory();
-    window.addEventListener("popstate", function (e) {
-        sessionStorage.removeItem('file');
-        sessionStorage.removeItem('checkUser');
-        window.location.href = "./mange.html?modular=userInformation";
-    }, false);
-
-    function pushHistory() {
-        var state = {
-            title: "title",
-            url: "#"
-        };
-        window.history.pushState(state, "title", "#");
-    }
+    // if (window.history && window.history.pushState) {
+    //     $(window).on('popstate', function () {
+    //         window.history.pushState('forward', null, '#');
+    //         window.history.forward(1);
+    //         sessionStorage.removeItem('file');
+    //         sessionStorage.removeItem('checkUser');
+    //         window.location.href = './mange.html?modular=userInformation'; //跳转到个人中心
+    //     });
+    // }
+    // window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
+    // window.history.forward(1);
 
 })();
 
