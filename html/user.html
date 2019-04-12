@@ -55,8 +55,8 @@
                     <input type="text" name="realName" autocomplete="off" class="layui-input realName" placeholder="请输入姓名">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码框</label>
+            <div class="layui-form-item pwd">
+                <label class="layui-form-label"><span style="color: red;">*</span> 密码</label>
                 <div class="layui-input-block">
                     <input type="password" name="password" placeholder="111111" autocomplete="off" class="layui-input password darkgray">
                 </div>
@@ -125,7 +125,7 @@
     }else{
         $('#submit_btn').show();
         if(getQueryString("layEvent") == 'edit'){
-            $('.password').attr('readonly',"readonly");
+            $('.pwd').hide();
         }
     }
 </script>
