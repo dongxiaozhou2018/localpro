@@ -138,7 +138,8 @@ $(function () {
         } else {
             var parms = {
                 'passwordOld': $.md5(oldPwd),
-                'passwordNew': $.md5(newPwd)
+                'passwordNew': $.md5(newPwd),
+                'passwordNews': $.md5(confirmPwd)
             }
             var url = global_path + "/changePassword";
             commonAjax(url, parms, function (data) {
