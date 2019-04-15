@@ -2,6 +2,10 @@ $(function () {
     // 删除暂存session数据
     sessionStorage.removeItem('file');
     sessionStorage.removeItem('checkUser');
+    var HTlogin = sessionStorage.getItem('HTlogin');
+    if(HTlogin){
+        var at = JSON.parse(HTlogin).data.token;
+    }
     // 判断渲染模块
     function showModular(){
         var modular = sessionStorage.getItem('modular');
@@ -335,10 +339,6 @@ $(function () {
     var curnum = 1;
     function police(pageNum,pageSize) {
         
-        var HTlogin = sessionStorage.getItem('HTlogin');
-        if(HTlogin){
-            var at = JSON.parse(HTlogin).data.token;
-        }
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
@@ -566,10 +566,6 @@ $(function () {
     // 用户信息
     var page=1,limit=10;
     function userInformation(page,limit) {
-        var HTlogin = sessionStorage.getItem('HTlogin');
-        if(HTlogin){
-            var at = JSON.parse(HTlogin).data.token;
-        }
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
@@ -991,29 +987,46 @@ $(function () {
     }
     // 操作日志
     function oplog() {
-        function showLog(startTime1, endTime1) {
-            layui.use('table', function () {
-                var table = layui.table;
+        var pageNum = 1,pageSize = 10,startTime = '', endTime = '';
+        function showLog(startTime1, endTime1,pageNum,pageSize) {
+            layui.use(['table','laypage','laydate'], function () {
+                var table = layui.table,
+                    laydate=layui.laydate,
+                    laypage = layui.laypage;
 
                 table.render({
                     elem: '#test',
-                    url: global_path + '/selectRecordInfo' //数据接口
-                        ,
+                    url: global_path + '/manage/recordinfo/selectRecordInfo', //数据接口
+                    method:'post',
+                    headers: {
+                        'at': at
+                    },
+                    request: {
+                        pageName: 'pageNum', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
                     where: {
                         startTime: startTime1,
-                        endTime: endTime1
+                        endTime: endTime1,
+                        'pageNum':pageNum,
+                        'pageSize':pageSize
                     },
                     title: '操作日志',
-                    page: true //开启分页
-                        ,
-                    toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                        ,
+                    page: false, //开启分页
+                    toolbar: 'default', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                     cellMinWidth: 80,
                     parseData: function (res) {
+                        if(res.code == 0&&res.data.list.length>0){
+                            for(var i = 0;i<res.data.list.length;i++){
+                                var timestamp4 = new Date(res.data.list[i].createTime);
+                                res.data.list[i].createTime = timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8);
+                            }
+                        }
                         return {
                             'code': res.code,
                             'msg': res.msg,
-                            'data': res.data.list
+                            'data': res.data.list,
+                            "count": res.data.total,
                         }
                     },
                     cols: [[ //表头
@@ -1029,14 +1042,32 @@ $(function () {
                         }
 		      		, {
                             field: 'createTime',
-                            title: '时间',
+                            title: '创建时间',
                             width: '33.33%'
                         }
-			    ]]
+			        ]],
+                    done: function(res, curr, count){
+                        //如果是异步请求数据方式，res即为你接口返回的信息。
+                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                        laypage.render({
+                            elem:'oplog_laypage'
+                            ,count:count
+                            ,curr:pageNum
+                            ,limit:pageSize
+                            ,layout: ['prev', 'page', 'next', 'skip','count']
+                            ,jump:function (obj,first) {
+                                if(!first){
+                                    pageNum = obj.curr;
+                                    pageSize = obj.limit;
+                                    showLog(startTime, endTime,pageNum,pageSize);
+                                }
+                            }
+                        })
+                    }
                 });
             });
         }
-        showLog('', '');
+        showLog('', '',pageNum,pageSize);
         //日期时间选择器
         layui.use('laydate', function () {
             var laydate = layui.laydate;
@@ -1050,14 +1081,14 @@ $(function () {
             });
         });
         $('.query').on('click', function () {
-            var startTime = $('#startTime').val();
-            var endTime = $('#endTime').val();
+            startTime = $('#startTime').val();
+            endTime = $('#endTime').val();
             if (startTime == '') {
                 alert('请选择起始时间');
             } else if (endTime == '') {
                 alert('请选择结束时间');
             } else {
-                showLog(startTime, endTime);
+                showLog(startTime, endTime,pageNum,pageSize);
             }
         })
     }
