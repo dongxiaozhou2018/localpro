@@ -1001,6 +1001,7 @@ $(function () {
                     headers: {
                         'at': at
                     },
+                    contentType : "application/json",
                     request: {
                         pageName: 'pageNum', //页码的参数名称，默认：page
                         limitName: 'pageSize' //每页数据量的参数名，默认：limit
@@ -1088,6 +1089,8 @@ $(function () {
             } else if (endTime == '') {
                 alert('请选择结束时间');
             } else {
+                startTime = Date.parse(startTime);
+                endTime = Date.parse(endTime);
                 showLog(startTime, endTime,pageNum,pageSize);
             }
         })
