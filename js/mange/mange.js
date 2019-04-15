@@ -1023,6 +1023,9 @@ $(function () {
                                 res.data.list[i].createTime = timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8);
                             }
                         }
+                        if (res.code == 401){
+                            unauthorized(res.code);
+                        }
                         return {
                             'code': res.code,
                             'msg': res.msg,
@@ -1097,10 +1100,6 @@ $(function () {
     }
     // 升级维护
     function upgradeMaintenance() {
-        var HTlogin = sessionStorage.getItem('HTlogin');
-        if(HTlogin){
-            var at = JSON.parse(HTlogin).data.token;
-        }
         layui.use(['table', 'upload'], function () {
             var upload = layui.upload;
             table = layui.table //表格
@@ -1109,8 +1108,8 @@ $(function () {
             table.render({
                 elem: '#upgrade',
                 url: global_path + '/manage/version/selectVersionInfo', //数据接口
-                where : {
-                    'at':at
+                headers: {
+                    'at': at
                 },
                 title: '升级维护',
                 page: true //开启分页
@@ -1131,13 +1130,13 @@ $(function () {
                     {
                         field: 'id',
                         title: 'ID',
-                        width: '15%',
+                        width: '10%',
                         align: 'center'
                     },
                     {
                         field: 'version',
                         title: '版本名称',
-                        width: '15%',
+                        width: '10%',
                         align: 'center'
                     }
 			      	, {
@@ -1149,11 +1148,57 @@ $(function () {
 			      	, {
                         field: 'versionInfo',
                         title: '版本说明',
-                        width: '50%',
+                        width: '44.5%',
                         align: 'center'
+                    }
+                    , {
+                        fixed: 'right',
+                        title: '操作',
+                        width: '15.5%',
+                        align: 'center',
+                        toolbar: '#upgrade_operation'
                     }
 			    ]]
             });
+            function request(id){
+                var parms = {
+                    'id' : id
+                }
+                $.ajax({
+                    type: "post",
+                    url: global_path + '/manage/user/downLoad',
+                    data: parms,
+                    beforeSend: function (XMLHttpRequest) {
+                        XMLHttpRequest.setRequestHeader("at",at);
+                    },
+                    success: function (res) {
+                        if(res.code == 0){
+                            // window.open或者a标签下载 
+                            var isSupportDownload = 'download' in document.createElement('a');
+                            if(isSupportDownload){
+                                var $a = $("<a>") ;
+                                $a.attr({href:res.data.url,download:res.data.filename}).hide().appendTo($("body"))[0].click();
+                            }else{
+                               window.open(res.data.url);
+                            }
+                        }else if (res.code == 401){
+                            unauthorized(res.code);
+                        }else{
+                          alert(res.msg);
+                        }
+                    }
+                })
+            }
+            //监听行工具事件
+            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,
+                    layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'download') {
+                    request(data.id);
+                }
+            });
+
 
         });
         $('#equipment_btn').on('click','.layui-btn',function(){
