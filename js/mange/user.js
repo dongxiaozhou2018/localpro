@@ -17,6 +17,8 @@
             headers: {
                 'at': at
             },
+            acceptMime: 'image/*',
+            accept: 'images',
             before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
@@ -58,6 +60,21 @@
                 });
             }
         });
+        // 用户权限
+        // getAjax(global_path + "/manage/user/selectFunction",function(res){
+        //     if(res.code == 0){
+        //         if(res.data.length>=1){
+        //             for(var i = 0;i<res.data.length;i++){
+        //                 var choiceInput = '<input type="checkbox" name="power['+ res.data[i].id+ ']" title="'+ res.data[i].functionName+ '">';
+        //                 $('.choice_power').append(choiceInput);
+        //             }
+        //         }
+        //     }else if(res.code == 401){
+        //         unauthorized(res.code);
+        //     }else{
+        //         alert(res.msg);
+        //     }
+        // })
           //表单初始赋值
         var checkUser = sessionStorage.getItem('checkUser');
         if(checkUser){

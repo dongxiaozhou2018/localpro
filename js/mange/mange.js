@@ -1099,10 +1099,13 @@ $(function () {
         })
     }
     // 升级维护
-    function upgradeMaintenance() {
-        layui.use(['table', 'upload'], function () {
+    var upgradeNum = 1,upgradeSize = 10
+    function upgradeMaintenance(upgradeNum,upgradeSize) {
+        layui.use(['table','laypage','laydate'], function () {
             var upload = layui.upload;
-            table = layui.table //表格
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage;
 
             //执行一个 table 实例
             table.render({
@@ -1112,14 +1115,23 @@ $(function () {
                     'at': at
                 },
                 title: '升级维护',
-                page: true //开启分页
+                page: false //开启分页
                     ,
+                request: {
+                    pageName: 'pageNum', //页码的参数名称，默认：page
+                    limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                },
+                where: {
+                    'pageNum':upgradeNum,
+                    'pageSize':upgradeSize
+                },
                 parseData: function (res) {
                     if(res.code == 0){
                         return {
                             'code': res.code,
                             'msg': res.msg,
-                            'data': res.data
+                            'data': res.data,
+                            "count": res.data.total,
                         }
                     }else if (res.code == 401){
                         unauthorized(res.code);
@@ -1158,7 +1170,25 @@ $(function () {
                         align: 'center',
                         toolbar: '#upgrade_operation'
                     }
-			    ]]
+			    ]],
+                done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem:'upgrade_laypage'
+                        ,count:count
+                        ,curr:upgradeNum
+                        ,limit:upgradeSize
+                        ,layout: ['prev', 'page', 'next', 'skip','count']
+                        ,jump:function (obj,first) {
+                            if(!first){
+                                upgradeNum = obj.curr;
+                                upgradeSize = obj.limit;
+                                upgradeMaintenance(upgradeNum,upgradeSize);
+                            }
+                        }
+                    })
+                }
             });
 
             function request(id) {
