@@ -14,12 +14,10 @@
        // 上传文件
         var uploadInst = upload.render({
             elem: '#test1',
-            exts: 'txt',
+            exts: 'jpg|png|bmp|gif|jpeg|doc|docx|xls|xlsx|pdf|ppt|pptx|txt',
             url: global_path + "/manage/user/fileUpLoad",
-            before: function (obj) {
-                this.data = {
-                    'at':at
-                }
+            headers: {
+                'at': at
             },
             done: function (res) {
                 //如果上传失败
