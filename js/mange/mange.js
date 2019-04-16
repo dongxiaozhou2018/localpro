@@ -1087,15 +1087,9 @@ $(function () {
         $('.query').on('click', function () {
             startTime = $('#startTime').val();
             endTime = $('#endTime').val();
-            if (startTime == '') {
-                alert('请选择起始时间');
-            } else if (endTime == '') {
-                alert('请选择结束时间');
-            } else {
-                startTime = Date.parse(startTime);
-                endTime = Date.parse(endTime);
-                showLog(startTime, endTime,pageNum,pageSize);
-            }
+            startTime = Date.parse(startTime);
+            endTime = Date.parse(endTime);
+            showLog(startTime, endTime,pageNum,pageSize);
         })
     }
     // 升级维护
