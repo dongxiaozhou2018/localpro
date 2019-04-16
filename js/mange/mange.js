@@ -1160,34 +1160,10 @@ $(function () {
                     }
 			    ]]
             });
-            function request(id){
-                var parms = {
-                    'id' : id
-                }
-                $.ajax({
-                    type: "post",
-                    url: global_path + '/manage/user/downLoad',
-                    data: parms,
-                    beforeSend: function (XMLHttpRequest) {
-                        XMLHttpRequest.setRequestHeader("at",at);
-                    },
-                    success: function (res) {
-                        if(res.code == 0){
-                            // window.open或者a标签下载 
-                            var isSupportDownload = 'download' in document.createElement('a');
-                            if(isSupportDownload){
-                                var $a = $("<a>") ;
-                                $a.attr({href:res.data.url,download:res.data.filename}).hide().appendTo($("body"))[0].click();
-                            }else{
-                               window.open(res.data.url);
-                            }
-                        }else if (res.code == 401){
-                            unauthorized(res.code);
-                        }else{
-                          alert(res.msg);
-                        }
-                    }
-                })
+
+            function request(id) {
+                var url = global_path + '/manage/user/downLoad?id='+id+'&at='+at;
+                window.open(url);
             }
             //监听行工具事件
             table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
