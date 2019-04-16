@@ -60,10 +60,11 @@
             var file = sessionStorage.getItem('file');
             var version = $('.version').val();
             var versionInfo = $('.versionInfo').val();
-            if(!file){
-                alert('请上传文件');
-                return;
-            }else if(version == ''){
+            // if(!file){
+            //     alert('请上传文件');
+            //     return;
+            // }else 
+            if(version == ''){
                 alert('请输入版本号');
                 return;
             }else if(versionInfo == ''){

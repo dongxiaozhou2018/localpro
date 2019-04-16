@@ -32,7 +32,7 @@ $(function () {
                     $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
                 }
             })
-            upgradeMaintenance();
+            upgradeMaintenance(upgradeNum,upgradeSize);
         }else{
             $('#terminalData').show().siblings().hide();
             echart();
@@ -72,7 +72,7 @@ $(function () {
         // }
         if ($(this).attr('name') == 'sjwh') {
             $('#upgradeMaintenance').show().siblings().hide();
-            upgradeMaintenance();
+            upgradeMaintenance(upgradeNum,upgradeSize);
         }
     });
     $('.server').on('click', function () { // 接入服务器配置
@@ -1101,9 +1101,9 @@ $(function () {
     // 升级维护
     var upgradeNum = 1,upgradeSize = 10
     function upgradeMaintenance(upgradeNum,upgradeSize) {
-        layui.use(['table','laypage','laydate'], function () {
-            var upload = layui.upload;
-            var table = layui.table,
+        layui.use(['table','upload','laypage','laydate'], function () {
+            var upload = layui.upload,
+                table = layui.table,
                 laydate=layui.laydate,
                 laypage = layui.laypage;
 
@@ -1130,7 +1130,7 @@ $(function () {
                         return {
                             'code': res.code,
                             'msg': res.msg,
-                            'data': res.data,
+                            'data': res.data.list,
                             "count": res.data.total,
                         }
                     }else if (res.code == 401){
