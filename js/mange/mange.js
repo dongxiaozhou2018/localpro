@@ -9,7 +9,15 @@ $(function () {
     // 判断渲染模块
     function showModular(){
         var modular = sessionStorage.getItem('modular');
-        if(modular == 'permissionAssignment'){          //用户信息
+         if(modular == 'userInformation'){              //用户管理-----用户信息
+            $('#userInformation').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'yhgl'){
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
+                }
+            })
+            userInformation();
+        }else if(modular == 'permissionAssignment'){          //用户管理-----权限分配
             $('#permissionAssignment').show().siblings().hide();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'yhgl'){
