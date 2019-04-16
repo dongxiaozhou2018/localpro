@@ -99,6 +99,7 @@ function loginName(){
     if(HTlogin){
         HTlogin = JSON.parse(HTlogin);
         $('.loginName').html(HTlogin.data.username);
+        $('.layui-nav-img').attr('src',HTlogin.data.url);
     }else{
         window.location.href = '../login.html';
     }
