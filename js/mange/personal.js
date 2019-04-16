@@ -30,7 +30,7 @@
                 
             },
             done: function (res) {
-                //如果上传失败
+                //如果上传成功
                 if (res.code == 0) {
                     sessionStorage.setItem('file',JSON.stringify(res));
                     return layer.msg('上传成功');
@@ -39,7 +39,7 @@
                 }else{
                     return layer.msg('上传失败');
                 }
-                //上传成功
+                //上传失败
             },
             error: function () {
                 //演示失败状态，并实现重传

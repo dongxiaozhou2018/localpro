@@ -14,20 +14,22 @@
        // 上传文件
         var uploadInst = upload.render({
             elem: '#test1',
-            exts: 'jpg|png|bmp|gif|jpeg|doc|docx|xls|xlsx|pdf|ppt|pptx|txt',
+            accept: 'file',
+            exts: 'jpg|png|bmp|gif|jpeg|doc|docx|xls|xlsx|zip|rar|arj|z|pdf|ppt|pptx|txt',
+            // size: 
             url: global_path + "/manage/user/fileUpLoad",
             headers: {
                 'at': at
             },
             done: function (res) {
-                //如果上传失败
+                //如果上传成功
                 if (res.code == 0) {
                     sessionStorage.setItem('file',JSON.stringify(res));
                     return layer.msg('上传成功');
                 }else{
                     return layer.msg('上传失败');
                 }
-                //上传成功
+                //上传失败
             },
             error: function () {
                 //演示失败状态，并实现重传
@@ -55,6 +57,13 @@
                 var parms = {
                     'version':data.field.version,
                     'versionInfo':data.field.versionInfo,
+                }
+                if(file){
+                    file = JSON.parse(file).data;
+                    parms.filename = file.filename;
+                    parms.filetype = file.filetype;
+                    parms.suffix = file.suffix;
+                    parms.url = file.url;
                 }
                 var url = global_path + "/manage/version/insertVersionInfo";
                 commonAjax(url,parms,function(data){
