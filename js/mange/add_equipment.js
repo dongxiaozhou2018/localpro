@@ -21,6 +21,16 @@
             headers: {
                 'at': at
             },
+            before: function (obj) {
+                var file = sessionStorage.getItem('file');
+                if(file){
+                    file = JSON.parse(file).data;
+                    this.data = {
+                        'filename':file.filename + '.' + file.suffix
+                    }
+                }
+                
+            },
             done: function (res) {
                 //如果上传成功
                 if (res.code == 0) {

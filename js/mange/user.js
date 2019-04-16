@@ -26,7 +26,7 @@
                 if(file){
                     file = JSON.parse(file).data;
                     this.data = {
-                        'filename':file.filename
+                        'filename':file.filename + '.' + file.suffix
                     }
                 }
                 
