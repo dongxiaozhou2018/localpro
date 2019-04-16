@@ -23,8 +23,14 @@
                 var file = sessionStorage.getItem('file');
                 if(file){
                     file = JSON.parse(file).data;
+                    // requestType  文件为0，图片为1
                     this.data = {
-                        'filename':file.filename + '.' + file.suffix
+                        'filename':file.filename + '.' + file.suffix,
+                        'requestType':'1'
+                    }
+                }else{
+                    this.data = {
+                        'requestType':'1'
                     }
                 }
                 

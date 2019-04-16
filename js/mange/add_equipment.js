@@ -15,7 +15,7 @@
         var uploadInst = upload.render({
             elem: '#test1',
             accept: 'file',
-            exts: 'jpg|png|bmp|gif|jpeg|doc|docx|xls|xlsx|zip|rar|arj|z|pdf|ppt|pptx|txt',
+            exts: 'zip|rar|arj|z',
             // size: 
             url: global_path + "/manage/user/fileUpLoad",
             headers: {
@@ -25,8 +25,14 @@
                 var file = sessionStorage.getItem('file');
                 if(file){
                     file = JSON.parse(file).data;
+                    // requestType  文件为0，图片为1
                     this.data = {
-                        'filename':file.filename + '.' + file.suffix
+                        'filename':file.filename + '.' + file.suffix,
+                        'requestType':'0'
+                    }
+                }else{
+                    this.data = {
+                        'requestType':'0'
                     }
                 }
                 
