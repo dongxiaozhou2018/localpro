@@ -12,7 +12,6 @@
         if(checkServer){
             checkServer = JSON.parse(checkServer).data[0];
             form.val("example", {
-                "id": checkServer.id,
                 "serverIp": checkServer.serverIp,
                 "clientPort": checkServer.clientPort,
                 "devPort": checkServer.devPort,
@@ -21,17 +20,11 @@
         }
         
         form.on('submit(demo1)', function (data) {
-            // var fileId = sessionStorage.getItem('fileId');
-            
-            var id = $('.id').val();
             var serverIp = $('.serverIp').val();
             var clientPort = $('.clientPort').val();
             var devPort = $('.devPort').val();
             var devId = $('.devId').val();
-            if(id == ''){
-                alert('请输入ID');
-                return;
-            }else if(serverIp == ''){
+            if(serverIp == ''){
                 alert('请输入服务器IP');
                 return;
             }else if(clientPort == ''){
@@ -45,7 +38,6 @@
                 return;
             }else{
                 var parms = {
-                    "id": data.field.id,
                     "serverIp": data.field.serverIp,
                     "clientPort": data.field.clientPort,
                     "devPort": data.field.devPort,
@@ -55,7 +47,7 @@
                     var url = global_path + "/accsvr/addService";
                 }else if(getQueryString('type') == 'update'){
                     var url = global_path + "/accsvr/updateService";
-                    parms.remarks = data.field.remarks;
+                    parms.id = getQueryString('ID');
                 }
                 
                 commonAjax(url,parms,function(data){

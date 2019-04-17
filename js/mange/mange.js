@@ -163,7 +163,7 @@ $(function () {
         getAjax(url, function(data) {
             if (data.code == 0) {
                 sessionStorage.setItem('checkUser', JSON.stringify(data));
-                var url = winUrl + "?userID=" + id + '&type=update';
+                var url = winUrl + "?ID=" + id + '&type=update';
                 frame(tit,url,aleSession);
             } else if(data.code == 401){
                 unauthorized(data.code);
@@ -181,6 +181,8 @@ $(function () {
                 fnName(pageNum,pageSize);
             }else if(data.code == 401){
                 unauthorized(data.code);
+            }else{
+                alert(data.msg);
             }
         })
         
@@ -249,10 +251,11 @@ $(function () {
 
     // 服务配置---------------接入服务器配置
     function server(pageNum,pageSize) {
-        layui.use(['table','laypage','laydate'], function () {
+        layui.use(['table','laypage','laydate','element'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
-                laypage = layui.laypage;
+                laypage = layui.laypage,
+                element = layui.element;
 
             //执行一个 table 实例
             table.render({
@@ -262,6 +265,7 @@ $(function () {
                 headers: {
                     'at': at
                 },
+                id: 'serviceBox',
                 contentType : "application/json",
                 loading:true,
                 request: {
@@ -359,38 +363,69 @@ $(function () {
                 // var checkStatus = table.checkStatus(obj.config.id)
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        // obj.del(); //删除对应行（tr）的DOM结构
-                        // del(data.id);
+                        console.log(data)
+                        del('/accsvr/delServeice',data.id,server);
                         layer.close(index);
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    // update('/accsvr/selectDeviceByDevId',data.id,'编辑用户信息','user.html','userInformation');
+                    update('/accsvr/getUpdateOrDelAccsvr',data.devId,'编辑服务器信息','server.html','checkServer');
                     // update(data.id, layEvent);
                 }
             });
 
-            //渲染搜索列表
-            function searchCity() {
-                var devId = $(".devId").val().toUpperCase();
-                if (devId == "") {
-                    $("tr").show();
-                } else{
-                    $("td").each(function () {
-                        if ($(this).attr('data-field') == 'devId') {
-                            var id = $(this).find('.layui-table-cell').text().toUpperCase();
-                            if (id.indexOf(devId) != -1) {
-                                $(this).parents('tr').show();
-                            } else {
-                                $(this).parents('tr').hide();
-                            }
+            //搜索加载--数据表格重载
+            var $ = layui.$, active = {
+                reload: function () {
+                    //执行重载
+                    table.reload('serviceBox', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        },
+                        url: global_path + '/accsvr/selectDevIdListByServerIp'
+                        , where: {
+                           serverIp: $(".serverIp").val()
                         }
                     });
                 }
-            }
+            };
+
+
             $('.server_query').on('click', function () {
-                searchCity();
+                if($(".serverIp").val() == ''){
+                    server(pageNum,pageSize);
+                }else{
+                    ids=new Array();
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                }
+                
             });
+            element.init();
+
+
+
+            //渲染搜索列表
+            // function searchCity() {
+            //     var serverIp = $(".serverIp").val();
+            //     if (serverIp == "") {
+            //         $("tr").show();
+            //     } else{
+            //         $("td").each(function () {
+            //             if ($(this).attr('data-field') == 'serverIp') {
+            //                 var id = $(this).find('.layui-table-cell').text();
+            //                 if (id.indexOf(serverIp) != -1) { 
+            //                     $(this).parents('tr').show();
+            //                 } else {
+            //                     $(this).parents('tr').hide();
+            //                 }
+            //             }
+            //         });
+            //     }
+            // }
+            // $('.server_query').on('click', function () {
+            //     searchCity();
+            // });
         });
         $('#server_btn').on('click',function(){
             var url = "server.html?type=add";

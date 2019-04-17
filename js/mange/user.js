@@ -129,8 +129,8 @@
                     'dept':data.field.dept,
                     'telephone':data.field.telephone
                 }
-                if(getQueryString('userID')){
-                    parms.id = getQueryString('userID');
+                if(getQueryString('ID')){
+                    parms.id = getQueryString('ID');
                 }
                 if(file){
                     file = JSON.parse(file).data;
