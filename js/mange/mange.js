@@ -18,14 +18,20 @@ $(function () {
                 }
             })
             userInformation();
-        }else if(modular == 'police'){              //报警级别
-            $('#police_box').show().siblings().hide();
+        }else if(modular == 'police' || modular == 'server'){              //服务配置
             $('.btn').each(function(){
                 if($(this).attr('name') == 'fwpz'){
                     $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
                 }
             })
-            police();
+            if(modular == 'server'){            //接入服务器配置
+                $('#server').show().siblings().hide();
+                server(pageNum,pageSize);
+            }else{                              //报警级别
+                $('#police_box').show().siblings().hide();
+                police(pageNum,pageSize); 
+            }
+           
         }else if(modular == 'upgrade'){         //升级维护
             $('#upgradeMaintenance').show().siblings().hide();
             $('.btn').each(function(){
@@ -79,12 +85,12 @@ $(function () {
     });
     $('.server').on('click', function () { // 接入服务器配置
         $('#server').show().siblings().hide();
-        server();
+        server(pageNum,pageSize);
     });
 
     $('.police').on('click', function () { // 报警等级设定
         $('#police_box').show().siblings().hide();
-        police();
+        police(pageNum,pageSize);
     });
     $('.logout').on('click', function () { //退出登录
         $('.loginOut').show();
@@ -242,7 +248,7 @@ $(function () {
     echart();
 
     // 服务配置---------------接入服务器配置
-    function server() {
+    function server(pageNum,pageSize) {
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
