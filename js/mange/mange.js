@@ -413,7 +413,7 @@ $(function () {
                 searchCity();
             });
         });
-        $('#server_btn').on('click',function(){
+        $('#server_btn').on('click','.layui-btn',function(){
             var url = "server.html?type=add";
             frame('添加服务器',url,'server');
         })

@@ -99,7 +99,10 @@
                 </div>
                 <!-- layui   服务配置 ----------接入服务器配置  -->
                 <div id="server" style="display: none">
-                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <div id="server_btn" class="">
+                        <button class="layui-btn" style="height: 30px;line-height: 30px;border-radius: 3px;">添加</button>
+                    </div>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                         <legend style="font-size: 13px;">接入服务器配置</legend>
                     </fieldset>
                     <div class="demoTable">
@@ -107,9 +110,6 @@
                             <input name="devId" class="layui-input devId" autocomplete="off" placeholder="请输入设备ID" style="width: auto;height: 30px;">
                         </div>
                         <button class="layui-btn server_query" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;">查询</button>
-                        <div id="server_btn" class="right">
-                            <button class="layui-btn" style="height: 30px;line-height: 30px;border-radius: 3px;">添加</button>
-                        </div>
                         <div class="clearf"></div>
                     </div>
                     <table class="layui-hide" id="service" lay-filter="test"></table>
