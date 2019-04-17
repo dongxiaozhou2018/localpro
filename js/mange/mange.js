@@ -157,7 +157,7 @@ $(function () {
         getAjax(url, function(data) {
             if (data.code == 0) {
                 sessionStorage.setItem('checkUser', JSON.stringify(data));
-                var url = winUrl + "?userID=" + id;
+                var url = winUrl + "?userID=" + id + '&type=update';
                 frame(tit,url,aleSession);
             } else if(data.code == 401){
                 unauthorized(data.code);
@@ -243,95 +243,106 @@ $(function () {
 
     // 服务配置---------------接入服务器配置
     function server() {
-        layui.use('table', function () {
-            table = layui.table //表格
+        layui.use(['table','laypage','laydate'], function () {
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage;
 
             //执行一个 table 实例
             table.render({
                 elem: '#service',
-                url: '' //数据接口
-                    ,
+                url: global_path + '/accsvr/getAll', //数据接口
+                method: 'post',
+                headers: {
+                    'at': at
+                },
+                contentType : "application/json",
+                loading:true,
+                request: {
+                    pageName: 'pageNum' //页码的参数名称，默认：page
+                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                },
+                where:{
+                    'pageNum':pageNum,
+                    'pageSize':pageSize
+                },
                 title: '服务配置',
-                page: true //开启分页
-                    ,
-                toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    // ,totalRow: true //开启合计行
-                    ,
-                parseData: function (data) {
-                    return {
-                        'code': data.code,
-                        'msg': data.msg,
-                        // 'data': data.data.list
+                page: false, //开启分页
+                parseData: function (res) {
+                    if(res.code == 0){
+                        return {
+                            'code': res.code,
+                            'msg': res.msg,
+                            "count": res.data.total,
+                            'data': res.data.list
+                        }
+                    }else if(res.code == 401){
+                        unauthorized(res.code);
                     }
                 },
                 cols: [[ //表头
-                    // {type: 'checkbox', fixed: 'left'}
                     {
-                        field: 'username',
+                        field: 'devId',
+                        title: '设备ID',
+                        width: '10%',
+                        align: 'center'
+                    }
+                    ,{
+                        field: 'serverIp',
                         title: '服务器IP',
-                        width: '16.6%',
+                        width: '12.6%',
                         align: 'center'
                     }
                     , {
-                        field: 'remarks',
+                        field: 'clientPort',
                         title: '客户端口',
                         width: '12.6%',
                         align: 'center'
                     }
                     , {
-                        field: 'remarks',
+                        field: 'devPort',
                         title: '设备端口',
                         width: '12.6%',
                         align: 'center'
                     }
-                    , {
-                        field: 'remarks',
-                        title: '接入终端数量',
-                        width: '8%',
-                        align: 'center'
-                    }
-                    , {
-                        field: 'remarks',
-                        title: '备注',
-                        width: '39.33%',
-                        align: 'center'
-                    }
+                    // , {
+                    //     field: 'devId',
+                    //     title: '设备ID',
+                    //     width: '10%',
+                    //     align: 'center'
+                    // }
+                    // , {
+                    //     field: 'remarks',
+                    //     title: '备注',
+                    //     width: '29.33%',
+                    //     align: 'center'
+                    // }
                     , {
                         field: 'url',
                         title: '操作',
-                        width: '10.9%',
+                        width: '15.9%',
                         align: 'center',
                         toolbar: '#service_operation'
                     }
-                ]]
-            });
-            //监听头工具栏事件
-            table.on('toolbar(test)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id),
-                    data = checkStatus.data; //获取选中的数据
-                switch (obj.event) {
-                    case 'add':
-                        window.location.href = "./add_user.html";
-                        break;
-                    case 'update':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能同时编辑一个');
-                        } else {
-                            update('/manage/user/checkUser',checkStatus.data[0].id,'编辑用户信息','user.html','userInformation');
+                ]],
+                done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem:'server_laypage'
+                        ,count:count
+                        ,curr:pageNum
+                        ,limit:pageSize
+                        ,layout: ['prev', 'page', 'next', 'skip','count']
+                        ,jump:function (obj,first) {
+                            if(!first){
+                                pageNum = obj.curr;
+                                pageSize = obj.limit;
+                                server(pageNum,pageSize);
+                            }
                         }
-                        break;
-                    case 'delete':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能删除一个');
-                        } else {
-                            del(checkStatus.data[0].id);
-                        }
-                        break;
-                };
+                    })
+                }
             });
 
             //监听行工具事件
@@ -343,17 +354,42 @@ $(function () {
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
                         // obj.del(); //删除对应行（tr）的DOM结构
-                        del(data.id);
+                        // del(data.id);
                         layer.close(index);
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    update('/manage/user/checkUser',data.id,'编辑用户信息','user.html','userInformation');
+                    // update('/accsvr/selectDeviceByDevId',data.id,'编辑用户信息','user.html','userInformation');
                     // update(data.id, layEvent);
                 }
             });
 
+            //渲染搜索列表
+            function searchCity() {
+                var devId = $(".devId").val().toUpperCase();
+                if (devId == "") {
+                    $("tr").show();
+                } else{
+                    $("td").each(function () {
+                        if ($(this).attr('data-field') == 'devId') {
+                            var id = $(this).find('.layui-table-cell').text().toUpperCase();
+                            if (id.indexOf(devId) != -1) {
+                                $(this).parents('tr').show();
+                            } else {
+                                $(this).parents('tr').hide();
+                            }
+                        }
+                    });
+                }
+            }
+            $('.server_query').on('click', function () {
+                searchCity();
+            });
         });
+        $('#server_btn').on('click',function(){
+            var url = "server.html?type=add";
+            frame('添加服务器',url,'server');
+        })
     }
     // 服务配置---------------报警等级设定
     function police(pageNum,pageSize) {
@@ -479,7 +515,6 @@ $(function () {
                     var police_parms = {
                         'alarmType':data.alarmType
                     }
-                    console.log(police_parms)
                     commonAjax(police_url,police_parms,function(res){
                         if(res.code == 0){
                             sessionStorage.setItem('checkPolice',JSON.stringify(res));
@@ -835,10 +870,6 @@ $(function () {
                 yes: function (index,layero) {
                     var body = layer.getChildFrame('body', index);
                     var w = $(layero).find("iframe")[0].contentWindow;
-                    console.log(body);
-                    console.log(w);
-                    console.log(index);
-                    console.log(body.find('.username').val());
                 },
 
                 zIndex: layer.zIndex, //重点1

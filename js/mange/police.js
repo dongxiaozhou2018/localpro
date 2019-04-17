@@ -66,10 +66,6 @@
                 })
             }
         });
-        form.on('submit(demo2)', function (data) {
-            sessionStorage.removeItem('checkPolice');
-            window.location.href = "./mange.html?modular=police";
-        });
     });
 })();
 

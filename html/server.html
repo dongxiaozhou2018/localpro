@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>添加服务器</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/mange.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css">
+    <script type="text/javascript" src="../layui/layui.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../js/globalvar.js"></script>
+    <script type="text/javascript" src="../js/mange/server.js"></script>
+
+</head>
+
+<body class="layui-layout-body">
+    <div class="content" style="margin: 20px 20px;">
+        <form class="layui-form layui-form-pane" action="" enctype="multipart/form-data" lay-filter="example">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red;">*</span> ID</label>
+                <div class="layui-input-block">
+                    <input type="text" name="id" autocomplete="off" class="layui-input id" placeholder="请输入ID">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red;">*</span> 服务器IP</label>
+                <div class="layui-input-block">
+                    <input type="text" name="serverIp" autocomplete="off" class="layui-input serverIp" placeholder="请输入服务器IP">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red;">*</span> 客户端口</label>
+                <div class="layui-input-block">
+                    <input type="text" name="clientPort" autocomplete="off" class="layui-input clientPort" placeholder="请输入客户端口">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red;">*</span> 设备端口</label>
+                <div class="layui-input-block">
+                    <input type="text" name="devPort" autocomplete="off" class="layui-input devPort" placeholder="请输入设备端口">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red;">*</span> 设备ID</label>
+                <div class="layui-input-block">
+                    <input type="text" name="devId" autocomplete="off" class="layui-input devId" placeholder="请输入设备ID">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text remarks_box">
+                <label class="layui-form-label"><span style="color: red;">*</span> 备注信息</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" class="layui-textarea remarks" name="remarks" style="resize:none;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-left: 43%;">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" type="button" id="submit_btn">确认保存</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    if(getQueryString("type") == 'add'){
+        $('.remarks_box').hide();
+    }
+</script>
+</html>
