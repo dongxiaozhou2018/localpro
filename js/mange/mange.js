@@ -394,6 +394,7 @@ $(function () {
                 var devId = $(".devId").val();
                 if (devId == "") {
                     $("tr").show();
+                    $('#server_laypage').show();
                 } else{
                     $("td").each(function () {
                         if ($(this).attr('data-field') == 'devId') {
@@ -408,6 +409,7 @@ $(function () {
                 }
             }
             $('.server_query').on('click', function () {
+                $('#server_laypage').hide();
                 searchCity();
             });
         });
@@ -554,6 +556,7 @@ $(function () {
                 var police_role = $('.police_role').val();
                 if (police_role == '') {
                     $("tr").show();
+                    $('#police_laypage').show();
                 } else {
                     $("td").each(function () {
                         if ($(this).attr('data-field') == 'alarmLevel') {
@@ -568,6 +571,7 @@ $(function () {
                 }
             }
             $('.police_query').on('click', function () {
+                $('#police_laypage').hide();
                 searchCity();
             });
         });
@@ -779,6 +783,7 @@ $(function () {
                 var select_role = $('.select_role').val();
                 if (username == "" && select_role == '') {
                     $("tr").show();
+                    $('#user_laypage').show();
                 } else if(username != "" && select_role == ''){
                     $("td").each(function () {
                         if ($(this).attr('data-field') == 'username') {
@@ -827,6 +832,7 @@ $(function () {
             }
             $('.query').on('click', function () {
                 searchCity();
+                $('#user_laypage').hide();
             });
             //监听头工具栏事件
             table.on('toolbar(test)', function (obj) {
