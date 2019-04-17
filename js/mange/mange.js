@@ -151,7 +151,34 @@ $(function () {
     }
     user();
 
-
+    // 编辑信息
+    function update(ajaxUrl,id,tit,winUrl,aleSession) {
+        var url = global_path + ajaxUrl + "?id="+id;
+        getAjax(url, function(data) {
+            if (data.code == 0) {
+                sessionStorage.setItem('checkUser', JSON.stringify(data));
+                var url = winUrl + "?userID=" + id;
+                frame(tit,url,aleSession);
+            } else if(data.code == 401){
+                unauthorized(data.code);
+            } else {
+                alert(data.msg);
+            }
+        })
+    }
+    // 删除信息
+    function del(ajaxUrl,id,fnName) {
+        var url = global_path + ajaxUrl + "?id="+id;
+        getAjax(url, function(data) {
+            if(data.code == 0){
+                alert(data.msg);
+                fnName(pageNum,pageSize);
+            }else if(data.code == 401){
+                unauthorized(data.code);
+            }
+        })
+        
+    }
     // 终端总览
     function echart() {
         // 基于准备好的dom，初始化echarts实例
@@ -292,7 +319,7 @@ $(function () {
                         } else if (data.length > 1) {
                             layer.msg('只能同时编辑一个');
                         } else {
-                            update(checkStatus.data[0].id);
+                            update('/manage/user/checkUser',checkStatus.data[0].id,'编辑用户信息','user.html','userInformation');
                         }
                         break;
                     case 'delete':
@@ -321,7 +348,8 @@ $(function () {
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    update(data.id, layEvent);
+                    update('/manage/user/checkUser',data.id,'编辑用户信息','user.html','userInformation');
+                    // update(data.id, layEvent);
                 }
             });
 
@@ -755,7 +783,7 @@ $(function () {
                         } else if (data.length > 1) {
                             layer.msg('只能同时编辑一个');
                         } else {
-                            update(checkStatus.data[0].id);
+                            update('/manage/user/checkUser',checkStatus.data[0].id,'编辑用户信息','user.html','userInformation');
                         }
                         break;
                     case 'delete':
@@ -764,7 +792,7 @@ $(function () {
                         } else if (data.length > 1) {
                             layer.msg('只能删除一个');
                         } else {
-                            del(checkStatus.data[0].id);
+                            del('/manage/user/deleteUser',checkStatus.data[0].id,userInformation);
                         }
                         break;
                 };
@@ -777,11 +805,11 @@ $(function () {
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        del(data.id);
+                        del('/manage/user/deleteUser',data.id,userInformation);
                         layer.close(index); //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    update(data.id, layEvent);
+                    update('/manage/user/checkUser',data.id,'编辑用户信息','user.html','userInformation');
                 }else if (layEvent === 'pwd') {
                     layer.confirm('真的重置密码吗？', function (index) {
                         resetPwd(data.id);
@@ -825,34 +853,6 @@ $(function () {
                 }
             });
         })
-    }
-    // 编辑用户信息
-    function update(id, layEvent) {
-        var url = global_path + "/manage/user/checkUser?id="+id;
-        getAjax(url, function(data) {
-            if (data.code == 0) {
-                sessionStorage.setItem('checkUser', JSON.stringify(data));
-                var url = "user.html?layEvent=" + layEvent + "&userID=" + id;
-                frame('编辑用户信息',url,'userInformation');
-            } else if(data.code == 401){
-                unauthorized(data.code);
-            } else {
-                alert(data.msg);
-            }
-        })
-    }
-    // 删除用户信息
-    function del(id) {
-        var url = global_path + "/manage/user/deleteUser?id="+id;
-        getAjax(url, function(data) {
-            if(data.code == 0){
-                alert(data.msg);
-                userInformation(page,limit);
-            }else if(data.code == 401){
-                unauthorized(data.code);
-            }
-        })
-        
     }
     // 重置密码
     function resetPwd(id) {
