@@ -17,14 +17,6 @@ $(function () {
                 }
             })
             userInformation();
-        }else if(modular == 'permissionAssignment'){          //用户管理-----权限分配
-            $('#permissionAssignment').show().siblings().hide();
-            $('.btn').each(function(){
-                if($(this).attr('name') == 'yhgl'){
-                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
-                }
-            })
-            permissionAssignment();
         }else if(modular == 'police'){              //报警级别
             $('#police_box').show().siblings().hide();
             $('.btn').each(function(){
@@ -54,10 +46,10 @@ $(function () {
     });
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
-        // if($(this).attr('name') == 'yhgl'){
-        // 	$('#user').show().siblings().hide();
-        // 	user();
-        // }
+        if($(this).attr('name') == 'yhgl'){
+        	$('#userInformation').show().siblings().hide();
+        	userInformation();
+        }
         if ($(this).attr('name') == 'dtpz') {
             $('#mapid').show().siblings().hide();
             map();
@@ -91,15 +83,6 @@ $(function () {
     $('.police').on('click', function () { // 报警等级设定
         $('#police_box').show().siblings().hide();
         police();
-    });
-    $('.userInformation').on('click', function () { // 用户信息
-        $('#userInformation').show().siblings().hide();
-        userInformation();
-    });
-
-    $('.permissionAssignment').on('click', function () { // 权限分配
-        $('#permissionAssignment').show().siblings().hide();
-        permissionAssignment();
     });
     $('.logout').on('click', function () { //退出登录
         $('.loginOut').show();
@@ -884,114 +867,6 @@ $(function () {
             }
         })
         
-    }
-    // 权限分配
-    function permissionAssignment() {
-        layui.use('table', function () {
-            table = layui.table //表格
-
-            //执行一个 table 实例
-            table.render({
-                elem: '#permission',
-                url: '' //数据接口
-                    ,
-                title: '权限',
-                page: true //开启分页
-                    ,
-                toolbar: '#addBtn' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-                    ,
-                parseData: function (data) {
-                    return {
-                        'code': data.code,
-                        'msg': data.msg,
-                        'data': data.data.list
-                    }
-                },
-                cols: [[ //表头
-			      	// {type: 'checkbox', fixed: 'left'}
-                    {
-                        field: 'id',
-                        title: 'ID',
-                        width: '20%',
-                        align: 'center'
-                    }
-                    , {
-                        field: 'username',
-                        title: '角色',
-                        width: '20%',
-                        align: 'center'
-                    }
-			      	, {
-                        field: 'remarks',
-                        title: '备注',
-                        width: '20%',
-                        align: 'center'
-                    }
-                    , {
-                        field: 'functionName',
-                        title: '权限',
-                        width: '20%',
-                        align: 'center'
-                    }
-			      	, {
-                        field: 'url',
-                        title: '操作',
-                        width: '20%',
-                        align: 'center',
-                        toolbar: '#permission_operation'
-                    }
-			    ]]
-            });
-            //监听头工具栏事件
-            table.on('toolbar(test)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id),
-                    data = checkStatus.data; //获取选中的数据
-                switch (obj.event) {
-                    case 'add':
-                        window.location.href = "./add_power.html";
-                        break;
-                };
-            });
-
-            //监听行工具事件
-            table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-                var data = obj.data //获得当前行数据
-                    ,
-                    layEvent = obj.event; //获得 lay-event 对应的值
-                if (layEvent === 'del') {
-                    layer.confirm('真的删除行么', function (index) {
-                        var parms = {
-                            'id': data.id
-                        }
-                        var url = global_path + "/deleteOne";
-                        commonAjax(url, parms, function (data) {
-                            if (data.code == 0) {
-                                permissionAssignment();
-                                alert(data.msg);
-                            } else {
-                                alert(data.msg);
-                            }
-                        })
-                        layer.close(index);
-                        //向服务端发送删除指令
-                    });
-                } else if (layEvent === 'edit') {
-                    var parms = {
-                        'id': data.id
-                    }
-                    var url = global_path + "/selectOne";
-                    commonAjax(url, parms, function (data) {
-                        if (data.code == 0) {
-                            permissionAssignment();
-                            alert(data.msg);
-                        } else {
-                            alert(data.msg);
-                        }
-                    })
-                }
-            });
-
-        });
     }
     // 操作日志
     function oplog() {
