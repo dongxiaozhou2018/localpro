@@ -6,6 +6,7 @@ $(function () {
     if(HTlogin){
         var at = JSON.parse(HTlogin).data.token;
     }
+    var pageNum = 1,pageSize = 10;
     // 判断渲染模块
     function showModular(){
         var modular = sessionStorage.getItem('modular');
@@ -32,7 +33,7 @@ $(function () {
                     $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
                 }
             })
-            upgradeMaintenance(upgradeNum,upgradeSize);
+            upgradeMaintenance(pageNum,pageSize);
         }else{
             $('#terminalData').show().siblings().hide();
             echart();
@@ -45,6 +46,7 @@ $(function () {
         frame('编辑个人信息',url);
     });
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
+        pageNum = 1; pageSize = 10;
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if($(this).attr('name') == 'yhgl'){
         	$('#userInformation').show().siblings().hide();
@@ -72,7 +74,7 @@ $(function () {
         // }
         if ($(this).attr('name') == 'sjwh') {
             $('#upgradeMaintenance').show().siblings().hide();
-            upgradeMaintenance(upgradeNum,upgradeSize);
+            upgradeMaintenance(pageNum,pageSize);
         }
     });
     $('.server').on('click', function () { // 接入服务器配置
@@ -326,8 +328,6 @@ $(function () {
         });
     }
     // 服务配置---------------报警等级设定
-    var limitcount = 10;
-    var curnum = 1;
     function police(pageNum,pageSize) {
         
         layui.use(['table','laypage','laydate'], function () {
@@ -412,14 +412,14 @@ $(function () {
                     laypage.render({
                         elem:'police_laypage'
                         ,count:count
-                        ,curr:curnum
-                        ,limit:limitcount
+                        ,curr:pageNum
+                        ,limit:pageSize
                         ,layout: ['prev', 'page', 'next', 'skip','count']
                         ,jump:function (obj,first) {
                             if(!first){
-                                curnum = obj.curr;
-                                limitcount = obj.limit;
-                                police(curnum,limitcount);
+                                pageNum = obj.curr;
+                                pageSize = obj.limit;
+                                police(pageNum,pageSize);
                             }
                         }
                     })
@@ -439,7 +439,7 @@ $(function () {
                         commonAjax(url,parms, function(res) {
                             alert(res.msg);
                             if(res.code == 0){
-                                police(curnum,limitcount);
+                                police(pageNum,pageSize);
                             }else if(res.code == 401){
                                 unauthorized(res.code);
                             }
@@ -555,8 +555,7 @@ $(function () {
 
     
     // 用户信息
-    var page=1,limit=10;
-    function userInformation(page,limit) {
+    function userInformation(pageNum,pageSize) {
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
@@ -574,8 +573,8 @@ $(function () {
                     ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
                 },
                 where:{
-                    'pageNum':page,
-                    'pageSize':limit
+                    'pageNum':pageNum,
+                    'pageSize':pageSize
                 },
                 title: '用户表',
                 page: false, //开启分页
@@ -673,14 +672,14 @@ $(function () {
                     laypage.render({
                         elem:'user_laypage'
                         ,count:count
-                        ,curr:page
-                        ,limit:limit
+                        ,curr:pageNum
+                        ,limit:pageSize
                         ,layout: ['prev', 'page', 'next', 'skip','count']
                         ,jump:function (obj,first) {
                             if(!first){
-                                page = obj.curr;
-                                limit = obj.limit;
-                                userInformation(page,limit);
+                                pageNum = obj.curr;
+                                pageSize = obj.limit;
+                                userInformation(pageNum,pageSize);
                             }
                         }
                     })
@@ -870,7 +869,7 @@ $(function () {
     }
     // 操作日志
     function oplog() {
-        var pageNum = 1,pageSize = 10,startTime = '', endTime = '';
+        var startTime = '', endTime = '';
         function showLog(startTime1, endTime1,pageNum,pageSize) {
             layui.use(['table','laypage','laydate'], function () {
                 var table = layui.table,
@@ -976,8 +975,7 @@ $(function () {
         })
     }
     // 升级维护
-    var upgradeNum = 1,upgradeSize = 10
-    function upgradeMaintenance(upgradeNum,upgradeSize) {
+    function upgradeMaintenance(pageNum,pageSize) {
         layui.use(['table','upload','laypage','laydate'], function () {
             var upload = layui.upload,
                 table = layui.table,
@@ -999,8 +997,8 @@ $(function () {
                     limitName: 'pageSize' //每页数据量的参数名，默认：limit
                 },
                 where: {
-                    'pageNum':upgradeNum,
-                    'pageSize':upgradeSize
+                    'pageNum':pageNum,
+                    'pageSize':pageSize
                 },
                 parseData: function (res) {
                     if(res.code == 0){
@@ -1054,14 +1052,14 @@ $(function () {
                     laypage.render({
                         elem:'upgrade_laypage'
                         ,count:count
-                        ,curr:upgradeNum
-                        ,limit:upgradeSize
+                        ,curr:pageNum
+                        ,limit:pageSize
                         ,layout: ['prev', 'page', 'next', 'skip','count']
                         ,jump:function (obj,first) {
                             if(!first){
-                                upgradeNum = obj.curr;
-                                upgradeSize = obj.limit;
-                                upgradeMaintenance(upgradeNum,upgradeSize);
+                                pageNum = obj.curr;
+                                pageSize = obj.limit;
+                                upgradeMaintenance(pageNum,pageSize);
                             }
                         }
                     })
@@ -1081,8 +1079,6 @@ $(function () {
                     request(data.id);
                 }
             });
-
-
         });
         $('#equipment_btn').on('click','.layui-btn',function(){
             var url = "add_equipment.html";
