@@ -104,7 +104,7 @@
                     </fieldset>
                     <div class="demoTable">
                         <div class="layui-inline left">
-                            <input name="serverIp" class="layui-input serverIp" autocomplete="off" placeholder="请输入服务器IP" style="width: auto;height: 30px;">
+                            <input name="devId" class="layui-input devId" autocomplete="off" placeholder="请输入设备ID" style="width: auto;height: 30px;">
                         </div>
                         <button class="layui-btn server_query" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;">查询</button>
                         <div id="server_btn" class="right">
@@ -115,6 +115,7 @@
                     <table class="layui-hide" id="service" lay-filter="test"></table>
                     <div id="server_laypage"></div>
                     <script type="text/html" id="service_operation">
+                        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="equipment">设备查询</a>
                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                     </script>

@@ -383,61 +383,33 @@ $(function () {
                             alert(res.msg);
                         }
                     })
+                } else if (layEvent === 'equipment') {
+                    var url = "equipment_server.html?serverIp=" + data.serverIp;
+                    frame('设备查询',url,'server');
                 }
             });
 
-            //搜索加载--数据表格重载
-            var $ = layui.$, active = {
-                reload: function () {
-                    //执行重载
-                    table.reload('serviceBox', {
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        },
-                        url: global_path + '/accsvr/selectDevIdListByServerIp'
-                        , where: {
-                           serverIp: $(".serverIp").val()
+            // 渲染搜索列表
+            function searchCity() {
+                var devId = $(".devId").val();
+                if (devId == "") {
+                    $("tr").show();
+                } else{
+                    $("td").each(function () {
+                        if ($(this).attr('data-field') == 'devId') {
+                            var id = $(this).find('.layui-table-cell').text();
+                            if (id.indexOf(devId) != -1) { 
+                                $(this).parents('tr').show();
+                            } else {
+                                $(this).parents('tr').hide();
+                            }
                         }
                     });
                 }
-            };
-
-
+            }
             $('.server_query').on('click', function () {
-                if($(".serverIp").val() == ''){
-                    server(pageNum,pageSize);
-                }else{
-                    ids=new Array();
-                    var type = $(this).data('type');
-                    active[type] ? active[type].call(this) : '';
-                }
-                
+                searchCity();
             });
-            element.init();
-
-
-
-            //渲染搜索列表
-            // function searchCity() {
-            //     var serverIp = $(".serverIp").val();
-            //     if (serverIp == "") {
-            //         $("tr").show();
-            //     } else{
-            //         $("td").each(function () {
-            //             if ($(this).attr('data-field') == 'serverIp') {
-            //                 var id = $(this).find('.layui-table-cell').text();
-            //                 if (id.indexOf(serverIp) != -1) { 
-            //                     $(this).parents('tr').show();
-            //                 } else {
-            //                     $(this).parents('tr').hide();
-            //                 }
-            //             }
-            //         });
-            //     }
-            // }
-            // $('.server_query').on('click', function () {
-            //     searchCity();
-            // });
         });
         $('#server_btn').on('click',function(){
             var url = "server.html?type=add";
