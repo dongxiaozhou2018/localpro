@@ -10,7 +10,7 @@
           //表单初始赋值
         var checkServer = sessionStorage.getItem('checkServer');
         if(checkServer){
-            checkServer = JSON.parse(checkServer).data[0];
+            checkServer = JSON.parse(checkServer).data;
             form.val("example", {
                 "serverIp": checkServer.serverIp,
                 "clientPort": checkServer.clientPort,

@@ -315,18 +315,6 @@ $(function () {
                         width: '12.6%',
                         align: 'center'
                     }
-                    // , {
-                    //     field: 'devId',
-                    //     title: '设备ID',
-                    //     width: '10%',
-                    //     align: 'center'
-                    // }
-                    // , {
-                    //     field: 'remarks',
-                    //     title: '备注',
-                    //     width: '29.33%',
-                    //     align: 'center'
-                    // }
                     , {
                         field: 'url',
                         title: '操作',
@@ -363,14 +351,38 @@ $(function () {
                 // var checkStatus = table.checkStatus(obj.config.id)
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        console.log(data)
-                        del('/accsvr/delServeice',data.id,server);
+                        var server_url = global_path + '/accsvr/delServeice';
+                        var server_parms = {
+                            'id':data.id
+                        }
+                        commonAjax(server_url,server_parms,function(res){
+                            if(res.code == 0){
+                                server(pageNum,pageSize);
+                            }else if(res.code == 401){
+                                unauthorized(res.code)
+                            }else{
+                                alert(res.msg);
+                            }
+                        })
                         layer.close(index);
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    update('/accsvr/getUpdateOrDelAccsvr',data.devId,'编辑服务器信息','server.html','checkServer');
-                    // update(data.id, layEvent);
+                    var server_url = global_path + '/accsvr/getUpdateOrDelAccsvr';
+                    var server_parms = {
+                        'id':data.id
+                    }
+                    commonAjax(server_url,server_parms,function(res){
+                        if(res.code == 0){
+                            sessionStorage.setItem('checkServer',JSON.stringify(res));
+                            var url = "server.html?type=update&id="+data.id;
+                            frame('编辑报警类型',url,'server');
+                        }else if(res.code == 401){
+                            unauthorized(res.code)
+                        }else{
+                            alert(res.msg);
+                        }
+                    })
                 }
             });
 
