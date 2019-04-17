@@ -885,6 +885,7 @@ $(function () {
                     sessionStorage.removeItem('checkPolice');
                     sessionStorage.removeItem('checkUser');
                     sessionStorage.removeItem('file');
+                    sessionStorage.removeItem('checkServer');
                 }
             });
         })
