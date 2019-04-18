@@ -1,5 +1,5 @@
 
-var global_path = "http://" + "192.168.1.142" + ":8083";
+var global_path = "http://" + "192.168.1.185" + ":8083";
 
 // var global_path = "https://" + window.location.hostname + ":8083";
 var HTlogin = sessionStorage.getItem('HTlogin');
