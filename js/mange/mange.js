@@ -60,7 +60,7 @@ $(function () {
         }
         if ($(this).attr('name') == 'zdpz') {
             $('#terminalConfigure').show().siblings().hide();
-            terminalConfigure();
+            terminalConfigure(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'zdzl') {
             $('#terminalData').show().siblings().hide();
@@ -578,44 +578,160 @@ $(function () {
     }
 
     // 终端配置
-    function terminalConfigure(){
-        layui.use('table', function () {
-            var table = layui.table;
+    function terminalConfigure(pageNum,pageSize){
+        var url = global_path + '/manage/device/listPage';
+        var parms = {
+                'pageNum':pageNum,
+                'pageSize':pageSize
+            }
+        commonAjax(url,parms,function(res){
+            if(res.code == 0){
+                renderTable(res.data.list);
+            }else if(res.code == 401){
+                unauthorized(res.code);
+            }
+        })
+        var renderTable = function (data) {
+            layui.config({
+                base: '../js/'
+            }).extend({
+                treetable: 'treetable'
+            }).use(['layer', 'table', 'treetable','laypage','laydate'], function () {
+                var $ = layui.jquery;
+                var table = layui.table;
+                var layer = layui.layer;
+                var treetable = layui.treetable;
+                var laydate=layui.laydate,
+                    laypage = layui.laypage;
+                
+                treetable.render({
+                    data:data,
+                    treeColIndex: 2, //树形图标显示在第几列
+                    treeSpid: -1, //最上级的父级id
+                    treeIdName: 'id', //id字段的名称
+                    treePidName: 'pid', //pid字段的名称
+                    treeDefaultClose: true, //是否默认折叠
+                    treeLinkage: false, //父级展开时是否自动展开所有子级
+                    elem: '#terminal', //表格id
+                    page: false, //树形表格一般是没有分页的
+                    cols: [[
+                        {type: 'radio'},
+                        {field: 'deviceId', title: '设备ID'},
+                        {field: 'deviceName', title: '设备名称'},
+                        {field: 'deviceIP', title: '设备IP'},
+                        {field: 'devicePort', title: '端口号'},
+                        {templet: '#terminal_operation', title: '操作'}
+                    ]],
+                    // done: function(res, curr, count){
+                    //     //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //     //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    //     laypage.render({
+                    //         elem:'terminal_laypage'
+                    //         ,count:count
+                    //         ,curr:pageNum
+                    //         ,limit:pageSize
+                    //         ,layout: ['prev', 'page', 'next', 'skip','count']
+                    //         ,jump:function (obj,first) {
+                    //             if(!first){
+                    //                 pageNum = obj.curr;
+                    //                 pageSize = obj.limit;
+                    //                 terminalConfigure(pageNum,pageSize);
+                    //             }
+                    //         }
+                    //     })
+                    // }
+                });
+                //监听工具条
+                table.on('tool(table1)', function (obj) {
+                    var data = obj.data;
+                    var layEvent = obj.event;
 
-            table.render({
-                elem: '#terminal',
-                url: '' //数据接口
-                    ,
-                title: '终端配置',
-                page: true //开启分页
-                    ,
-                cellMinWidth: 80,
-                parseData: function (res) {
-                    return {
-                        'code': res.code,
-                        'msg': res.msg,
-                        // 'data': res.data.list
+                    if (layEvent === 'del') {
+                        layer.msg('删除' + data.id);
+                    } else if (layEvent === 'edit') {
+                        layer.msg('修改' + data.id);
                     }
-                },
-                cols: [[ //表头
-                    {
-                        field: 'information',
-                        title: '操作内容',
-                        width: '33.33%'
-                    }
-                    , {
-                        field: 'username',
-                        title: '用户名',
-                        width: '33.33%'
-                    }
-                    , {
-                        field: 'createTime',
-                        title: '时间',
-                        width: '33.33%'
-                    }
-                ]]
-            });
-        });
+                });
+            })
+        }
+
+
+
+
+        // layui.use(['table','laypage','laydate'], function () {
+        //     var table = layui.table,
+        //         laydate=layui.laydate,
+        //         laypage = layui.laypage;
+
+            // table.render({
+            //     elem: '#terminal',
+            //     url: global_path + '/manage/device/listPage', //数据接口
+            //     title: '终端配置',
+            //     page: false, //开启分页
+            //     method: 'post',
+            //     headers: {
+            //         'at': at
+            //     },
+            //     request: {
+            //         pageName: 'pageNum' //页码的参数名称，默认：page
+            //         ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            //     },
+            //     where:{
+            //         'pageNum':pageNum,
+            //         'pageSize':pageSize
+            //     },
+            //     parseData: function (res) {
+            //         return {
+            //             'code': res.code,
+            //             'msg': res.msg,
+            //             "count": res.data.total,
+            //             'data': res.data.list
+            //         }
+            //     },
+            //     cols: [[ //表头
+            //         {
+            //             field: 'deviceId',
+            //             title: '设备ID'
+            //         }
+            //         , {
+            //             field: 'deviceName',
+            //             title: '设备名称'
+            //         }
+            //         , {
+            //             field: 'deviceIP',
+            //             title: '设备IP'
+            //         }
+            //         , {
+            //             field: 'devicePort',
+            //             title: '端口号'
+            //         }
+            //         , {
+            //             fixed: 'right',
+            //             title: '操作',
+            //             align: 'center',
+            //             toolbar: '#terminal_operation'
+            //         }
+            //     ]],
+            //     done: function(res, curr, count){
+            //         //如果是异步请求数据方式，res即为你接口返回的信息。
+            //         //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            //         laypage.render({
+            //             elem:'terminal_laypage'
+            //             ,count:count
+            //             ,curr:pageNum
+            //             ,limit:pageSize
+            //             ,layout: ['prev', 'page', 'next', 'skip','count']
+            //             ,jump:function (obj,first) {
+            //                 if(!first){
+            //                     pageNum = obj.curr;
+            //                     pageSize = obj.limit;
+            //                     terminalConfigure(pageNum,pageSize);
+            //                 }
+            //             }
+            //         })
+            //     }
+            // });
+        // });
     }
 
     
@@ -661,7 +777,7 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else{
+                    }else if(res.code == 401){
                         unauthorized(res.code);
                     }
                 },
