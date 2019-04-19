@@ -314,7 +314,7 @@ $(function () {
                     , {
                         field: 'url',
                         title: '操作',
-                        width: '15.9%',
+                        width: '20.9%',
                         align: 'center',
                         toolbar: '#service_operation'
                     }
