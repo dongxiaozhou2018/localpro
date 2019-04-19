@@ -114,7 +114,6 @@ layuiXtree.prototype.CreateCkAll = function () {
 
 //生产结构
 layuiXtree.prototype.dataBind = function (d) {
-    console.log(d)
     var _this = this;
     if (d.length > 0) {
         for (i in d) {
@@ -130,7 +129,7 @@ layuiXtree.prototype.dataBind = function (d) {
                 xtree_ischecked = d[i].checked ? ' checked ' : '';
                 xtree_isdisabled = d[i].disabled ? ' disabled="disabled" ' : '';
             }
-            _this._domStr += '<input type="checkbox" class="layui-xtree-checkbox" ' + xtree_isend + xtree_ischecked + xtree_isdisabled + ' value="' + d[i].text + '" title="' + d[i].text + '" lay-skin="primary" lay-filter="xtreeck' + _this._containerid + '">';
+            _this._domStr += '<input type="checkbox" class="layui-xtree-checkbox" ' + xtree_isend + xtree_ischecked + xtree_isdisabled + ' value="' + d[i].id + '" title="' + d[i].text + '" lay-skin="primary" lay-filter="xtreeck' + _this._containerid + '">';
             _this.dataBind(d[i].children);
             _this._domStr += '</div>';
         }
