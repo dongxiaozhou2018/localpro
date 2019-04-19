@@ -1,12 +1,13 @@
 (function(){
-    layui.use(['form', 'layedit', 'laydate',"jquery", "upload", "layer", "element"], function(){
+    layui.use(['form', 'layedit', 'laydate',"jquery", "upload", "layer", "element",'tree'], function(){
         var $ = layui.$
             ,form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
             ,laydate = layui.laydate
             ,upload = layui.upload
-            ,element = layui.element;
+            ,element = layui.element
+            ,tree = layui.tree;
         var HTlogin = sessionStorage.getItem('HTlogin');
         if(HTlogin){
             var at = JSON.parse(HTlogin).data.token;
@@ -61,20 +62,25 @@
             }
         });
         // 用户权限
-        // getAjax(global_path + "/manage/user/selectFunction",function(res){
-        //     if(res.code == 0){
-        //         if(res.data.length>=1){
-        //             for(var i = 0;i<res.data.length;i++){
-        //                 var choiceInput = '<input type="checkbox" name="power['+ res.data[i].id+ ']" title="'+ res.data[i].functionName+ '">';
-        //                 $('.choice_power').append(choiceInput);
-        //             }
-        //         }
-        //     }else if(res.code == 401){
-        //         unauthorized(res.code);
-        //     }else{
-        //         alert(res.msg);
-        //     }
-        // })
+        var nodenew;
+        getAjax(global_path + "/manage/group/groupTree",function(res){
+            if(res.code == 0){
+                    nodenew = res.data.children;
+                    var aaa = nodenew.length;
+                    var xtree1 = new layuiXtree({
+                        elem: 'xtree1'   //(必填) 放置xtree的容器，样式参照 .xtree_contianer
+                        , form: form     //(必填) layui 的 from
+                        , data: nodenew     //(必填) json数据
+                    });
+                xtree1.GetChecked();
+                    form.render();
+            }else if(res.code == 401){
+                unauthorized(res.code);
+            }else{
+                alert(res.msg);
+            }
+        })
+        
           //表单初始赋值
         var checkUser = sessionStorage.getItem('checkUser');
         if(checkUser){
@@ -98,10 +104,7 @@
             var telephone = $('.telephone').val();
             var remarks = $('.remarks').val();
             var password = $('.password').val();
-            // if(!file || file == ''){
-            //     alert('请选择图片');
-            //     return;
-            // }else 
+
             if(username == ''){
                 alert('请输入用户名');
                 return;
@@ -174,6 +177,6 @@
             sessionStorage.removeItem('checkUser');
         });
     });
-
+    
 })();
 
