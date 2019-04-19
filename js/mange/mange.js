@@ -944,8 +944,8 @@ $(function () {
                 }
             }
             $('.query').on('click', function () {
-                searchCity();
                 $('#user_laypage').hide();
+                searchCity();
             });
             //监听头工具栏事件
             table.on('toolbar(test)', function (obj) {
