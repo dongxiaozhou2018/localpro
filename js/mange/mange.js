@@ -66,6 +66,10 @@ $(function () {
         	$('#userInformation').show().siblings().hide();
         	userInformation();
         }
+        if ($(this).attr('name') == 'dtpz') {
+            $('#mapid').show().siblings().hide();
+            map();
+        }
         if ($(this).attr('name') == 'zdpz') {
             $('#terminalConfigure').show().siblings().hide();
             terminalConfigure(pageNum,pageSize);
@@ -556,6 +560,29 @@ $(function () {
             var url = "police.html?type=add";
             frame('添加报警类型',url,'police');
         })
+    }
+
+
+    // 地图配置
+    function map() {
+        var map = new L.Map("mapid", {
+            zoom: 9,
+            center: [39.0850853357,117.1993482089],
+            boxZoom: true, 
+        });
+        var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
+        var layer = new L.TileLayer(url, {
+            subdomains:"1234"
+        });
+        map.addLayer(layer);
+        var marker = new L.marker([39.1410912411,117.0073575633]);
+        marker.addTo(map);
+        marker.bindPopup("<b>天津</b><br>西青区.");
+
+        var marker = new L.marker([39.0850853357,117.1993482089]);
+        marker.addTo(map);
+        marker.bindPopup("<b>天津</b>");
+
     }
 
     // 终端配置

@@ -687,8 +687,49 @@ $(function () {
 
     // 地图配置
     function map() {
+        // var cities = L.layerGroup();
+
+        // L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(cities),
+        //     L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(cities),
+        //     L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(cities),
+        //     L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(cities);
+
+
+        // var mbAttr = '',
+        //     mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+        // var grayscale = L.tileLayer(mbUrl, {
+        //         id: 'mapbox.light',
+        //         attribution: mbAttr
+        //     }),
+        //     streets = L.tileLayer(mbUrl, {
+        //         id: 'mapbox.streets',
+        //         attribution: mbAttr
+        //     });
+
+        // var map = L.map('mapid', {
+        //     center: [39.0851000000,117.1993700000],
+        //     zoom: 10,
+        //     layers: [grayscale, cities],
+        //     zoomControl: true,
+        //     zoomSnap: 0.25
+        // });
+        // map.zoomControl.setPosition('topleft');
+        // map.invalidateSize(true);
+        // var baseLayers = {
+        //     "Grayscale": grayscale,
+        //     "Streets": streets
+        // };
+
+        // var overlays = {
+        //     "Cities": cities
+        // };
+
+        // L.control.layers(baseLayers, overlays).addTo(map);
+
+
         var map = new L.Map("mapid", {
-            zoom: 9,
+            zoom: 8,
             center: [39.0850853357,117.1993482089],
             boxZoom: true, 
         });
@@ -700,11 +741,14 @@ $(function () {
         var marker = new L.marker([39.1410912411,117.0073575633]);
         marker.addTo(map);
         marker.bindPopup("<b>天津</b><br>西青区.");
-
-        var marker = new L.marker([39.0850853357,117.1993482089]);
-        marker.addTo(map);
-        marker.bindPopup("<b>天津</b>");
-
+		// marker.openPopup();
+        // var wmsLayer= L.tileLayer.wms("http://localhost:8080/geoserver/cite/wms?", {
+        //     layers: 'cite:bou2_4p',//需要加载的图层
+        //     format: 'image/png',//返回的数据格式
+        //     transparent: true,
+        //     //crs: L.CRS.EPSG4326
+        // });
+        // map.addLayer(wmsLayer);
     }
     // 终端配置
     function terminalConfigure(){
