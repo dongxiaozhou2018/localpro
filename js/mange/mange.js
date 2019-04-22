@@ -840,7 +840,7 @@ $(function () {
 			     	, {
                         field: 'dept',
                         title: '部门',
-                        width: '10.5%',
+                        width: '6.5%',
                         sort: true,
                         align: 'center'
                     }
@@ -853,20 +853,20 @@ $(function () {
 			     	, {
                         field: 'remarks',
                         title: '备注信息',
-                        width: '14.5%',
+                        width: '10.5%',
                         align: 'center'
                     }
 			     	, {
                         field: 'url',
                         title: '照片信息',
-                        width: '15.5%',
+                        width: '12.5%',
                         align: 'center',
                         toolbar: '#imgUrl'
                     }
 			     	, {
                         fixed: 'right',
                         title: '操作',
-                        width: '15.5%',
+                        width: '26.5%',
                         align: 'center',
                         toolbar: '#barDemo'
                     }
@@ -987,8 +987,10 @@ $(function () {
                         del('/manage/user/deleteUser',data.id,userInformation);
                         layer.close(index); //向服务端发送删除指令
                     });
-                } else if (layEvent === 'edit') {
+                } else if (layEvent === 'editUser') {
                     update('/manage/user/checkUser',data.id,'编辑用户信息','user.html','userInformation');
+                } else if (layEvent === 'editPower') {
+                    update('/manage/user/checkUser',data.id,'编辑用户权限','power.html','userInformation');
                 }else if (layEvent === 'pwd') {
                     layer.confirm('真的重置密码吗？', function (index) {
                         resetPwd(data.id);

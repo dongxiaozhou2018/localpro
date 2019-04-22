@@ -1,5 +1,5 @@
 
-var global_path = "http://" + "192.168.1.185" + ":8083";
+var global_path = "http://" + "192.168.1.142" + ":8083";
 
 // var global_path = "https://" + window.location.hostname + ":8083";
 var HTlogin = sessionStorage.getItem('HTlogin');
@@ -109,7 +109,7 @@ function unauthorized(code){
     if(code == 401){
         sessionStorage.removeItem('HTlogin');
         alert('登录超时，请重新登陆');
-        window.location.href = '../login.html';;
+        window.location.href = '../login.html';
     }
 }
 
