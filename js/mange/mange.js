@@ -393,29 +393,6 @@ $(function () {
                 }
             });
 
-            // 渲染搜索列表
-            function searchCity() {
-                var devId = $(".devId").val();
-                if (devId == "") {
-                    $("tr").show();
-                    $('#server_laypage').show();
-                } else{
-                    $("td").each(function () {
-                        if ($(this).attr('data-field') == 'devId') {
-                            var id = $(this).find('.layui-table-cell').text();
-                            if (id.indexOf(devId) != -1) { 
-                                $(this).parents('tr').show();
-                            } else {
-                                $(this).parents('tr').hide();
-                            }
-                        }
-                    });
-                }
-            }
-            $('.server_query').on('click', function () {
-                $('#server_laypage').hide();
-                searchCity();
-            });
         });
         $('#server_btn').on('click','.layui-btn',function(){
             var url = "server.html?type=add";
@@ -518,7 +495,26 @@ $(function () {
                             }
                         }
                     })
+                },
+                id: 'testReload'
+            });
+            var $ = layui.$, active = {
+                reload: function(){
+                    var police_role = $('.police_role');
+                  
+                  //执行重载
+                    table.reload('testReload', {
+                        url: global_path + '/alarmlevel/getAllByAlarmLevel',
+                        where: {
+                            'alarmLevel': police_role.val(),
+                        }
+                    });
                 }
+            };
+              
+            $('.police_query').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
             });
             table.on('tool(police)', function (obj) { 
                 var data = obj.data //获得当前行数据
@@ -554,29 +550,6 @@ $(function () {
                         }
                     })
                 }
-            });
-            //渲染搜索列表
-            function searchCity() {
-                var police_role = $('.police_role').val();
-                if (police_role == '') {
-                    $("tr").show();
-                    $('#police_laypage').show();
-                } else {
-                    $("td").each(function () {
-                        if ($(this).attr('data-field') == 'alarmLevel') {
-                            var alarmLevel = $(this).find('.layui-btn').text();
-                            if (alarmLevel.indexOf(police_role) != -1) {
-                                $(this).parents('tr').show();
-                            } else {
-                                $(this).parents('tr').hide();
-                            }
-                        }
-                    });
-                }
-            }
-            $('.police_query').on('click', function () {
-                $('#police_laypage').hide();
-                searchCity();
             });
         });
         $('#police_btn').on('click',function(){
@@ -696,25 +669,25 @@ $(function () {
                 });
                 var $ = layui.$, active = {
                     reload: function(){
-                      var deviceId = $('.deviceId');
-                      var deviceName = $('.deviceName');
-                      var deviceIP = $('.deviceIP');
+                        var deviceId = $('.deviceId');
+                        var deviceName = $('.deviceName');
+                        var deviceIP = $('.deviceIP');
                       
-                      //执行重载
-                      table.reload('testReload', {
-                        where: {
-                            'deviceId': deviceId.val(),
-                            'deviceName': deviceName.val(),
-                            'deviceIP': deviceIP.val(),
-                        }
-                      });
+                        //执行重载
+                        table.reload('testReload', {
+                            where: {
+                                'deviceId': deviceId.val(),
+                                'deviceName': deviceName.val(),
+                                'deviceIP': deviceIP.val(),
+                            }
+                        });
                     }
-                  };
+                };
                   
-                  $('.terminal').on('click', function(){
+                $('.terminal').on('click', function(){
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
-                  });
+                });
             }
             table.on('tool(terminal)', function (obj) { 
                 var data = obj.data //获得当前行数据
@@ -868,25 +841,25 @@ $(function () {
             });
             var $ = layui.$, active = {
                 reload: function(){
-                  var realName = $('.realName');
-                  var select_role = $('.select_role');
-                  var telephone = $('.telephone');
+                    var realName = $('.realName');
+                    var select_role = $('.select_role');
+                    var telephone = $('.telephone');
                   
-                  //执行重载
-                  table.reload('testReload', {
-                    where: {
-                        'realName': realName.val(),
-                        'role': select_role.val(),
-                        'telephone': telephone.val(),
-                    }
-                  });
+                    //执行重载
+                    table.reload('testReload', {
+                        where: {
+                            'realName': realName.val(),
+                            'role': select_role.val(),
+                            'telephone': telephone.val(),
+                        }
+                    });
                 }
-              };
+            };
               
-              $('.query').on('click', function(){
+            $('.query').on('click', function(){
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
-              });
+            });
             //监听头工具栏事件
             table.on('toolbar(test)', function (obj) {
                 var checkStatus = table.checkStatus(obj.config.id),
