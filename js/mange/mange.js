@@ -32,6 +32,14 @@ $(function () {
                 police(pageNum,pageSize); 
             }
            
+        }else if(modular == 'equipment'){         //终端设备
+            $('#terminalConfigure').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'zdpz'){
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
+                }
+            })
+            terminalConfigure(pageNum,pageSize);
         }else if(modular == 'upgrade'){         //升级维护
             $('#upgradeMaintenance').show().siblings().hide();
             $('.btn').each(function(){
@@ -588,12 +596,8 @@ $(function () {
                 tree = layui.tree,
                 $ = layui.jquery;
 
-            var nodenew;
             getAjax(global_path + "/manage/group/groupTree",function(res){
                 if(res.code == 0){
-                    nodenew = res.data.children;
-                    nodenew = menutree(nodenew);
-                    console.log(nodenew)
                     layui.tree({
                         elem: '#terminal_demo' //指定元素
                         ,click: function(item){ //点击节点回调
@@ -601,7 +605,7 @@ $(function () {
                                 terminalTab(item.id);
                             }
                         }
-                        ,nodes: nodenew
+                        ,nodes: menutree(nodenew)
                     });
                 }else if(res.code == 401){
                     unauthorized(res.code);
@@ -639,8 +643,6 @@ $(function () {
                                 "count": res.data.total,
                                 'data': res.data.list
                             }
-                        }else if(res.code == 401){
-                            unauthorized(res.code);
                         }
                         
                     },
@@ -689,22 +691,37 @@ $(function () {
                                 }
                             }
                         })
-                    }
+                    },
+                    id: 'testReload'
                 });
+                var $ = layui.$, active = {
+                    reload: function(){
+                      var deviceId = $('.deviceId');
+                      var deviceName = $('.deviceName');
+                      var deviceIP = $('.deviceIP');
+                      
+                      //执行重载
+                      table.reload('testReload', {
+                        where: {
+                            'deviceId': deviceId.val(),
+                            'deviceName': deviceName.val(),
+                            'deviceIP': deviceIP.val(),
+                        }
+                      });
+                    }
+                  };
+                  
+                  $('.terminal').on('click', function(){
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                  });
             }
             table.on('tool(terminal)', function (obj) { 
                 var data = obj.data //获得当前行数据
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'edit') {
-                    var terminal_url = global_path + '/device/selectOne?id=' + data.id;
-                    getAjax(terminal_url,function(res){
-                        if(res.code == 0){
-                            sessionStorage.setItem('checkeQuipment',JSON.stringify(res));
-                            var url = "equipment.html?type=update";
-                            frame('编辑终端设备信息',url,'equipment');
-                        }
-                    })
+                    update('/device/selectOne',data.id,'编辑终端设备信息','equipment.html','equipment');
                 }
             });
         });
@@ -717,10 +734,12 @@ $(function () {
     
     // 用户信息
     function userInformation(pageNum,pageSize) {
-        layui.use(['table','laypage','laydate'], function () {
+        layui.use(['table','tree','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
-                laypage = layui.laypage;
+                laypage = layui.laypage,
+                tree = layui.tree,
+                $ = layui.jquery;
 
             //执行一个 table 实例
             table.render({
@@ -844,65 +863,30 @@ $(function () {
                             }
                         }
                     })
-                }
+                },
+                id:'testReload'
             });
-            //渲染搜索列表
-            function searchCity() {
-                var username = $(".username").val().toUpperCase();
-                var select_role = $('.select_role').val();
-                if (username == "" && select_role == '') {
-                    $("tr").show();
-                    $('#user_laypage').show();
-                } else if(username != "" && select_role == ''){
-                    $("td").each(function () {
-                        if ($(this).attr('data-field') == 'username') {
-                            var name = $(this).find('.layui-table-cell').text().toUpperCase();
-                            if (name.indexOf(username) != -1) {
-                                $(this).parents('tr').show();
-                            } else {
-                                $(this).parents('tr').hide();
-                            }
-                        }
-                    });
-                } else if(username == "" && select_role != ''){
-                    $("td").each(function () {
-                        if ($(this).attr('data-field') == 'role') {
-                            var role = $(this).find('.layui-table-cell').text();
-                            if (role.indexOf(select_role) != -1) {
-                                $(this).parents('tr').show();
-                            } else {
-                                $(this).parents('tr').hide();
-                            }
-                        }
-                    });
-                }else{
-                    var name
-                    $("tr").each(function () {
-                        $("td").each(function () {
-                            if ($(this).attr('data-field') == 'username') {
-                                name = $(this).find('.layui-table-cell').text().toUpperCase();
-                                if (name.indexOf(username) != -1) {
-                                    $(this).parents('tr').show();
-                                } else {
-                                    $(this).parents('tr').hide();
-                                }
-                            }
-                            if ($(this).attr('data-field') == 'role') {
-                                var role = $(this).find('.layui-table-cell').text();
-                                if (name.indexOf(username) != -1&&role.indexOf(select_role) != -1) {
-                                    $(this).parents('tr').show();
-                                } else {
-                                    $(this).parents('tr').hide();
-                                }
-                            }
-                        });
-                    });
+            var $ = layui.$, active = {
+                reload: function(){
+                  var realName = $('.realName');
+                  var select_role = $('.select_role');
+                  var telephone = $('.telephone');
+                  
+                  //执行重载
+                  table.reload('testReload', {
+                    where: {
+                        'realName': realName.val(),
+                        'role': select_role.val(),
+                        'telephone': telephone.val(),
+                    }
+                  });
                 }
-            }
-            $('.query').on('click', function () {
-                $('#user_laypage').hide();
-                searchCity();
-            });
+              };
+              
+              $('.query').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+              });
             //监听头工具栏事件
             table.on('toolbar(test)', function (obj) {
                 var checkStatus = table.checkStatus(obj.config.id),

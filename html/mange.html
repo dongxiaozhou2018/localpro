@@ -160,15 +160,15 @@
                     </fieldset>
                     <div class="demoTable" style="margin-bottom: 20px;">
                         <div class="layui-inline left" style="margin-right: 10px;">
-                            <input name="username" class="layui-input username" autocomplete="off" placeholder="请输入设备ID" style="width: auto;height: 30px;">
+                            <input name="deviceId" class="layui-input deviceId" autocomplete="off" placeholder="请输入设备ID" style="width: auto;height: 30px;">
                         </div>
                         <div class="layui-inline left" style="margin-right: 10px;">
-                            <input name="username" class="layui-input username" autocomplete="off" placeholder="请输入设备名称" style="width: auto;height: 30px;">
+                            <input name="deviceName" class="layui-input deviceName" autocomplete="off" placeholder="请输入设备名称" style="width: auto;height: 30px;">
                         </div>
                         <div class="layui-inline left" style="margin-right: 10px;">
-                            <input name="username" class="layui-input username" autocomplete="off" placeholder="请输入设备IP" style="width: auto;height: 30px;">
+                            <input name="deviceIP" class="layui-input deviceIP" autocomplete="off" placeholder="请输入设备IP" style="width: auto;height: 30px;">
                         </div>
-                        <button class="layui-btn query" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+                        <button class="layui-btn terminal" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
                         <div class="clearf"></div>
                     </div>
                     <div id="terminal_tree" class="left" style="width: 20%;margin-top: 19px;">
@@ -194,18 +194,21 @@
                 <div id="userInformation" style="display: none">
                     <div class="demoTable">
                         <div class="layui-inline left">
-                            <input name="username" class="layui-input username" autocomplete="off" placeholder="请输入用户名" style="width: auto;height: 30px;">
+                            <input name="realName" class="layui-input realName" autocomplete="off" placeholder="请输入姓名" style="width: auto;height: 30px;margin-right: 25px;">
+                        </div>
+                        <div class="layui-inline left">
+                            <input name="telephone" class="layui-input telephone" autocomplete="off" placeholder="请输入电话" style="width: auto;height: 30px;">
                         </div>
                         <div class="layui-inline left select_type_box">
                             <label class="select_type">用户类型：</label>
                             <select name="role" class="select_role right">
                                 <option value="">请选择类型</option>
-                                <option value="管理员">管理员</option>
-                                <option value="操作员">操作员</option>
-                                <option value="维修员">维修员</option>
+                                <option value="0">管理员</option>
+                                <option value="1">操作员</option>
+                                <option value="2">维修员</option>
                             </select>
                         </div>
-                        <button class="layui-btn query" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+                        <button class="layui-btn query" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
                         <div class="clearf"></div>
                     </div>
                     <table class="layui-hide" id="demo" lay-data="{id: 'idTest'}" lay-filter="test"></table>
@@ -217,9 +220,9 @@
                         </button>
                     </script>
                     <script type="text/html" id="barDemo">
-                        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="editUser"><i class="layui-icon layui-icon-edit"></i>编辑信息</a>
-                        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="editPower"><i class="layui-icon layui-icon-edit"></i>编辑权限</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除用户</a>
+                        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="editUser"><i class="layui-icon layui-icon-edit"></i>信息</a>
+                        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="editPower"><i class="layui-icon layui-icon-edit"></i>权限</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
                         <a class="layui-btn layui-btn-xs" lay-event="pwd"><i class="layui-icon layui-icon-password"></i>密码重置</a>
                     </script>
                     <script type="text/html" id="imgUrl">
