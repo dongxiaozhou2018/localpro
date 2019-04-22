@@ -594,6 +594,15 @@ $(function () {
                     nodenew = res.data.children;
                     nodenew = menutree(nodenew);
                     console.log(nodenew)
+                    layui.tree({
+                        elem: '#terminal_demo' //指定元素
+                        ,click: function(item){ //点击节点回调
+                            if(item.children.length == 0){
+                                terminalTab(item.id);
+                            }
+                        }
+                        ,nodes: nodenew
+                    });
                 }else if(res.code == 401){
                     unauthorized(res.code);
                 }else{
@@ -601,18 +610,11 @@ $(function () {
                 }
             })
             terminalTab();
-            layui.tree({
-                elem: '#terminal_demo' //指定元素
-                ,click: function(item){ //点击节点回调
-                    layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                    console.log(item);
-                }
-                ,nodes: nodenew
-            });
+
             function terminalTab(id){
                 table.render({
                     elem: '#terminal',
-                    url: global_path + '/manage/device/listPage?id='+id, //数据接口
+                    url: global_path + '/manage/device/listPage', //数据接口
                     title: '终端配置',
                     page: false, //开启分页
                     method: 'post',
@@ -626,7 +628,8 @@ $(function () {
                     },
                     where:{
                         'pageNum':pageNum,
-                        'pageSize':pageSize
+                        'pageSize':pageSize,
+                        'id':id
                     },
                     parseData: function (res) {
                         if(res.code == 0){
