@@ -965,6 +965,7 @@ $(function () {
                 area: ['800px', '600px'],
                 shade: 0,
                 resize: false,
+                tipsMore: false,
                 content: url,
                 yes: function (index,layero) {
                     var body = layer.getChildFrame('body', index);
@@ -982,6 +983,7 @@ $(function () {
                     sessionStorage.removeItem('file');
                     sessionStorage.removeItem('checkServer');
                     sessionStorage.removeItem('checkeQuipment');
+                    layer.closeAll();
                 }
             });
         })
