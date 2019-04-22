@@ -1,5 +1,5 @@
 
-var global_path = "http://" + "192.168.1.142" + ":8083";
+var global_path = "http://" + "192.168.1.185" + ":8083";
 
 // var global_path = "https://" + window.location.hostname + ":8083";
 var HTlogin = sessionStorage.getItem('HTlogin');
@@ -112,4 +112,14 @@ function unauthorized(code){
         window.location.href = '../login.html';
     }
 }
-
+// 树形菜单
+function menutree(a){
+    for(var i = 0;i < a.length;i++){
+        a[i].name = a[i].text;
+        a[i].spread = false;
+        if(a[i].children && a[i].children.length>0){
+            menutree(a[i].children);
+        }
+    }
+    return a;
+}

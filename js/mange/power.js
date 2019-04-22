@@ -14,7 +14,7 @@
             var id = JSON.parse(checkUser).data.id;
         }
 
-        getAjax(global_path + "/manage/function/selectManageInter?id=" + id,function(res){
+        getAjax(global_path + "/manage/function/selectOne?id=" + id,function(res){
             
             nodenew = res.children;
             var xtree1 = new layuiXtree({

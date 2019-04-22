@@ -579,163 +579,116 @@ $(function () {
 
     // 终端配置
     function terminalConfigure(pageNum,pageSize){
-        // var url = global_path + '/manage/device/listPage';
-        // var parms = {
-        //         'pageNum':pageNum,
-        //         'pageSize':pageSize
-        //     }
-        // commonAjax(url,parms,function(res){
-        //     if(res.code == 0){
-        //         renderTable(res.data.list);
-        //     }else if(res.code == 401){
-        //         unauthorized(res.code);
-        //     }
-        // })
-        // var renderTable = function (data) {
-        //     layui.config({
-        //         base: '../js/'
-        //     }).extend({
-        //         treetable: 'treetable'
-        //     }).use(['layer', 'table', 'treetable','laypage','laydate'], function () {
-        //         var $ = layui.jquery;
-        //         var table = layui.table;
-        //         var layer = layui.layer;
-        //         var treetable = layui.treetable;
-        //         var laydate=layui.laydate,
-        //             laypage = layui.laypage;
-                
-        //         treetable.render({
-        //             data:data,
-        //             treeColIndex: 2, //树形图标显示在第几列
-        //             treeSpid: -1, //最上级的父级id
-        //             treeIdName: 'id', //id字段的名称
-        //             treePidName: 'pid', //pid字段的名称
-        //             treeDefaultClose: true, //是否默认折叠
-        //             treeLinkage: false, //父级展开时是否自动展开所有子级
-        //             elem: '#terminal', //表格id
-        //             page: false, //树形表格一般是没有分页的
-        //             cols: [[
-        //                 {type: 'radio'},
-        //                 {field: 'deviceId', title: '设备ID'},
-        //                 {field: 'deviceName', title: '设备名称'},
-        //                 {field: 'deviceIP', title: '设备IP'},
-        //                 {field: 'devicePort', title: '端口号'},
-        //                 {templet: '#terminal_operation', title: '操作'}
-        //             ]],
-        //             // done: function(res, curr, count){
-        //             //     //如果是异步请求数据方式，res即为你接口返回的信息。
-        //             //     //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-        //             //     laypage.render({
-        //             //         elem:'terminal_laypage'
-        //             //         ,count:count
-        //             //         ,curr:pageNum
-        //             //         ,limit:pageSize
-        //             //         ,layout: ['prev', 'page', 'next', 'skip','count']
-        //             //         ,jump:function (obj,first) {
-        //             //             if(!first){
-        //             //                 pageNum = obj.curr;
-        //             //                 pageSize = obj.limit;
-        //             //                 terminalConfigure(pageNum,pageSize);
-        //             //             }
-        //             //         }
-        //             //     })
-        //             // }
-        //         });
-        //         //监听工具条
-        //         table.on('tool(table1)', function (obj) {
-        //             var data = obj.data;
-        //             var layEvent = obj.event;
-
-        //             if (layEvent === 'del') {
-        //                 layer.msg('删除' + data.id);
-        //             } else if (layEvent === 'edit') {
-        //                 layer.msg('修改' + data.id);
-        //             }
-        //         });
-        //     })
-        // }
 
 
-
-
-        layui.use(['table','laypage','laydate'], function () {
+        layui.use(['table','tree','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
-                laypage = layui.laypage;
+                laypage = layui.laypage,
+                tree = layui.tree,
+                $ = layui.jquery;
 
-            table.render({
-                elem: '#terminal',
-                url: global_path + '/manage/device/listPage', //数据接口
-                title: '终端配置',
-                page: false, //开启分页
-                method: 'post',
-                headers: {
-                    'at': at
-                },
-                request: {
-                    pageName: 'pageNum' //页码的参数名称，默认：page
-                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
-                },
-                where:{
-                    'pageNum':pageNum,
-                    'pageSize':pageSize
-                },
-                parseData: function (res) {
-                    if(res.code == 0){
-                        return {
-                            'code': res.code,
-                            'msg': res.msg,
-                            "count": res.data.total,
-                            'data': res.data.list
-                        }
-                    }else if(res.code == 401){
-                        unauthorized(res.code);
-                    }
-                    
-                },
-                cols: [[ //表头
-                    {
-                        field: 'deviceId',
-                        title: '设备ID'
-                    }
-                    , {
-                        field: 'deviceName',
-                        title: '设备名称'
-                    }
-                    , {
-                        field: 'deviceIP',
-                        title: '设备IP'
-                    }
-                    , {
-                        field: 'devicePort',
-                        title: '端口号'
-                    }
-                    , {
-                        fixed: 'right',
-                        title: '操作',
-                        align: 'center',
-                        toolbar: '#terminal_operation'
-                    }
-                ]],
-                done: function(res, curr, count){
-                    //如果是异步请求数据方式，res即为你接口返回的信息。
-                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-                    laypage.render({
-                        elem:'terminal_laypage'
-                        ,count:count
-                        ,curr:pageNum
-                        ,limit:pageSize
-                        ,layout: ['prev', 'page', 'next', 'skip','count']
-                        ,jump:function (obj,first) {
-                            if(!first){
-                                pageNum = obj.curr;
-                                pageSize = obj.limit;
-                                terminalConfigure(pageNum,pageSize);
-                            }
-                        }
-                    })
+            var nodenew;
+            getAjax(global_path + "/manage/group/groupTree",function(res){
+                if(res.code == 0){
+                    nodenew = res.data.children;
+                    nodenew = menutree(nodenew);
+                    console.log(nodenew)
+                }else if(res.code == 401){
+                    unauthorized(res.code);
+                }else{
+                    alert(res.msg);
                 }
+            })
+            terminalTab();
+            layui.tree({
+                elem: '#terminal_demo' //指定元素
+                ,click: function(item){ //点击节点回调
+                    layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                    console.log(item);
+                }
+                ,nodes: nodenew
             });
+            function terminalTab(id){
+                table.render({
+                    elem: '#terminal',
+                    url: global_path + '/manage/device/listPage?id='+id, //数据接口
+                    title: '终端配置',
+                    page: false, //开启分页
+                    method: 'post',
+                    headers: {
+                        'at': at
+                    },
+                    contentType : "application/json",
+                    request: {
+                        pageName: 'pageNum' //页码的参数名称，默认：page
+                        ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where:{
+                        'pageNum':pageNum,
+                        'pageSize':pageSize
+                    },
+                    parseData: function (res) {
+                        if(res.code == 0){
+                            return {
+                                'code': res.code,
+                                'msg': res.msg,
+                                "count": res.data.total,
+                                'data': res.data.list
+                            }
+                        }else if(res.code == 401){
+                            unauthorized(res.code);
+                        }
+                        
+                    },
+                    cols: [[ //表头
+                        {
+                            field: 'deviceId',
+                            title: '设备ID'
+                        }
+                        , {
+                            field: 'deviceName',
+                            title: '设备名称'
+                        }
+                        , {
+                            field: 'deviceIP',
+                            title: '设备IP'
+                        }
+                        , {
+                            field: 'devicePort',
+                            title: '端口号'
+                        }
+                        , {
+                            field: 'modelName',
+                            title: '设备型号'
+                        }
+                        , {
+                            fixed: 'right',
+                            title: '操作',
+                            align: 'center',
+                            toolbar: '#terminal_operation'
+                        }
+                    ]],
+                    done: function(res, curr, count){
+                        //如果是异步请求数据方式，res即为你接口返回的信息。
+                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                        laypage.render({
+                            elem:'terminal_laypage'
+                            ,count:count
+                            ,curr:pageNum
+                            ,limit:pageSize
+                            ,layout: ['prev', 'page', 'next', 'skip','count']
+                            ,jump:function (obj,first) {
+                                if(!first){
+                                    pageNum = obj.curr;
+                                    pageSize = obj.limit;
+                                    terminalConfigure(pageNum,pageSize);
+                                }
+                            }
+                        })
+                    }
+                });
+            }
             table.on('tool(terminal)', function (obj) { 
                 var data = obj.data //获得当前行数据
                     ,
