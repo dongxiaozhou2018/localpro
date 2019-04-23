@@ -610,7 +610,7 @@ $(function () {
                                 terminalTab(item.id);
                             }
                         }
-                        ,nodes: menutree(nodenew)
+                        ,nodes: menutree(res.data.children)
                     });
                 }else if(res.code == 401){
                     unauthorized(res.code);
@@ -699,35 +699,37 @@ $(function () {
                     },
                     id: 'testReload'
                 });
-                var $ = layui.$, active = {
-                    reload: function(){
-                        var deviceId = $('.deviceId');
-                        var deviceName = $('.deviceName');
-                        var deviceIP = $('.deviceIP');
-                      
-                        //执行重载
-                        table.reload('testReload', {
-                            where: {
-                                'deviceId': deviceId.val(),
-                                'deviceName': deviceName.val(),
-                                'deviceIP': deviceIP.val(),
-                            }
-                        });
-                    }
-                };
-                  
-                $('.terminal').on('click', function(){
-                    var type = $(this).data('type');
-                    active[type] ? active[type].call(this) : '';
-                });
-                $('.empty').on('click', function(){
-                    $('.deviceId').val('');
-                    $('.deviceName').val('');
-                    $('.deviceIP').val('');
-                    var type = $(this).data('type');
-                    active[type] ? active[type].call(this) : '';
-                });
+
             }
+            var $ = layui.$, active = {
+                reload: function(){
+                    var deviceId = $('.deviceId');
+                    var deviceName = $('.deviceName');
+                    var deviceIP = $('.deviceIP');
+                  
+                    //执行重载
+                    table.reload('testReload', {
+                        where: {
+                            'deviceId': deviceId.val(),
+                            'deviceName': deviceName.val(),
+                            'deviceIP': deviceIP.val(),
+                            'id':''
+                        }
+                    });
+                }
+            };
+              
+            $('.terminal').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('.empty').on('click', function(){
+                $('.deviceId').val('');
+                $('.deviceName').val('');
+                $('.deviceIP').val('');
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
             table.on('tool(terminal)', function (obj) { 
                 var data = obj.data //获得当前行数据
                     ,
