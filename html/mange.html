@@ -167,6 +167,12 @@
                         <div class="layui-inline left" style="margin-right: 10px;">
                             <input name="deviceIP" class="layui-input deviceIP" autocomplete="off" placeholder="请输入设备IP" style="width: auto;height: 30px;">
                         </div>
+                        <div class="layui-inline left select_type_box" style="margin-right: 10px;margin-left: 0;">
+                            <label class="select_type">设备型号：</label>
+                            <select name="modelId" class="modelId right" style="border: none;margin-top: 5px;">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
                         <button class="layui-btn layui-btn-primary empty" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-refresh-3 layuiadmin-button-btn"></i></button>
                         <button class="layui-btn terminal" data-type="reload" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
                         <div class="clearf"></div>
@@ -188,6 +194,7 @@
                         <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                         <a class="layui-btn layui-btn-xs subscribe" lay-event="subscribe">订阅</a>
                         <a class="layui-btn layui-btn-xs unsubscribe" lay-event="unsubscribe">取消订阅</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
                     </script>
                 </div>
                 <!-- layui   用户信息 -->

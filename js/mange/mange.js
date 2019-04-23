@@ -601,6 +601,27 @@ $(function () {
                 tree = layui.tree,
                 $ = layui.jquery;
 
+            // 设备型号
+
+            var url = global_path + '/manage/model/queryAllModel';
+            getAjax(url, function(res) {
+                if (res.code == 0) {
+                    if(res.data.length>0){
+                        for(var i = 0;i<res.data.length;i++){
+                            var mode = '<option value="'+res.data[i].id+'">'+res.data[i].modelName+'</option>';
+                            $('.modelId').append(mode);
+                        }
+                    }
+
+                } else if(res.code == 401){
+                    unauthorized(res.code);
+                } else {
+                    alert(res.msg);
+                }
+            })
+
+            // 分组树
+            $('#terminal_demo').html('');
             getAjax(global_path + "/manage/group/groupTree",function(res){
                 if(res.code == 0){
                     layui.tree({
@@ -612,8 +633,6 @@ $(function () {
                         }
                         ,nodes: menutree(res.data.children)
                     });
-                }else if(res.code == 401){
-                    unauthorized(res.code);
                 }else{
                     alert(res.msg);
                 }
@@ -654,27 +673,33 @@ $(function () {
                     cols: [[ //表头
                         {
                             field: 'deviceId',
-                            title: '设备ID'
+                            title: '设备ID',
+                            width: '16.6%'
                         }
                         , {
                             field: 'deviceName',
-                            title: '设备名称'
+                            title: '设备名称',
+                            width: '16.6%'
                         }
                         , {
                             field: 'deviceIP',
-                            title: '设备IP'
+                            title: '设备IP',
+                            width: '16.6%'
                         }
                         , {
                             field: 'devicePort',
-                            title: '端口号'
+                            title: '端口号',
+                            width: '10.6%'
                         }
                         , {
                             field: 'modelName',
-                            title: '设备型号'
+                            title: '设备型号',
+                            width: '16.6%'
                         }
                         , {
                             fixed: 'right',
                             title: '操作',
+                            width: '22.6%',
                             align: 'center',
                             toolbar: '#terminal_operation'
                         }
@@ -706,13 +731,14 @@ $(function () {
                     var deviceId = $('.deviceId');
                     var deviceName = $('.deviceName');
                     var deviceIP = $('.deviceIP');
-                  
+                    var modelId = $('.modelId');
                     //执行重载
                     table.reload('testReload', {
                         where: {
                             'deviceId': deviceId.val(),
                             'deviceName': deviceName.val(),
                             'deviceIP': deviceIP.val(),
+                            'modelId':modelId.val(),
                             'id':''
                         }
                     });
@@ -727,6 +753,7 @@ $(function () {
                 $('.deviceId').val('');
                 $('.deviceName').val('');
                 $('.deviceIP').val('');
+                $('.modelId').val();
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
@@ -735,8 +762,13 @@ $(function () {
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'edit') {
-                    update('/device/selectOne',data.id,'编辑终端设备信息','equipment.html','equipment');
-                }
+                    update('/manage/device/selectOne',data.id,'编辑终端设备信息','equipment.html','equipment');
+                }else if (layEvent === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        del('/manage/user/deleteUser',data.id,terminalTab);
+                        layer.close(index); //向服务端发送删除指令
+                    });
+                } 
             });
         });
         $('#terminal_btn').on('click','.layui-btn',function(){
