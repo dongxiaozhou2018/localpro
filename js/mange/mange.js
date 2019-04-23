@@ -520,6 +520,11 @@ $(function () {
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
+            $('.empty').on('click', function(){
+                $('.police_role').val('');
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
             table.on('tool(police)', function (obj) { 
                 var data = obj.data //获得当前行数据
                     ,
@@ -715,6 +720,13 @@ $(function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
                 });
+                $('.empty').on('click', function(){
+                    $('.deviceId').val('');
+                    $('.deviceName').val('');
+                    $('.deviceIP').val('');
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
             }
             table.on('tool(terminal)', function (obj) { 
                 var data = obj.data //获得当前行数据
@@ -884,6 +896,13 @@ $(function () {
             };
               
             $('.query').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('.empty').on('click', function(){
+                $('.realName').val('');
+                $('.select_role').val('');
+                $('.telephone').val('');
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
