@@ -1113,6 +1113,13 @@ $(function () {
             endTime = Date.parse(endTime);
             showLog(startTime, endTime,pageNum,pageSize);
         })
+        $('.empty').on('click', function () {
+            $('#startTime').val('');
+            $('#endTime').val('');
+            startTime = '';
+            endTime = '';
+            showLog('', '',pageNum,pageSize);
+        })
     }
     // 升级维护
     function upgradeMaintenance(pageNum,pageSize) {
