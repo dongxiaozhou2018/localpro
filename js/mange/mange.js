@@ -667,6 +667,13 @@ $(function () {
                     },
                     parseData: function (res) {
                         if(res.code == 0){
+                            for (var i = 0; i < res.data.list.length; i++) {
+                                if (res.data.list[i].status == 0) {
+                                    res.data.list[i].status = '<button class="layui-btn layui-btn-warm layui-btn-xs">不在线</button>';
+                                } else if (res.data.list[i].status == 1) {
+                                    res.data.list[i].status = '<button class="layui-btn layui-btn-normal layui-btn-xs">在线</button>';
+                                }
+                            }
                             return {
                                 'code': res.code,
                                 'msg': res.msg,
@@ -685,12 +692,12 @@ $(function () {
                         , {
                             field: 'deviceName',
                             title: '设备名称',
-                            width: '16.6%'
+                            width: '10.6%'
                         }
                         , {
                             field: 'deviceIP',
                             title: '设备IP',
-                            width: '16.6%'
+                            width: '10.6%'
                         }
                         , {
                             field: 'devicePort',
@@ -701,6 +708,12 @@ $(function () {
                             field: 'modelName',
                             title: '设备型号',
                             width: '16.6%'
+                        }
+                        , {
+                            field: 'status',
+                            title: '状态',
+                            width: '10%',
+                            align: 'center',
                         }
                         , {
                             fixed: 'right',
