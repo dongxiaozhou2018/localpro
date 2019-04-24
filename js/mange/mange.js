@@ -9,6 +9,7 @@ $(function () {
     var pageNum = 1,pageSize = 10;
     // 判断渲染模块
     function showModular(){
+        pageNum = 1; pageSize = 10;
         var modular = sessionStorage.getItem('modular');
          if(modular == 'userInformation'){              //用户管理-----用户信息
             $('#userInformation').show().siblings().hide();
@@ -591,7 +592,7 @@ $(function () {
     }
 
     // 终端配置
-    function terminalConfigure(pageNum,pageSize){
+    function terminalConfigure(){
 
 
         layui.use(['table','tree','laypage','laydate'], function () {
@@ -628,9 +629,9 @@ $(function () {
                 if(res.code == 0){
                     layui.tree({
                         elem: '#terminal_demo' //指定元素
-                        ,click: function(item){ //点击节点回调
+                        ,click: function(item){ //点击最里层节点回调
                             if(item.children.length == 0){
-                                terminalTab(item.id);
+                                terminalTab('',item.id,pageNum,pageSize);
                             }
                         }
                         ,nodes: menutree(res.data.children)
@@ -641,10 +642,13 @@ $(function () {
             })
             terminalTab();
 
-            function terminalTab(id){
+            function terminalTab(url,id,pageNum,pageSize){
+                if(!url){
+                    url = global_path + '/manage/device/listPage';
+                }
                 table.render({
                     elem: '#terminal',
-                    url: global_path + '/manage/device/listPage', //数据接口
+                    url: url, //数据接口
                     title: '终端配置',
                     page: false, //开启分页
                     method: 'post',
@@ -719,7 +723,7 @@ $(function () {
                                 if(!first){
                                     pageNum = obj.curr;
                                     pageSize = obj.limit;
-                                    terminalConfigure(pageNum,pageSize);
+                                    terminalTab('','',pageNum,pageSize);
                                 }
                             }
                         })
@@ -771,7 +775,17 @@ $(function () {
                     update('/manage/device/selectOne',data.id,'编辑终端设备信息','equipment.html','equipment');
                 }else if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        del('/manage/user/deleteUser',data.id,terminalTab);
+                        var url = global_path + "/manage/device/deleteDevice?id="+id;
+                        getAjax(url, function(data) {
+                            if(data.code == 0){
+                                alert(data.msg);
+                                terminalTab('','',pageNum,pageSize);
+                            }else if(data.code == 401){
+                                unauthorized(data.code);
+                            }else{
+                                alert(data.msg);
+                            }
+                        })
                         layer.close(index); //向服务端发送删除指令
                     });
                 } 
