@@ -817,11 +817,6 @@ $(function () {
                         maxmin:true,
                         scrollbar:true,
                         content: '../aa/devset.jsp.html',
-                        yes: function (index,layero) {
-                            var body = layer.getChildFrame('body', index);
-                            var w = $(layero).find("iframe")[0].contentWindow;
-                        },
-
                         zIndex: layer.zIndex, //重点1
                         success: function (layero) {
                             sessionStorage.setItem('modular','equipment');
