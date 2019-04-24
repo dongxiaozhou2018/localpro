@@ -1,0 +1,1861 @@
+
+<!-- saved from url=(0046)http://39.98.57.97:9602/icapmng/dev/devset.jsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+	<link id="bootstrap-style" href="./devset.jsp_files/bootstrap.min.css" rel="stylesheet">
+	<link href="./devset.jsp_files/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style" href="./devset.jsp_files/style.css" rel="stylesheet">
+	<link id="base-style-responsive" href="./devset.jsp_files/style-responsive.css" rel="stylesheet"> 
+	<link href="./devset.jsp_files/realfont.css" rel="stylesheet" type="text/css">
+	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<link id="ie-style" href="../css/ie.css" rel="stylesheet">
+	<![endif]-->
+
+	<!--[if IE 9]>
+	<link id="ie9style" href="../css/ie9.css" rel="stylesheet">
+	<![endif]-->
+<style type="text/css">
+.checkMid{
+	vertical-align:middle !important; 
+	margin-top:0 !important;
+}
+.fix_select {
+	width:100px;
+	font-size:12px !important;
+	height:25px !important;
+	margin:0px !important;
+}
+.fix_input{
+	width:30px;
+	font-size:12px !important;
+	height:25px !important;
+	margin:0px !important;
+}
+.setbig_input{
+	width:255px;
+	font-size:12px !important;
+	height:25px !important;
+	margin:0px !important;
+}
+.setmid_input{
+	width:120px;
+	font-size:12px !important;
+	height:25px !important;
+	margin:0px !important;
+}
+.setsmall_input{
+	width:70px;
+	font-size:12px !important;
+	height:25px !important;
+	margin:0px !important;
+}
+.setsmall_input:focus,
+.setmid_input:focus,
+.setbig_input:focus,
+.fix_input:focus{
+	border-color: #9cbef5 !important;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;	
+}
+.tdcenter{
+	text-align:center !important;
+	vertical-align:middle !important;
+}
+.tdNone{
+	color:#000000;
+}
+.tdNormal{
+	color:#1E7145;
+}
+.tdAlarm{
+	color:#E25A59;
+}
+.spNone{
+  	text-shadow: none;
+	height:6px !important;
+	padding: 0px 4px;
+	background: #999999 !important;
+	border-color: #999999 !important;	
+}
+.spNormal{
+  	text-shadow: none;
+	height:6px !important;
+	padding: 0px 4px;
+	background: #1E7145 !important;
+	border-color: #1E7145 !important;	
+}
+.spWarning{
+  	text-shadow: none;
+	height:6px !important;
+	padding: 0px 4px;
+	background: #DEB948 !important;
+	border-color: #DEB948 !important;	
+}
+.spAlarm{
+  	text-shadow: none;
+	height:6px !important;
+	padding: 0px 4px;
+	background: #E25A59 !important;
+	border-color: #E25A59 !important;	
+}
+.pop_input_small{
+	width:50px;
+	font-size:12px !important;
+	height:25px !important;
+}
+.pop_input_mid{
+	width:128px;
+	font-size:12px !important;
+	height:25px !important;
+}
+.pop_input,
+.pop_select {
+	width:180px;
+	font-size:12px !important;
+	height:25px !important;
+}
+.pop_input_small:focus,
+.pop_input_mid:focus,
+.pop_input:focus{
+	border-color: #9cbef5 !important;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;	
+}
+</style>
+<script src="./devset.jsp_files/jquery-1.9.1.min.js"></script>
+<script src="./devset.jsp_files/bootstrap.min.js"></script>
+<script type="text/javascript" src="./devset.jsp_files/jquery-ui-1.10.0.custom.min.js"></script>
+<script type="text/javascript" src="./devset.jsp_files/jquery-ui-timepicker-addon.js"></script> 
+<script type="text/javascript" src="./devset.jsp_files/jquery.ui.datepicker-zh-CN.js.js" charset="gb2312"></script>
+<script type="text/javascript" src="./devset.jsp_files/jquery-ui-timepicker-zh-CN.js"></script>	
+<script type="text/javascript">
+var curDevId = "";
+var curDevType = "";
+var tmrDevTime = null;  //时间定时器
+var curPlatInfo = null; //当前设备平台信息
+var curNtpTimeInfo = null; //当前同步时间信息
+var curNetInfo = null; //设备网络配置信息
+var curDevIpInfo = null; //外设网络信息
+var curAlarmRangeInfo = null; //报警规则信息
+var curLinkSmsInfo = null; //报警联动短信息
+var curSecurityInfo = null; //准入规则信息
+var curResetInfo = null; //复位规则信息
+var curSelPhone = -1; //选中的电话号码
+
+//页面加载事件
+$(document).ready(function(){
+	if($('#hideType').val() == "null"){
+		top.location = "/icapmng/";
+		return;
+	}
+    $(document).bind("contextmenu",function(e){
+        return false;
+    });	
+	$.ajaxSetup ({ cache: false });
+	$.getJSON("LoadUpdate",function(data){
+		$.each(data.lstUpdate,function(i,value){
+			$('#sVersion').append("<option value='"+value.IID+"'>"+value.CHNAME+"</option>");
+		});		
+	});	
+});
+//添加日志 
+function addOperLog(content){ 
+	$.ajax({ 
+		type:"post", 
+		url:"AdminLogOper",
+		data:{
+			sContent:content
+		}, 
+		dataType:"json",
+		success:function(data){ 
+		}, 
+		error:function(){ 
+		 }
+	});
+}
+//根据状态获取样式
+function getStatusClass(status){
+	if(status == "0"){
+		return "spNone";
+	}else if(status == "1"){
+		return "spNormal";
+	}else if(status == "2"){
+		return "spAlarm";
+	}else{
+		return "spWarning";
+	}
+}
+function getTdStatusClass(status){
+	if(status == "0"){
+		return "tdNone";
+	}else if(status == "1"){
+		return "tdNormal";
+	}else{
+		return "tdAlarm";
+	}
+}
+//设置撤防时间
+function setDutyTime(){
+	if($('#spDevID').text() == ""){
+		return;
+	}
+	var tDuty = $('#tDutyTime').val();
+	if(tDuty == "" || isNaN(tDuty)){
+		alert("请输入撤防合法的小时数！");
+	}
+	var obj = new Object();
+	obj.iDelayMinute = "" + parseInt(tDuty)*60;
+	obj.chId = "";	
+	parent.execIcapOperate(parseInt("0x1011",16),obj);
+	addOperLog("对终端《" + $('#spDevName').text()+ "》进行布撤防操作");
+}
+//控制IO
+function setCtrlIOStatus(sender){
+	if($('#spDevID').text() == ""){
+		$(sender).attr("checked",false);
+		return;
+	}
+	var obj = new Object();
+	var index = 0;
+	obj.sItem = $(sender).val();
+	index = parseInt(obj.sItem);
+	if($(sender).is(":checked") == true){
+		obj.sOpt = "1";
+	}else{
+		obj.sOpt = "0";
+	}
+	obj.chId = "";
+	parent.execIcapOperate(parseInt("0x1002",16),obj);
+	var content = "";
+	if(obj.sOpt == "0"){
+		content += ("关闭终端");
+	}else{
+		content += ("打开终端");
+	}	
+	content += ("《"+$('#spDevName').text()+ "》的");
+	if(index>=2 && index<=7){
+		content += ("ETH_" + (index-1));
+	}else if(index>=8 && index<=10){
+		content += ("DC12V_" + (index-7));
+	}else if(index == 11){
+		content += ("DC48V");
+	}else if(index>=12 && index<=14){
+		content += ("AC24V_" + (index-11));
+	}else{
+		content += ("AC220V");
+	}
+	content += ("供电");
+	addOperLog(content);
+}
+//设置平台信息-描述
+function setPlatInfo(){
+	if($('#spDevID').text() == "" || curPlatInfo == null){
+		return;
+	}
+	if(isNaN($('#tDevLng').val())){
+		alert("经度输入错误！");
+	 	return;
+	}
+	if(isNaN($('#tDevLat').val())){
+		alert("纬度输入错误！");
+	 	return;
+	} 
+	if($('#tDevLng').val() == ""){
+		$('#tDevLng').val("0.00");
+	}
+	if($('#tDevLat').val() == ""){
+		$('#tDevLat').val("0.00");
+	}	
+	curPlatInfo.chName = $('#tDevName').val();
+	curPlatInfo.chLng = $('#tDevLng').val();
+	curPlatInfo.chLat = $('#tDevLat').val();
+	parent.execIcapOperate(parseInt("0x1009",16),curPlatInfo);
+	parent.saveDevNamePos(curPlatInfo.chId,curPlatInfo.chName,curPlatInfo.chLng,curPlatInfo.chLat);
+	addOperLog("设置终端《" + $('#spDevName').text()+ "》描述信息");
+}
+//设置平台信息-版本
+function setPlatInfoEx(){
+	if($('#spDevID').text() == "" || curPlatInfo == null){
+		return;
+	}
+	curPlatInfo.chUpdateUrl = $('#tUpdateUrl').val();
+	curPlatInfo.chVersion = $('#sVersion').find("option:selected").text();
+	parent.execIcapOperate(parseInt("0x1009",16),curPlatInfo);
+	addOperLog("修改终端《" + $('#spDevName').text()+ "》的版本升级设置");
+}
+function saveUpdateId(devid){
+	parent.saveUpdateIdEx(devid,$('#sVersion').val());
+}
+/*检查IP的合法性*/
+function checkIP(value){
+    var exp=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+    var reg = value.match(exp);
+    if(reg==null){
+    	return false;
+    }
+    var strList = value.split(".");
+    for(var i=0; i<4; i++){
+    	if(strList[i].length != (""+parseInt(strList[i])).length){
+    		return false;
+    	}
+    }    
+    return true;
+}
+//设置时间同步信息
+function setNtpTimeInfo(){
+	if($('#spDevID').text() == ""){
+		return;
+	}
+	var iZone = parseInt($('#tNtpZone').val());
+	if(iZone == NaN && $('#tNtpZone').val() != ""){
+		alert("请输入合法的时区信息！");
+		return;
+	}
+	if(iZone < -12 || iZone > 12){
+		alert("输入的时区信息超出范围限制[-12~12]！");
+		return;	
+	}
+	if($('#cIfNtp').is(":checked") == true){
+		if(checkIP($('#tNtpIp').val()) == false){
+			alert("请输入合法的服务器IP信息！");
+			return;
+		}	
+		curNtpTimeInfo.chIp = $('#tNtpIp').val();
+		curNtpTimeInfo.iZone = $('#tNtpZone').val();		
+		curNtpTimeInfo.iNtp = "1";
+		curNtpTimeInfo.pchTime = $('#dDevTime').text();
+	}else{
+		curNtpTimeInfo.pchTime = new Date().pattern("yyyy-MM-dd hh:mm:ss");
+		curNtpTimeInfo.iNtp = "0";
+		curNtpTimeInfo.chIp = "";
+		curNtpTimeInfo.iZone = 8;		
+	}	
+	parent.execIcapOperate(parseInt("0x1007",16),curNtpTimeInfo);
+	addOperLog("修改终端《" + $('#spDevName').text()+ "》的网络校时设置");
+}
+//对讲及挂断
+function setTalkInfo(sender){
+	if($(sender).val() == "对讲"){
+		var obj = new Object();
+		obj.sPlayType = $('#sPlayType').val();
+		obj.sVolume = "127";
+		obj.chId = "";
+		parent.execIcapOperate(parseInt("0x1013",16),obj);
+		parent.execIcapOperate(parseInt("0x000C",16),null);
+		$(sender).attr("disabled",true);
+	}else{
+		parent.execIcapOperate(parseInt("0x100C",16),null);
+		//$(sender).val("对讲");
+	}
+}
+function OnRecvTalkResult(result){
+	$('#btnTalk').attr("disabled",false);
+	if(result == 0){
+		$('#btnTalk').val("挂断");
+	}else{
+		if($('#btnTalk').val() == "对讲"){
+			alert("请求对讲失败");
+		}
+		$('#btnTalk').val("对讲");
+	}
+}
+//接收到实时数据
+function OnRecvDevStatus(obj){
+	$('#spDevID').text(obj.chId);
+	if(obj.chId == ""){
+		$('#tDevName').val("");
+		$('#spDevName').text("");
+		$('#tDevLng').val("0.00");
+		$('#tDevLat').val("0.00");
+		$('#tUpdateUrl').val("");
+		$('#dVersion').text("2.1.6");	
+		$('#cIfNtp').attr("checked",false);
+		$('#tNtpIp').val("");
+		$('#tNtpZone').val("8");
+		if(tmrDevTime != null){
+			window.clearInterval(tmrDevTime);
+			tmrDevTime = null;
+		}		
+		$('#dDevTime').text("0000-00-00 00:00:00");	
+		$('#sAC220VIN').attr("class","spNone");
+		$('#fAC220VIN').text("0.00");
+		$('#sDC48VIN').attr("class","spNone");
+		$('#fDC48VIN').text("0.00");	
+		$('#fPOE1').text("0");
+		$('#fPOE2').text("0");
+		$('#fPOE3').text("0");
+		$('#fPOE4').text("0");
+		$('#fPOE5').text("0");
+		$('#fPOE6').text("0");
+		$('#fFC').text("0");
+		$('#sPOE1').attr("class",getStatusClass("0"));
+		$('#sPOE2').attr("class",getStatusClass("0"));
+		$('#sPOE3').attr("class",getStatusClass("0"));
+		$('#sPOE4').attr("class",getStatusClass("0"));
+		$('#sPOE5').attr("class",getStatusClass("0"));
+		$('#sPOE6').attr("class",getStatusClass("0"));
+		$('#sFC').attr("class",getStatusClass("0"));	
+		$('#cPOEA1').attr("checked",false);	
+		$('#cPOEA2').attr("checked",false);
+		$('#cPOEA3').attr("checked",false);
+		$('#cPOEA4').attr("checked",false);
+		$('#cPOEA5').attr("checked",false);
+		$('#cPOEA6').attr("checked",false);
+		$('#fPOEA1').text("0.0");
+		$('#fPOEA2').text("0.0");
+		$('#fPOEA3').text("0.0");
+		$('#fPOEA4').text("0.0");
+		$('#fPOEA5').text("0.0");
+		$('#fPOEA6').text("0.0");
+		$('#sPOEA1').attr("class",getStatusClass("0"));
+		$('#sPOEA2').attr("class",getStatusClass("0"));
+		$('#sPOEA3').attr("class",getStatusClass("0"));
+		$('#sPOEA4').attr("class",getStatusClass("0"));
+		$('#sPOEA5').attr("class",getStatusClass("0"));
+		$('#sPOEA6').attr("class",getStatusClass("0"));	
+		$('#cAC24V1').attr("checked",false);	
+		$('#cAC24V2').attr("checked",false);
+		$('#cAC24V3').attr("checked",false);
+		$('#cAC220V').attr("checked",false);
+		$('#sAC24V1').attr("class",getStatusClass("0"));
+		$('#sAC24V2').attr("class",getStatusClass("0"));
+		$('#sAC24V3').attr("class",getStatusClass("0"));
+		$('#sAC220V').attr("class",getStatusClass("0"));
+		$('#cDC12V1').attr("checked",false);	
+		$('#cDC12V2').attr("checked",false);	
+		$('#cDC12V3').attr("checked",false);	
+		$('#cDC48V').attr("checked",false);	
+		$('#fDC12V1').text("0.0");
+		$('#fDC12V2').text("0.0");
+		$('#fDC12V3').text("0.0");
+		$('#fDC48V').text("0.0");	
+		$('#sDC12V1').attr("class",getStatusClass("0"));
+		$('#sDC12V2').attr("class",getStatusClass("0"));
+		$('#sDC12V3').attr("class",getStatusClass("0"));
+		$('#sDC48V').attr("class",getStatusClass("0"));
+		$('#sDuty').text("未知");
+		$('#sDuty').attr("class","tdNone");	
+		$('#sDoor').text("未知");
+		$('#sDoor').attr("class","tdNone");	
+		$('#sTemp').text("0℃");
+		$('#sTemp').attr("class",getTdStatusClass("0"));
+		$('#sFan').text("0");
+		$('#sFan').attr("class",getTdStatusClass("0"));	
+		$('#sSIM').text("未知");
+		$('#sSIM').attr("class",getTdStatusClass("0"));		
+		$('#btnTalk').val("对讲");	
+		$('#tDevName').val("");
+		$('#spDevName').text("");
+		$('#tDevLng').val("");
+		$('#tDevLat').val("");
+		$('#tUpdateUrl').val("");
+		$('#dVersion').text("2.1.6");
+		$('#cIfNtp').attr("checked",false);
+		$('#tNtpIp').val("");
+		$('#tNtpZone').val("8");
+		$('#dDevTime').text("0000-00-00 00:00:00");								
+		return;		
+	}
+	//供电输入
+	if(obj.fAC220VIN_V == "0.00"){
+		$('#sAC220VIN').attr("class","spNone");
+		$('#sDC48VIN').attr("class","spNormal");
+		$('#fAC220VIN').text("0.00");
+		$('#fDC48VIN').text(obj.fDC48VIN_V);
+	}else{
+		$('#sAC220VIN').attr("class","spNormal");
+		$('#sDC48VIN').attr("class","spNone");	
+		$('#fAC220VIN').text(obj.fAC220VIN_V);
+		$('#fDC48VIN').text("0.00");		
+	}
+	//网络状态
+	for (var i = 1; i <= 6; i++){  //RJ45
+		if(i <= parseInt(obj.chType.substring(8,9))){
+			$('#fPOE' + i).text(obj.iNetDelay[i-1]);
+			$('#sPOE' + i).attr("class",getStatusClass(obj.chIOStatus.substring(22+i,23+i)));
+			$('#bPOE' + i).text(obj.iNetBand[i-1]);
+		}else{
+			$('#fPOE' + i).text("");
+			$('#sPOE' + i).attr("class",getStatusClass("0"));
+			$('#bPOE' + i).text("");		
+		}
+	}
+	if(obj.chType.substring(9,10) == "1"){
+		$('#fFC').text(obj.iNetDelay[6]);
+		$('#sFC').show();
+		$('#sFC').attr("class",getStatusClass(obj.chIOStatus.substring(29,30)));
+		$('#bFC').text(obj.iNetBand[6]);	
+	}else{
+		$('#fFC').text("");
+		$('#sFC').hide();
+		$('#bFC').text("");		
+	}
+	if(curDevId == obj.chId){
+		for(var i=2; i<16; i++){
+			if(obj.chIOStatus.substring(i,i+1)=="1"){
+				if(i < 8){
+					if($('#cPOEA' + (i-1)).is(':checked') == false){
+						curDevId = "";
+						break;
+					}
+				}
+				if(i>=8 && i<11){
+					if($('#cDC12V' + (i-7)).is(':checked') == false){
+						curDevId = "";
+						break;
+					}			
+				}
+				if(i == 11){
+					if($('#cDC48V').is(':checked') == false){
+						curDevId = "";
+						break;
+					}					
+				}
+				if(i>=12 && i<15){
+					if($('#cAC24V' + (i-11)).is(':checked') == false){
+						curDevId = "";
+						break;
+					}			
+				}
+				if(i == 15){
+					if($('#cAC220V').is(':checked') == false){
+						curDevId = "";
+						break;
+					}					
+				}
+			}
+		}	
+	}	
+	//POE供电
+	if(curDevId != obj.chId){
+		if(obj.chIOStatus.substring(2,3) == "1"){
+			$('#cPOEA1').prop("checked","checked");
+		}else{
+			$('#cPOEA1').attr("checked",false);
+		}
+		if(obj.chIOStatus.substring(3,4) == "1"){
+			$('#cPOEA2').prop("checked","checked");
+		}else{
+			$('#cPOEA2').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(4,5) == "1"){
+			$('#cPOEA3').prop("checked","checked");
+		}else{
+			$('#cPOEA3').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(5,6) == "1"){
+			$('#cPOEA4').prop("checked","checked");
+		}else{
+			$('#cPOEA4').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(6,7) == "1"){
+			$('#cPOEA5').prop("checked","checked");
+		}else{
+			$('#cPOEA5').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(7,8) == "1"){
+			$('#cPOEA6').prop("checked","checked");
+		}else{
+			$('#cPOEA6').attr("checked",false);
+		}		
+	}
+	for (var i = 1; i <= 6; i++){
+		if(i <= parseInt(obj.chType.substring(3,4))){
+			$('#fPOEA' + i).text(obj.fPOE_A[i-1]);
+			$('#sPOEA' + i).show();
+			$('#sPOEA' + i).attr("class",getStatusClass(obj.chIOStatus.substring(i+1,i+2)));
+			$('#cPOEA' + i).show();
+		}else{
+			$('#fPOEA' + i).text("");
+			$('#sPOEA' + i).hide();
+			$('#cPOEA' + i).hide();
+		}
+	}
+	//交流供电
+	if(curDevId != obj.chId){
+		if(obj.chIOStatus.substring(12,13) == "1"){
+			$('#cAC24V1').prop("checked","checked");
+		}else{
+			$('#cAC24V1').attr("checked",false);
+		}
+		if(obj.chIOStatus.substring(13,14) == "1"){
+			$('#cAC24V2').prop("checked","checked");
+		}else{
+			$('#cAC24V2').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(14,15) == "1"){
+			$('#cAC24V3').prop("checked","checked");
+		}else{
+			$('#cAC24V3').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(15,16) == "1"){
+			$('#cAC220V').prop("checked","checked");
+		}else{
+			$('#cAC220V').attr("checked",false);
+		}		
+	}	
+	var iCount = parseInt(obj.chType.substring(1, 2));
+	if(iCount > 0){
+		iCount--;
+	}
+	if (obj.chType.substring(1, 2) == "0"){
+		$('#cAC220V').hide();
+		$('#sAC220V').hide();
+		$('#fAC220V').text("");
+	}else{
+		$('#cAC220V').show();
+		$('#sAC220V').show();
+		$('#tdAC220V').text("AC220V_" + (iCount + 1));
+		$('#sAC220V').attr("class",getStatusClass(obj.chIOStatus.substring(15,16)));
+		$('#fAC220V').text(obj.fAC220V_A);	
+		if(iCount > 0){
+			for (var i = 1; i <= 3; i++){
+				if(i <= iCount){
+					$('#cAC24V' + (4-i)).show();
+					$('#sAC24V' + (4-i)).show();
+					$('#sAC24V' + (4-i)).attr("class",getStatusClass(obj.chIOStatus.substring(15-i,16-i)));
+					$('#fAC24V' + (4-i)).text(obj.fAC24V_A[3-i]);	
+					$('#tdAC24V'+ (4-i)).text("AC220V_" + (iCount+1-i));				
+				}else{
+					$('#cAC24V' + (4-i)).hide();
+					$('#sAC24V' + (4-i)).hide();
+					$('#fAC24V' + (4-i)).text("");
+					$('#tdAC24V'+ (4-i)).text("AC24V_" + (4-i));
+				}
+			}			
+		}
+	}	
+	for (var i = 1; i <= 3 - iCount; i++){
+		if (i <= parseInt(obj.chType.substring(2, 3))){
+			$('#cAC24V' + i).show();
+			$('#sAC24V' + i).show();
+			$('#sAC24V' + i).attr("class",getStatusClass(obj.chIOStatus.substring(11+i,12+i)));
+			$('#fAC24V' + i).text(obj.fAC24V_A[i-1]);						
+		}else{
+			$('#cAC24V' + i).hide();
+			$('#sAC24V' + i).hide();
+			$('#fAC24V' + i).text("");		
+		}
+	}		
+	//直流供电
+	if(curDevId != obj.chId){
+		if(obj.chIOStatus.substring(8,9) == "1"){
+			$('#cDC12V1').prop("checked","checked");
+		}else{
+			$('#cDC12V1').attr("checked",false);
+		}
+		if(obj.chIOStatus.substring(9,10) == "1"){
+			$('#cDC12V2').prop("checked","checked");
+		}else{
+			$('#cDC12V2').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(10,11) == "1"){
+			$('#cDC12V3').prop("checked","checked");
+		}else{
+			$('#cDC12V3').attr("checked",false);
+		}	
+		if(obj.chIOStatus.substring(11,12) == "1"){
+			$('#cDC48V').prop("checked","checked");
+		}else{
+			$('#cDC48V').attr("checked",false);
+		}		
+	}	
+	for (var i = 1; i <= 3; i++){
+		if(i <= parseInt(obj.chType.substring(6,7))){
+			$('#fDC12V' + i).text(obj.fDC12V_A[i-1]);
+			$('#sDC12V' + i).show();
+			$('#sDC12V' + i).attr("class",getStatusClass(obj.chIOStatus.substring(7+i,8+i)));
+			$('#cDC12V' + i).show();
+		}else{
+			$('#fDC12V' + i).text("");
+			$('#sDC12V' + i).hide();
+			$('#cDC12V' + i).hide();
+		}
+	}	
+	if(obj.chType.substring(4,5)=="0" && obj.chType.substring(5,6)=="0"){
+		$('#fDC48V').text("");	
+		$('#sDC48V').hide();
+		$('#cDC48V').hide();		
+	}else{
+		if(obj.chType.substring(4,5)=="1"){
+			$('#tdDC48V').text("DC48V");
+		}else{
+			$('#tdDC48V').text("DC36V");
+		}
+		$('#fDC48V').text(obj.fDC48V_A);	
+		$('#sDC48V').show();
+		$('#sDC48V').attr("class",getStatusClass(obj.chIOStatus.substring(11,12)));
+		$('#cDC48V').show();
+	}
+	//终端状态
+	if(obj.chType.substring(10,11)=="0"){
+		$('#btnTalk').hide();
+	}else{
+		$('#btnTalk').show();
+	}	
+	if(obj.iIfDoorDuty == "0"){
+		$('#sDuty').text("撤防");
+		$('#sDuty').attr("class","tdNormal");
+	}else{
+		$('#sDuty').text("布防");
+		$('#sDuty').attr("class","tdAlarm");
+	}
+	if(obj.chIOStatus.substring(16,17) == "0"){
+		$('#sDoor').text("关闭");
+		$('#sDoor').attr("class","tdNormal");
+	}else{
+		$('#sDoor').text("打开");
+		if(obj.iIfDoorDuty == "0"){
+			$('#sDoor').attr("class","tdNormal");
+		}else{
+			$('#sDoor').attr("class","tdAlarm");
+		}
+	}
+	if(obj.chType.substring(12,13)=="0"){
+		$('#sDoor').hide();
+		$('#sDuty').hide();
+		$('#btnNoDuty').hide();
+		$('#tDutyTime').hide();
+		$('#spanTime').hide();
+	}else{
+		$('#sDoor').show();
+		$('#sDuty').show();	
+		$('#btnNoDuty').show();
+		$('#tDutyTime').show();
+		$('#spanTime').show();		
+	}
+	$('#sTemp').text(obj.fTemp + "℃");
+	$('#sTemp').attr("class",getTdStatusClass(obj.chIOStatus.substring(31,32)));
+	$('#sFan').text(obj.iFanSpeed);
+	$('#sFan').attr("class",getTdStatusClass(obj.chIOStatus.substring(20,21)));
+	if(obj.chType.substring(13,14)=="0"){
+		$('#sFan').hide();
+	}else{
+		$('#sFan').show();
+	}	
+	if(obj.chIOStatus.substring(30,31) == "1"){
+		$('#sSIM').text("正常");
+	}else{
+		$('#sSIM').text("故障");
+	}
+	$('#sSIM').attr("class",getTdStatusClass(obj.chIOStatus.substring(30,31)));
+	if(obj.chType.substring(11,12)=="0"){
+		$('#sSIM').hide();
+	}else{
+		$('#sSIM').show();
+	}	
+	if(curDevId != obj.chId){
+		curDevId = obj.chId;
+	}
+	if(curDevType != obj.chType){
+		curDevType = obj.chType;
+	}
+}
+//收到平台注册信息
+function OnRecvPlatInfo(obj){
+	$('#tDevName').val(obj.chName);
+	$('#spDevName').text(obj.chName);
+	$('#tDevLng').val(obj.chLng);
+	$('#tDevLat').val(obj.chLat);
+	$('#tUpdateUrl').val(obj.chUpdateUrl);
+	$('#dVersion').text(obj.chVersion);
+	curPlatInfo = obj;
+}
+//收到同步时间信息
+Date.prototype.pattern=function(fmt) {
+  var o = {
+  "M+" : this.getMonth()+1, //月份
+  "d+" : this.getDate(), //日
+  "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时
+  "H+" : this.getHours(), //小时
+  "m+" : this.getMinutes(), //分
+  "s+" : this.getSeconds() //秒
+  };
+  if(/(y+)/.test(fmt)){
+    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+  }
+  for(var k in o){
+    if(new RegExp("("+ k +")").test(fmt)){
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+    }
+  }
+  return fmt;
+}
+//定时器显示设备时间
+function OnDevTimeRun(){
+	var str = $('#dDevTime').text(); 
+	var dt = new Date(Date.parse(str.replace(/-/g,"/")));
+	dt.setTime(dt.getTime() + 1000);
+	$('#dDevTime').text(dt.pattern("yyyy-MM-dd hh:mm:ss"));
+}
+//收到时间信息
+function OnRecvTimeInfo(obj){
+	if(obj.iNtp == "1"){
+		$('#cIfNtp').prop("checked","checked");
+	}else{
+		$('#cIfNtp').attr("checked",false);
+	}
+	$('#tNtpIp').val(obj.chIp);
+	$('#tNtpZone').val(obj.iZone);
+	$('#dDevTime').text(obj.pchTime);
+	curNtpTimeInfo = obj;
+	if(tmrDevTime != null){
+		window.clearInterval(tmrDevTime);
+		tmrDevTime = null;
+	}
+	tmrDevTime = window.setInterval("OnDevTimeRun()",1000);
+}
+//收到对讲播放信息
+function OnRecvTalkInfo(obj){
+	$('#sPlayType').val(obj.sPlayType);
+}
+//两个IP是否同一子网
+function ip2hex(ip){
+	var ip4 = ip.split(".");
+	var p,i;
+	var hexStr = "0x";
+	for(i=0; i<ip4.length; i++)
+	{
+		p = new Number(ip4[i]);
+		hexStr += p<16?("0"+p.toString(16)):p.toString(16);
+	}
+	return(hexStr);
+}
+function isSubNetIp(startIp,subCode,hostIp){
+	startIp = ip2hex(startIp);
+ 	subCode = ip2hex(subCode);
+ 	hostIp = ip2hex(hostIp);
+ 	return((startIp&subCode) == (hostIp&subCode));
+}
+//收到网络信息
+function OnRecvNetInfo(obj){
+	curNetInfo = obj;
+	if($('#myTitle').html() != '基础参数设置'){
+		return;
+	}
+	var htmlstr = '&nbsp;&nbsp;&nbsp;&nbsp;终端ID：<input name="devId" id="devId" type="text" class="pop_input" maxlength="20" value="' + curPlatInfo.chId + '"/>';
+	htmlstr += ('&nbsp;接入服务器：<input name="svrIp" id="svrIp" type="text" class="pop_input" maxlength="20" value="'+curPlatInfo.chIp+'"/></br>');
+	htmlstr += ('&nbsp;服务端口：<input name="svrPort" id="svrPort" type="text" class="pop_input" maxlength="6" value="'+curPlatInfo.iPort+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IP地址：<input name="devIp" id="devIp" type="text" class="pop_input" maxlength="20" value="'+obj.chIp+'" /></br>');
+	htmlstr += ('&nbsp;子网掩码：<input name="devMask" id="devMask" type="text" class="pop_input" maxlength="20" value="'+obj.chMask+'"/>');	
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;默认网关：<input name="devGate" id="devGate" type="text" class="pop_input" maxlength="20" value="'+obj.chGateWay+'"/>');	
+	$('.modal-body').html(htmlstr);	
+	$("#btnOk").unbind('click'); 
+	$('#btnOk').click(function(){
+		if(isNaN($('#devId').val())){
+			alert("请输入合法的终端ID(只能输入数字)！");
+			return;
+		}
+		if($('#svrIp').val()!="" && checkIP($('#svrIp').val()) == false){
+			alert("请输入合法的接入服务器IP地址！");
+			return;
+		}
+		if($('#svrPort').val() == ""){
+			$('#svrPort').val("9601");
+		}else if(isNaN($('#tDevLat').val())){
+			alert("请输入合法的服务端口(只能输入数字)！");
+			return;
+		}
+		if(checkIP($('#devIp').val()) == false){
+			alert("请输入合法的设备IP地址！");
+			return;
+		}
+		if(checkIP($('#devMask').val()) == false){
+			alert("请输入合法的子网掩码！");
+			return;
+		}	
+		if(checkIP($('#devGate').val()) == false){
+			alert("请输入合法的默认网关！");
+			return;
+		}		
+		if(isSubNetIp($('#devIp').val(),$('#devMask').val(),$('#devGate').val()) == false){
+			alert("设备IP和默认网关必须在同一子网！");
+			return;		
+		}	
+		curPlatInfo.chId = $('#devId').val();
+		curPlatInfo.chIp = $('#svrIp').val();
+		curPlatInfo.iPort = $('#svrPort').val();
+		parent.execIcapOperate(parseInt("0x1009",16),curPlatInfo);
+		curNetInfo.chIp = $('#devIp').val();
+		curNetInfo.chMask = $('#devMask').val();
+		curNetInfo.chGateWay = $('#devGate').val();
+		parent.execIcapOperate(parseInt("0x1006",16),curNetInfo);
+		addOperLog("对终端《" + $('#spDevName').text()+ "》进行基础参数设置");
+		$('#myModal').modal('hide'); 						
+	});	
+	$('#myModal').modal('show');	
+}
+//收到网口设置信息
+function OnRecvDevIpInfo(obj){
+	curDevIpInfo = obj;
+	if($('#myTitle').html() != '网络参数设置'){
+		return;
+	}	
+	var htmlstr = ('&nbsp;&nbsp;&nbsp;ETH1：<input name="POEIp1" id="POEIp1" type="text" class="pop_input" maxlength="20" value="'+obj.chPOEIP_1+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH2：<input name="POEIp2" id="POEIp2" type="text" class="pop_input" maxlength="20" value="'+obj.chPOEIP_2+'"/></br>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;ETH3：<input name="POEIp3" id="POEIp3" type="text" class="pop_input" maxlength="20" value="'+obj.chPOEIP_3+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH4：<input name="POEIp4" id="POEIp4" type="text" class="pop_input" maxlength="20" value="'+obj.chPOEIP_4+'"/></br>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;ETH5：<input name="POEIp5" id="POEIp5" type="text" class="pop_input" maxlength="20" value="'+obj.chPOEIP_5+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH6：<input name="POEIp6" id="POEIp6" type="text" class="pop_input" maxlength="20" value="'+obj.chPOEIP_6+'"/></br>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FC：<input name="FCIp" id="FCIp" type="text" class="pop_input" maxlength="20" value="'+obj.chOpticalIp+'"/>');	
+	htmlstr += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主干网：<select name="mainNet" id="mainNet" class="pop_select" >';
+	htmlstr += '<option value="0">ETH1</option>';
+	htmlstr += '<option value="1">ETH2</option>';
+	htmlstr += '<option value="2">ETH3</option>';
+	htmlstr += '<option value="3">ETH4</option>';
+	htmlstr += '<option value="4">ETH5</option>';
+	htmlstr += '<option value="5">ETH6</option>';
+	htmlstr += '<option value="6">FC</option>';
+	htmlstr += '</select>';	
+	$('.modal-body').html(htmlstr);	
+	if(curDevType != ""){
+		for(var i=1; i<7; i++){
+			if(i <= parseInt(curDevType.substring(8, 9))){
+				$('#POEIp' + i).removeAttr("disabled");
+			}else{
+				$('#POEIp' + i).attr("disabled","disabled");
+				$("#mainNet option[text='ETH"+ i + "']").remove(); 
+			}
+		}
+		if(curDevType.substring(9, 10) == "0"){
+			$('#FCIp').attr("disabled","disabled");
+			$("#mainNet option[text='FC']").remove(); 
+		}else{
+			$('#FCIp').removeAttr("disabled");
+		}	
+	}
+	$('#mainNet').val(obj.iCenterNet);
+	$("#btnOk").unbind('click'); 
+	$('#btnOk').click(function(){
+		for(var i=1; i<7; i++){
+			if($('#POEIp' + i).val()!="" && checkIP($('#POEIp' + i).val()) == false){
+				alert("请输入合法的ETH"+i+"设备IP地址！");
+				return;
+			}
+		}
+		if($('#FCIp').val()!="" && checkIP($('#FCIp').val()) == false){
+			alert("请输入合法的FC设备IP地址！");
+			return;
+		}											
+		curDevIpInfo.chPOEIP_1 = $('#POEIp1').val();
+		curDevIpInfo.chPOEIP_2 = $('#POEIp2').val();
+		curDevIpInfo.chPOEIP_3 = $('#POEIp3').val();
+		curDevIpInfo.chPOEIP_4 = $('#POEIp4').val();
+		curDevIpInfo.chPOEIP_5 = $('#POEIp5').val();
+		curDevIpInfo.chPOEIP_6 = $('#POEIp6').val();
+		curDevIpInfo.chOpticalIp = $('#FCIp').val();
+		curDevIpInfo.iCenterNet = $('#mainNet').val();
+		parent.execIcapOperate(parseInt("0x1005",16),curDevIpInfo);	
+		addOperLog("对终端《" + $('#spDevName').text()+ "》进行网络参数设置");
+		$('#myModal').modal('hide'); 
+	});	
+	$('#myModal').modal('show');
+}
+//收到报警规则
+function OnRecvAlarmRangeInfo(obj){
+	curAlarmRangeInfo = obj;
+	if($('#myTitle').html() != '报警规则设置'){
+		return;
+	}		
+	var htmlstr = ('&nbsp;DC12V_1电流(0~3A)：<input name="DC12V1_Low" id="DC12V1_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC12V_Low[0]+'"/>--<input name="DC12V1_High" id="DC12V1_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC12V_High[0]+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DC12V_2电流(0~3A)：<input name="DC12V2_Low" id="DC12V2_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC12V_Low[1]+'"/>--<input name="DC12V2_High" id="DC12V2_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC12V_High[1]+'"/></br>');
+	htmlstr += ('&nbsp;DC12V_3电流(0~3A)：<input name="DC12V3_Low" id="DC12V3_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC12V_Low[2]+'"/>--<input name="DC12V3_High" id="DC12V3_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC12V_High[2]+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spADC48V" name="spADC48V">DC48V电流(0~2A)：</span><input name="DC48V_Low" id="DC48V_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC48V_Low+'"/>--<input name="DC48V_High" id="DC48V_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fDC48V_High+'"/></br>');
+	//htmlstr += ('<ul class="nav nav-list"><li class="divider"></li></ul>');
+	htmlstr += ('&nbsp;<span id="spAAC24V1" name="spAAC24V1">AC24V_1电流(0~3A)：</span><input name="AC24V1_Low" id="AC24V1_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC24V_Low[0]+'"/>--<input name="AC24V1_High" id="AC24V1_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC24V_High[0]+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spAAC24V2" name="spAAC24V2">AC24V_2电流(0~3A)：</span><input name="AC24V2_Low" id="AC24V2_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC24V_Low[1]+'"/>--<input name="AC24V2_High" id="AC24V2_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC24V_High[1]+'"/></br>');
+	htmlstr += ('&nbsp;<span id="spAAC24V3" name="spAAC24V3">AC24V_3电流(0~3A)：</span><input name="AC24V3_Low" id="AC24V3_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC24V_Low[2]+'"/>--<input name="AC24V3_High" id="AC24V3_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC24V_High[2]+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spAAC220V" name="spAAC220V">AC220V电流(0~5A)：</span><input name="AC220V_Low" id="AC220V_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC220V_Low+'"/>--<input name="AC220V_High" id="AC220V_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fAC220V_High+'"/></br>');	
+	//htmlstr += ('<ul class="nav nav-list"><li class="divider"></li></ul>');
+	htmlstr += ('&nbsp;&nbsp;ETH_1电流(0~0.5A)：<input name="POE1_Low" id="POE1_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_Low[0]+'"/>--<input name="POE1_High" id="POE1_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_High[0]+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH_2电流(0~0.5A)：<input name="POE2_Low" id="POE2_Low" type="text" class="pop_input_small" maxlength="10" value="'+obj.fPOE_Low[1]+'"/>--<input name="POE2_High" id="POE2_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_High[1]+'"/></br>');	
+	htmlstr += ('&nbsp;&nbsp;ETH_3电流(0~0.5A)：<input name="POE3_Low" id="POE3_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_Low[2]+'"/>--<input name="POE3_High" id="POE3_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_High[2]+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH_4电流(0~0.5A)：<input name="POE4_Low" id="POE4_Low" type="text" class="pop_input_small" maxlength="10" value="'+obj.fPOE_Low[3]+'"/>--<input name="POE4_High" id="POE4_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_High[3]+'"/></br>');	
+	htmlstr += ('&nbsp;&nbsp;ETH_5电流(0~0.5A)：<input name="POE5_Low" id="POE5_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_Low[4]+'"/>--<input name="POE5_High" id="POE5_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_High[4]+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH_6电流(0~0.5A)：<input name="POE6_Low" id="POE6_Low" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_Low[5]+'"/>--<input name="POE6_High" id="POE6_High" type="text" class="pop_input_small" maxlength="4" value="'+obj.fPOE_High[5]+'"/></br>');			
+	//htmlstr += ('<ul class="nav nav-list"><li class="divider"></li></ul>');
+	htmlstr += ('&nbsp;&nbsp;ETH1 预警阈值(ms)：<input name="POE1_Net" id="POE1_Net" type="text" class="pop_input_mid" maxlength="10" value="'+curDevIpInfo.iDelayTime[0]+'"/>'); 
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH2 预警阈值(ms)：<input name="POE2_Net" id="POE2_Net" type="text" class="pop_input_mid" maxlength="10" value="'+curDevIpInfo.iDelayTime[1]+'"/></br>'); 
+	htmlstr += ('&nbsp;&nbsp;ETH3 预警阈值(ms)：<input name="POE3_Net" id="POE3_Net" type="text" class="pop_input_mid" maxlength="10" value="'+curDevIpInfo.iDelayTime[2]+'"/>'); 
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH4 预警阈值(ms)：<input name="POE4_Net" id="POE4_Net" type="text" class="pop_input_mid" maxlength="10" value="'+curDevIpInfo.iDelayTime[3]+'"/></br>');
+	htmlstr += ('&nbsp;&nbsp;ETH5 预警阈值(ms)：<input name="POE5_Net" id="POE5_Net" type="text" class="pop_input_mid" maxlength="10" value="'+curDevIpInfo.iDelayTime[4]+'"/>'); 
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH6 预警阈值(ms)：<input name="POE6_Net" id="POE6_Net" type="text" class="pop_input_mid" maxlength="10" value="'+curDevIpInfo.iDelayTime[5]+'"/></br>'); 	 	
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FC 预警阈值(ms)：<input name="FC_Net" id="FC_Net" type="text" class="pop_input_mid" maxlength="10" value="'+curDevIpInfo.iDelayTime[6]+'"/>'); 
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;温度阈值(℃)：<input name="Temp_Low" id="Temp_Low" type="text" class="pop_input_small" maxlength="5" value="'+
+	            obj.fTemp_Low+'"/>--<input name="Temp_High" id="Temp_High" type="text" class="pop_input_small" maxlength="5" value="'+obj.fTemp_High+'"/>');	
+	$('.modal-body').html(htmlstr);
+	
+	if(curDevType != ""){
+		for (var i = 1; i <= 6; i++){
+			if(i <= parseInt(curDevType.substring(3,4))){
+				$('#POE' + i + '_Low').removeAttr("disabled");
+				$('#POE' + i + '_High').removeAttr("disabled");
+			}else{
+				$('#POE' + i + '_Low').attr("disabled","disabled");
+				$('#POE' + i + '_High').attr("disabled","disabled");
+			}
+		}
+		if(curDevType.substring(4, 5) == "0" && curDevType.substring(5, 6) == "0"){ //DC48V
+			$('#DC48V_Low').attr("disabled","disabled");
+			$('#DC48V_High').attr("disabled","disabled");
+		}else{
+			if(curDevType.substring(4, 5) == "1"){
+				$('#spADC48V').text("DC48V电流(0~2A)：");
+			}else{
+				$('#spADC48V').text("DC36V电流(0~2A)：");
+			}
+			$('#DC48V_Low').removeAttr("disabled");
+			$('#DC48V_High').removeAttr("disabled");		
+		}
+		for (var i = 1; i <= 3; i++){
+			if(i <= parseInt(curDevType.substring(6,7))){
+				$('#DC12V' + i + '_Low').removeAttr("disabled");
+				$('#DC12V' + i + '_High').removeAttr("disabled");
+			}else{
+				$('#DC12V' + i + '_Low').attr("disabled","disabled");
+				$('#DC12V' + i + '_High').attr("disabled","disabled");
+			}
+		}
+        var iCount = parseInt(curDevType.substring(1, 2));
+        if (iCount > 0){
+           iCount--;
+        }
+        if (curDevType.substring(1, 2) == "0"){  //AC220V
+			$('#AC220V_Low').attr("disabled","disabled");
+			$('#AC220V_High').attr("disabled","disabled");        	
+        }else{
+			$('#AC220V_Low').removeAttr("disabled");
+			$('#AC220V_High').removeAttr("disabled");  
+			$('#spAAC220V').text("AC220V"+(iCount + 1)+"电流(0~5A)：");  
+			if(iCount > 0){ 
+				for (var i = 1; i <= 3; i++){
+					if(i <= iCount){
+						$('#AC24V' + (4-i) + '_Low').removeAttr("disabled");
+						$('#AC24V' + (4-i) + '_High').removeAttr("disabled");
+						$('#spAAC24V' + (4-i)).text("AC220V" + (iCount + 1 - i)+"电流(0~5A)："); 
+					}else{
+						$('#AC24V' + (4-i) + '_Low').attr("disabled","disabled");
+						$('#AC24V' + (4-i) + '_High').attr("disabled","disabled");
+						$('#spAAC24V' + (4-i)).text("AC24V_" + (4 - i)+"电流(0~3A)："); 
+					}
+				}
+			}    
+        }
+		for (var i = 1; i <= 3 - iCount; i++){
+			if (i <= parseInt(curDevType.substring(2, 3))){
+				$('#AC24V' + i + '_Low').removeAttr("disabled");
+				$('#AC24V' + i + '_High').removeAttr("disabled");					
+			}else{
+				$('#AC24V' + i + '_Low').attr("disabled","disabled");
+				$('#AC24V' + i + '_High').attr("disabled","disabled");	
+			}
+		}
+ 		for(var i=1; i<7; i++){
+			if(i <= parseInt(curDevType.substring(8, 9))){
+				$('#POE' + i +'_Net').removeAttr("disabled");
+			}else{
+				$('#POE' + i +'_Net').attr("disabled","disabled");
+			}
+		}
+		if (curDevType.substring(9, 10) == "0"){
+			$('#FC_Net').attr("disabled","disabled");
+		}else{
+			$('#FC_Net').removeAttr("disabled");
+		}
+			       			
+	}	
+	$("#btnOk").unbind('click'); 
+	$('#btnOk').click(function(){
+		for(var i=1; i<4; i++){
+			if($('#DC12V' + i + '_Low').val()=="" || isNaN($('#DC12V' + i + '_Low').val())){
+				alert("DC12V_" + i + "电流下限输入错误！");
+				return;
+			}
+			if($('#DC12V' + i + '_High').val()=="" || isNaN($('#DC12V' + i + '_High').val())){
+				alert("DC12V_" + i + "电流上限输入错误！");
+				return;
+			}							
+		}
+		if($('#DC48V_Low').val()=="" || isNaN($('#DC48V_Low').val())){
+			alert("DC48V电流下限输入错误！");
+			return;
+		}	
+		if($('#DC48V_High').val()=="" || isNaN($('#DC48V_High').val())){
+			alert("DC48V电流上限输入错误！");
+			return;
+		}	
+		for(var i=1; i<4; i++){
+			if($('#AC24V' + i + '_Low').val()=="" || isNaN($('#AC24V' + i + '_Low').val())){
+				alert("AC24V_" + i + "电流下限输入错误！");
+				return;
+			}
+			if($('#AC24V' + i + '_High').val()=="" || isNaN($('#AC24V' + i + '_High').val())){
+				alert("AC24V_" + i + "电流上限输入错误！");
+				return;
+			}							
+		}
+		if($('#AC220V_Low').val()=="" || isNaN($('#AC220V_Low').val())){
+			alert("AC220V电流下限输入错误！");
+			return;
+		}	
+		if($('#AC220V_High').val()=="" || isNaN($('#AC220V_High').val())){
+			alert("AC220V电流上限输入错误！");
+			return;
+		}		
+		for(var i=1; i<7; i++){
+			if($('#POE' + i + '_Low').val()=="" || isNaN($('#POE' + i + '_Low').val())){
+				alert("ETN_" + i + "电流下限输入错误！");
+				return;
+			}
+			if($('#POE' + i + '_High').val()=="" || isNaN($('#POE' + i + '_High').val())){
+				alert("ETH_" + i + "电流上限输入错误！");
+				return;
+			}
+			if($('#POE' + i + '_Net').val()=="" || isNaN($('#POE' + i + '_Net').val())){
+				alert("ETH_" + i + "预警阈值输入错误！");
+				return;
+			}											
+		}
+		if($('#FC_Net').val()=="" || isNaN($('#FC_Net').val())){
+			alert("FC预警阈值输入错误！");
+			return;
+		}
+		if($('#Temp_Low').val()=="" || isNaN($('#Temp_Low').val())){
+			alert("温度阈值下限输入错误！");
+			return;
+		}	
+		if($('#Temp_High').val()=="" ||isNaN($('#Temp_High').val())){
+			alert("温度阈值上限输入错误！");
+			return;
+		}									
+		for(var i=1; i<4; i++){
+			curAlarmRangeInfo.fDC12V_Low[i-1] = $('#DC12V' + i + '_Low').val();			
+			curAlarmRangeInfo.fDC12V_High[i-1] = $('#DC12V' + i + '_High').val();
+			curAlarmRangeInfo.fAC24V_Low[i-1] = $('#AC24V' + i + '_Low').val();			
+			curAlarmRangeInfo.fAC24V_High[i-1] = $('#AC24V' + i + '_High').val();						
+		}
+		curAlarmRangeInfo.fDC48V_Low = $('#DC48V_Low').val();		
+		curAlarmRangeInfo.fDC48V_High = $('#DC48V_High').val();
+		curAlarmRangeInfo.fAC220V_Low = $('#AC220V_Low').val();		
+		curAlarmRangeInfo.fAC220V_High = $('#AC220V_High').val();		
+		for(var i=1; i<7; i++){
+			curAlarmRangeInfo.fPOE_Low[i-1] = $('#POE' + i + '_Low').val();
+			curAlarmRangeInfo.fPOE_High[i-1] = $('#POE' + i + '_High').val();
+			curDevIpInfo.iDelayTime[i-1] = $('#POE' + i + '_Net').val();
+		}
+		curDevIpInfo.iDelayTime[6] = $('#FC_Net').val();	
+		curAlarmRangeInfo.fTemp_Low = $('#Temp_Low').val();
+		curAlarmRangeInfo.fTemp_High = $('#Temp_High').val();
+		parent.execIcapOperate(parseInt("1005",16),curDevIpInfo);
+		parent.execIcapOperate(parseInt("1010",16),curAlarmRangeInfo);
+		addOperLog("对终端《" + $('#spDevName').text()+ "》进行报警规则设置");
+		$('#myModal').modal('hide'); 		
+	});	
+	$('#myModal').modal('show');	
+}
+//设置当前手机号码的联动事件
+function savePhoneLinkEvent(index){
+	if(index == -1){
+		return;
+	}
+	var iEvent = 0;
+	for(var i=0; i<14; i++){
+		if($('#cLink' + i).is(":checked") == true){
+			iEvent |= (1<<i);
+		}
+	}
+	curLinkSmsInfo.iLinkEvent[index] = "" + iEvent;
+}
+//电话列表选中发生变化
+function OnSelLinkPhone(){
+	var index = parseInt($('#Phone').val());
+	if(curSelPhone != index){
+		savePhoneLinkEvent(curSelPhone);
+		curSelPhone = index;
+	}
+	var iEvent = parseInt(curLinkSmsInfo.iLinkEvent[index]);
+	for(var i=0; i<14; i++){
+		if(((iEvent>>i)& 1) == 1){
+			$('#cLink' + i).prop("checked","checked");
+		}else{
+			$('#cLink' + i).attr("checked",false);
+		}
+	}
+}
+//更新电话通知列表
+function setPhoneList(){
+	$('#Phone').empty();
+	for(var i=1; i<=6; i++){
+		$('#Phone').append($("<option>").val(i-1).text($('#Phone' + i).val()));
+	}
+	$('#Phone').val("0");
+	OnSelLinkPhone();	
+}
+//测试短信
+function testSMSSend(){
+	var obj = new Object();
+	obj.chPhone = $("#Phone").find("option:selected").text();
+	obj.chId = "";
+	parent.execIcapOperate(parseInt("0x1012",16),obj);	
+}
+//检测手机号码是否合法
+function checkPhone(val) {
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+    if(!myreg.test(val)){
+        return false;
+    }else{
+    	return true;
+    }
+}
+//收到报警联动短信信息
+function OnRecvLinkSmsInfo(obj){
+	curLinkSmsInfo = obj;
+	if($('#myTitle').html() != '短信联动设置'){
+		return;
+	}
+	var htmlstr = ('&nbsp;&nbsp;&nbsp;手机1：<input name="Phone1" id="Phone1" type="text" class="pop_input" maxlength="20" value="'+obj.chPhone1+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机2：<input name="Phone2" id="Phone2" type="text" class="pop_input" maxlength="20" value="'+obj.chPhone2+'"/></br>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;手机3：<input name="Phone3" id="Phone3" type="text" class="pop_input" maxlength="20" value="'+obj.chPhone3+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机4：<input name="Phone4" id="Phone4" type="text" class="pop_input" maxlength="20" value="'+obj.chPhone4+'"/></br>');	
+	htmlstr += ('&nbsp;&nbsp;&nbsp;手机5：<input name="Phone5" id="Phone5" type="text" class="pop_input" maxlength="20" value="'+obj.chPhone5+'"/>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机6：<input name="Phone6" id="Phone6" type="text" class="pop_input" maxlength="20" value="'+obj.chPhone6+'"/></br>');		
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;<input id="chkSendSMS" name="chkSendSMS" type="checkbox" value="0" class="checkMid"/> 启用短信报警');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="btnEditPhone" name="btnEditPhone" value="保存" class="btn btn-small btn-primary" style="font-size:12px;padding:0px 5px;" onClick="setPhoneList()"/></br>');	
+	htmlstr += ('<ul class="nav nav-list"><li class="divider"></li></ul>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机：<select name="Phone" id="Phone" class="pop_select" onChange="OnSelLinkPhone()" ><option value="0">'+obj.chPhone1+'</option><option value="1">'+obj.chPhone2+'</option><option value="2">'+obj.chPhone3+
+	            '</option><option value="3">'+obj.chPhone4+'</option><option value="4">'+obj.chPhone5+'</option><option value="5">'+obj.chPhone6+'</option></select>');	
+htmlstr += ('&nbsp;&nbsp;&nbsp;<input type="button" id="btnTestSMS" name="btnTestSMS" value="测试" class="btn btn-small btn-primary" style="font-size:12px;padding:0px 5px;margin-bottom:7px;" onClick="testSMSSend()"/></br>');	            
+	htmlstr += ('&nbsp;&nbsp;&nbsp;<input id="cLink0" name="cLink0" type="checkbox" value="0" class="checkMid"/> 主干网络质量预警');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink1" name="cLink1" type="checkbox" value="1" class="checkMid"/> 主干网络中断报警');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink2" name="cLink2" type="checkbox" value="2" class="checkMid"/> 设备网络质量预警');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink3" name="cLink3" type="checkbox" value="3" class="checkMid"/> 设备网络中断报警</br>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;<input id="cLink4" name="cLink4" type="checkbox" value="4" class="checkMid"/> 市电故障');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink5" name="cLink5" type="checkbox" value="5" class="checkMid"/> ETH电流超限');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink6" name="cLink6" type="checkbox" value="6" class="checkMid"/> DC12V电流超限');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink7" name="cLink7" type="checkbox" value="7" class="checkMid"/> DC48V电流超限</br>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;<input id="cLink8" name="cLink8" type="checkbox" value="8" class="checkMid"/> 非授权开门');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink9" name="cLink9" type="checkbox" value="9" class="checkMid"/> 温度异常报警');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink10" name="cLink10" type="checkbox" value="10" class="checkMid"/> 风扇故障报警');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cLink12" name="cLink12" type="checkbox" value="12" class="checkMid"/> AC24V电流超限</br>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;<input id="cLink13" name="cLink13" type="checkbox" value="13" class="checkMid"/> AC220V电流超限'); 
+	htmlstr += ('<input id="cLink11" name="cLink11" type="checkbox" value="11" class="checkMid" style="display:none;"/>'); 
+	$('.modal-body').html(htmlstr);	
+	if(obj.iLink == "1"){
+		$('#chkSendSMS').prop("checked","checked");
+	}else{
+		$('#chkSendSMS').attr("checked",false);
+	}	
+	curSelPhone = -1;
+	$('#Phone').val("0");
+	OnSelLinkPhone();
+	$("#btnOk").unbind('click'); 
+	$('#btnOk').click(function(){
+		for(var i=1; i<7; i++){
+			if($('#Phone' + i).val() != "" && checkPhone($('#Phone' + i).val())==false){
+				alert("手机号码"+i+"输入错误！");
+				return;
+			}
+		}
+		curLinkSmsInfo.chPhone1 = $('#Phone1').val();
+		curLinkSmsInfo.chPhone2 = $('#Phone2').val();
+		curLinkSmsInfo.chPhone3 = $('#Phone3').val();
+		curLinkSmsInfo.chPhone4 = $('#Phone4').val();
+		curLinkSmsInfo.chPhone5 = $('#Phone5').val();
+		curLinkSmsInfo.chPhone6 = $('#Phone6').val();
+		savePhoneLinkEvent(curSelPhone);
+		if($('#chkSendSMS').is(":checked") == true){
+			curLinkSmsInfo.iLink = "1";
+		}else{
+			curLinkSmsInfo.iLink = "0";
+		}
+		parent.execIcapOperate(parseInt("0x1004",16),curLinkSmsInfo);
+		addOperLog("对终端《" + $('#spDevName').text()+ "》进行短信联动设置");
+		$('#myModal').modal('hide'); 
+	});	
+	$('#myModal').modal('show');		
+}
+//收到安全模式信息
+function OnRecvSecurityInfo(obj){
+	curSecurityInfo = obj;
+	if($('#myTitle').html() != '网络准入设置'){
+		return;
+	}	
+	var htmlstr = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务IP：<input name="svrIp" id="svrIp" type="text" class="pop_input" maxlength="20" value="'+curSecurityInfo.chAuthIp+'"/>';
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务端口：<input name="svrPort" id="svrPort" type="text" class="pop_input" maxlength="6" value="'+curSecurityInfo.iAuthPort+'"/></br>');
+	htmlstr += ('&nbsp;&nbsp;共享秘钥：<input name="shareKey" id="shareKey" type="text" class="pop_input" maxlength="20" value="'+curSecurityInfo.chShareKey+'" /></br>');
+	htmlstr += ('<ul class="nav nav-list"><li class="divider"></li></ul>');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cPOE0" name="cPOE0" type="checkbox" value="0" class="checkMid"/> ETH1');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cPOE1" name="cPOE1" type="checkbox" value="0" class="checkMid"/> ETH2');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cPOE2" name="cPOE2" type="checkbox" value="0" class="checkMid"/> ETH3');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cPOE3" name="cPOE3" type="checkbox" value="0" class="checkMid"/> ETH4');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cPOE4" name="cPOE4" type="checkbox" value="0" class="checkMid"/> ETH5');
+	htmlstr += ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cPOE5" name="cPOE5" type="checkbox" value="0" class="checkMid"/> ETH6');
+	$('.modal-body').html(htmlstr);	
+	for(var i=0; i<6; i++){
+		if( curSecurityInfo.iAuthNet[i] == '1'){
+			$('#cPOE' + i).prop("checked","checked");
+		}else{
+			$('#cPOE' + i).attr("checked",false);
+		}
+	}	
+	if(curDevType != ""){
+		for(var i=0; i<6; i++){
+			if(i < parseInt(curDevType.substring(8, 9))){
+				$('#cPOE' + i).show();
+			}else{
+				$('#cPOE' + i).hide();
+			}
+		}	
+	}	
+	$("#btnOk").unbind('click'); 
+	$('#btnOk').click(function(){
+		if(checkIP($('#svrIp').val()) == false){
+			alert("请输入合法的服务IP！");
+			return;
+		}	
+		if($('#svrPort').val() == ""){
+			$('#svrPort').val("1812");
+		}else if(isNaN($('#tDevLat').val())){
+			alert("请输入合法的服务端口(只能输入数字)！");
+			return;
+		}	
+		curSecurityInfo.chAuthIp = $('#svrIp').val();
+		curSecurityInfo.iAuthPort = $('#svrPort').val();
+		curSecurityInfo.chShareKey = $('#shareKey').val();
+		for(var i=0; i<6; i++){
+			if($('#cPOE' + i).is(":checked") == true){
+				curSecurityInfo.iAuthNet[i] = '1';
+			}else{
+				curSecurityInfo.iAuthNet[i] = '0';
+			}
+		}		
+		parent.execIcapOperate(parseInt("0x1016",16),curSecurityInfo);
+		addOperLog("对终端《" + $('#spDevName').text()+ "》进行网络准入设置");		
+		$('#myModal').modal('hide'); 						
+	});	
+	$('#myModal').modal('show');	
+}
+//收到复位规则信息
+function OnRecvResetInfo(obj){
+	curResetInfo = obj;
+	if($('#myTitle').html() != '定时重启设置'){
+		return;
+	} 
+	var htmlstr = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH1&nbsp;&nbsp;<input id="cRPOE0" name="cRPOE0" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRPOE0" name="tRPOE0"  value="00:00">';
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH2&nbsp;&nbsp;<input id="cRPOE1" name="cRPOE1" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRPOE1" name="tRPOE1" value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH3&nbsp;&nbsp;<input id="cRPOE2" name="cRPOE2" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRPOE2" name="tRPOE2" value="00:00"></br>');
+	htmlstr +=   ('<div style="height:5px;width:100%"></div>');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH4&nbsp;&nbsp;<input id="cRPOE3" name="cRPOE3" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRPOE3" name="tRPOE3"  value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH5&nbsp;&nbsp;<input id="cRPOE4" name="cRPOE4" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRPOE4" name="tRPOE4" value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ETH6&nbsp;&nbsp;<input id="cRPOE5" name="cRPOE5" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRPOE5" name="tRPOE5" value="00:00"></br>');
+	htmlstr +=   ('<div style="height:5px;width:100%"></div>');
+	htmlstr +=   ('&nbsp;&nbsp;DC12V_1&nbsp;&nbsp;<input id="cRDC12V0" name="cRDC12V0" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRDC12V0" name="tRDC12V0"  value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;DC12V_2&nbsp;&nbsp;<input id="cRDC12V1" name="cRDC12V1" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRDC12V1" name="tRDC12V1" value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;DC12V_3&nbsp;&nbsp;<input id="cRDC12V2" name="cRDC12V2" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRDC12V2" name="tRDC12V2" value="00:00"></br>');
+	htmlstr +=   ('<div style="height:5px;width:100%"></div>');
+	htmlstr +=   ('&nbsp;&nbsp;<span id="spAC24V0" name="spAC24V0">AC24V_1</span>&nbsp;&nbsp;<input id="cRAC24V0" name="cRAC24V0" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRAC24V0" name="tRAC24V0"  value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;<span id="spAC24V1" name="spAC24V1">AC24V_2</span>&nbsp;&nbsp;<input id="cRAC24V1" name="cRAC24V1" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRAC24V1" name="tRAC24V1" value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;<span id="spAC24V2" name="spAC24V2">AC24V_3</span>&nbsp;&nbsp;<input id="cRAC24V2" name="cRAC24V2" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRAC24V2" name="tRAC24V2" value="00:00"></br>');
+	htmlstr +=   ('<div style="height:5px;width:100%"></div>');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spDC48V" name="spDC48V">DC48V</span>&nbsp;&nbsp;<input id="cRDC48V" name="cRDC48V" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRDC48V" name="tRDC48V"  value="00:00">');
+	htmlstr +=   ('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	htmlstr +=   ('&nbsp;&nbsp;<span id="spAC220V" name="spAC220V">&nbsp;&nbsp;AC220V</span>&nbsp;&nbsp;<input id="cRAC220V" name="cRAC220V" type="checkbox" value="0" class="checkMid"/>&nbsp;&nbsp;<input type="text" class="setsmall_input" id="tRAC220V" name="tRAC220V" value="00:00">');	
+	$('.modal-body').html(htmlstr);	
+	for(var i=0; i<6; i++){
+		$('#tRPOE' + i).timepicker();
+		if(curResetInfo.chPOE[i] == ""){
+			$('#cRPOE' + i).attr("checked",false);
+			$('#tRPOE' + i).val("00:00");
+		}else{
+			$('#cRPOE' + i).prop("checked","checked");
+			$('#tRPOE' + i).val(curResetInfo.chPOE[i]);
+		}
+	}
+	for(var i=0; i<3; i++){
+		$('#tRDC12V' + i).timepicker();
+		$('#tRAC24V' + i).timepicker();
+		if(curResetInfo.chDC12V[i] == ""){
+			$('#cRDC12V' + i).attr("checked",false);
+			$('#tRDC12V' + i).val("00:00");
+		}else{
+			$('#cRDC12V' + i).prop("checked","checked");
+			$('#tRDC12V' + i).val(curResetInfo.chDC12V[i]);
+		}
+		if(curResetInfo.chAC24V[i] == ""){
+			$('#cRAC24V' + i).attr("checked",false);
+			$('#tRAC24V' + i).val("00:00");
+		}else{
+			$('#cRAC24V' + i).prop("checked","checked");
+			$('#tRAC24V' + i).val(curResetInfo.chAC24V[i]);
+		}					
+	} 
+	$('#tRDC48V').timepicker();
+	$('#tRAC220V').timepicker();	
+	if(curResetInfo.chDC48V == ""){
+		$('#cRDC48V').attr("checked",false);
+		$('#tRDC48V').val("00:00");
+	}else{
+		$('#cRDC48V').prop("checked","checked");
+		$('#tRDC48V').val(curResetInfo.chDC48V);
+	}	
+	if(curResetInfo.chAC220V == ""){
+		$('#cRAC220V').attr("checked",false);
+		$('#tRAC220V').val("00:00");
+	}else{
+		$('#cRAC220V').prop("checked","checked");
+		$('#tRAC220V').val(curResetInfo.chAC220V);
+	}	
+	if(curDevType != ""){
+		for (var i = 1; i <= 6; i++){
+			if(i <= parseInt(curDevType.substring(3,4))){
+				$('#cRPOE' + (i-1)).removeAttr("disabled");
+				$('#tRPOE' + (i-1)).removeAttr("disabled");
+			}else{
+				$('#cRPOE' + (i-1)).attr("disabled","disabled");
+				$('#tRPOE' + (i-1)).attr("disabled","disabled");
+			}
+		}
+		if(curDevType.substring(4, 5) == "0" && curDevType.substring(5, 6) == "0"){ //DC48V
+			$('#cRDC48V').attr("disabled","disabled");
+			$('#tRDC48V').attr("disabled","disabled");
+		}else{
+			if(curDevType.substring(4, 5) == "1"){
+				$('#spDC48V').text("DC48V");
+			}else{
+				$('#spDC48V').text("DC36V"); 
+			}
+			$('#cRDC48V').removeAttr("disabled");
+			$('#tRDC48V').removeAttr("disabled");		 
+		}
+		for (var i = 1; i <= 3; i++){
+			if(i <= parseInt(curDevType.substring(6,7))){
+				$('#cRDC12V' + (i-1)).removeAttr("disabled");
+				$('#tRDC12V' + (i-1)).removeAttr("disabled");
+			}else{
+				$('#cRDC12V' + (i-1)).attr("disabled","disabled");
+				$('#tRDC12V' + (i-1)).attr("disabled","disabled");
+			}
+		}
+        var iCount = parseInt(curDevType.substring(1, 2));
+        if (iCount > 0){
+           iCount--;
+        }
+        if (curDevType.substring(1, 2) == "0"){  //AC220V
+			$('#cRAC220V').attr("disabled","disabled");
+			$('#tRAC220V').attr("disabled","disabled");        	
+        }else{
+			$('#cRAC220V').removeAttr("disabled");
+			$('#tRAC220V').removeAttr("disabled");  
+			$('#spAC220V').text("AC220V" + (iCount + 1));  
+			if(iCount > 0){
+				for (var i = 1; i <= 3; i++){ 
+					if(i <= iCount){
+						$('#cRAC24V' + (3-i)).removeAttr("disabled");
+						$('#tRAC24V' + (3-i)).removeAttr("disabled");
+						$('#spAC24V' + (3-i)).text("AC220V" + (iCount + 1 - i)); 
+					}else{
+						$('#cRAC24V' + (3-i)).attr("disabled","disabled");
+						$('#tRAC24V' + (3-i)).attr("disabled","disabled");
+						$('#spAC24V' + (3-i)).text("AC24V_" + (4 - i)); 
+					}
+				}
+			}    
+        }	
+		for (var i = 1; i <= 3 - iCount; i++){
+			if (i <= parseInt(curDevType.substring(2, 3))){
+				$('#cRAC24V' + (i-1)).removeAttr("disabled");
+				$('#tRAC24V' + (i-1)).removeAttr("disabled");				
+			}else{
+				$('#cRAC24V' + (i-1)).attr("disabled","disabled");
+				$('#tRAC24V' + (i-1)).attr("disabled","disabled");
+			}
+		}        		
+	}
+	$("#btnOk").unbind('click');
+	$('#btnOk').click(function(){
+		for(var i=0; i<6; i++){
+			if($('#cRPOE' + i).is(":checked") == true){
+				curResetInfo.chPOE[i] = $('#tRPOE' + i).val();
+			}else{
+				curResetInfo.chPOE[i] = "";
+			}
+		}
+		for(var i=0; i<3; i++){
+			if($('#cRDC12V' + i).is(":checked") == true){
+				curResetInfo.chDC12V[i] = $('#tRDC12V' + i).val();
+			}else{
+				curResetInfo.chDC12V[i] = "";
+			} 
+			if($('#cRAC24V' + i).is(":checked") == true){
+				curResetInfo.chAC24V[i] = $('#tRAC24V' + i).val();
+			}else{
+				curResetInfo.chAC24V[i] = "";
+			}					
+		}
+		if($('#cRDC48V').is(":checked") == true){
+			curResetInfo.chDC48V = $('#tRDC48V').val();
+		}else{
+			curResetInfo.chDC48V = "";
+		}	
+		if($('#cRAC220V').is(":checked") == true){
+			curResetInfo.chAC220V = $('#tRAC220V').val();
+		}else{
+			curResetInfo.chAC220V = "";
+		}
+		parent.execIcapOperate(parseInt("0x1015",16),curResetInfo);
+		addOperLog("对终端《" + $('#spDevName').text()+ "》进行定时重启设置");		
+		$('#myModal').modal('hide'); 							
+	});
+	$('#myModal').modal('show');	
+}
+//设置基础参数
+function setBaseInfo(){
+	$('#myTitle').html('基础参数设置');
+	parent.execIcapOperate(parseInt("0x0009",16),null);
+	parent.execIcapOperate(parseInt("0x0006",16),null);
+}
+//设置外设IP地址
+function setDevIpInfo(){
+	$('#myTitle').html('网络参数设置');
+	parent.execIcapOperate(parseInt("0x0005",16),null);	
+}
+//设置报警参数
+function setAlarmRangeInfo(){
+	$('#myTitle').html('报警规则设置');
+	parent.execIcapOperate(parseInt("0x0005",16),null);
+	parent.execIcapOperate(parseInt("0x0010",16),null);
+}
+function setLinkSmsInfo(){
+	if(curDevType != "" && curDevType.substring(11,12)=="0"){
+		alert("当前设备不支持短信功能！");
+		return;
+	}
+	$('#myTitle').html('短信联动设置');
+	parent.execIcapOperate(parseInt("0x0004",16),null);
+}
+//设置安全模式参数
+function setSecurityInfo(){
+	if(curDevType != "" && curDevType.substring(0,1)=="0"){
+		alert("当前设备不支持网络准入功能！");
+		return;
+	}
+	$('#myTitle').html('网络准入设置');
+	parent.execIcapOperate(parseInt("0x0016",16),null);
+}
+//设置复位规则参数
+function setResetInfo(){
+	$('#myTitle').html('定时重启设置');
+	parent.execIcapOperate(parseInt("0x0015",16),null);
+}
+//重启设备
+function setRestartDev(){
+	parent.execIcapOperate(parseInt("0x0014",16),null);
+	addOperLog("对终端《" + $('#spDevName').text()+ "》进行重启操作");
+}
+
+</script> 
+</head>
+<body>
+<input name="hideType" id="hideType" type="hidden" value="0">
+<div class="container-fluid-full">
+	<div class="row-fluid">
+		<div class="span2">
+			【ID】<span id="spDevID" name="spDevId"></span>
+		</div>
+		<div class="span3">
+			【终端名称】<span id="spDevName" name="spDevName"></span>
+		</div>
+		<div class="span7" style="text-align:right;">   
+			<input type="button" value="基础参数" class="btn btn-small btn-primary" onclick="setBaseInfo()">&nbsp;
+			<input type="button" value="网络参数" class="btn btn-small btn-primary" onclick="setDevIpInfo()">&nbsp;
+			<input type="button" value="网络准入" class="btn btn-small btn-primary" onclick="setSecurityInfo()">&nbsp;
+			<input type="button" value="报警规则" class="btn btn-small btn-primary" onclick="setAlarmRangeInfo()">&nbsp;
+			<input type="button" value="短信联动" class="btn btn-small btn-primary" onclick="setLinkSmsInfo()">&nbsp;
+			<input type="button" value="定时重启" class="btn btn-small btn-primary" onclick="setResetInfo()">&nbsp;
+			<input type="button" value="重启设备" class="btn btn-small btn-primary" onclick="setRestartDev()">&nbsp;
+		</div>
+	</div>
+	<div style="height:5px;"></div>
+	<div class="row-fluid">
+		 <div class="span3">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>供电输入</h2>
+				</div>
+				<div class="box-content">
+				<table class="table">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>&nbsp;</td><td class="tdcenter">AC220V</td><td class="tdcenter">DC48V</td></tr>
+						<tr><td>状态</td>
+                            <td class="tdcenter"><span id="sAC220VIN" name="sAC220VIN" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sDC48VIN" name="sDC48VIN" class="spNone">&nbsp;</span></td>
+                        </tr>
+						<tr><td>电压(V)</td>
+                            <td id="fAC220VIN" name="fAC220VIN" class="tdcenter">0.0</td>
+                            <td id="fDC48VIN" name="fDC48VIN" class="tdcenter">0.0</td>
+                        </tr>  
+						<tr><td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>                                                
+					</tbody>
+				</table>
+				</div>
+			</div>
+		 </div>	
+		 <div class="span5">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>网络状态</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>&nbsp;</td><td class="tdcenter">ETH1</td><td class="tdcenter">ETH2</td><td class="tdcenter">ETH3</td><td class="tdcenter">ETH4</td><td class="tdcenter">ETH5</td><td class="tdcenter">ETH6</td><td class="tdcenter">FC</td></tr>
+						<tr><td>状态</td>
+                            <td class="tdcenter"><span id="sPOE1" name="sPOE1" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOE2" name="sPOE2" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOE3" name="sPOE3" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOE4" name="sPOE4" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOE5" name="sPOE5" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOE6" name="sPOE6" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sFC" name="sFC" class="spNone">&nbsp;</span></td>
+                        </tr>
+						<tr><td>延时(ms)</td>
+                            <td id="fPOE1" name="fPOE1" class="tdcenter">0</td>
+                            <td id="fPOE2" name="fPOE2" class="tdcenter">0</td>
+                            <td id="fPOE3" name="fPOE3" class="tdcenter">0</td>
+                            <td id="fPOE4" name="fPOE4" class="tdcenter">0</td>
+                            <td id="fPOE5" name="fPOE5" class="tdcenter">0</td>
+                            <td id="fPOE6" name="fPOE6" class="tdcenter">0</td>
+                            <td id="fFC" name="fFC" class="tdcenter">0</td>
+                        </tr>
+						<tr><td>速率(kbps)</td>
+                            <td id="bPOE1" name="bPOE1" class="tdcenter">0</td>
+                            <td id="bPOE2" name="bPOE2" class="tdcenter">0</td>
+                            <td id="bPOE3" name="bPOE3" class="tdcenter">0</td>
+                            <td id="bPOE4" name="bPOE4" class="tdcenter">0</td>
+                            <td id="bPOE5" name="bPOE5" class="tdcenter">0</td>
+                            <td id="bPOE6" name="bPOE6" class="tdcenter">0</td>
+                            <td id="bFC" name="bFC" class="tdcenter">0</td>
+                        </tr>                        
+					</tbody>
+				</table>
+				</div>
+			</div>
+		 </div>
+		 <div class="span4">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>交流设备供电</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>&nbsp;</td><td class="tdcenter" id="tdAC24V1" name="tdAC24V1">AC24V_1</td><td class="tdcenter" id="tdAC24V2" name="tdAC24V2">AC24V_2</td><td class="tdcenter" id="tdAC24V3" name="tdAC24V3">AC24V_3</td><td class="tdcenter" id="tdAC220V" name="tdAC220V">AC220V</td></tr>
+						<tr><td>启用</td>
+                             <td class="tdcenter"><input id="cAC24V1" name="cAC24V1" type="checkbox" value="12" onclick="setCtrlIOStatus(this)"></td>
+                             <td class="tdcenter"><input id="cAC24V2" name="cAC24V2" type="checkbox" value="13" onclick="setCtrlIOStatus(this)"></td>
+                             <td class="tdcenter"><input id="cAC24V3" name="cAC24V3" type="checkbox" value="14" onclick="setCtrlIOStatus(this)"></td>
+                             <td class="tdcenter"><input id="cAC220V" name="cAC220V" type="checkbox" value="15" onclick="setCtrlIOStatus(this)"></td>
+                        </tr>
+						<tr><td>状态</td>
+                            <td class="tdcenter"><span id="sAC24V1" name="sAC24V1" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sAC24V2" name="sAC24V2" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sAC24V3" name="sAC24V3" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sAC220V" name="sAC220V" class="spNone">&nbsp;</span></td>
+                        </tr> 
+						<tr><td>电流(A)</td>
+                            <td id="fAC24V1" name="fAC24V1" class="tdcenter">0.0</td>
+                            <td id="fAC24V2" name="fAC24V2" class="tdcenter">0.0</td>
+                            <td id="fAC24V3" name="fAC24V3" class="tdcenter">0.0</td>
+                            <td id="fAC220V" name="fAC220V" class="tdcenter">0.0</td>
+                        </tr>                        
+					</tbody>
+				</table>
+				</div>
+			</div>
+		 </div> 		
+	</div>
+	<div style="height:5px;"></div>
+	<div class="row-fluid">
+		<div class="span3">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>终端状态及维护</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>箱门</td><td id="sDoor" name="sDoor" class="tdNone">未知</td><td></td><td>温度</td><td id="sTemp" name="sTemp" class="tdNone">0℃</td></tr>
+						<tr><td>SIM卡</td><td id="sSIM" name="sSIM" class="tdNone">未知</td><td></td><td>风扇</td><td id="sFan" name="sFan" class="tdNone">0</td></tr>
+						<tr><td>门禁</td><td id="sDuty" name="sDuty" class="tdNone">未知</td><td></td><td><input type="button" id="btnNoDuty" name="btnNoDuty" value="撤防" class="btn btn-small btn-primary" style="font-size:12px;padding:0px 5px;margin-bottom:0px;" onclick="setDutyTime()"></td><td><input id="tDutyTime" name="tDutyTime" class="fix_input" type="text" value=""><span id="spanTime" name="spanTime">小时</span></td></tr>
+						<tr><td colspan="4">播音&nbsp;&nbsp;<select name="sPlayType" id="sPlayType" class="fix_select">
+					      <option value="0">喇叭&amp;音箱</option>
+					      <option value="1">音箱</option>
+                      </select></td><td><input name="btnTalk" id="btnTalk" type="button" value="对讲" class="btn btn-small btn-primary" style="font-size:12px;padding:0px 5px;" onclick="setTalkInfo(this)"></td></tr>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		</div> 
+		 <div class="span5">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>ETH供电输出</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>&nbsp;</td><td class="tdcenter">ETH1</td><td class="tdcenter">ETH2</td><td class="tdcenter">ETH3</td><td class="tdcenter">ETH4</td><td class="tdcenter">ETH5</td><td class="tdcenter">ETH6</td></tr>
+						<tr><td>启用</td>
+                            <td class="tdcenter"><input id="cPOEA1" name="cPOEA1" type="checkbox" value="2" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cPOEA2" name="cPOEA2" type="checkbox" value="3" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cPOEA3" name="cPOEA3" type="checkbox" value="4" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cPOEA4" name="cPOEA4" type="checkbox" value="5" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cPOEA5" name="cPOEA5" type="checkbox" value="6" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cPOEA6" name="cPOEA6" type="checkbox" value="7" onclick="setCtrlIOStatus(this)"></td>
+                        </tr>
+                        <tr><td>状态</td>
+                            <td class="tdcenter"><span id="sPOEA1" name="sPOEA1" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOEA2" name="sPOEA2" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOEA3" name="sPOEA3" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOEA4" name="sPOEA4" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOEA5" name="sPOEA5" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sPOEA6" name="sPOEA6" class="spNone">&nbsp;</span></td>
+                        </tr>
+						<tr><td>电流(A)</td>
+                            <td id="fPOEA1" name="fPOEA1" class="tdcenter">0.0</td>
+                            <td id="fPOEA2" name="fPOEA2" class="tdcenter">0.0</td>
+                            <td id="fPOEA3" name="fPOEA3" class="tdcenter">0.0</td>
+                            <td id="fPOEA4" name="fPOEA4" class="tdcenter">0.0</td>
+                            <td id="fPOEA5" name="fPOEA5" class="tdcenter">0.0</td>
+                            <td id="fPOEA6" name="fPOEA6" class="tdcenter">0.0</td>
+                       </tr>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		 </div>	
+		<div class="span4">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>直流供电输出</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>&nbsp;</td><td class="tdcenter">DC12V_1</td><td class="tdcenter">DC12V_2</td><td class="tdcenter">DC12V_3</td><td class="tdcenter" name="tdDC48V" id="tdDC48V">DC48V</td></tr>
+						<tr><td>启用</td>
+                            <td class="tdcenter"><input id="cDC12V1" name="cDC12V1" type="checkbox" value="8" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cDC12V2" name="cDC12V2" type="checkbox" value="9" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cDC12V3" name="cDC12V3" type="checkbox" value="10" onclick="setCtrlIOStatus(this)"></td>
+                            <td class="tdcenter"><input id="cDC48V" name="cDC48V" type="checkbox" value="11" onclick="setCtrlIOStatus(this)"></td>
+                        </tr>
+						<tr><td>状态</td>
+                            <td class="tdcenter"><span id="sDC12V1" name="sDC12V1" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sDC12V2" name="sDC12V2" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sDC12V3" name="sDC12V3" class="spNone">&nbsp;</span></td>
+                            <td class="tdcenter"><span id="sDC48V" name="sDC48V" class="spNone">&nbsp;</span></td>
+                        </tr>
+						<tr><td>电流(A)</td>
+                            <td id="fDC12V1" name="fDAC2V1" class="tdcenter">0.0</td>
+                            <td id="fDC12V2" name="fDC12V2" class="tdcenter">0.0</td>
+                            <td id="fDC12V3" name="fDC12V3" class="tdcenter">0.0</td>
+                            <td id="fDC48V" name="fDC48V" class="tdcenter">0.0</td>
+                        </tr>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		 </div>	
+	</div>
+	<div style="height:5px;"></div>
+	<div class="row-fluid">
+		<div class="span4">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>描述信息</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>设备名称</td><td colspan="4"><input id="tDevName" name="tDevName" class="setbig_input" type="text" value=""></td></tr>
+						<tr><td align="right">经度</td><td><input id="tDevLng" name="tDevLng" class="setsmall_input" type="text" value="" maxlength="10"></td>
+                            <td>纬度</td><td><input id="tDevLat" name="tDevLat" class="setsmall_input" type="text" value="" maxlength="10"></td>
+                            <td><input type="button" value="确定" class="btn btn-small btn-primary" style="font-size:12px;padding:0px 5px;margin-bottom:0px;" onclick="setPlatInfo()"></td>
+                        </tr>
+					</tbody>
+				</table>
+				</div>
+			  </div>
+		</div>
+		<div class="span4">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>版本升级</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>升级网址</td><td colspan="4"><input id="tUpdateUrl" name="tUpdateUrl" class="setbig_input" type="text" value=""></td></tr>
+						<tr><td align="right">当前版本</td><td id="dVersion" name="dVersion">2.1.6</td>
+                            <td>升级版本</td><td><select name="sVersion" id="sVersion" class="fix_select"></select></td>
+                            <td><input type="button" value="确定" class="btn btn-small btn-primary" style="font-size:12px;padding:0px 5px;margin-bottom:0px;" onclick="setPlatInfoEx()"></td>
+                        </tr>
+					</tbody>
+				</table>
+				</div>
+			  </div>
+		</div>
+		<div class="span4">
+			 <div class="box" style="margin-left:5px;margin-right:5px;">
+				<div class="box-header" data-original-title="">
+					<h2>网络校时</h2>
+				</div>
+				<div class="box-content">
+				<table class="table" style="margin-bottom:0px;">  
+				  	<tbody style="font-size:12px;">
+						<tr><td>本机：</td><td id="dDevTime" name="dDevTime" colspan="2">0000-00-00 00:00:00</td><td colspan="2"><input id="cIfNtp" name="cIfNtp" type="checkbox" value="0" class="checkMid">&nbsp;启动NTP校时</td></tr>
+						<tr><td align="right">服务器IP</td><td><input id="tNtpIp" name="tNtpIp" class="setmid_input" type="text" value=""></td>
+                            <td>时区</td><td><input id="tNtpZone" name="tNtpZone" class="fix_input" type="text" value=""></td>
+                            <td><input type="button" value="确定" class="btn btn-small btn-primary" style="font-size:12px;padding:0px 5px;margin-bottom:0px;" onclick="setNtpTimeInfo()"></td>
+                        </tr>
+					</tbody>
+				</table>
+				</div>
+			  </div>
+		</div>
+	</div>
+</div>
+<div class="modal hide fade" id="myModal" aria-hidden="true" data-backdrop="static">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" onclick="hideMaskLayer()">×</button>
+		<h3 id="myTitle" name="myTitle">添加用户</h3>
+	</div>
+	<div class="modal-body" style="font-size:12px;">
+	</div>
+	<div class="modal-footer">
+		<a href="http://39.98.57.97:9602/icapmng/dev/devset.jsp#" class="btn" data-dismiss="modal" onclick="hideMaskLayer()">取消</a>
+		<a id="btnOk" name="btnOk" href="http://39.98.57.97:9602/icapmng/dev/devset.jsp#" class="btn btn-primary">确定</a>
+	</div>
+</div>
+
+
+</body></html>

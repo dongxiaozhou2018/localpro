@@ -638,8 +638,6 @@ $(function () {
                         }
                         ,nodes: menutree(newTree)
                     });
-                }else{
-                    alert(res.msg);
                 }
             })
             terminalTab('','',pageNum,pageSize);
@@ -803,7 +801,38 @@ $(function () {
                         })
                         layer.close(index); //向服务端发送删除指令
                     });
-                } 
+                }else if(layEvent === 'control'){
+                    var maxWidth = $('.layui-body').width();
+                    var maxHeight = $('.layui-body').height();
+                    layui.use('layer', function(){ //独立版的layer无需执行这一句
+                    var $ = layui.jquery, layer = layui.layer;
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                            ,
+                        title: '数据监控展示',
+                        area: ['1120px', '800px'],
+                        shade: 0,
+                        resize: true,
+                        tipsMore: false,
+                        maxmin:true,
+                        scrollbar:true,
+                        content: '../aa/devset.jsp.html',
+                        yes: function (index,layero) {
+                            var body = layer.getChildFrame('body', index);
+                            var w = $(layero).find("iframe")[0].contentWindow;
+                        },
+
+                        zIndex: layer.zIndex, //重点1
+                        success: function (layero) {
+                            sessionStorage.setItem('modular','equipment');
+                            layer.setTop(layero); //重点2
+                        },
+                        cancel: function(){ 
+                            layer.closeAll();
+                        }
+                    });
+                })
+                }
             });
         });
         $('#terminal_btn').on('click','.layui-btn',function(){
