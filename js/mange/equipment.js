@@ -8,17 +8,6 @@
             layedit = layui.layedit,
             laydate = layui.laydate;
           //表单初始赋值
-        var checkeQuipment = sessionStorage.getItem('checkeQuipment');
-        if(checkeQuipment){
-            checkeQuipment = JSON.parse(checkeQuipment).data;
-            form.val("example", {
-                "deviceName": checkeQuipment.deviceName,
-                "deviceId": checkeQuipment.deviceId,
-                "deviceIP": checkeQuipment.deviceIP,
-                "devicePort": checkeQuipment.devicePort,
-                "modelId": checkeQuipment.modelId
-            })
-        }
         var url = global_path + '/manage/model/queryAllModel';
         getAjax(url, function(res) {
             if (res.code == 0) {
@@ -29,13 +18,25 @@
                     }
                 }
                 form.render();
-
+                var checkeQuipment = sessionStorage.getItem('checkUser');
+                if(checkeQuipment){
+                    checkeQuipment = JSON.parse(checkeQuipment).data;
+                    form.val("example", {
+                        "deviceName": checkeQuipment.deviceName,
+                        "deviceId": checkeQuipment.deviceId,
+                        "deviceIP": checkeQuipment.deviceIP,
+                        "devicePort": checkeQuipment.devicePort,
+                        "modelId": checkeQuipment.modelId
+                    })
+                }
             } else if(res.code == 401){
                 unauthorized(res.code);
             } else {
                 alert(res.msg);
             }
         })
+        
+        
         form.on('submit(demo1)', function (data) {
             var deviceName = $('.deviceName').val();
             var deviceId = $('.deviceId').val();
