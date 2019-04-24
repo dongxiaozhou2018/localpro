@@ -625,8 +625,10 @@ $(function () {
 
             // 分组树
             $('#terminal_demo').html('');
+            var newTree = [];
             getAjax(global_path + "/manage/group/groupTree",function(res){
                 if(res.code == 0){
+                    newTree.push(res.data);
                     layui.tree({
                         elem: '#terminal_demo' //指定元素
                         ,click: function(item){ //点击最里层节点回调
@@ -634,7 +636,7 @@ $(function () {
                                 terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
                             }
                         }
-                        ,nodes: menutree(res.data.children)
+                        ,nodes: menutree(newTree)
                     });
                 }else{
                     alert(res.msg);
