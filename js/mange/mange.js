@@ -602,10 +602,12 @@ $(function () {
                 $ = layui.jquery;
 
             // 设备型号
-
+            $('.modelId').html('');
             var url = global_path + '/manage/model/queryAllModel';
             getAjax(url, function(res) {
                 if (res.code == 0) {
+                    var firstmodel = '<option value="">请选择</option>';
+                    $('.modelId').append(firstmodel);
                     if(res.data.length>0){
                         for(var i = 0;i<res.data.length;i++){
                             var mode = '<option value="'+res.data[i].id+'">'+res.data[i].modelName+'</option>';
@@ -728,17 +730,17 @@ $(function () {
             }
             var $ = layui.$, active = {
                 reload: function(){
-                    var deviceId = $('.deviceId');
-                    var deviceName = $('.deviceName');
-                    var deviceIP = $('.deviceIP');
-                    var modelId = $('.modelId');
+                    var deviceId = $('.deviceId').val();
+                    var deviceName = $('.deviceName').val();
+                    var deviceIP = $('.deviceIP').val();
+                    var modelId = $('.modelId').val();
                     //执行重载
                     table.reload('testReload', {
                         where: {
-                            'deviceId': deviceId.val(),
-                            'deviceName': deviceName.val(),
-                            'deviceIP': deviceIP.val(),
-                            'modelId':modelId.val(),
+                            'deviceId': deviceId,
+                            'deviceName': deviceName,
+                            'deviceIP': deviceIP,
+                            'modelId':modelId,
                             'id':''
                         }
                     });
@@ -753,7 +755,11 @@ $(function () {
                 $('.deviceId').val('');
                 $('.deviceName').val('');
                 $('.deviceIP').val('');
-                $('.modelId').val();
+                $('.modelId').val('');
+                deviceId = '';
+                deviceName = '';
+                deviceIP = '';
+                modelId = '';
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
