@@ -631,7 +631,7 @@ $(function () {
                         elem: '#terminal_demo' //指定元素
                         ,click: function(item){ //点击最里层节点回调
                             if(item.children.length == 0){
-                                terminalTab('',item.id,pageNum,pageSize);
+                                terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
                             }
                         }
                         ,nodes: menutree(res.data.children)
@@ -640,11 +640,11 @@ $(function () {
                     alert(res.msg);
                 }
             })
-            terminalTab();
+            terminalTab('','',pageNum,pageSize);
 
             function terminalTab(url,id,pageNum,pageSize){
                 if(!url){
-                    url = global_path + '/manage/device/listPage';
+                    url = global_path + '/manage/device/findAllPage';
                 }
                 table.render({
                     elem: '#terminal',
@@ -740,6 +740,7 @@ $(function () {
                     var modelId = $('.modelId').val();
                     //执行重载
                     table.reload('testReload', {
+                        url: global_path + '/manage/device/listPage',
                         where: {
                             'deviceId': deviceId,
                             'deviceName': deviceName,
@@ -764,8 +765,7 @@ $(function () {
                 deviceName = '';
                 deviceIP = '';
                 modelId = '';
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
+                terminalTab('','',pageNum,pageSize);
             });
             table.on('tool(terminal)', function (obj) { 
                 var data = obj.data //获得当前行数据
@@ -775,7 +775,7 @@ $(function () {
                     update('/manage/device/selectOne',data.id,'编辑终端设备信息','equipment.html','equipment');
                 }else if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        var url = global_path + "/manage/device/deleteDevice?id="+id;
+                        var url = global_path + "/manage/device/deleteDevice?id="+data.id;
                         getAjax(url, function(data) {
                             if(data.code == 0){
                                 alert(data.msg);
