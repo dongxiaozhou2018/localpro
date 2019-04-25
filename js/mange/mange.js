@@ -608,7 +608,6 @@ $(function () {
         function attribute(){
             var p = marker.getPosition();
             // 经纬度
-            console.log();
             var point = new BMap.Point(p.lng, p.lat);
             var gc = new BMap.Geocoder();
             gc.getLocation(point, function (rs) {
