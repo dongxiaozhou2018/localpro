@@ -11,7 +11,7 @@ $(function () {
     function showModular(){
         pageNum = 1; pageSize = 10;
         var modular = sessionStorage.getItem('modular');
-         if(modular == 'userInformation'){              //用户管理-----用户信息
+        if(modular == 'userInformation'){              //用户管理-----用户信息
             $('#userInformation').show().siblings().hide();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'yhgl'){
@@ -62,6 +62,7 @@ $(function () {
     });
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
         pageNum = 1; pageSize = 10;
+        sessionStorage.removeItem('modular');
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if($(this).attr('name') == 'yhgl'){
         	$('#userInformation').show().siblings().hide();
@@ -571,23 +572,60 @@ $(function () {
 
     // 地图配置
     function map() {
-        var map = new L.Map("mapid", {
-            zoom: 9,
-            center: [39.0850853357,117.1993482089],
-            boxZoom: true, 
-        });
-        var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
-        var layer = new L.TileLayer(url, {
-            subdomains:"1234"
-        });
-        map.addLayer(layer);
-        var marker = new L.marker([39.1410912411,117.0073575633]);
-        marker.addTo(map);
-        marker.bindPopup("<b>天津</b><br>西青区.");
+        // var map = new L.Map("mapid", {
+        //     zoom: 9,
+        //     center: [39.0850853357,117.1993482089],
+        //     boxZoom: true, 
+        // });
+        // var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
+        // var layer = new L.TileLayer(url, {
+        //     subdomains:"1234"
+        // });
+        // map.addLayer(layer);
+        // var marker = new L.marker([39.1410912411,117.0073575633]);
+        // marker.addTo(map);
+        // marker.bindPopup("<b>天津</b><br>西青区.");
 
-        var marker = new L.marker([39.0850853357,117.1993482089]);
-        marker.addTo(map);
-        marker.bindPopup("<b>天津</b>");
+        // var marker = new L.marker([39.0850853357,117.1993482089]);
+        // marker.addTo(map);
+        // marker.bindPopup("<b>天津</b>");
+        $('.layui-body').css('bottom','0');
+        $('.layui-body div').css('padding','0');
+
+        var map = new BMap.Map("mapid");
+    
+    
+        var point = new BMap.Point(117.1993482089,39.0850853357);
+        map.centerAndZoom(point, 12);
+        map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+        map.enableContinuousZoom();
+        var marker = new BMap.Marker(point);// 创建标注
+        map.addOverlay(marker);             // 将标注添加到地图中
+        marker.enableDragging();            //可拖拽
+    //    marker.disableDragging();           //不可拖拽
+        marker.addEventListener("dragend",attribute);
+        map.addOverlay(marker);    //增加点
+        function attribute(){
+            var p = marker.getPosition();
+            // 经纬度
+            console.log();
+            var point = new BMap.Point(p.lng, p.lat);
+            var gc = new BMap.Geocoder();
+            gc.getLocation(point, function (rs) {
+                var addComp = rs.addressComponents;
+                actual_address = rs.address;        //  位置信息
+    //          
+                var opts = {
+                    width : 100, // 信息窗口宽度
+                    height: 80, // 信息窗口高度
+                    title : "您的位置是" , // 信息窗口标题
+                    enableMessage:false,//设置允许信息窗发送短息
+                }
+                var infoWindow = new BMap.InfoWindow(rs.address+'('+p.lng+ ',' + p.lat+')', opts); // 创建信息窗口对象
+    //          
+                map.openInfoWindow(infoWindow,point); //开启信息窗口
+            })
+        }
 
     }
 
