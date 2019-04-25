@@ -11,6 +11,7 @@ $(function () {
     function showModular(){
         pageNum = 1; pageSize = 10;
         var modular = sessionStorage.getItem('modular');
+        $('.layui-body').css('bottom','44px');
         if(modular == 'userInformation'){              //用户管理-----用户信息
             $('#userInformation').show().siblings().hide();
             $('.btn').each(function(){
@@ -63,6 +64,7 @@ $(function () {
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
         pageNum = 1; pageSize = 10;
         sessionStorage.removeItem('modular');
+        $('.layui-body').css('bottom','44px');
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if($(this).attr('name') == 'yhgl'){
         	$('#userInformation').show().siblings().hide();
@@ -590,13 +592,12 @@ $(function () {
         // marker.addTo(map);
         // marker.bindPopup("<b>天津</b>");
         $('.layui-body').css('bottom','0');
-        $('.layui-body div').css('padding','0');
 
-        var map = new BMap.Map("mapid");
+        var map = new BMap.Map("mapid",{enableMapClick:false});
     
     
         var point = new BMap.Point(117.1993482089,39.0850853357);
-        map.centerAndZoom(point, 12);
+        map.centerAndZoom(point, 15);
         map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
         map.enableContinuousZoom();
         var marker = new BMap.Marker(point);// 创建标注
