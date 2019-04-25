@@ -123,3 +123,28 @@ function menutree(a){
     }
     return a;
 }
+function websocket(idName,message,fn){
+    var msg = document.getElementById(idName);
+    var wsServer = 'ws://192.168.1.185:80';
+    var ws = "client";
+    var websocket = new WebSocket(wsServer);
+    //监听连接打开
+    websocket.onopen = function (evt) {
+        msg.innerHTML = "The connection is open";
+    };
+
+    //监听服务器数据推送
+    websocket.onmessage = fn;
+
+    //监听连接关闭
+    websocket.onclose = function (evt) {
+        alert("连接关闭");
+    };
+
+    function send() {
+        websocket.send(JSON.stringify(message));
+    };
+    websocket.onerror = function(evt) {
+        
+    };
+}
