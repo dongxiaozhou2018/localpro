@@ -606,6 +606,7 @@ $(function () {
     //    marker.disableDragging();           //不可拖拽
         marker.addEventListener("dragend",attribute);
         map.addOverlay(marker);    //增加点
+        
         function attribute(){
             var p = marker.getPosition();
             // 经纬度
@@ -614,7 +615,7 @@ $(function () {
             gc.getLocation(point, function (rs) {
                 var addComp = rs.addressComponents;
                 actual_address = rs.address;        //  位置信息
-    //          
+
                 var opts = {
                     width : 100, // 信息窗口宽度
                     height: 80, // 信息窗口高度
@@ -622,7 +623,7 @@ $(function () {
                     enableMessage:false,//设置允许信息窗发送短息
                 }
                 var infoWindow = new BMap.InfoWindow(rs.address+'('+p.lng+ ',' + p.lat+')', opts); // 创建信息窗口对象
-    //          
+
                 map.openInfoWindow(infoWindow,point); //开启信息窗口
             })
         }
