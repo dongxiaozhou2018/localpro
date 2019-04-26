@@ -71,7 +71,7 @@ $(function () {
         	userInformation();
         }
         if ($(this).attr('name') == 'dtpz') {
-            $('#mapid').show().siblings().hide();
+            $('.map_box').show().siblings().hide();
             map();
         }
         if ($(this).attr('name') == 'zdpz') {
@@ -593,20 +593,22 @@ $(function () {
         // marker.bindPopup("<b>天津</b>");
         $('.layui-body').css('bottom','0');
 
+        var spotAddress = '',lngLat = '';
+
         var map = new BMap.Map("mapid",{enableMapClick:false});
     
     
-        var point = new BMap.Point(117.1993482089,39.0850853357);
-        map.centerAndZoom(point, 15);
+        var point = new BMap.Point(117.216582,39.030182);
+        map.centerAndZoom(point, 17);
         map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
         map.enableContinuousZoom();
         var marker = new BMap.Marker(point);// 创建标注
         map.addOverlay(marker);             // 将标注添加到地图中
-        marker.enableDragging();            //可拖拽
-    //    marker.disableDragging();           //不可拖拽
-        marker.addEventListener("dragend",attribute);
-        map.addOverlay(marker);    //增加点
-        
+        // marker.enableDragging();            //可拖拽
+        marker.disableDragging();           //不可拖拽
+        marker.addEventListener("click",attribute);
+        // map.addOverlay(marker);    //增加点
+
         function attribute(){
             var p = marker.getPosition();
             // 经纬度
@@ -625,8 +627,25 @@ $(function () {
                 var infoWindow = new BMap.InfoWindow(rs.address+'('+p.lng+ ',' + p.lat+')', opts); // 创建信息窗口对象
 
                 map.openInfoWindow(infoWindow,point); //开启信息窗口
+
+                spotAddress = rs.address;
+                lngLat = p.lng+ ',' + p.lat;
             })
         }
+        // 绑定事件,点击可拖拽点
+        $('.Identification').on('click','.layui-icon-edit',function(){
+            marker.enableDragging();
+            marker.addEventListener("dragend",attribute);
+            map.addOverlay(marker);    //增加点
+        })
+        
+        // 绑定事件,点击不可拖拽点
+
+        $('.Identification').on('click','.layui-icon-ok',function(){
+            marker.disableDragging();
+            console.log(spotAddress);
+            console.log(lngLat);
+        })
 
     }
 
