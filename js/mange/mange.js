@@ -115,7 +115,7 @@ $(function () {
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
-                window.location.href = "../login.html";
+                window.location.href = "../../login.html";
             }
         })
     });

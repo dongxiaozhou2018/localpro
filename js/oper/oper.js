@@ -49,26 +49,31 @@ $(function () {
         if ($(this).attr('name') == 'ywdt') {
             $('.overview').hide();
             $('.map_box').show().siblings().hide();
+            $('.map_box').parent('div').show();
             map();
         }
         if ($(this).attr('name') == 'sbjk') {
             $('.overview').hide();
             $('#terminalConfigure').show().siblings().hide();
+            $('#terminalConfigure').parent('div').show();
             terminalConfigure(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'xtxj') {
             $('.overview').hide();
             // $('#terminalData').show().siblings().hide();
+            // $('#terminalData').parent('div').show();
             // echart();
         }
         if ($(this).attr('name') == 'bjjl') {
             $('.overview').hide();
             $('#police_box').show().siblings().hide();
+            $('#police_box').parent('div').show();
             police(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'czrz') {
             $('.overview').hide();
             $('#oplog').show().siblings().hide();
+            $('#oplog').parent('div').show();
             oplog();
         }
     });
@@ -83,7 +88,7 @@ $(function () {
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
-                window.location.href = "../login.html";
+                window.location.href = "../../login.html";
             }
         })
     });
