@@ -99,9 +99,9 @@
                     if(data.code == 0){
                         sessionStorage.setItem('HTlogin',JSON.stringify(data));
                         if(data.data.role == '0'){
-                            window.location.href = "html/mange.html";
+                            window.location.href = "html/mange/mange.html";
                         }else if(data.data.role == '1'){
-                            window.location.href = "html/oper.html";
+                            window.location.href = "html/oper/oper.html";
                         }
                     }else{
                         alert(data.msg);

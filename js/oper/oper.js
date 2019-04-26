@@ -43,24 +43,32 @@ $(function () {
         sessionStorage.removeItem('oper');
         $('.layui-body').css('bottom','44px');
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
-        
+        if ($(this).attr('name') == 'zl') {
+            $('.overview').show().siblings().hide();
+            overview();
+        }
         if ($(this).attr('name') == 'ywdt') {
+            $('.overview').hide();
             $('.map_box').show().siblings().hide();
             map();
         }
         if ($(this).attr('name') == 'sbjk') {
+            $('.overview').hide();
             $('#terminalConfigure').show().siblings().hide();
             terminalConfigure(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'xtxj') {
+            $('.overview').hide();
             // $('#terminalData').show().siblings().hide();
             // echart();
         }
         if ($(this).attr('name') == 'bjjl') {
+            $('.overview').hide();
             $('#police_box').show().siblings().hide();
             police(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'czrz') {
+            $('.overview').hide();
             $('#oplog').show().siblings().hide();
             oplog();
         }
@@ -122,6 +130,21 @@ $(function () {
         }
     });
 
+    //   总览数据
+    $('.full_btn').on('click',function(){
+        $('.overview').hide();
+        $('.full_overview').show();
+        var full_width = $(window).width();
+        var full_height = $(window).height();
+        $('.full_overview').css({
+            'width':full_width+'px',
+            'height':full_height+'px'
+        });
+    })
+    $('.full_outbtn').on('click',function(){
+        $('.overview').show();
+        $('.full_overview').hide();
+    })
     // 管理界面渲染
     function user() {
         layui.use('element', function () {
