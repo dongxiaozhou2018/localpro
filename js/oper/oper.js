@@ -140,7 +140,16 @@ $(function () {
             'width':full_width+'px',
             'height':full_height+'px'
         });
+        window.onresize = function() {
+            var full_width = $(window).width();
+            var full_height = $(window).height();
+            $('.full_overview').css({
+                'width':full_width+'px',
+                'height':full_height+'px'
+            });
+        }
     })
+
     $('.full_outbtn').on('click',function(){
         $('.overview').show();
         $('.full_overview').hide();
@@ -152,8 +161,8 @@ $(function () {
         });
     }
     user();
-
-    map();
+    
+    // map();
     // 运维地图
     function map() {
         // var map = new L.Map("mapid", {

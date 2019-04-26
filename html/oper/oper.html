@@ -5,19 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>操作员---运维箱安全监控平台</title>
-    <link rel="stylesheet" type="text/css" href="../css/mange.css">
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
-    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="../leaflet/dist/leaflet.css">
-    <script type="text/javascript" src="../leaflet/dist/leaflet.js"></script>
-    <script type="text/javascript" src="../layui/layui.js"></script>
-    <script type="text/javascript" src="../js/layui-xtree.js"></script>
-    <script type="text/javascript" src="../js/echarts.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="../js/globalvar.js"></script>
-    <script type="text/javascript" src="../js/oper/oper.js"></script>
-    <script type="text/javascript" src="../js/jQuery.md5.js"></script>
-    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/mange.css">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../leaflet/dist/leaflet.css">
+    <script type="text/javascript" src="../../leaflet/dist/leaflet.js"></script>
+    <script type="text/javascript" src="../../layui/layui.js"></script>
+    <script type="text/javascript" src="../../js/layui-xtree.js"></script>
+    <script type="text/javascript" src="../../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../../js/globalvar.js"></script>
+    <script type="text/javascript" src="../../js/oper/oper.js"></script>
+    <script type="text/javascript" src="../../js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="../../js/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1yjsTRrm5ZSBrrM3z7mRNiuSM1PneVmG"></script>
     <style type="text/css">
         .layui-nav-bar {
@@ -50,6 +50,9 @@
         ::-webkit-scrollbar-track {
             background-color: #ddd
         }
+        .full_btn,.full_outbtn{
+            opacity: 0.4;
+        }
     </style>
 </head>
 
@@ -57,7 +60,7 @@
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
             <div class="layui-logo">
-                <a style="display:block;float:left;margin-left:-35px;margin-right:15px;" href="javascript:;"><img src="../img/logo.png" style="margin:3px 0 0 35px;" width="90%;"></a>
+                <a style="display:block;float:left;margin-left:-35px;margin-right:15px;" href="javascript:;"><img src="../../img/logo.png" style="margin:3px 0 0 35px;" width="90%;"></a>
             </div>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -98,13 +101,13 @@
             </div>
         </div>
         <div class="full_overview" style="position: absolute;top: 0;left: 0;z-index: 1000;display: none;">
-            <iframe src="../oper/overview.html" style="width: 100%;height: 100%"></iframe>
-            <button class="layui-btn layui-btn-primary full_outbtn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i> 退出全屏</button>
+            <iframe src="../oper/overview.html?" style="width: 100%;height: 100%"></iframe>
+            <button class="layui-btn layui-btn-primary full_outbtn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i>退出全屏</button>
         </div>
         <div class="layui-body">
             <div class="overview">
                 <iframe src="../oper/overview.html" style="width: 100%;height: 856px;"></iframe>
-                <button class="layui-btn layui-btn-primary layui-btn-sm full_btn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i> 全屏展示</button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm full_btn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i>全屏展示</button>
             </div>
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
