@@ -11,16 +11,32 @@
     <link rel="stylesheet" type="text/css" href="../leaflet/dist/leaflet.css">
     <script type="text/javascript" src="../leaflet/dist/leaflet.js"></script>
     <script type="text/javascript" src="../layui/layui.js"></script>
+    <script type="text/javascript" src="../js/layui-xtree.js"></script>
     <script type="text/javascript" src="../js/echarts.min.js"></script>
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../js/globalvar.js"></script>
     <script type="text/javascript" src="../js/mange/oper.js"></script>
     <script type="text/javascript" src="../js/jQuery.md5.js"></script>
     <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1yjsTRrm5ZSBrrM3z7mRNiuSM1PneVmG"></script>
     <style type="text/css">
         .layui-nav-bar {
             display: none !important;
         }
+        #userInformation .layui-table-cell{
+            height: auto!important;
+        }
+        #userInformation .layui-table-cell img{
+            max-width: 50px!important;
+        }
+        #userInformation .layui-table-fixed{
+            display: none;
+        }
+        .layui-table-box .layui-btn{
+            height: 20px;
+            line-height: 20px;
+        }
+        .anchorBL{display:none;}
     </style>
 </head>
 
@@ -33,8 +49,8 @@
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="personal">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        <span class="loginName">贤心</span>
+                        <img src="" class="layui-nav-img">
+                        <span class="loginName"></span>
                     </a>
                 </li>
                 <li class="layui-nav-item"><a href="javascript:;" class="changePwd">修改密码</a></li>
@@ -45,35 +61,22 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="test">
+                    
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;" class="btn click_btn" name="zdzl">终端总览</a>
+                        <a href="javascript:;" class="btn click_btn" name="ywdt">运维地图</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="fwpz">服务配置</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" class="server">接入服务器配置</a></dd>
-                            <dd><a href="javascript:;" class="police">报警等级设定</a></dd>
-                        </dl>
+                        <a href="javascript:;" class="btn" name="sbjk">设备监控</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="dtpz">地图配置</a>
+                        <a href="javascript:;" class="btn" name="xtxj">系统巡检</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="zdpz">终端配置</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="yhgl">用户管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" class="userInformation">用户信息</a></dd>
-                            <dd><a href="javascript:;" class="permissionAssignment">权限分配</a></dd>
-                        </dl>
+                        <a href="javascript:;" class="btn" name="bjjl">报警记录</a>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;" class="btn" name="czrz">操作日志</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" class="btn" name="sjwh">升级维护</a>
                     </li>
                 </ul>
             </div>
@@ -82,100 +85,78 @@
         <div class="layui-body">
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
-                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM     终端总览-->
-                <div id="terminalData">
-                    <div id="cake" class="left" style="width: 48%;height:400px;margin-bottom: 50px;"></div>
-                    <div id="brokenLine" class="right" style="width: 48%;height:400px;margin-bottom: 50px;"></div>
-                    <div id="columnar" class="left" style="width: 48%;height:400px;margin-bottom: 50px;"></div>
-                    <div id="radar" class="right" style="width: 48%;height:400px;margin-bottom: 50px;"></div>
-                    <div id="stacking" class="left" style="width: 100%;height:400px;"></div>
+                <!-- 运维地图 -->
+                <div class="map_box">
+                    <!-- <div class="Identification"><i class="layui-icon layui-icon-edit"></i></div> -->
+                    <!-- <div class="Identification" style="top:41px;"><i class="layui-icon layui-icon-ok"></i></div> -->
+                    <div id="mapid"></div>
                 </div>
-                <!-- layui   服务配置 ----------接入服务器配置  -->
-                <div id="server" style="display: none">
+                <!-- layui   服务配置 ----------报警记录  -->
+                <div id="police_box" style="display: none">
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                        <legend style="font-size: 13px;">接入服务器配置</legend>
+                        <legend style="font-size: 13px;">报警记录</legend>
                     </fieldset>
-                    <table class="layui-hide" id="service" lay-filter="test"></table>
-
-                    <script type="text/html" id="service_operation">
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                    </script>
-                    <script type="text/html" id="imgUrl">
-                        <img src="{{ d.url }}" width="100px">
-                    </script>
-
-                </div>
-                <!-- layui   服务配置 ----------报警等级设定  -->
-                <div id="police" style="display: none">
-                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                        <legend style="font-size: 13px;">报警等级设定</legend>
-                    </fieldset>
-                    <table class="layui-hide" id="police" lay-filter="test"></table>
-
-                    <script type="text/html" id="police_operation">
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <!-- <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> -->
-                    </script>
-                    <!-- <script type="text/html" id="imgUrl">
-                        <img src="{{ d.url }}" width="100px">
-                    </script> -->
-
-                </div>
-                <!-- 地图配置 -->
-                <div id="mapid" style="display: none"></div>
-                <!-- 终端配置 -->
-                <div id="terminalConfigure" style="display: none">
-                    <table class="layui-table" lay-skin="line" lay-size="sm" id="terminal"></table>
-                </div>
-                <!-- layui   用户信息 -->
-                <div id="userInformation" style="display: none">
                     <div class="demoTable">
-                        <div class="layui-inline left">
-                            <input name="id" class="layui-input" id="demoReload" autocomplete="off" placeholder="请输入用户ID" style="width: auto;height: 30px;">
-                        </div>
-                        <div class="layui-inline left select_type_box">
-                            <label class="select_type">用户类型：</label>
-                            <select name="role" class="select_role right">
-                                <option value="">请选择类型</option>
-                                <option value="管理员">管理员</option>
-                                <option value="操作员">操作员</option>
-                                <option value="维修员">维修员</option>
+                        <div class="layui-inline left select_type_box" style="width: 185px;padding-left: 0;margin-left: 0;">
+                            <label class="select_type">报警级别</label>
+                            <select name="role" class="police_role right">
+                                <option value="">请选择报警级别</option>
+                                <option value="3">高</option>
+                                <option value="2">中</option>
+                                <option value="1">低</option>
                             </select>
                         </div>
-                        <button class="layui-btn query" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;">查询</button>
+                        <button class="layui-btn layui-btn-primary empty" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-refresh-3 layuiadmin-button-btn"></i></button>
+                        <button class="layui-btn police_query" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+                        <div class="clearf"></div>
                     </div>
-                    <table class="layui-hide" id="demo" lay-filter="test"></table>
-
-                    <script type="text/html" id="barDemo">
-                        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                    </script>
-                    <script type="text/html" id="imgUrl">
-                        <img src="{{ d.url }}" width="100px">
-                    </script>
+                    <table class="layui-hide" id="police" lay-filter="police"></table>
+                    <div id="police_laypage"></div>
 
                 </div>
-                <!-- layui   权限分配 -->
-                <div id="permissionAssignment" style="display: none">
-                    <!-- <div class="demoTable" style="margin-left: 1%;">
-                      请输入用户ID：
-                      <div class="layui-inline">
-                        <input name="id" class="layui-input" id="demoReload" autocomplete="off">
-                      </div>
-                    </div> -->
-                    <table class="layui-hide" id="permission" lay-filter="test"></table>
-
-                    <script type="text/html" id="permission_operation">
-                        <!-- <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a> -->
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                
+                
+                <!-- 终端配置 -->
+                <div id="terminalConfigure" style="display: none">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend style="font-size: 13px;">终端设备配置</legend>
+                    </fieldset>
+                    <div class="demoTable" style="margin-bottom: 20px;">
+                        <div class="layui-inline left" style="margin-right: 10px;">
+                            <input name="deviceId" class="layui-input deviceId" autocomplete="off" placeholder="请输入设备ID" style="width: auto;height: 30px;">
+                        </div>
+                        <div class="layui-inline left" style="margin-right: 10px;">
+                            <input name="deviceName" class="layui-input deviceName" autocomplete="off" placeholder="请输入设备名称" style="width: auto;height: 30px;">
+                        </div>
+                        <div class="layui-inline left" style="margin-right: 10px;">
+                            <input name="deviceIP" class="layui-input deviceIP" autocomplete="off" placeholder="请输入设备IP" style="width: auto;height: 30px;">
+                        </div>
+                        <div class="layui-inline left select_type_box" style="margin-right: 10px;margin-left: 0;">
+                            <label class="select_type">设备型号：</label>
+                            <select name="modelId" class="modelId right" style="border: none;margin-top: 5px;">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                        <button class="layui-btn layui-btn-primary empty" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-refresh-3 layuiadmin-button-btn"></i></button>
+                        <button class="layui-btn terminal" data-type="reload" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+                        <div class="clearf"></div>
+                    </div>
+                    <div id="terminal_tree" class="left" style="width: 20%;margin-top: 19px;">
+                        <div style="display: inline-block; width: 100%; height: auto; padding: 10px; border: 1px solid #ddd; overflow: auto;">
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;margin-bottom: 10px;">
+                                <legend style="font-size: 13px;">选择地址</legend>
+                            </fieldset>
+                            <ul id="terminal_demo"></ul>
+                        </div>
+                    </div>
+                    <div class="right" style="width: 75%;">
+                        <table class="layui-table" lay-skin="line" lay-size="sm" id="terminal" class="layui-table" lay-filter="terminal"></table>
+                        <div id="terminal_laypage"></div>
+                        <div class="clearf"></div>
+                    </div>
+                    <script type="text/html" id="terminal_operation">
+                        <a class="layui-btn layui-btn-xs control" lay-event="control">数据监控</a>
                     </script>
-                    <script type="text/html" id="imgUrl">
-                        <img src="{{ d.url }}" width="100px">
-                    </script>
-
                 </div>
                 <!-- 操作日志 -->
                 <div id="oplog" style="display: none;">
@@ -191,28 +172,14 @@
                                 <input type="text" class="layui-input" id="endTime" placeholder="yyyy-MM-dd HH:mm:ss" style="width: auto;display: inline-block;height: 30px;">
                             </div>
                         </div>
-                        <button class="query layui-btn" type="button" style="height: 30px;line-height: 30px;margin-top: -8px;">查询</button>
+                        <button class="layui-btn layui-btn-primary empty" data-type="reload" style="height: 30px;line-height: 30px;margin-top: -8px;margin-left: 10px;"><i class="layui-icon layui-icon-refresh-3 layuiadmin-button-btn"></i></button>
+                        <button class="query layui-btn" type="button" style="height: 30px;line-height: 30px;margin-top: -8px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
                     </div>
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                         <legend style="font-size: 13px;">查询结果</legend>
                     </fieldset>
                     <table class="layui-hide" id="test"></table>
-                </div>
-                <!-- layui   升级维护 -->
-                <div id="upgradeMaintenance" style="display: none">
-                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                        <legend style="font-size: 13px;">设备升级库</legend>
-                    </fieldset>
-                    <table class="layui-hide" id="upgrade" lay-filter="test"></table>
-
-                    <script type="text/html" id="upgrade_operation">
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                    </script>
-                    <script type="text/html" id="imgUrl">
-                        <img src="{{ d.url }}" width="100px">
-                    </script>
-
+                    <div id="oplog_laypage"></div>
                 </div>
             </div>
         </div>
