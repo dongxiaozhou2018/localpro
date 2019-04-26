@@ -58,7 +58,7 @@ $(function () {
     showModular();
     // 点击事件
     $('.personal').on('click',function(){
-        var url = "./personal.html";
+        var url = "../personal.html";
         frame('编辑个人信息',url);
     });
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
