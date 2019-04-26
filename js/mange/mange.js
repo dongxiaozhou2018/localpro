@@ -328,6 +328,12 @@ $(function () {
                         align: 'center'
                     }
                     , {
+                        field: 'devPort',
+                        title: '数量',
+                        width: '10%',
+                        align: 'center',
+                    }
+                    , {
                         field: 'url',
                         title: '操作',
                         width: '20.9%',

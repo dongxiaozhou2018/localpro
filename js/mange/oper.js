@@ -49,8 +49,8 @@ $(function () {
             map();
         }
         if ($(this).attr('name') == 'sbjk') {
-            // $('#terminalConfigure').show().siblings().hide();
-            // terminalConfigure(pageNum,pageSize);
+            $('#terminalConfigure').show().siblings().hide();
+            terminalConfigure(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'xtxj') {
             // $('#terminalData').show().siblings().hide();
@@ -191,20 +191,6 @@ $(function () {
                 lngLat = p.lng+ ',' + p.lat;
             })
         }
-        // 绑定事件,点击可拖拽点
-        // $('.Identification').on('click','.layui-icon-edit',function(){
-        //     marker.enableDragging();
-        //     marker.addEventListener("dragend",attribute);
-        //     map.addOverlay(marker);    //增加点
-        // })
-        
-        // // 绑定事件,点击不可拖拽点
-
-        // $('.Identification').on('click','.layui-icon-ok',function(){
-        //     marker.disableDragging();
-        //     console.log(spotAddress);
-        //     console.log(lngLat);
-        // })
 
     }
 
@@ -452,6 +438,13 @@ $(function () {
                             width: '10%',
                             align: 'center',
                         }
+                        , {
+                            fixed: 'right',
+                            title: '操作',
+                            width: '22.6%',
+                            align: 'center',
+                            toolbar: '#terminal_operation'
+                        }
                     ]],
                     done: function(res, curr, count){
                         //如果是异步请求数据方式，res即为你接口返回的信息。
@@ -570,11 +563,6 @@ $(function () {
                     layer.setTop(layero); //重点2
                 },
                 cancel: function(){ 
-                    sessionStorage.removeItem('checkPolice');
-                    sessionStorage.removeItem('checkUser');
-                    sessionStorage.removeItem('file');
-                    sessionStorage.removeItem('checkServer');
-                    sessionStorage.removeItem('checkeQuipment');
                     layer.closeAll();
                 }
             });
