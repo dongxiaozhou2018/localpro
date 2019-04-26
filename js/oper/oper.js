@@ -553,7 +553,7 @@ $(function () {
                             tipsMore: false,
                             maxmin:true,
                             scrollbar:true,
-                            content: '../aa/devset.jsp.html',
+                            content: '../../aa/devset.jsp.html',
                             zIndex: layer.zIndex, //重点1
                             success: function (layero) {
                                 sessionStorage.setItem('oper','equipment');
