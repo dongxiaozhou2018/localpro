@@ -115,31 +115,6 @@
                 <div class="map_box" style="display: none">
                     <div id="mapid"></div>
                 </div>
-                <!-- layui   服务配置 ----------报警记录  -->
-                <div id="police_box" style="display: none">
-                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                        <legend style="font-size: 13px;">报警记录</legend>
-                    </fieldset>
-                    <div class="demoTable">
-                        <div class="layui-inline left select_type_box" style="width: 185px;padding-left: 0;margin-left: 0;">
-                            <label class="select_type">报警级别</label>
-                            <select name="role" class="police_role right">
-                                <option value="">请选择报警级别</option>
-                                <option value="3">高</option>
-                                <option value="2">中</option>
-                                <option value="1">低</option>
-                            </select>
-                        </div>
-                        <button class="layui-btn layui-btn-primary empty" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-refresh-3 layuiadmin-button-btn"></i></button>
-                        <button class="layui-btn police_query" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
-                        <div class="clearf"></div>
-                    </div>
-                    <table class="layui-hide" id="police" lay-filter="police"></table>
-                    <div id="police_laypage"></div>
-
-                </div>
-                
-                
                 <!-- 终端配置 -->
                 <div id="terminalConfigure" style="display: none">
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -182,6 +157,55 @@
                         <a class="layui-btn layui-btn-xs control" lay-event="control">数据监控</a>
                     </script>
                 </div>
+
+                <!-- layui   系统巡检  -->
+                <div id="inspection_box" style="display: none">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend style="font-size: 13px;">系统巡检</legend>
+                    </fieldset>
+                    <div class="demoTable">
+                        <div class="layui-inline left select_type_box" style="width: 185px;padding-left: 0;margin-left: 0;">
+                            <label class="select_type">巡检区域：</label>
+                            <select name="role" class="inspection_role right" style="display: inline-block;width: 45%;">
+                                <option value="0">全部</option>
+                                <option value="1">天津</option>
+                            </select>
+                        </div>
+                        <button class="layui-btn layui-btn-primary empty" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-refresh-3 layuiadmin-button-btn"></i></button>
+                        <button class="layui-btn inspection_query" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+                        <div class="clearf"></div>
+                    </div>
+                    <table class="layui-hide" id="inspection" lay-filter="inspection"></table>
+                    <div id="inspection_laypage"></div>
+
+                </div>
+
+                <!-- layui   服务配置 ----------报警记录  -->
+                <div id="police_box" style="display: none">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend style="font-size: 13px;">报警记录</legend>
+                    </fieldset>
+                    <div class="demoTable">
+                        <div class="layui-inline left select_type_box" style="width: 185px;padding-left: 0;margin-left: 0;">
+                            <label class="select_type">报警级别</label>
+                            <select name="role" class="police_role right">
+                                <option value="">请选择报警级别</option>
+                                <option value="3">高</option>
+                                <option value="2">中</option>
+                                <option value="1">低</option>
+                            </select>
+                        </div>
+                        <button class="layui-btn layui-btn-primary empty" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-refresh-3 layuiadmin-button-btn"></i></button>
+                        <button class="layui-btn police_query" data-type="reload" style="height: 30px;line-height: 30px;margin-left: 25px;border-radius: 3px;"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+                        <div class="clearf"></div>
+                    </div>
+                    <table class="layui-hide" id="police" lay-filter="police"></table>
+                    <div id="police_laypage"></div>
+
+                </div>
+                
+                
+                
                 <!-- 操作日志 -->
                 <div id="oplog" style="display: none;">
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">

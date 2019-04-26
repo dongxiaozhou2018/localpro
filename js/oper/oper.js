@@ -60,9 +60,9 @@ $(function () {
         }
         if ($(this).attr('name') == 'xtxj') {
             $('.overview').hide();
-            // $('#terminalData').show().siblings().hide();
-            // $('#terminalData').parent('div').show();
-            // echart();
+            $('#inspection_box').show().siblings().hide();
+            $('#inspection_box').parent('div').show();
+            inspection(pageNum,pageSize) 
         }
         if ($(this).attr('name') == 'bjjl') {
             $('.overview').hide();
@@ -229,7 +229,158 @@ $(function () {
         }
 
     }
+    // 系统巡检
+    function inspection(pageNum,pageSize) {
+        
+        layui.use(['table','laypage','laydate'], function () {
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage;
 
+            //执行一个 table 实例
+            table.render({
+                elem: '#inspection',
+                url: global_path + '/alarmlevel/select_all_alarmlevel', //数据接口
+                method: 'post',
+                headers: {
+                    'at': at
+                },
+                contentType : "application/json",
+                loading:true,
+                request: {
+                    pageName: 'pageNum' //页码的参数名称，默认：page
+                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                },
+                where:{
+                    'pageNum':pageNum,
+                    'pageSize':pageSize
+                },
+                title: '系统巡检',
+                page: false,
+                parseData: function (res) {
+                    if(res.code == 0){
+                        return {
+                            'code': res.code,
+                            'msg': res.msg,
+                            "count": res.data.total,
+                            'data': res.data.list
+                        }
+                    }else if(res.code == 401){
+                        unauthorized(res.code);
+                    }
+                    
+                },
+                cols: [[ //表头
+                    {
+                        field: 'alarmType',
+                        title: '终端名称'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '终端状态'
+                    }
+                    
+                    , {
+                        field: 'alarmLevel',
+                        title: '终端IP'
+                    }
+                    ,{
+                        field: 'alarmType',
+                        title: '所属区域'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '接入电压'
+                    }
+                    
+                    , {
+                        field: 'alarmLevel',
+                        title: 'ETH_1电流'
+                    }
+                    ,{
+                        field: 'alarmType',
+                        title: 'ETH_2电流'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: 'ETH_3电流'
+                    }
+                    
+                    , {
+                        field: 'alarmLevel',
+                        title: 'ETH_4电流'
+                    }
+                    ,{
+                        field: 'alarmType',
+                        title: 'ETH_5电流'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: 'ETH_6电流'
+                    }
+                    , {
+                        field: 'alarmLevel',
+                        title: 'DC12V_1电流'
+                    }
+                    ,{
+                        field: 'alarmType',
+                        title: 'DC12V_2电流'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: 'DC12V_3电流'
+                    }
+                    
+                    , {
+                        field: 'alarmLevel',
+                        title: 'DC48V电流'
+                    }
+                ]],
+                done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem:'inspection_laypage'
+                        ,count:count
+                        ,curr:pageNum
+                        ,limit:pageSize
+                        ,layout: ['prev', 'page', 'next', 'skip','count']
+                        ,jump:function (obj,first) {
+                            if(!first){
+                                pageNum = obj.curr;
+                                pageSize = obj.limit;
+                                inspection(pageNum,pageSize);
+                            }
+                        }
+                    })
+                },
+                id: 'testReload'
+            });
+            var $ = layui.$, active = {
+                reload: function(){
+                    var inspection_role = $('.inspection_role');
+                  
+                  //执行重载
+                    table.reload('testReload', {
+                        url: global_path + '/alarmlevel/getAllByAlarmLevel',
+                        where: {
+                            'alarmLevel': inspection_role.val(),
+                        }
+                    });
+                }
+            };
+              
+            $('.inspection_query').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('.empty').on('click', function(){
+                $('.inspection_role').val('全部');
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+        });
+    }
     // 报警记录
     function police(pageNum,pageSize) {
         
@@ -256,7 +407,7 @@ $(function () {
                     'pageNum':pageNum,
                     'pageSize':pageSize
                 },
-                title: '报警等级',
+                title: '报警记录',
                 page: false,
                 parseData: function (res) {
                     if(res.code == 0){
