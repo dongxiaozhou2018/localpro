@@ -48,6 +48,7 @@ $(function () {
             $('.overview').show().siblings().hide();
             $('.layui-body').css('bottom','0');
             $('.content_box').css('padding','0');
+            overview();
         }
         if ($(this).attr('name') == 'ywdt') {
             $('.overview').hide();
@@ -168,8 +169,12 @@ $(function () {
         });
     }
     user();
-    
-    // map();
+
+    // 数据总览
+    overview()
+    function overview(){
+
+    }
     // 运维地图
     function map() {
         // var map = new L.Map("mapid", {
