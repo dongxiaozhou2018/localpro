@@ -272,8 +272,8 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#service',
-                url: global_path + '/accsvr/getAll', //数据接口
-                method: 'post',
+                url: global_path + '/accsvr/selectAll', //数据接口
+                method:'post',
                 headers: {
                     'at': at
                 },
@@ -296,7 +296,7 @@ $(function () {
                             'code': res.code,
                             'msg': res.msg,
                             "count": res.data.total,
-                            'data': res.data.list
+                            'data': res.data
                         }
                     }else if(res.code == 401){
                         unauthorized(res.code);
@@ -304,8 +304,8 @@ $(function () {
                 },
                 cols: [[ //表头
                     {
-                        field: 'devId',
-                        title: '设备ID',
+                        field: 'id',
+                        title: 'ID',
                         width: '10%',
                         align: 'center'
                     }
@@ -328,10 +328,22 @@ $(function () {
                         align: 'center'
                     }
                     , {
-                        field: 'devPort',
+                        field: 'remarks',
+                        title: '备注',
+                        width: '10%',
+                        align: 'center',
+                    }
+                    , {
+                        field: 'count',
                         title: '数量',
                         width: '10%',
                         align: 'center',
+                    }
+                    , {
+                        field: 'state',
+                        title: '状态',
+                        width: '12.6%',
+                        align: 'center'
                     }
                     , {
                         field: 'url',
@@ -369,11 +381,8 @@ $(function () {
                 // var checkStatus = table.checkStatus(obj.config.id)
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        var server_url = global_path + '/accsvr/delServeice';
-                        var server_parms = {
-                            'id':data.id
-                        }
-                        commonAjax(server_url,server_parms,function(res){
+                        var server_url = global_path + '/accsvr/delAccsvrById?id=' + data.id;
+                        getAjax(server_url,function(res){
                             if(res.code == 0){
                                 server(pageNum,pageSize);
                             }else if(res.code == 401){
