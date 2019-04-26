@@ -42,9 +42,12 @@ $(function () {
         pageNum = 1; pageSize = 10;
         sessionStorage.removeItem('oper');
         $('.layui-body').css('bottom','44px');
+        $('.content_box').css('padding','15px');
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if ($(this).attr('name') == 'zl') {
             $('.overview').show().siblings().hide();
+            $('.layui-body').css('bottom','0');
+            $('.content_box').css('padding','0');
         }
         if ($(this).attr('name') == 'ywdt') {
             $('.overview').hide();
