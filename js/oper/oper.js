@@ -45,7 +45,6 @@ $(function () {
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if ($(this).attr('name') == 'zl') {
             $('.overview').show().siblings().hide();
-            overview();
         }
         if ($(this).attr('name') == 'ywdt') {
             $('.overview').hide();
