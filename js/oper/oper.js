@@ -315,13 +315,13 @@ $(function () {
                 tree = layui.tree,
                 $ = layui.jquery;
 
-            $('#terminal_demo').html('');
+            $('#map_tree').html('');
             var newTree = [];
             getAjax(global_path + "/manage/group/groupTree",function(res){
                 if(res.code == 0){
                     newTree.push(res.data);
                     layui.tree({
-                        elem: '#terminal_demo' //指定元素
+                        elem: '#map_tree' //指定元素
                         ,click: function(item){ //点击最里层节点回调
                             // if(item.children.length == 0){
                             //     terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
@@ -647,7 +647,7 @@ $(function () {
 
 
 
-    // 终端配置
+    // 设备监控
     function terminalConfigure(){
 
 

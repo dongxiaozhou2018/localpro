@@ -114,11 +114,13 @@ function unauthorized(code){
 }
 // 树形菜单
 function menutree(a){
-    for(var i = 0;i < a.length;i++){
-        a[i].name = a[i].text;
-        a[i].spread = false;
-        if(a[i].children && a[i].children.length>0){
-            menutree(a[i].children);
+    if(a.length>0){
+        for(var i = 0;i < a.length;i++){
+            a[i].name = a[i].text;
+            a[i].spread = false;
+            if(a[i].children && a[i].children.length>0){
+                menutree(a[i].children);
+            }
         }
     }
     return a;
