@@ -463,15 +463,15 @@ $(function () {
                 page: false,
                 parseData: function (res) {
                     if(res.code == 0){
-                        for(var i=0;i<res.data.list.length;i++){
-                            if(res.data.list[i].alarmLevel == 1){       //  低
-                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-normal">低</span>';
-                            }else if(res.data.list[i].alarmLevel == 2){        // 中
-                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-warm">中</span>';
-                            }else if(res.data.list[i].alarmLevel == 3){         //高
-                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-danger">高</span>';
-                            }
-                        }
+                        // for(var i=0;i<res.data.list.length;i++){
+                        //     if(res.data.list[i].alarmLevel == 1){       //  低
+                        //         res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-normal">低</span>';
+                        //     }else if(res.data.list[i].alarmLevel == 2){        // 中
+                        //         res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-warm">中</span>';
+                        //     }else if(res.data.list[i].alarmLevel == 3){         //高
+                        //         res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-danger">高</span>';
+                        //     }
+                        // }
                         return {
                             'code': res.code,
                             'msg': res.msg,
@@ -486,22 +486,46 @@ $(function () {
                 cols: [[ //表头
                     {
                         field: 'alarmType',
-                        title: '报警类型',
-                        width: '20%',
-                        align: 'center'
+                        title: '终端名称'
                     }
                     ,{
                         field: 'alarmName',
-                        title: '报警名称',
-                        width: '33.33%',
-                        align: 'center'
+                        title: '所属区域'
+                    }
+                    , {
+                        field: 'alarmLevel',
+                        title: '报警时间'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '等级'
                     }
                     
                     , {
                         field: 'alarmLevel',
-                        title: '报警等级',
-                        width: '23.33%',
-                        align: 'center'
+                        title: '报警内容'
+                    }
+                    , {
+                        field: 'alarmLevel',
+                        title: '处理状态'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '处理人'
+                    }
+                    
+                    , {
+                        field: 'alarmLevel',
+                        title: '处理时间'
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '指派人员'
+                    }
+                    
+                    , {
+                        field: 'alarmLevel',
+                        title: '派工备注'
                     }
                 ]],
                 done: function(res, curr, count){
