@@ -66,7 +66,7 @@ $(function () {
             $('.overview').hide();
             $('#inspection_box').show().siblings().hide();
             $('#inspection_box').parent('div').show();
-            inspection(pageNum,pageSize) 
+            inspection(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'bjjl') {
             $('.overview').hide();
@@ -162,6 +162,23 @@ $(function () {
         $('.overview').show();
         $('.full_overview').hide();
     })
+
+    // 地图查询、分组树显示
+    $('.map_box').on('click','.show_list',function(){
+        
+        if($('.show_list').find('i').hasClass('layui-icon-next')){
+            $('#terminal_tree').show();
+            $('.show_list').css('left','18%');
+            $('.show_list').html('<i class="layui-icon layui-icon-search layui-icon-prev"></i> 设备地址');
+            // $('.show_list').find('i').removeClass('layui-icon-next').addClass('');
+        }else{
+            $('#terminal_tree').hide();
+            $('.show_list').css('left','0');
+            $('.show_list').html('设备地址 <i class="layui-icon layui-icon-search layui-icon-next"></i>');
+            // $('.show_list').find('i').removeClass('layui-icon-prev').addClass('layui-icon-next');
+        }
+        
+    })
     // 管理界面渲染
     function user() {
         layui.use('element', function () {
@@ -235,6 +252,30 @@ $(function () {
                 lngLat = p.lng+ ',' + p.lat;
             })
         }
+        layui.use(['table','tree','laypage','laydate'], function () {
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage,
+                tree = layui.tree,
+                $ = layui.jquery;
+            // 分组树
+            $('#terminal_demo').html('');
+            var newTree = [];
+            getAjax(global_path + "/manage/group/groupTree",function(res){
+                if(res.code == 0){
+                    newTree.push(res.data);
+                    layui.tree({
+                        elem: '#terminal_demo' //指定元素
+                        ,click: function(item){ //点击最里层节点回调
+                            // if(item.children.length == 0){
+                            //     terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
+                            // }
+                        }
+                        ,nodes: menutree(newTree)
+                    });
+                }
+            })
+        })
 
     }
     // 系统巡检
