@@ -572,6 +572,18 @@ $(function () {
                 active[type] ? active[type].call(this) : '';
             });
         });
+        //日期时间选择器
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#beginTime',
+                type: 'datetime'
+            });
+            laydate.render({
+                elem: '#Deadline',
+                type: 'datetime'
+            });
+        });
     }
 
 
