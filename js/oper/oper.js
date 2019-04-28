@@ -29,7 +29,7 @@ $(function () {
             terminalConfigure(pageNum,pageSize);
         }else{
             $('.map_box').show().siblings().hide();
-            map();
+            mapFn();
         }
     }
     // showOper();
@@ -54,7 +54,7 @@ $(function () {
             $('.overview').hide();
             $('.map_box').show().siblings().hide();
             $('.map_box').parent('div').show();
-            map();
+            mapFn();
         }
         if ($(this).attr('name') == 'sbjk') {
             $('.overview').hide();
@@ -169,18 +169,20 @@ $(function () {
         if($('.show_list').find('i').hasClass('layui-icon-next')){
             $('#terminal_tree').show();
             $('.show_list').css('left','18%');
+            $('.Identification').css('left','19%');
             $('.show_list').html('<i class="layui-icon layui-icon-search layui-icon-prev"></i> 设备地址');
             // $('.show_list').find('i').removeClass('layui-icon-next').addClass('');
         }else{
             $('#terminal_tree').hide();
             $('.show_list').css('left','0');
+            $('.Identification').css('left','10px');
             $('.show_list').html('设备地址 <i class="layui-icon layui-icon-search layui-icon-next"></i>');
             // $('.show_list').find('i').removeClass('layui-icon-prev').addClass('layui-icon-next');
         }
         
     })
     $('.Identification3').on('click','img',function(){
-        map();
+        mapFn();
     })
     // 管理界面渲染
     function user() {
@@ -196,7 +198,7 @@ $(function () {
 
     }
     // 运维地图
-    function map() {
+    function mapFn() {
         // var map = new L.Map("mapid", {
         //     zoom: 9,
         //     center: [39.0850853357,117.1993482089],
@@ -218,50 +220,101 @@ $(function () {
 
         // var spotAddress = '',lngLat = '';
 
-        var map = new BMap.Map("mapid",{enableMapClick:false});
-    
-    
-        var point = new BMap.Point(117.216582,39.030182);
-        map.centerAndZoom(point, 17);
-        map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
-        map.enableContinuousZoom();
-        var marker = new BMap.Marker(point);// 创建标注
-        map.addOverlay(marker);             // 将标注添加到地图中
-        // marker.enableDragging();            //可拖拽
-        marker.disableDragging();           //不可拖拽
-        marker.addEventListener("click",attribute);
-        // map.addOverlay(marker);    //增加点
+        var markerArr = [{
+                title: "名称：天津市西青区",
+                point: "117.012247,39.139446",
+                address: "天津市西青区",
+                tel: "12306"
+            },
+            {
+                title: "名称：天津市河东区",
+                point: "117.226568,39.122125",
+                address: "天津市河东区 ",
+                tel: "18500000000"
+            },
+            {
+                title: "名称：天津市东丽区",
+                point: "117.313967,39.087764",
+                address: "天津市东丽区",
+                tel: "18500000000"
+            },
+            {
+                title: "名称：天津市滨海新区",
+                point: "117.654173,39.032846",
+                address: "天津市滨海新区",
+                tel: "18500000000"
+            }];
 
-        function attribute(){
-            var p = marker.getPosition();
-            // 经纬度
-            var point = new BMap.Point(p.lng, p.lat);
-            var gc = new BMap.Geocoder();
-            gc.getLocation(point, function (rs) {
-                var addComp = rs.addressComponents;
-                actual_address = rs.address;        //  位置信息
+        var map; //Map实例  
+        function map_init() {
+            map = new BMap.Map("mapid",{enableMapClick:false});
+            //第1步：设置地图中心点，天津市 
+            var point = new BMap.Point(117.190182,39.125596);
+            //第2步：初始化地图,设置中心点坐标和地图级别。  
+            map.centerAndZoom(point, 10);
+            //第3步：启用滚轮放大缩小  
+            map.enableScrollWheelZoom(true);
 
-                var opts = {
-                    width : 100, // 信息窗口宽度
-                    height: 80, // 信息窗口高度
-                    title : "您的位置是" , // 信息窗口标题
-                    enableMessage:false,//设置允许信息窗发送短息
-                }
-                var infoWindow = new BMap.InfoWindow(rs.address+'('+p.lng+ ',' + p.lat+')', opts); // 创建信息窗口对象
-
-                map.openInfoWindow(infoWindow,point); //开启信息窗口
-
-                spotAddress = rs.address;
-                lngLat = p.lng+ ',' + p.lat;
-            })
+            //第4步：绘制点    
+            for (var i = 0; i < markerArr.length; i++) {
+                var p0 = markerArr[i].point.split(",")[0];
+                var p1 = markerArr[i].point.split(",")[1];
+                var maker = addMarker(new window.BMap.Point(p0, p1), i);
+                addInfoWindow(maker, markerArr[i], i);
+            }
         }
+
+        // 添加标注  
+        function addMarker(point, index) {
+            var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png",
+                new BMap.Size(19, 25), {
+                    offset: new BMap.Size(10, 25),
+                    imageOffset: new BMap.Size(0, 0 - index * 25)
+                });
+            var marker = new BMap.Marker(point, {
+                icon: myIcon
+            });
+            map.addOverlay(marker);
+            return marker;
+        }
+
+        // 添加信息窗口  
+        function addInfoWindow(marker, poi) {
+            //pop弹窗标题  
+            var title = '<div style="font-weight:bold;color:#CE5521;font-size:14px">' + poi.title + '</div>';
+            //pop弹窗信息  
+            var html = [];
+            html.push('<table cellspacing="0" style="table-layout:fixed;width:100%;font:12px arial,simsun,sans-serif"><tbody>');
+            html.push('<tr>');
+            html.push('<td style="vertical-align:top;line-height:16px;width:38px;white-space:nowrap;word-break:keep-all">地址:</td>');
+            html.push('<td style="vertical-align:top;line-height:16px">' + poi.address + ' </td>');
+            html.push('</tr>');
+            html.push('<td style="vertical-align:top;line-height:16px;width:38px;white-space:nowrap;word-break:keep-all">坐标:</td>');
+            html.push('<td style="vertical-align:top;line-height:16px">' + poi.point + ' </td>');
+            html.push('</tr>');
+            html.push('</tbody></table>');
+            var infoWindow = new BMap.InfoWindow(html.join(""), {
+                title: title,
+                width: 200
+            });
+
+            var openInfoWinFun = function() {
+                marker.openInfoWindow(infoWindow);
+            };
+            marker.addEventListener("click", openInfoWinFun);
+            return openInfoWinFun;
+        }
+
+        map_init();
+
+        // 分组树
         layui.use(['table','tree','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
                 laypage = layui.laypage,
                 tree = layui.tree,
                 $ = layui.jquery;
-            // 分组树
+
             $('#terminal_demo').html('');
             var newTree = [];
             getAjax(global_path + "/manage/group/groupTree",function(res){
