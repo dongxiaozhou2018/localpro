@@ -179,6 +179,9 @@ $(function () {
         }
         
     })
+    $('.Identification3').on('click','img',function(){
+        map();
+    })
     // 管理界面渲染
     function user() {
         layui.use('element', function () {

@@ -161,6 +161,28 @@ $(function () {
         }
     });
 
+     // 地图查询、分组树显示
+    $('.map_box').on('click','.show_list',function(){
+        
+        if($('.show_list').find('i').hasClass('layui-icon-next')){
+            $('#map_tree').show();
+            $('.show_list').css('left','18%');
+            $('.Identification').css('left','19%');
+            $('.show_list').html('<i class="layui-icon layui-icon-search layui-icon-prev"></i> 设备地址');
+            // $('.show_list').find('i').removeClass('layui-icon-next').addClass('');
+        }else{
+            $('#map_tree').hide();
+            $('.show_list').css('left','0');
+            $('.Identification').css('left','10px');
+            $('.show_list').html('设备地址 <i class="layui-icon layui-icon-search layui-icon-next"></i>');
+            // $('.show_list').find('i').removeClass('layui-icon-prev').addClass('layui-icon-next');
+        }
+        
+    })
+    // 地图刷新
+    $('.Identification3').on('click','img',function(){
+        map();
+    })
     // 管理界面渲染
     function user() {
         layui.use('element', function () {
@@ -614,7 +636,7 @@ $(function () {
     
     
         var point = new BMap.Point(117.216582,39.030182);
-        map.centerAndZoom(point, 17);
+        map.centerAndZoom(point, 10);
         map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
         map.enableContinuousZoom();
         var marker = new BMap.Marker(point);// 创建标注
@@ -643,23 +665,57 @@ $(function () {
 
                 map.openInfoWindow(infoWindow,point); //开启信息窗口
 
-                spotAddress = rs.address;
-                lngLat = p.lng+ ',' + p.lat;
+                spotAddress = rs.address;        //点的位置信息
+                lngLat = p.lng+ ',' + p.lat;     //点的经纬度
             })
         }
-        // 绑定事件,点击可拖拽点
+        // 绑定事件,点击编辑可拖拽点
         $('.Identification').on('click','.layui-icon-edit',function(){
             marker.enableDragging();
             marker.addEventListener("dragend",attribute);
             map.addOverlay(marker);    //增加点
         })
         
-        // 绑定事件,点击不可拖拽点
+        // 绑定事件,点击保存不可拖拽点
 
         $('.Identification').on('click','.layui-icon-ok',function(){
             marker.disableDragging();
             console.log(spotAddress);
             console.log(lngLat);
+        })
+        // 绑定事件,点击添加可拖拽点
+        $('.Identification').on('click','.layui-icon-add-1',function(){
+           
+            // var pt = new BMap.Point(117.218349,39.003313);
+            // var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(23, 25));
+            // var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+            // map.addOverlay(marker2);  
+
+        })
+        
+        layui.use(['table','tree','laypage','laydate'], function () {
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage,
+                tree = layui.tree,
+                $ = layui.jquery;
+            // 分组树
+            $('#map_demo').html('');
+            var newTree = [];
+            getAjax(global_path + "/manage/group/groupTree",function(res){
+                if(res.code == 0){
+                    newTree.push(res.data);
+                    layui.tree({
+                        elem: '#map_demo' //指定元素
+                        ,click: function(item){ //点击最里层节点回调
+                            // if(item.children.length == 0){
+                            //     terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
+                            // }
+                        }
+                        ,nodes: menutree(newTree)
+                    });
+                }
+            })
         })
 
     }

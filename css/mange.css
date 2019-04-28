@@ -7,10 +7,9 @@
 }
 .Identification {
   position: absolute;
-  top: 10px;
+  top: 50px;
   left: 10px;
   width: 30px;
-  height: 30px;
   z-index: 100;
   border: 1px solid gray;
   background: #fff;
@@ -18,7 +17,7 @@
   cursor: pointer;
 }
 .Identification .layui-icon {
-  font-size: 26px;
+  font-size: 20px;
 }
 #mapid {
   width: 103%;
