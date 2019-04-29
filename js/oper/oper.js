@@ -351,7 +351,7 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#inspection',
-                url: global_path + '/alarmlevel/select_all_alarmlevel', //数据接口
+                url: global_path + '/systeminspectioncontroller/selectAll', //数据接口
                 method: 'post',
                 headers: {
                     'at': at
@@ -370,6 +370,12 @@ $(function () {
                 page: false,
                 parseData: function (res) {
                     if(res.code == 0){
+                        for(var i = 0;i<res.data.list.length;i++){
+                            var poeAlist = res.data.list[i].poeAlist[0].split(',');
+                            for(var j = 0;j<poeAlist.length;j++){
+                                res.data.list[i]['poeAlist'+(j+1)] = poeAlist[j];
+                            }
+                        }
                         return {
                             'code': res.code,
                             'msg': res.msg,
@@ -405,28 +411,27 @@ $(function () {
                     }
                     
                     , {
-                        field: 'alarmLevel',
+                        field: 'poeAlist1',
                         title: 'ETH_1电流'
                     }
                     ,{
-                        field: 'alarmType',
+                        field: 'poeAlist2',
                         title: 'ETH_2电流'
                     }
                     ,{
-                        field: 'alarmName',
+                        field: 'poeAlist3',
                         title: 'ETH_3电流'
                     }
-                    
                     , {
-                        field: 'alarmLevel',
+                        field: 'poeAlist4',
                         title: 'ETH_4电流'
                     }
                     ,{
-                        field: 'alarmType',
+                        field: 'poeAlist5',
                         title: 'ETH_5电流'
                     }
                     ,{
-                        field: 'alarmName',
+                        field: 'poeAlist6',
                         title: 'ETH_6电流'
                     }
                     , {
@@ -441,7 +446,6 @@ $(function () {
                         field: 'alarmName',
                         title: 'DC12V_3电流'
                     }
-                    
                     , {
                         field: 'alarmLevel',
                         title: 'DC48V电流'
