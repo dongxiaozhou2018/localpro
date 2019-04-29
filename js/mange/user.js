@@ -123,11 +123,11 @@
                     parms.suffix = file.suffix;
                     parms.url = file.url;
                 }
-                if(getQueryString("layEvent") == 'edit'){
+                if(getQueryString("type") == 'update'){
 
                     var url = global_path + "/manage/user/updateUser";
 
-                }else if(getQueryString("layEvent") == 'add'){
+                }else if(getQueryString("type") == 'add'){
                     if(password == ''){
                         parms.password = $.md5('111111');
                     }else{

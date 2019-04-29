@@ -342,7 +342,23 @@ $(function () {
     }
     // 系统巡检
     function inspection(pageNum,pageSize) {
-        
+        $('.inspection_role').html('');
+        var url = global_path + '/manage/group/groupOption';
+        getAjax(url, function(res) {
+            if (res.code == 0) {
+                var firstmodel = '<option value="">请选择</option>';
+                $('.inspection_role').append(firstmodel);
+                for(var i = 0;i<res.data.length;i++){
+                    var groupName = '<option value="'+res.data[i].id+'">'+res.data[i].groupName+'</option>';
+                    $('.inspection_role').append(groupName);
+                }
+            } else if(res.code == 401){
+                unauthorized(res.code);
+            } else {
+                alert(res.msg);
+            }
+        })
+
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
@@ -352,11 +368,9 @@ $(function () {
             table.render({
                 elem: '#inspection',
                 url: global_path + '/systeminspectioncontroller/selectAll', //数据接口
-                method: 'post',
                 headers: {
                     'at': at
                 },
-                contentType : "application/json",
                 loading:true,
                 request: {
                     pageName: 'pageNum' //页码的参数名称，默认：page
@@ -368,6 +382,7 @@ $(function () {
                 },
                 title: '系统巡检',
                 page: false,
+                toolbar: '#toolbarDemo', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                 parseData: function (res) {
                     if(res.code == 0){
                         for(var i = 0;i<res.data.list.length;i++){
@@ -382,8 +397,6 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else if(res.code == 401){
-                        unauthorized(res.code);
                     }
                     
                 },
@@ -449,6 +462,87 @@ $(function () {
                     , {
                         field: 'alarmLevel',
                         title: 'DC48V电流'
+                    }
+
+
+
+
+                    ,{
+                        field: 'alarmType',
+                        title: '终端名称1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '终端状态1',
+                        hide: true
+                    }
+                    
+                    , {
+                        field: 'alarmLevel',
+                        title: '终端IP1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'alarmType',
+                        title: '所属区域1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: '接入电压1',
+                        hide: true
+                    }
+                    
+                    , {
+                        field: 'poeAlist1',
+                        title: 'ETH_1电流1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'poeAlist2',
+                        title: 'ETH_2电流1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'poeAlist3',
+                        title: 'ETH_3电流1',
+                        hide: true
+                    }
+                    , {
+                        field: 'poeAlist4',
+                        title: 'ETH_4电流1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'poeAlist5',
+                        title: 'ETH_5电流1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'poeAlist6',
+                        title: 'ETH_6电流1',
+                        hide: true
+                    },
+                    , {
+                        field: 'alarmLevel',
+                        title: 'DC12V_1电流1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'alarmType',
+                        title: 'DC12V_2电流1',
+                        hide: true
+                    }
+                    ,{
+                        field: 'alarmName',
+                        title: 'DC12V_3电流1',
+                        hide: true
+                    }
+                    , {
+                        field: 'alarmLevel',
+                        title: 'DC48V电流1',
+                        hide: true
                     }
                 ]],
                 done: function(res, curr, count){

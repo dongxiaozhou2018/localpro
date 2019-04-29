@@ -1134,7 +1134,7 @@ $(function () {
                     data = checkStatus.data; //获取选中的数据
                 switch (obj.event) {
                     case 'add':
-                        var url = "user.html?layEvent=add";
+                        var url = "user.html?type=add";
                         frame('添加用户信息',url,'userInformation');
                         break;
                     case 'update':
