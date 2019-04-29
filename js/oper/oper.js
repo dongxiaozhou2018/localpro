@@ -26,7 +26,7 @@ $(function () {
                     $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
                 }
             })
-            terminalConfigure(pageNum,pageSize);
+            // terminalConfigure(pageNum,pageSize);
         }else{
             $('.map_box').show().siblings().hide();
             mapFn();
@@ -60,7 +60,9 @@ $(function () {
             $('.overview').hide();
             $('#terminalConfigure').show().siblings().hide();
             $('#terminalConfigure').parent('div').show();
-            terminalConfigure(pageNum,pageSize);
+            $('.layui-body').css('bottom','0');
+            $('.content_box').css('padding','0');
+            // terminalConfigure(pageNum,pageSize);
         }
         if ($(this).attr('name') == 'xtxj') {
             $('.overview').hide();
@@ -306,7 +308,7 @@ $(function () {
         }
 
         map_init();
-
+        
         // 分组树
         layui.use(['table','tree','laypage','laydate'], function () {
             var table = layui.table,
@@ -323,14 +325,13 @@ $(function () {
                     layui.tree({
                         elem: '#map_tree' //指定元素
                         ,click: function(item){ //点击最里层节点回调
-                            // if(item.children.length == 0){
-                            //     terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
-                            // }
-
-                            //第1步：设置地图中心点
-                            var point = new BMap.Point(117.654173,39.032846);
-                            //第2步：初始化地图,设置中心点坐标和地图级别。  
-                            map.centerAndZoom(point, 12);
+                            if(item.point&&item.point!=''){
+                                //第1步：设置地图中心点
+                                var point = new BMap.Point(item.point);
+                                //第2步：初始化地图,设置中心点坐标和地图级别。  
+                                map.centerAndZoom(point, 12);
+                            }
+                            
                         }
                         ,nodes: menutree(newTree)
                     });

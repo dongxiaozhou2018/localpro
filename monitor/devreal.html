@@ -1,0 +1,955 @@
+
+<!-- saved from url=(0047)http://39.98.57.97:9602/icapmng/dev/devreal.jsp -->
+<html class=" js inlinesvg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+	<link id="bootstrap-style" href="./devreal_files/bootstrap.min.css" rel="stylesheet">
+	<link href="./devreal_files/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style" href="./devreal_files/style.css" rel="stylesheet">
+	<link id="base-style-responsive" href="./devreal_files/style-responsive.css" rel="stylesheet">
+	<link href="./devreal_files/realfont.css" rel="stylesheet" type="text/css">
+	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<link id="ie-style" href="../css/ie.css" rel="stylesheet">
+	<![endif]-->
+
+	<!--[if IE 9]>
+	<link id="ie9style" href="../css/ie9.css" rel="stylesheet">
+	<![endif]-->
+<style type="text/css">
+.pop_input{
+	width:180px;
+	font-size:12px !important;
+	height:25px !important;
+}
+.pop_input:focus{
+	border-color: #9cbef5 !important;
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b !important;	
+}
+.circleStat canvas{
+	margin-left: -20%;
+}
+.row-fluid{
+	margin-top: 2.5%;
+}
+.gray,
+.gray [class="box-header"],
+.gray.box,
+.slider.gray .ui-slider-range, 
+.progress.gray .ui-progressbar-value,
+.sliderVertical.gray .ui-slider-range,
+.progressSlim.gray .ui-progressbar-value,
+.label-success,
+.badge-success {
+	background: #D6D6D6 !important;
+	border-color: #D6D6D6 !important;
+	color: #fff;
+}
+.grayBorder{
+	border-color: #D6D6D6 !important;
+}
+
+.runblue,
+.runblue [class="box-header"],
+.runblue.box,
+.slider.runblue .ui-slider-range, 
+.progress.runblue .ui-progressbar-value,
+.sliderVertical.runblue .ui-slider-range,
+.progressSlim.runblue .ui-progressbar-value,
+.label-success,
+.badge-success {
+	background: #588EBD !important;
+	border-color: #588EBD !important;
+	color: #fff;
+}
+.runblueBorder{
+	border-color: #588EBD !important;
+}
+.rungreen,
+.rungreen [class="box-header"],
+.rungreen.box,
+.slider.rungreen .ui-slider-range, 
+.progress.rungreen .ui-progressbar-value,
+.sliderVertical.rungreen .ui-slider-range,
+.progressSlim.rungreen .ui-progressbar-value,
+.label-success,
+.badge-success {
+	background: #99B433 !important;
+	border-color: #99B433 !important;
+	color: #fff;
+}
+.rungreenBorder{
+	border-color: #99B433 !important;
+}
+.runpurple,
+.runpurple [class="box-header"],
+.runpurple.box,
+.slider.runpurple .ui-slider-range, 
+.progress.runpurple .ui-progressbar-value,
+.sliderVertical.runpurple .ui-slider-range,
+.progressSlim.runpurple .ui-progressbar-value,
+.label-success,
+.badge-success {
+	background: #8674A6 !important;
+	border-color: #8674A6 !important;
+	color: #fff;
+}
+.runorange,
+.runorange [class="box-header"],
+.runorange.box,
+.slider.runorange .ui-slider-range, 
+.progress.runorange .ui-progressbar-value,
+.sliderVertical.runorange .ui-slider-range,
+.progressSlim.runorange .ui-progressbar-value,
+.label-success,
+.badge-success {
+	background: #F6B533 !important;
+	border-color: #F6B533 !important;
+	color: #fff;
+}
+.runorangeBorder{
+	border-color: #F6B533 !important;
+}
+.runredBorder{
+	border-color: #E25A59 !important;
+}
+</style>
+
+<script src="./devreal_files/jquery-1.9.1.min.js"></script>
+<script src="./devreal_files/jquery-migrate-1.0.0.min.js"></script>
+<script src="./devreal_files/jquery-ui-1.10.0.custom.min.js"></script>
+<script src="./devreal_files/jquery.ui.touch-punch.js"></script>
+<script src="./devreal_files/modernizr.js"></script>
+<script src="./devreal_files/bootstrap.min.js"></script>
+<script src="./devreal_files/jquery.cookie.js"></script>
+<script src="./devreal_files/fullcalendar.min.js"></script>
+<script src="./devreal_files/jquery.dataTables.min.js"></script>
+<script src="./devreal_files/excanvas.js"></script>
+<script src="./devreal_files/jquery.flot.js"></script>
+<script src="./devreal_files/jquery.flot.pie.js"></script>
+<script src="./devreal_files/jquery.flot.stack.js"></script>
+<script src="./devreal_files/jquery.flot.resize.min.js"></script>
+<script src="./devreal_files/jquery.chosen.min.js"></script>
+<script src="./devreal_files/jquery.uniform.min.js"></script>		
+<script src="./devreal_files/jquery.cleditor.min.js"></script>	
+<script src="./devreal_files/jquery.noty.js"></script>	
+<script src="./devreal_files/jquery.elfinder.min.js"></script>	
+<script src="./devreal_files/jquery.raty.min.js"></script>	
+<script src="./devreal_files/jquery.iphone.toggle.js"></script>	
+<script src="./devreal_files/jquery.uploadify-3.1.min.js"></script>	
+<script src="./devreal_files/jquery.imagesloaded.js"></script>
+<script src="./devreal_files/jquery.masonry.min.js"></script>
+<script src="./devreal_files/jquery.knob.modified.js"></script>
+<script src="./devreal_files/jquery.sparkline.min.js"></script>
+<script src="./devreal_files/counter.js"></script>
+<script src="./devreal_files/retina.js"></script>
+<script src="./devreal_files/custom.js"></script>
+<script type="text/javascript">
+var curDevType = "";
+var arrRealACC = new Array(300);  //实时电压数据
+var arrRealNet = new Array(300);  //实时网络数据
+var iAutoBar = 0;
+var plotRealAcc = null; //电压曲线
+var plotRealNet = null; //网络曲线
+var ReallOptions = {
+	series: { shadowSize: 1 },
+	lines: { fill: true, fillColor: { colors: [ { opacity: 1 }, { opacity: 0.1 } ] }},
+	xaxis: { show: false },
+	colors: ["#F4A506"],
+	grid: {	tickColor: "#dddddd",
+			borderWidth: 0 
+	}
+};
+$(document).ready(function(){
+    $(document).bind("contextmenu",function(e){
+        return false;
+    });
+	sparkline_charts();
+	circle_progess($("#circleFan"),0,3000);
+	circle_progess($("#circleTemp"),-40,80);
+	circle_progess($("#circleSIM"),0,100);
+	initRealAccNet();
+	if(document.body.clientHeight > 620){
+		var iHeight = (document.body.clientHeight - 620)/5;
+		for(var i=0; i<5; i++){
+			$("#row" + i).css("height",iHeight + "px");
+		}
+	}
+});
+//画圆形表格
+function sparkline_chart(obj,text){
+	if(text == "---"){
+		obj.text('1,2,3,4,5');		
+	}else{
+		if(iAutoBar > 3){
+			iAutoBar = 0;
+		}else{
+			iAutoBar++;
+		}
+		if(iAutoBar == 0){
+			obj.text('1,2,3,5,4');
+		}else if(iAutoBar == 1){
+			obj.text('2,1,5,4,3');
+		}else if(iAutoBar == 2){
+			obj.text('5,3,1,2,4');
+		}else{
+			obj.text('1,5,3,4,2');
+		}
+	}
+	obj.sparkline('html', {
+		type: 'bar',
+		height: '30',
+		barWidth: '4',
+		barSpacing: '1',
+		barColor: '#ffffff',
+		negBarColor: '#eeeeee'}
+	);		
+}
+function sparkline_charts() {
+	if($(".boxchart")) {
+		$(".boxchart").sparkline('html', {
+		    type: 'bar',
+		    height: '30',
+			barWidth: '4',
+			barSpacing: '1',
+		    barColor: '#ffffff',
+		    negBarColor: '#eeeeee'}
+		);		
+	}	
+}
+function circle_progess(obj,min,max){
+	obj.knob({
+        'min':min,
+        'max':max,
+        'readOnly': true,
+        'width': 120,
+        'height': 120,
+		'bgColor': 'rgba(255,255,255,0.5)',
+        'fgColor': 'rgba(255,255,255,0.9)',
+        'thickness': 0.2,
+        'tickColorizeValues': true
+    });	 
+}
+//画波浪线
+function pushAccData(value){
+	arrRealACC = arrRealACC.slice(1);
+	arrRealACC.push(value);
+}
+function pushNetData(value){
+	arrRealNet = arrRealNet.slice(1);
+	arrRealNet.push(value);
+}
+function getRealAccData(){
+	var arrRes = [];
+	for(var i=0; i<arrRealACC.length; i++){
+		arrRes.push([i,arrRealACC[i]]);
+	}
+	return arrRes;
+}
+function getRealNetData(){
+	var arrRes = [];
+	for(var i=0; i<arrRealNet.length; i++){
+		arrRes.push([i,arrRealNet[i]]);
+	}
+	return arrRes;
+}
+function updateRealAccNet(){
+	plotRealAcc.setData([ getRealAccData() ]);
+	plotRealAcc.setupGrid();
+	plotRealAcc.draw();
+	plotRealNet.setData([ getRealNetData() ]);
+	plotRealNet.setupGrid();
+	plotRealNet.draw();			
+	setTimeout(updateRealAccNet, 1000);
+}
+function initRealAccNet(){
+	for(var i=0; i<300; i++){
+		arrRealACC[i] = 0;
+		arrRealNet[i] = 0;
+	}
+	plotRealAcc = $.plot($("#realtimeACC"), [ getRealAccData() ], ReallOptions);
+	plotRealNet = $.plot($("#realtimeNet"), [ getRealNetData() ], ReallOptions);
+	updateRealAccNet();
+}
+//收到设备实时数据
+function GetBoxStatus2(obj,status){
+	if(status == "0"){
+		obj.text("---");
+		return "span2 statbox gray";
+	}else if(status == "1"){
+		return "span2 statbox runblue";
+	}else{
+		obj.text("---");
+		return "span2 statbox red";
+	}
+}
+function GetBoxStatus2Ex(obj,status){
+	if(status == "0"){
+		obj.text("---");
+		return "span2 statbox gray";
+	}else if(status == "1"){
+		return "span2 statbox rungreen";
+	}else if(status == "2"){
+		obj.text("---");
+		return "span2 statbox red";
+	}else{
+		return "span2 statbox runorange";
+	}
+}
+function GetBoxStatus3(obj,status){
+	if(status == "0"){
+		obj.text("---");
+		return "span3 statbox gray";
+	}else if(status == "1"){
+		return "span3 statbox runblue";
+	}else{
+		obj.text("---");
+		return "span3 statbox red";
+	}
+}
+function GetBoxStatus4(status){
+	if(status == "0"){
+		return "box-header gray";
+	}else if(status == "1"){
+		return "box-header runblue";
+	}else if(status == "2"){
+		return "box-header red";
+	}else{
+		return "box-header runorange";
+	}
+}
+function GetBoxStatus4Border(status){
+	if(status == "0"){
+		return "box span4 grayBorder";
+	}else if(status == "1"){
+		return "box span4 runblueBorder";
+	}else if(status == "2"){
+		return "box span4 runredBorder";
+	}else{
+		return "box span4 runorangeBorder";
+	}
+}
+function GetCircleStatus(status){
+	if(status == "0"){
+		return "circleStatsItemBox gray";
+	}else if(status == "2"){
+		return "circleStatsItemBox red";
+	}else{
+		return "circleStatsItemBox runpurple";
+	}
+}
+function OnRecvDevStatus(obj){
+	var strTemp = "-----------------";
+	if(obj.fAC220VIN_V == "0.00"){
+		pushAccData(parseFloat(obj.fDC48VIN_V));
+	}else{
+		pushAccData(parseFloat(obj.fAC220VIN_V));
+	}	
+	if(curDevType != obj.chType){
+		for (var i = 1; i <= 6; i++){
+			$('#sPOEA' + i).prop("onclick",null).off("click"); 
+			$('#footPOE' + i).text(strTemp);
+			if(i <= parseInt(obj.chType.substring(3,4))){
+				$('#sPOEA' + i).on("click",{index:i},function(event){POECtrlIO(''+(event.data.index+1),'POEA'+event.data.index,'ETH_'+event.data.index);});
+				$('#footPOE' + i).text("ETH_" + i + " 电流");
+			}
+		}
+		for (var i = 1; i <= 3; i++){
+			$('#sDC12V' + i).prop("onclick",null).off("click"); 
+			$('#footDC12V' + i).text(strTemp);
+			if(i <= parseInt(obj.chType.substring(6,7))){
+				$('#sDC12V' + i).on("click",{index:i},function(event){POECtrlIO(''+(event.data.index+7),'DC12V'+event.data.index,'DC12V_' + event.data.index);});
+				$('#footDC12V' + i).text("DC12V_" + i + " 电流");
+			}
+		}
+		$('#sDC48V').prop("onclick",null).off("click"); 
+		$('#footDC48V').text(strTemp);
+		if(obj.chType.substring(4,5)=="1"){
+			$('#sDC48V').on("click",function(){POECtrlIO('11','DC48V');});
+			$('#footDC48V').text("DC48V 电流");
+		}
+		if(obj.chType.substring(5,6)=="1"){
+			$('#sDC48V').on("click",function(){POECtrlIO('11','DC48V');});
+			$('#footDC48V').text("DC36V 电流");
+		}	
+		var iCount = parseInt(obj.chType.substring(1, 2));
+		if(iCount > 0){
+			iCount--;
+		}	
+		$('#sAC220V').prop("onclick",null).off("click"); 
+		$('#footAC220V').text(strTemp);
+		if (obj.chType.substring(1, 2) != "0"){ 
+			$('#sAC220V').on("click",{index:(iCount+1)},function(event){POECtrlIO('15','AC220V','AC220V_'+event.data.index);});
+			$('#footAC220V').text('AC220V_'+(iCount + 1) + " 电流");
+			if(iCount > 0){
+				for (var i = 1; i <= 3; i++){
+					$('#sAC24V'+(4-i)).prop("onclick",null).off("click"); 
+					$('#footAC24V'+(4-i)).text(strTemp);
+					if(i <= iCount){
+						$('#sAC24V'+(4-i)).on("click",{index:i,log:(iCount+1-i)},function(event){POECtrlIO(''+(15-event.data.index),'AC24V'+(4-event.data.index),'AC220V_' + event.data.log);});
+						$('#footAC24V'+(4-i)).text('AC220V_'+(iCount+1-i) + " 电流");
+					}
+				}
+			}
+		}	
+		for (var i = 1; i <= 3 - iCount; i++){
+			if (i <= parseInt(obj.chType.substring(2, 3))){
+				$('#sAC24V' + i).on("click",{index:i},function(event){POECtrlIO(''+(11+event.data.index),'AC24V'+event.data.index,'AC24V_'+event.data.index);});
+				$('#footAC24V'+i).text('AC24V_'+i + " 电流");
+			}
+		}	
+		for (var i = 1; i <= 6; i++){  //RJ45
+			$('#footETH' + i).text(strTemp);
+			if(i <= parseInt(obj.chType.substring(8,9))){
+				$('#footETH' + i).text("ETH_" + i + " 网络");
+			}
+		}	
+		$('#btnDisarm').prop("onclick",null).off("click"); 	
+		if (obj.chType.substring(11, 12) == "0"){
+			$('#btnDisarm').on("click",function(event){event.preventDefault();alert("此设备不具备撤防功能！");});
+		}else{
+			$('#btnDisarm').on("click",function(event){StartDisarm();});			
+		}
+		$('#btnTalk').prop("onclick",null).off("click"); 	
+		if (obj.chType.substring(10, 11) == "0"){
+			$('#btnTalk').on("click",function(event){event.preventDefault();alert("此设备不具备对讲功能！")});
+		}else{
+			$('#btnTalk').on("click",function(event){StartTalk();});			
+		}		
+		curDevType = obj.chType;
+	}	
+	//POE电流  
+	for(var i=1; i<=6; i++){
+		if($('#footPOE'+i).text() != strTemp){
+			$('#fPOEA' + i).text(obj.fPOE_A[i-1]);
+			$('#sPOEA' + i).attr("class",GetBoxStatus2($('#fPOEA' + i),obj.chIOStatus.substring(1+i,2+i)));
+			sparkline_chart($('#cPOEA' + i),$('#fPOEA' + i).text());
+			$('#sPOEA' + i).css("cursor","hand");
+		}else{
+			$('#fPOEA' + i).text("---");
+			$('#sPOEA' + i).attr("class",GetBoxStatus2($('#fPOEA' + i),0));
+			$('#sPOEA' + i).css("cursor","default");
+		}	
+	}
+	//网络延时
+	for (var i = 1; i <= 6; i++){
+		if($('#footETH'+i).text() != strTemp){
+			$('#fPOE' + i).text(obj.iNetBand[i-1]);
+			$('#bPOE' + i).text(obj.iNetDelay[i-1] + " ms");
+			$('#sPOE' + i).attr("class",GetBoxStatus2Ex($('#fPOE' + i),obj.chIOStatus.substring(22+i,23+i)));
+			sparkline_chart($('#cPOE' + i),$('#fPOE' + i).text());
+		}else{
+			$('#fPOE' + i).text("---");
+			$('#bPOE' + i).text("0 ms");
+			$('#sPOE' + i).attr("class",GetBoxStatus2Ex($('#fPOE' + i),obj.chIOStatus.substring(22+i,23+i)));		
+		} 
+	}
+	if (obj.chType.substring(9, 10) == "1"){
+		pushNetData(parseInt(obj.iNetDelay[6]));	
+		$('#sFC').attr("class",GetBoxStatus4(obj.chIOStatus.substring(29,30)));
+		$('#bFC').attr("class",GetBoxStatus4Border(obj.chIOStatus.substring(29,30)));		
+	}else{
+		$('#sFC').attr("class",GetBoxStatus4("0"));
+		$('#bFC').attr("class",GetBoxStatus4Border("0"));		
+	}
+	//交流供电	
+	for (var i = 1; i <= 3; i++){
+		if($('#footAC24V'+i).text() != strTemp){
+			$('#fAC24V' + i).text(obj.fAC24V_A[i-1]);
+			$('#sAC24V' + i).attr("class",GetBoxStatus3($('#fAC24V' + i),obj.chIOStatus.substring(11+i,12+i)));
+			sparkline_chart($('#cAC24V' + i),$('#fAC24V' + i).text());
+			$('#sAC24V' + i).css("cursor","hand");
+		}else{
+			$('#fAC24V' + i).text("---");
+			$('#sAC24V' + i).attr("class",GetBoxStatus3($('#fAC24V' + i),0));	
+			$('#sAC24V' + i).css("cursor","default");
+		}
+	}
+	if($('#footAC220V').text() != strTemp){
+		$('#fAC220V').text(obj.fAC220V_A);
+		$('#sAC220V').attr("class",GetBoxStatus3($('#fAC220V'),obj.chIOStatus.substring(15,16)));
+		sparkline_chart($('#cAC220V'),$('#fAC220V').text());	
+		$('#sAC220V').css("cursor","hand");
+	}else{
+		$('#fAC220V').text("---");
+		$('#sAC220V').attr("class",GetBoxStatus3($('#fAC220V'),0));	
+		$('#sAC220V').css("cursor","default");
+	}
+	//直流供电
+	for (var i = 1; i <= 3; i++){
+		if($('#footDC12V' + i).text() != strTemp){
+			$('#fDC12V' + i).text(obj.fDC12V_A[i-1]);
+			$('#sDC12V' + i).attr("class",GetBoxStatus3($('#fDC12V' + i),obj.chIOStatus.substring(7+i,8+i)));
+			sparkline_chart($('#cDC12V' + i),$('#fDC12V' + i).text());
+			$('#sDC12V' + i).css("cursor","hand");
+		}else{
+			$('#fDC12V' + i).text("---");
+			$('#sDC12V' + i).attr("class",GetBoxStatus3($('#fDC12V' + i),0));
+			$('#sDC12V' + i).css("cursor","default");
+		}
+	}
+	if($('#footDC48V').text() != strTemp){
+		$('#fDC48V').text(obj.fDC48V_A);
+		$('#sDC48V').attr("class",GetBoxStatus3($('#fDC48V'),obj.chIOStatus.substring(11,12)));	
+		sparkline_chart($('#cDC48V'),$('#fDC48V').text());
+		$('#sDC48V').css("cursor","hand");
+	}else{
+		$('#fDC48V').text("---");
+		$('#sDC48V').attr("class",GetBoxStatus3($('#fDC48V'),0));	
+		$('#sDC48V').css("cursor","default");
+	}
+	$('#sACIN').attr("class",GetBoxStatus4(obj.chIOStatus.substring(0,1)));
+	$('#bACIN').attr("class",GetBoxStatus4Border(obj.chIOStatus.substring(0,1)));	
+	
+	$('#sTemp').attr("class",GetCircleStatus(obj.chIOStatus.substring(31,32)));	
+	$('#circleTemp').val(obj.fTemp).trigger('change');
+	if(obj.chIOStatus.substring(31,32) == "2"){
+		$('#tTemp').text("报警");
+	}else{
+		$('#tTemp').text("正常");
+	}	
+	if(obj.chType.substring(13,14)=="1"){	
+		$('#sFan').attr("class",GetCircleStatus(obj.chIOStatus.substring(20,21)));	
+		$('#circleFan').val(0).trigger('change');	
+		if(obj.chIOStatus.substring(20,21) == "2"){
+			$('#tFan').text("故障");
+		}else{
+			$('#tFan').text("正常");
+		}
+	}else{
+		$('#sFan').attr("class",GetCircleStatus(0));
+		$('#circleFan').val('0').trigger('change');
+		$('#tFan').text("无");
+	}
+	if(obj.chType.substring(11,12)=="1"){
+		if(obj.chIOStatus.substring(30,31) == "0"){
+			$('#tSIM').text("故障");
+			$('#sSIM').attr("class",GetCircleStatus("2"));
+		}else{
+			$('#tSIM').text("正常");
+			$('#sSIM').attr("class",GetCircleStatus("1"));
+		}	
+		$('#circleSIM').val(parseInt(parseInt(obj.iSimCSQ)*100/31)).trigger('change');
+	}else{
+		$('#tSIM').text("无");
+		$('#sSIM').attr("class",GetCircleStatus("0"));
+		$('#circleSIM').val(0).trigger('change');
+	}
+	if(obj.chType.substring(12,13)=="1"){
+		if(obj.chIOStatus.substring(16,17) == "0"){
+			$('#sDoor').text("关闭");
+			$('#dDoor').attr("class","box span2 runpurpleBorder");
+			$('#hDoor').attr("class","box-header runpurple");
+			$('#fDoor').attr("class","span12 runpurple");		
+		}else{
+			$('#sDoor').text("打开");
+			if(obj.iIfDoorDuty == "1"){
+				$('#dDoor').attr("class","box span2 runredBorder");
+				$('#hDoor').attr("class","box-header red");
+				$('#fDoor').attr("class","span12 red");
+			}else{
+				$('#dDoor').attr("class","box span2 runpurpleBorder");
+				$('#hDoor').attr("class","box-header runpurple");
+				$('#fDoor').attr("class","span12 runpurple");		
+			}
+		}
+		if(obj.iIfDoorDuty == "0"){
+			$('#sDuty').text("撤防");
+		}else{
+			$('#sDuty').text("布防");
+		}
+	}else{
+		$('#sDoor').text("未知");
+		$('#sDuty').text("未知");
+	}
+}
+//对讲
+function OnRecvTalkResult(result){
+	if(result == 0){
+		$('#btnTalk').html('<i class="icon-volume-up"></i><p>挂断</p>');
+	}else{
+		if($('#btnTalk').html() == '<i class="icon-volume-off"></i><p>对讲</p>'){
+			alert("请求对讲失败");
+		}
+		$('#btnTalk').html('<i class="icon-volume-off"></i><p>对讲</p>');
+	}
+}
+function StartTalk(){
+	if(parent.getCurPlayId() == ""){
+		return;
+	}
+	if(parent.GetRight(1) == "0"){
+		alert("当前用户无对讲权限!");
+		return;
+	}
+	if($('#btnTalk').html().indexOf("对讲") != -1){
+		parent.execIcapOperate(parseInt("0x000C",16),null);
+		addOperLog("对终端《" + parent.GetCurDevName() + "》开启对讲");
+	}else{
+		parent.execIcapOperate(parseInt("0x100C",16),null);
+		addOperLog("对终端《" + parent.GetCurDevName() + "》挂断对讲");
+		//$('#btnTalk').html('<i class="icon-volume-off"></i><p>对讲</p>');
+	}
+}
+function StartDisarm(){
+	if(parent.getCurPlayId() == ""){
+		return;
+	}
+	if(parent.GetRight(1) == "0"){
+		alert("当前用户无开箱授权权限!");
+		return;
+	}
+	$('#myTitle').html("门禁撤防");
+	$('.modal-body').html('&nbsp;&nbsp;&nbsp;&nbsp;撤防时间：<input name="disarmTime" id="disarmTime" type="text" class="pop_input" maxlength="6" value=""/>小时');	
+	$("#btnOk").unbind('click'); 
+	$('#btnOk').click(function(){
+		var tDuty = $('#disarmTime').val();
+		if(tDuty == "" || isNaN(tDuty)){
+			alert("请输入撤防合法的小时数！");
+		}
+		var obj = new Object();
+		obj.iDelayMinute = "" + parseInt(tDuty)*60;
+		obj.chId = "";	
+		parent.execIcapOperate(parseInt("0x1011",16),obj);	
+		addOperLog("设置终端《" + parent.GetCurDevName() + "》的撤防时间：" + tDuty + "小时");
+		$('#myModal').modal('hide');
+	});
+	$('#myModal').modal('show');
+}
+//添加日志
+function addOperLog(content){
+	$.ajax({ 
+		type:"post", 
+		url:"AdminLogOper",
+		data:{
+			sContent:content
+		}, 
+		dataType:"json",
+		success:function(data){ 
+		}, 
+		error:function(){ 
+		 }
+	});
+}
+//控制IO 
+function POECtrlIO(tag,objtext,logtext){
+	if(parent.getCurPlayId() == "" || curDevType==""){
+		return;
+	}
+	if(parseInt(tag) < 8){
+		if(parent.GetRight(2) == "0"){
+			alert("当前用户无ETH供电控制权限!");
+			return;
+		}
+	}else{
+		if(parent.GetRight(4) == "0"){
+			alert("当前用户无输出供电端子控制权限!");
+			return;
+		}	
+	}
+	if(confirm("确定要控制此供电输出吗？") == false){
+		return;
+	}
+	var objTag = $('#f'+objtext);
+	var obj = new Object();
+	obj.sItem = tag;
+	if(objTag.text() == "---"){
+		obj.sOpt = "1";
+	}else{
+		obj.sOpt = "0";
+	}
+	obj.chId = "";
+	parent.execIcapOperate(parseInt("0x1002",16),obj);	
+	var index = parseInt(tag);
+	var content = "";
+	if(obj.sOpt == "0"){
+		content += ("关闭终端");
+	}else{
+		content += ("打开终端");
+	}		
+	content += ("《"+parent.GetCurDevName()+ "》的" + logtext);
+	
+	content += ("供电");
+	addOperLog(content);	
+}
+</script>
+<style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
+<body>
+<div class="container-fluid-full">
+	<div class="row-fluid">
+		<div id="sPOE1" name="sPOE1" class="span2 statbox gray">
+			<div id="cPOE1" class="boxchart"></div>
+			<div class="number"><span id="fPOE1" name="fPOE1">---</span> <span style="font-size:20px;">Kbps</span></div>
+			<div class="title" style="font-size:14px;right:5px;" id="bPOE1" name="bPOE1">0 ms</div>
+			<div class="footerNone">
+				<span id="footETH1" name="footETH1">ETH_1 网络</span> 
+			</div>	
+		</div>
+		<div id="sPOE2" name="sPOE2" class="span2 statbox gray">
+			<div id="cPOE2" class="boxchart"></div>
+			<div class="number"><span id="fPOE2" name="fPOE2">---</span> <span style="font-size:20px;">Kbps</span></div>
+			<div class="title" style="font-size:14px;right:5px;" id="bPOE2" name="bPOE2">0 ms</div>
+			<div class="footerNone">
+				<span id="footETH2" name="footETH2">ETH_2 网络</span>
+			</div>	
+		</div>
+		<div id="sPOE3" name="sPOE3" class="span2 statbox gray">
+			<div id="cPOE3" class="boxchart"></div>
+			<div class="number"><span id="fPOE3" name="fPOE3">---</span> <span style="font-size:20px;">Kbps</span></div>
+			<div class="title" style="font-size:14px;right:5px;" id="bPOE3" name="bPOE3">0 ms</div>
+			<div class="footerNone">
+				<span id="footETH3" name="footETH3">ETH_3 网络</span>
+			</div>	
+		</div>
+		<div id="sPOE4" name="sPOE4" class="span2 statbox gray">
+			<div id="cPOE4" class="boxchart"></div>
+			<div class="number"><span id="fPOE4" name="fPOE4">---</span> <span style="font-size:20px;">Kbps</span></div>
+			<div class="title" style="font-size:14px;right:5px;" id="bPOE4" name="bPOE4">0 ms</div>
+			<div class="footerNone">
+				<span id="footETH4" name="footETH4">ETH_4 网络</span>
+			</div>	
+		</div>
+		<div id="sPOE5" name="sPOE5" class="span2 statbox gray">
+			<div id="cPOE5" class="boxchart"></div>
+			<div class="number"><span id="fPOE5" name="fPOE5">---</span> <span style="font-size:20px;">Kbps</span></div>
+			<div class="title" style="font-size:14px;right:5px;" id="bPOE5" name="bPOE5">0 ms</div>
+			<div class="footerNone">
+				<span id="footETH5" name="footETH5">ETH_5 网络</span>
+			</div>	
+		</div>
+		<div id="sPOE6" name="sPOE6" class="span2 statbox gray">
+			<div id="cPOE6" class="boxchart"></div>
+			<div class="number"><span id="fPOE6" name="fPOE6">---</span> <span style="font-size:20px;">Kbps</span></div>
+			<div class="title" style="font-size:14px;right:5px;" id="bPOE6" name="bPOE6">0 ms</div>
+			<div class="footerNone">
+				<span id="footETH6" name="footETH6">ETH_6 网络</span>
+			</div>	
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div id="sPOEA1" name="sPOEA1" class="span2 statbox gray" onclick="POECtrlIO(&#39;2&#39;,&#39;POEA1&#39;,&#39;ETH_1&#39;)" style="cursor:hand;">
+			<div id="cPOEA1" class="boxchart"></div>
+			<div class="number"><span id="fPOEA1" name="fPOEA1">---</span> <i class="icon-bolt"></i></div>
+			<div class="title">A</div>
+			<div class="footerNone">
+				<span id="footPOE1" name="footPOE1">ETH_1 电流</span>
+			</div>	
+		</div>
+		<div id="sPOEA2" name="sPOEA2" class="span2 statbox gray" onclick="POECtrlIO(&#39;3&#39;,&#39;POEA2&#39;,&#39;ETH_2&#39;)" style="cursor:hand;">
+			<div id="cPOEA2" class="boxchart"></div>
+			<div class="number"><span id="fPOEA2" name="fPOEA2">---</span> <i class="icon-bolt"></i></div>
+			<div class="title">A</div>
+			<div class="footerNone">
+				<span id="footPOE2" name="footPOE2">ETH_2 电流</span>
+			</div>	
+		</div>
+		<div id="sPOEA3" name="sPOEA3" class="span2 statbox gray" onclick="POECtrlIO(&#39;4&#39;,&#39;POEA3&#39;,&#39;ETH_3&#39;)" style="cursor:hand;">
+			<div id="cPOEA3" class="boxchart"></div>
+			<div class="number"><span id="fPOEA3" name="fPOEA3">---</span> <i class="icon-bolt"></i></div>
+			<div class="title">A</div>
+			<div class="footerNone">
+				<span id="footPOE3" name="footPOE3">ETH_3 电流</span>
+			</div>	
+		</div>
+		<div id="sPOEA4" name="sPOEA4" class="span2 statbox gray" onclick="POECtrlIO(&#39;5&#39;,&#39;POEA4&#39;,&#39;ETH_4&#39;)" style="cursor:hand;">
+			<div id="cPOEA4" class="boxchart"></div>
+			<div class="number"><span id="fPOEA4" name="fPOEA4">---</span> <i class="icon-bolt"></i></div>
+			<div class="title">A</div>
+			<div class="footerNone">
+				<span id="footPOE4" name="footPOE4">ETH_4 电流</span>
+			</div>	
+		</div>
+		<div id="sPOEA5" name="sPOEA5" class="span2 statbox gray" onclick="POECtrlIO(&#39;6&#39;,&#39;POEA5&#39;,&#39;ETH_5&#39;)" style="cursor:hand;">
+			<div id="cPOEA5" class="boxchart"></div>
+			<div class="number"><span id="fPOEA5" name="fPOEA5">---</span> <i class="icon-bolt"></i></div>
+			<div class="title">A</div>
+			<div class="footerNone">
+				<span id="footPOE5" name="footPOE5">ETH_5 电流</span>
+			</div>	
+		</div>
+		<div id="sPOEA6" name="sPOEA6" class="span2 statbox gray" onclick="POECtrlIO(&#39;7&#39;,&#39;POEA6&#39;,&#39;ETH_6&#39;)" style="cursor:hand;">
+			<div id="cPOEA6" class="boxchart"></div>
+			<div class="number"><span id="fPOEA6" name="fPOEA6">---</span> <i class="icon-bolt"></i></div>
+			<div class="title">A</div>
+			<div class="footerNone">
+				<span id="footPOE6" name="footPOE6">ETH_6 电流</span>
+			</div>	
+		</div>
+	</div>
+	<div class="row-fluid circleStats">
+		<div class="span2">
+            <div id="sFan" name="sFan" class="circleStatsItemBox gray">
+			<div class="header">风扇转速</div>
+			<span class="percent">rpm</span>
+			<div class="circleStat">
+                 <div style="width:120px;display:inline;&quot;"><canvas width="120" height="120"></canvas><input id="circleFan" name="circleFan" type="text" value="0" class="whiteCircle" style="font-size: 30px; width: 60px; position: absolute; margin-top: 42.8571px; margin-left: -90px; border: none; background: none; font-family: Arial; font-weight: bold; text-align: center; color: rgba(255, 255, 255, 0.9); padding: 0px; -webkit-appearance: none;" readonly="readonly"></div>
+			</div>		
+			<div class="footer">
+				<span class="value">
+					<span id="tFan" name="tFan" class="number">正常</span>
+				</span>	
+			</div>
+             </div>
+		</div>
+		<div id="bACIN" class="box span4 grayBorder">
+			<div id="sACIN" class="box-header gray">
+				<h2><i class="halflings-icon white list-alt"></i><span class="break"></span>市电</h2>
+			</div>
+			<div class="box-content">
+				 <div id="realtimeACC" style="height: 155px; padding: 0px; position: relative;"><canvas class="base" width="412" height="155"></canvas><canvas class="overlay" width="412" height="155" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="yAxis y1Axis" style="color:#545454"><div class="tickLabel" style="position:absolute;text-align:right;top:141px;right:391px;width:21px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:104px;right:391px;width:21px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:68px;right:391px;width:21px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:31px;right:391px;width:21px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-6px;right:391px;width:21px">1.0</div></div></div></div>
+			</div>
+		</div>
+		<div id="bFC" class="box span4 grayBorder">
+			<div id="sFC" class="box-header gray">
+				<h2><i class="halflings-icon white list-alt"></i><span class="break"></span>主干网延时</h2>
+			</div>
+			<div class="box-content">
+				 <div id="realtimeNet" style="height: 155px; padding: 0px; position: relative;"><canvas class="base" width="412" height="155"></canvas><canvas class="overlay" width="412" height="155" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="yAxis y1Axis" style="color:#545454"><div class="tickLabel" style="position:absolute;text-align:right;top:141px;right:391px;width:21px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:104px;right:391px;width:21px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:68px;right:391px;width:21px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:31px;right:391px;width:21px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-6px;right:391px;width:21px">1.0</div></div></div></div>
+			</div>
+		</div>
+		<div class="span2">
+            <div id="sTemp" name="sTemp" class="circleStatsItemBox gray">
+			<div class="header">系统温度</div>
+			<span class="percent">℃</span>
+			<div class="circleStat">
+                 <div style="width:120px;display:inline;&quot;"><canvas width="120" height="120"></canvas><input id="circleTemp" name="circleTemp" type="text" value="-40" class="whiteCircle" readonly="readonly" style="width: 60px; position: absolute; margin-top: 42.8571px; margin-left: -90px; font-size: 30px; border: none; background: none; font-family: Arial; font-weight: bold; text-align: center; color: rgba(255, 255, 255, 0.9); padding: 0px; -webkit-appearance: none;"></div>
+			</div>		
+			<div class="footer">
+				<span class="value">
+					<span id="tTemp" name="tTemp" class="number">正常</span>
+				</span>	
+			</div>
+             </div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span2 circleStats">
+             <div id="sSIM" name="sSIM" class="circleStatsItemBox gray">
+			<div class="header">SIM卡</div>
+			<span class="percent">%</span>
+			<div class="circleStat">
+                 <div style="width:120px;display:inline;&quot;"><input id="circleSIM" name="circleSIM" type="text" value="15" class="whiteCircle" readonly="readonly" style="width: 60px; position: absolute; margin-top: 42.8571px; margin-left: -90px; font-size: 30px; border: none; background: none; font-family: Arial; font-weight: bold; text-align: center; color: rgba(255, 255, 255, 0.9); padding: 0px; -webkit-appearance: none;"></div>
+			</div>		
+			<div class="footer">
+				<span class="value">
+					<span id="tSIM" name="tSIM" class="number">正常</span>
+				</span>	
+			</div>
+             </div>
+		</div>
+		<div class="span8" style="margin-top: -1.5%;">
+			<div class="row-fluid">
+				<div id="sDC12V1" name="sDC12V1" class="span3 statbox gray" onclick="POECtrlIO(&#39;8&#39;,&#39;DC12V1&#39;,&#39;DC12V_1&#39;)" style="cursor:hand;">
+					<div id="cDC12V1" class="boxchart"></div>
+					<div class="number"><span id="fDC12V1" name="fDC12V1">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footDC12V1" name="footDC12V1">DC12V_1 电流</span>
+					</div>	
+				</div>
+				<div id="sDC12V2" name="sDC12V2" class="span3 statbox gray" onclick="POECtrlIO(&#39;9&#39;,&#39;DC12V2&#39;,&#39;DC12V_2&#39;)" style="cursor:hand;">
+					<div id="cDC12V2" class="boxchart"></div>
+					<div class="number"><span id="fDC12V2" name="fDC12V2">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footDC12V2" name="footDC12V2">DC12V_2 电流</span>
+					</div>	
+				</div>
+				<div id="sDC12V3" name="sDC12V3" class="span3 statbox gray" onclick="POECtrlIO(&#39;10&#39;,&#39;DC12V3&#39;,&#39;DC12V_3&#39;)" style="cursor:hand;">
+					<div id="cDC12V3" class="boxchart"></div>
+					<div class="number"><span id="fDC12V3" name="fDC12V3">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footDC12V3" name="footDC12V3">DC12V_3 电流</span>
+					</div>	
+				</div>
+				<div id="sDC48V" name="sDC48V" class="span3 statbox gray" onclick="POECtrlIO(&#39;11&#39;,&#39;DC48V&#39;,&#39;DC48V&#39;)" style="cursor:hand;">  
+					<div id="cDC48V" class="boxchart"></div>
+					<div class="number"><span id="fDC48V" name="fDC48V">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footDC48V" name="footDC48V">DC48V 电流</span>
+					</div>	
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div id="sAC24V1" name="sAC24V1" class="span3 statbox gray" onclick="POECtrlIO(&#39;12&#39;,&#39;AC24V1&#39;,&#39;AC24V_1&#39;)" style="cursor:hand;">
+					<div id="cAC24V1" class="boxchart"></div>
+					<div class="number"><span id="fAC24V1" name="fAC24V1">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footAC24V1" name="footAC24V1">AC24V_1 电流</span>
+					</div>	
+				</div>
+				<div id="sAC24V2" name="sAC24V2" class="span3 statbox gray" onclick="POECtrlIO(&#39;13&#39;,&#39;AC24V2&#39;,&#39;AC24V_2&#39;)" style="cursor:hand;">
+					<div id="cAC24V2" class="boxchart"></div>
+					<div class="number"><span id="fAC24V2" name="fAC24V2">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footAC24V2" name="footAC24V2">AC24V_2 电流</span>
+					</div>	
+				</div>
+				<div id="sAC24V3" name="sAC24V3" class="span3 statbox gray" onclick="POECtrlIO(&#39;14&#39;,&#39;AC24V3&#39;,&#39;AC24V_3&#39;)" style="cursor:hand;">
+					<div id="cAC24V3" class="boxchart"></div>
+					<div class="number"><span id="fAC24V3" name="fAC24V3">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footAC24V3" name="footAC24V3">AC24V_3 电流</span>
+					</div>	
+				</div>
+				<div id="sAC220V" name="sAC220V" class="span3 statbox gray" onclick="POECtrlIO(&#39;15&#39;,&#39;AC220V&#39;,&#39;AC220V&#39;)" style="cursor:hand;">
+					<div id="cAC220V" class="boxchart"></div>
+					<div class="number"><span id="fAC220V" name="fAC220V">---</span> <i class="icon-bolt"></i></div>
+					<div class="title">A</div>
+					<div class="footerNone">
+						<span id="footAC220V" name="footAC220V">AC220V 电流</span>
+					</div>	
+				</div>
+			</div>			
+		</div>
+		<div id="dDoor" class="box span2 grayBorder">
+			<div id="hDoor" class="box-header gray">
+				<h2><i class="halflings-icon white white hand-top"></i><span class="break"></span>门禁&amp;对讲</h2>
+			</div>
+			<div class="box-content" style="margin-top:15px;margin-bottom:15px;height:92px !important;">
+				<div class="span12">
+				<a id="btnDisarm" class="quick-button-small span5" onclick="StartDisarm()">
+					<i class="icon-eye-close"></i>
+					<p>撤防</p>
+				</a>
+				<div class="span2"></div>
+				<a id="btnTalk" class="quick-button-small span5" onclick="StartTalk()">
+					<i class="icon-volume-off"></i>
+					<p>对讲</p>
+				</a>
+				</div>
+				<div class="span12"></div>
+			</div>
+			<div class="footer">
+				<div id="fDoor" class="span12 gray" style="text-align:center;">
+					<span id="sDoor" name="sDoor" style="font-size:14px;line-height:30px;">未知</span>
+					<span class="sep"> / </span>
+					<span id="sDuty" name="sDuty" style="font-size:14px;line-height:30px;font-weight:700;">未知</span>	
+                </div>
+      		</div>
+		</div>
+	</div>
+</div>
+<div class="modal hide fade" id="myModal" aria-hidden="true" data-backdrop="static">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" onclick="hideMaskLayer()">×</button>
+		<h3 id="myTitle" name="myTitle">标题</h3>
+	</div>
+	<div class="modal-body" style="font-size:12px;">
+		
+	</div>
+	<div class="modal-footer">
+		<a href="http://39.98.57.97:9602/icapmng/dev/devreal.jsp#" class="btn" data-dismiss="modal" onclick="hideMaskLayer()">取消</a>
+		<a id="btnOk" name="btnOk" href="http://39.98.57.97:9602/icapmng/dev/devreal.jsp#" class="btn btn-primary">确定</a>
+	</div>
+</div>
+
+
+</body></html>
