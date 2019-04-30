@@ -611,85 +611,88 @@ $(function () {
 
     // 地图配置
     function map() {
-        // var map = new L.Map("mapid", {
-        //     zoom: 9,
-        //     center: [39.0850853357,117.1993482089],
-        //     boxZoom: true, 
-        // });
-        // var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
-        // var layer = new L.TileLayer(url, {
-        //     subdomains:"1234"
-        // });
-        // map.addLayer(layer);
-        // var marker = new L.marker([39.1410912411,117.0073575633]);
-        // marker.addTo(map);
-        // marker.bindPopup("<b>天津</b><br>西青区.");
 
-        // var marker = new L.marker([39.0850853357,117.1993482089]);
-        // marker.addTo(map);
-        // marker.bindPopup("<b>天津</b>");
+        var map = new L.Map("mapid", {
+            zoom: 9,
+            center: [39.0850853357,117.1993482089],
+            boxZoom: true, 
+        });
+        var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
+        var layer1 = new L.TileLayer(url, {
+            subdomains:"1234"
+        });
+        map.addLayer(layer1);
+        var result = [{
+            title: "名称：天津市西青区",
+            lat:39.139446,
+            lng:117.012247,
+            address: "天津市西青区",
+            tel: "12306"
+        },
+        {
+            title: "名称：天津市河东区",
+            lat:39.122125,
+            lng:117.226568,
+            address: "天津市河东区 ",
+            tel: "18500000000"
+        },
+        {
+            title: "名称：天津市东丽区",
+            lat:39.087764,
+            lng:117.313967,
+            address: "天津市东丽区",
+            tel: "18500000000"
+        },
+        {
+            title: "名称：天津市滨海新区",
+            lat:39.032846,
+            lng:117.654173,
+            address: "天津市滨海新区",
+            tel: "18500000000"
+        }];
+        var layers=[];
+        for(var i = 0;i< result.length;i++){
+            var layer = new L.marker([ result[i].lat, result[i].lng ]);
+            layers.push(layer);
+        }
+        var myGroup=L.layerGroup(layers);
+        map.addLayer(myGroup);
+
+        
+        
+        // var marker1 = new L.marker([39.1410912411,117.0073575633]);
+        // marker1.addTo(map);
+        // marker1.bindPopup("<b>天津</b><br>西青区.");
+
+        // var marker2 = new L.marker([39.0850853357,117.1993482089]);
+        // marker2.addTo(map);
+        // marker2.bindPopup("<b>天津</b>");
         $('.layui-body').css('bottom','0');
 
-        var spotAddress = '',lngLat = '';
-
-        var map = new BMap.Map("mapid",{enableMapClick:false});
-    
-    
-        var point = new BMap.Point(117.216582,39.030182);
-        map.centerAndZoom(point, 10);
-        map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
-        map.enableContinuousZoom();
-        var marker = new BMap.Marker(point);// 创建标注
-        map.addOverlay(marker);             // 将标注添加到地图中
-        // marker.enableDragging();            //可拖拽
-        marker.disableDragging();           //不可拖拽
-        marker.addEventListener("click",attribute);
-        // map.addOverlay(marker);    //增加点
-
-        function attribute(){
-            var p = marker.getPosition();
-            // 经纬度
-            var point = new BMap.Point(p.lng, p.lat);
-            var gc = new BMap.Geocoder();
-            gc.getLocation(point, function (rs) {
-                var addComp = rs.addressComponents;
-                actual_address = rs.address;        //  位置信息
-
-                var opts = {
-                    width : 100, // 信息窗口宽度
-                    height: 80, // 信息窗口高度
-                    title : "您的位置是" , // 信息窗口标题
-                    enableMessage:false,//设置允许信息窗发送短息
-                }
-                var infoWindow = new BMap.InfoWindow(rs.address+'('+p.lng+ ',' + p.lat+')', opts); // 创建信息窗口对象
-
-                map.openInfoWindow(infoWindow,point); //开启信息窗口
-
-                spotAddress = rs.address;        //点的位置信息
-                lngLat = p.lng+ ',' + p.lat;     //点的经纬度
-            })
-        }
         // 绑定事件,点击编辑可拖拽点
         $('.Identification').on('click','.layui-icon-edit',function(){
-            marker.enableDragging();
-            marker.addEventListener("dragend",attribute);
-            map.addOverlay(marker);    //增加点
+            
+            for(x in myGroup._layers){
+                myGroup._layers[x].dragging.enable();
+            }
         })
         
         // 绑定事件,点击保存不可拖拽点
-
         $('.Identification').on('click','.layui-icon-ok',function(){
-            marker.disableDragging();
-            console.log(spotAddress);
-            console.log(lngLat);
+            myGroup.dragging = false;
+            for(x in myGroup._layers){
+                myGroup._layers[x].dragging.disable();
+                console.log(myGroup._layers[x].getLatLng());
+            }
+            
         })
-        // 绑定事件,点击添加可拖拽点
+
+        // // 绑定事件,点击添加可拖拽点
         $('.Identification').on('click','.layui-icon-add-1',function(){
-           
-            // var pt = new BMap.Point(117.218349,39.003313);
-            // var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(23, 25));
-            // var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-            // map.addOverlay(marker2);  
+            var marker3 = new L.marker([39.003313,117.218349], { draggable: true });
+            layers.push(marker3);
+            myGroup=L.layerGroup(layers);
+            map.addLayer(myGroup);
 
         })
         

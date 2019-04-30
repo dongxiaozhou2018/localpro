@@ -36,7 +36,9 @@
             height: 20px;
             line-height: 20px;
         }
-        .anchorBL{display:none;}
+        .anchorBL,.leaflet-control-container{
+            display:none;
+        }
     </style>
 </head>
 
@@ -152,7 +154,7 @@
                 <!-- 地图配置 -->
                 <div class="map_box" style="display: none">
                     <button class="layui-btn layui-btn-normal layui-btn-sm show_list"style="position: absolute;top: 0;left: 0;z-index: 1000;">设备地址 <i class="layui-icon layui-icon-search layui-icon-next"></i></button>
-                    <div class="Identification">
+                    <div class="Identification" style="z-index: 1000000">
                         <div class="Identification1" style="width: 100%;border-bottom: 1px solid gray;"><i class="layui-icon layui-icon-add-1"></i></div>
                         <div class="Identification1" style="width: 100%;border-bottom: 1px solid gray;"><i class="layui-icon layui-icon-edit"></i></div>
                         <div class="Identification2" style="width: 100%;border-bottom: 1px solid gray;"><i class="layui-icon layui-icon-ok"></i></div>
