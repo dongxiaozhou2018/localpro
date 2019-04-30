@@ -386,9 +386,46 @@ $(function () {
                 parseData: function (res) {
                     if(res.code == 0){
                         for(var i = 0;i<res.data.list.length;i++){
+                            // P0E电流
                             var poeAlist = res.data.list[i].poeAlist[0].split(',');
                             for(var j = 0;j<poeAlist.length;j++){
                                 res.data.list[i]['poeAlist'+(j+1)] = poeAlist[j];
+                            }
+                            // DC12V输出电流
+                            var dc12vAlist = res.data.list[i].dc12vAlist[0].split(',');
+                            for(var j = 0;j<dc12vAlist.length;j++){
+                                res.data.list[i]['dc12vAlist'+(j+1)] = dc12vAlist[j];
+                            }
+                            
+                            // AC24V输出电流
+                            var ac24vAlist = res.data.list[i].ac24vAlist[0].split(',');
+                            for(var j = 0;j<ac24vAlist.length;j++){
+                                res.data.list[i]['ac24vAlist'+(j+1)] = ac24vAlist[j];
+                            }
+                            // 网络延时数据
+                            var netdelayList = res.data.list[i].netdelayList[0].split(',');
+                            for(var j = 0;j<netdelayList.length;j++){
+                                res.data.list[i]['netdelayList'+(j+1)] = netdelayList[j];
+                            }
+                            // 带宽占用
+                            var netbandList = res.data.list[i].netbandList[0].split(',');
+                            for(var j = 0;j<netbandList.length;j++){
+                                res.data.list[i]['netbandList'+(j+1)] = netbandList[j];
+                            }
+
+                            // 设备状态
+                            if(res.data.list[i].status == '0'){
+                                res.data.list[i].status = '<span class="layui-btn">关闭</span>'
+                            }else if(res.data.list[i].status == '1'){
+                                res.data.list[i].status = '<span class="layui-btn layui-btn-normal">启用</span>'
+                            }else if(res.data.list[i].status == '2'){
+                                res.data.list[i].status = '<span class="layui-btn layui-btn-danger">报警</span>'
+                            }else if(res.data.list[i].status == '3'){
+                                res.data.list[i].status = '<span class="layui-btn layui-btn-warm">预警</span>'
+                            }
+                            // 撤防延时时间
+                            if(res.data.list[i].doorduty == '0'){
+                                res.data.list[i].doorduty = '<span class="layui-btn">布防</span>'
                             }
                         }
                         return {
@@ -402,27 +439,13 @@ $(function () {
                 },
                 cols: [[ //表头
                     {
-                        field: 'alarmType',
-                        title: '终端名称'
+                        field: 'status',
+                        title: '设备状态'
                     }
                     ,{
-                        field: 'alarmName',
-                        title: '终端状态'
+                        field: 'temp',
+                        title: '机箱内温度'
                     }
-                    
-                    , {
-                        field: 'alarmLevel',
-                        title: '终端IP'
-                    }
-                    ,{
-                        field: 'alarmType',
-                        title: '所属区域'
-                    }
-                    ,{
-                        field: 'alarmName',
-                        title: '接入电压'
-                    }
-                    
                     , {
                         field: 'poeAlist1',
                         title: 'ETH_1电流'
@@ -448,100 +471,154 @@ $(function () {
                         title: 'ETH_6电流'
                     }
                     , {
-                        field: 'alarmLevel',
-                        title: 'DC12V_1电流'
+                        field: 'dc12vAlist1',
+                        title: 'DC12V_1输出电流'
                     }
                     ,{
-                        field: 'alarmType',
-                        title: 'DC12V_2电流'
+                        field: 'dc12vAlist2',
+                        title: 'DC12V_2输出电流'
                     }
                     ,{
-                        field: 'alarmName',
-                        title: 'DC12V_3电流'
+                        field: 'dc12vAlist3',
+                        title: 'DC12V_3输出电流'
                     }
                     , {
-                        field: 'alarmLevel',
-                        title: 'DC48V电流'
+                        field: 'dc48vA',
+                        title: 'DC48V输出电流'
                     }
-
-
-
-
-                    ,{
-                        field: 'alarmType',
-                        title: '终端名称1',
+                    , {
+                        field: 'dc48vinV',
+                        title: 'DC48V输入电流'
+                    }
+                    , {
+                        field: 'ac220vinV',
+                        title: 'AC220V输出电压',
+                        hide: true
+                    }
+                    , {
+                        field: 'ac24vAlist1',
+                        title: 'AC24V_1电流',
+                        hide: true
+                    }
+                    , {
+                        field: 'ac24vAlist2',
+                        title: 'AC24V_2电流',
+                        hide: true
+                    }
+                    , {
+                        field: 'ac24vAlist3',
+                        title: 'AC24V_3电流',
+                        hide: true
+                    }
+                    , {
+                        field: 'ac220vA',
+                        title: 'AC220V输出电流',
+                        hide: true
+                    }
+                    , {
+                        field: 'ac220vA',
+                        title: 'AC220V输出电流',
                         hide: true
                     }
                     ,{
-                        field: 'alarmName',
-                        title: '终端状态1',
+                        field: 'netdelayList1',
+                        title: 'ETH_1网络延迟',
+                        hide: true
+                    }
+                    ,{
+                        field: 'netdelayList2',
+                        title: 'ETH_2网络延迟 ',
+                        hide: true
+                    }
+                    , {
+                        field: 'netdelayList3',
+                        title: 'ETH_3网络延迟',
+                        hide: true
+                    }
+                    ,{
+                        field: 'netdelayList4',
+                        title: 'ETH_4网络延迟',
+                        hide: true
+                    }
+                    ,{
+                        field: 'netdelayList5',
+                        title: 'ETH_5网络延迟',
                         hide: true
                     }
                     
                     , {
-                        field: 'alarmLevel',
-                        title: '终端IP1',
+                        field: 'netdelayList6',
+                        title: 'ETH_6网络延迟',
                         hide: true
                     }
                     ,{
-                        field: 'alarmType',
-                        title: '所属区域1',
+                        field: 'netdelayList7',
+                        title: 'FC网络延迟',
                         hide: true
                     }
                     ,{
-                        field: 'alarmName',
-                        title: '接入电压1',
-                        hide: true
-                    }
-                    
-                    , {
-                        field: 'poeAlist1',
-                        title: 'ETH_1电流1',
+                        field: 'netbandList1',
+                        title: 'ETH_1宽带占用',
                         hide: true
                     }
                     ,{
-                        field: 'poeAlist2',
-                        title: 'ETH_2电流1',
-                        hide: true
-                    }
-                    ,{
-                        field: 'poeAlist3',
-                        title: 'ETH_3电流1',
+                        field: 'netbandList2',
+                        title: 'ETH_2宽带占用 ',
                         hide: true
                     }
                     , {
-                        field: 'poeAlist4',
-                        title: 'ETH_4电流1',
+                        field: 'netbandList3',
+                        title: 'ETH_3宽带占用',
                         hide: true
                     }
                     ,{
-                        field: 'poeAlist5',
-                        title: 'ETH_5电流1',
+                        field: 'netbandList4',
+                        title: 'ETH_4宽带占用',
                         hide: true
                     }
                     ,{
-                        field: 'poeAlist6',
-                        title: 'ETH_6电流1',
-                        hide: true
-                    },
-                    , {
-                        field: 'alarmLevel',
-                        title: 'DC12V_1电流1',
-                        hide: true
-                    }
-                    ,{
-                        field: 'alarmType',
-                        title: 'DC12V_2电流1',
-                        hide: true
-                    }
-                    ,{
-                        field: 'alarmName',
-                        title: 'DC12V_3电流1',
+                        field: 'netbandList5',
+                        title: 'ETH_5宽带占用',
                         hide: true
                     }
                     , {
-                        field: 'alarmLevel',
-                        title: 'DC48V电流1',
+                        field: 'netbandList6',
+                        title: 'ETH_6宽带占用',
+                        hide: true
+                    }
+                    ,{
+                        field: 'netbandList7',
+                        title: 'FC宽带占用',
+                        hide: true
+                    }
+                    ,{
+                        field: 'fanspeed',
+                        title: '风扇转速',
+                        hide: true
+                    }
+                    , {
+                        field: 'qkwh',
+                        title: '用电总量',
+                        hide: true
+                    }
+                    ,{
+                        field: 'qkw',
+                        title: '当前功率',
+                        hide: true
+                    }
+                    ,{
+                        field: 'type',
+                        title: '设备类型',
+                        hide: true
+                    }
+                    , {
+                        field: 'simcsq',
+                        title: 'sim卡信号质量',
+                        hide: true
+                    }
+                    , {
+                        field: 'doorduty',
+                        title: '撤防延时时间',
                         hide: true
                     }
                 ]],
