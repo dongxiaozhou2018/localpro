@@ -68,7 +68,7 @@ $(function () {
             $('.overview').hide();
             $('#inspection_box').show().siblings().hide();
             $('#inspection_box').parent('div').show();
-            inspection(pageNum,pageSize);
+            inspection(pageNum,pageSize,'天津市',false);
         }
         if ($(this).attr('name') == 'bjjl') {
             $('.overview').hide();
@@ -341,16 +341,16 @@ $(function () {
 
     }
     // 系统巡检
-    function inspection(pageNum,pageSize) {
-        $('.inspection_role').html('');
+    function inspection(pageNum,pageSize,groupName,alarm) {
+        $('.groupName').html('');
         var url = global_path + '/manage/group/groupOption';
         getAjax(url, function(res) {
             if (res.code == 0) {
-                var firstmodel = '<option value="">请选择</option>';
-                $('.inspection_role').append(firstmodel);
+                var firstmodel = '<option value="天津市">天津市</option>';
+                $('.groupName').append(firstmodel);
                 for(var i = 0;i<res.data.length;i++){
-                    var groupName = '<option value="'+res.data[i].id+'">'+res.data[i].groupName+'</option>';
-                    $('.inspection_role').append(groupName);
+                    var groupName = '<option value="'+res.data[i].groupName+'">'+res.data[i].groupName+'</option>';
+                    $('.groupName').append(groupName);
                 }
             } else if(res.code == 401){
                 unauthorized(res.code);
@@ -378,7 +378,9 @@ $(function () {
                 },
                 where:{
                     'pageNum':pageNum,
-                    'pageSize':pageSize
+                    'pageSize':pageSize,
+                    'groupName':groupName,
+                    'alarm':alarm
                 },
                 title: '系统巡检',
                 page: false,
@@ -410,7 +412,7 @@ $(function () {
                             // 带宽占用
                             var netbandList = res.data.list[i].netbandList[0].split(',');
                             for(var j = 0;j<netbandList.length;j++){
-                                res.data.list[i]['netbandList'+(j+1)] = netbandList[j];
+                                res.data.list[i]['netbandList'+(j+1)] = netbandList[j] + ' kbps';
                             }
 
                             // 设备状态
@@ -445,6 +447,10 @@ $(function () {
                     ,{
                         field: 'temp',
                         title: '机箱内温度'
+                    }
+                    ,{
+                        field: 'groupName',
+                        title: '地区'
                     }
                     , {
                         field: 'poeAlist1',
@@ -644,13 +650,18 @@ $(function () {
             });
             var $ = layui.$, active = {
                 reload: function(){
-                    var inspection_role = $('.inspection_role');
-                  
-                  //执行重载
+                    var groupName = $('.groupName');
+                    var alarmcheck = $(".alarm").is(':checked');
+                    if(alarmcheck){
+                        var alarm = true;
+                    }else{
+                        var alarm = false;
+                    }
+                    //执行重载
                     table.reload('testReload', {
-                        url: global_path + '/alarmlevel/getAllByAlarmLevel',
                         where: {
-                            'alarmLevel': inspection_role.val(),
+                            'groupName': groupName.val(),
+                            'alarm':alarm
                         }
                     });
                 }
@@ -661,7 +672,8 @@ $(function () {
                 active[type] ? active[type].call(this) : '';
             });
             $('.empty').on('click', function(){
-                $('.inspection_role').val('全部');
+                $('.groupName').val('天津市');
+                $(".alarm_box").html('<input class="alarm" type="checkbox" name="alarm" value="只显示故障终端" />只显示故障终端');
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
