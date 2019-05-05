@@ -38,6 +38,8 @@
                         }
                     }else if(res.code == -1){
                         unauthorized(res.code);
+                    }else{
+                        alert(res.msg);
                     }
                 },
                 cols: [[ //表头

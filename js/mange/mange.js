@@ -210,8 +210,9 @@ $(function () {
     }
     // 删除信息
     function del(ajaxUrl,id,fnName) {
-        var url = global_path + ajaxUrl + "?id="+id;
-        getAjax(url, function(data) {
+        
+        var url = global_path + ajaxUrl + '?id=' + id;
+        getAjax(url,function(data) {
             if(data.code == 0){
                 alert(data.msg);
                 fnName(pageNum,pageSize);
@@ -958,7 +959,7 @@ $(function () {
                         tipsMore: false,
                         maxmin:true,
                         scrollbar:true,
-                        content: '../aa/devset.jsp.html',
+                        content: '../../aa/devset.jsp.html',
                         zIndex: layer.zIndex, //重点1
                         success: function (layero) {
                             sessionStorage.setItem('modular','equipment');
@@ -1158,16 +1159,42 @@ $(function () {
                         } else if (data.length > 1) {
                             layer.msg('只能同时编辑一个');
                         } else {
-                            update('/manage/user/checkUser',checkStatus.data[0].id,'编辑用户信息','user.html','userInformation');
+                            update('/manage/user/checkUser',data[0].id,'编辑用户信息','user.html','userInformation');
                         }
                         break;
                     case 'delete':
                         if (data.length === 0) {
                             layer.msg('请选择一行');
                         } else if (data.length > 1) {
-                            layer.msg('只能删除一个');
+                            layer.confirm('真的删除行么', function (index) {
+                                var userId = [];
+                                for(var i = 0;i<data.length;i++){
+                                    userId.push(data[i].id);
+                                }
+                                var parms = {
+                                    'userIds':userId
+                                }
+
+                                commonAjax(global_path + "/manage/user/delByChoose",parms,function(res){
+                                    if(res.code == 0){
+                                        alert(data.msg);
+                                        userInformation(pageNum,pageSize);
+                                    }else if(res.code == -1){
+                                        unauthorized(res.code);
+                                    }else{
+                                        alert(res.msg);
+                                    }
+                                })
+                                
+                                layer.close(index);
+                            });
+                            
                         } else {
-                            del('/manage/user/deleteUser',checkStatus.data[0].id,userInformation);
+                            layer.confirm('真的删除行么', function (index) {
+                                del('/manage/user/deleteUser',data[0].id,userInformation);
+                                layer.close(index);
+                            });
+                            
                         }
                         break;
                 };
@@ -1275,7 +1302,6 @@ $(function () {
                     },
                     title: '操作日志',
                     page: false, //开启分页
-                    toolbar: 'default', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                     cellMinWidth: 80,
                     parseData: function (res) {
                         if(res.code == 0&&res.data.list.length>0){

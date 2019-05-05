@@ -1,5 +1,5 @@
 ﻿$(function () {
-    initSocket();
+    // initSocket();
     echarts_1();
     echarts_2();
     echarts_4();
