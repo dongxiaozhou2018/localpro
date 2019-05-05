@@ -135,6 +135,8 @@ $(function () {
                 if (data.code == 0) {
                     $('.changePassword').hide();
                     alert(data.msg);
+                } else if(data.code == -1){
+                    unauthorized(data.code);
                 } else {
                     alert(data.msg);
                 }
@@ -337,6 +339,10 @@ $(function () {
                         }
                         ,nodes: menutree(newTree)
                     });
+                }else if(res.code == -1){
+                    unauthorized(res.code);
+                }else{
+                    alert(res.msg);
                 }
             })
         })
@@ -354,7 +360,7 @@ $(function () {
                     var groupName = '<option value="'+res.data[i].groupName+'">'+res.data[i].groupName+'</option>';
                     $('.groupName').append(groupName);
                 }
-            } else if(res.code == 401){
+            } else if(res.code == -1){
                 unauthorized(res.code);
             } else {
                 alert(res.msg);
@@ -438,6 +444,10 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
+                    }else if(res.code == -1){
+                        unauthorized(res.code);
+                    }else{
+                        alert(res.msg);
                     }
                     
                 },
@@ -726,8 +736,10 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else if(res.code == 401){
+                    }else if(res.code == -1){
                         unauthorized(res.code);
+                    }else{
+                        alert(res.msg);
                     }
                     
                 },
@@ -862,7 +874,7 @@ $(function () {
                         }
                     }
 
-                } else if(res.code == 401){
+                } else if(res.code == -1){
                     unauthorized(res.code);
                 } else {
                     alert(res.msg);
@@ -1127,9 +1139,10 @@ $(function () {
                                 var timestamp4 = new Date(res.data.list[i].createTime);
                                 res.data.list[i].createTime = timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8);
                             }
-                        }
-                        if (res.code == 401){
+                        }else if (res.code == -1){
                             unauthorized(res.code);
+                        }else{
+                            alert(res.msg);
                         }
                         return {
                             'code': res.code,

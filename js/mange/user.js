@@ -45,7 +45,7 @@
                 if (res.code == 0) {
                     sessionStorage.setItem('file',JSON.stringify(res));
                     return layer.msg('上传成功');
-                }else if(res.code == 401){
+                }else if(res.code == -1){
                     unauthorized(res.code);
                 }else{
                     return layer.msg('上传失败');
@@ -145,7 +145,7 @@
                         window.parent.location.reload();
                         var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                         parent.layer.close(index);
-                    }else if(data.code == 401){
+                    }else if(data.code == -1){
                         unauthorized(data.code);
                     }else{
                         alert(data.msg);
@@ -154,33 +154,6 @@
             }
         });
         
-        // $('#power_btn').on('click',function(){
-        //     // 用户权限
-        //     var nodenew;
-        //     var role = $('.role').val();
-        //     if(role == ''){
-        //         alert('请选择用户类型');
-        //         return;
-        //     }else{
-        //         getAjax(global_path + "/manage/function/selectManageInter?role=" + role,function(res){
-        //             // if(res.code == 0){
-        //                     nodenew = res.children;
-        //                     var aaa = nodenew.length;
-        //                     var xtree1 = new layuiXtree({
-        //                         elem: 'xtree1'   //(必填) 放置xtree的容器，样式参照 .xtree_contianer
-        //                         , form: form     //(必填) layui 的 from
-        //                         , data: nodenew     //(必填) json数据
-        //                     });
-        //                     form.render();
-        //             // }else if(res.code == 401){
-        //             //     unauthorized(res.code);
-        //             // }else{
-        //             //     alert(res.msg);
-        //             // }
-        //         })
-        //     }
-            
-        // })
     });
     
 })();

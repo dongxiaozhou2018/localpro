@@ -42,7 +42,7 @@
                 if (res.code == 0) {
                     sessionStorage.setItem('file',JSON.stringify(res));
                     return layer.msg('上传成功');
-                }else if(res.code == 401){
+                }else if(res.code == -1){
                     unauthorized(res.code);
                 }else{
                     return layer.msg('上传失败');

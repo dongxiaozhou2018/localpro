@@ -36,7 +36,7 @@
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else if(res.code == 401){
+                    }else if(res.code == -1){
                         unauthorized(res.code);
                     }
                 },

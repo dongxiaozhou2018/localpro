@@ -154,6 +154,8 @@ $(function () {
                 if (data.code == 0) {
                     $('.changePassword').hide();
                     alert(data.msg);
+                } else if(data.code == -1){
+                    unauthorized(data.code)
                 } else {
                     alert(data.msg);
                 }
@@ -199,7 +201,7 @@ $(function () {
                 sessionStorage.setItem('checkUser', JSON.stringify(data));
                 var url = winUrl + "?ID=" + id + '&type=update';
                 frame(tit,url,aleSession);
-            } else if(data.code == 401){
+            } else if(data.code == -1){
                 unauthorized(data.code);
             } else {
                 alert(data.msg);
@@ -213,7 +215,7 @@ $(function () {
             if(data.code == 0){
                 alert(data.msg);
                 fnName(pageNum,pageSize);
-            }else if(data.code == 401){
+            }else if(data.code == -1){
                 unauthorized(data.code);
             }else{
                 alert(data.msg);
@@ -320,8 +322,10 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data
                         }
-                    }else if(res.code == 401){
+                    }else if(res.code == -1){
                         unauthorized(res.code);
+                    }else{
+                        alert(res.msg);
                     }
                 },
                 cols: [[ //表头
@@ -407,7 +411,7 @@ $(function () {
                         getAjax(server_url,function(res){
                             if(res.code == 0){
                                 server(pageNum,pageSize);
-                            }else if(res.code == 401){
+                            }else if(res.code == -1){
                                 unauthorized(res.code)
                             }else{
                                 alert(res.msg);
@@ -426,7 +430,7 @@ $(function () {
                             sessionStorage.setItem('checkServer',JSON.stringify(res));
                             var url = "server.html?type=update&id="+data.id;
                             frame('编辑报警类型',url,'server');
-                        }else if(res.code == 401){
+                        }else if(res.code == -1){
                             unauthorized(res.code)
                         }else{
                             alert(res.msg);
@@ -489,8 +493,10 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else if(res.code == 401){
+                    }else if(res.code == -1){
                         unauthorized(res.code);
+                    }else{
+                        alert(res.msg);
                     }
                     
                 },
@@ -581,8 +587,10 @@ $(function () {
                             alert(res.msg);
                             if(res.code == 0){
                                 police(pageNum,pageSize);
-                            }else if(res.code == 401){
+                            }else if(res.code == -1){
                                 unauthorized(res.code);
+                            }else{
+                                alert(res.msg);
                             }
                         })
                         layer.close(index); //向服务端发送删除指令
@@ -597,6 +605,10 @@ $(function () {
                             sessionStorage.setItem('checkPolice',JSON.stringify(res));
                             var url = "police.html?type=update";
                             frame('编辑报警类型',url,'police');
+                        }else if(res.code == -1){
+                            unauthorized(res.code);
+                        }else{
+                            alert(res.msg);
                         }
                     })
                 }
@@ -679,7 +691,6 @@ $(function () {
 
                 LatLng_Arr.push(LatLng_Str);
             }
-            console.log(LatLng_Arr);
         })
 
         // 绑定事件,点击添加可拖拽点
@@ -712,6 +723,10 @@ $(function () {
                         }
                         ,nodes: menutree(newTree)
                     });
+                } else if(res.code == -1){
+                    unauthorized(res.code);
+                } else {
+                    alert(res.msg);
                 }
             })
         })
@@ -743,7 +758,7 @@ $(function () {
                         }
                     }
 
-                } else if(res.code == 401){
+                } else if(res.code == -1){
                     unauthorized(res.code);
                 } else {
                     alert(res.msg);
@@ -920,7 +935,7 @@ $(function () {
                             if(data.code == 0){
                                 alert(data.msg);
                                 terminalTab('','',pageNum,pageSize);
-                            }else if(data.code == 401){
+                            }else if(data.code == -1){
                                 unauthorized(data.code);
                             }else{
                                 alert(data.msg);
@@ -1008,8 +1023,10 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else if(res.code == 401){
+                    }else if(res.code == -1){
                         unauthorized(res.code);
+                    } else {
+                        alert(res.msg);
                     }
                 },
                 cols: [[ //表头
@@ -1221,8 +1238,10 @@ $(function () {
             if(data.code == 0){
                 alert(data.msg);
                 userInformation();
-            }else if(data.code == 401){
+            }else if(data.code == -1){
                 unauthorized(data.code);
+            } else {
+                alert(data.msg);
             }
         })
         
@@ -1264,9 +1283,10 @@ $(function () {
                                 var timestamp4 = new Date(res.data.list[i].createTime);
                                 res.data.list[i].createTime = timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8);
                             }
-                        }
-                        if (res.code == 401){
+                        }else if (res.code == -1){
                             unauthorized(res.code);
+                        } else {
+                            alert(res.msg);
                         }
                         return {
                             'code': res.code,
@@ -1375,8 +1395,10 @@ $(function () {
                             'data': res.data.list,
                             "count": res.data.total,
                         }
-                    }else if (res.code == 401){
+                    }else if (res.code == -1){
                         unauthorized(res.code);
+                    }else{
+                        alert(res.msg);
                     }
                     
                 },
