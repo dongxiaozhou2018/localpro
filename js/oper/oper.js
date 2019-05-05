@@ -1100,7 +1100,7 @@ $(function () {
 
                 table.render({
                     elem: '#test',
-                    url: global_path + '/manage/recordinfo/selectRecordInfo', //数据接口
+                    url: global_path + '/oper/recordinfo/selectRecordInfo', //数据接口
                     method:'post',
                     headers: {
                         'at': at
