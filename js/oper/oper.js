@@ -94,6 +94,7 @@ $(function () {
         $('.loginOut').hide();
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
+                closeWebSocket();
                 sessionStorage.removeItem('HTlogin');
                 window.location.href = "../../login.html";
             }

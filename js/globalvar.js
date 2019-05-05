@@ -126,8 +126,9 @@ function menutree(a){
     return a;
 }
 // webSocket 链接
+var webSocket = null;
 function initSocket(message) {
-    var webSocket = null;
+    
     if (!window.WebSocket) {
         alert("您的浏览器不支持ws");
         return false;
@@ -138,7 +139,8 @@ function initSocket(message) {
     // 建立连接
     webSocket.onopen = function(event) {
         send(message);
-        console.log("建立连接成功");
+        console.log("建立连接成功" + event);
+
     };
 
     // 收到服务端消息
@@ -155,11 +157,18 @@ function initSocket(message) {
     webSocket.onerror = function(event) {
         alert("链接异常");
     };
-
-    // 发送数据
-    function send(message) {
-        webSocket.send(JSON.stringify(message));
-    }
-
 }
 
+// 发送数据
+function send(message) {
+    if(message&&message!=null&&message!=undefined){
+        webSocket.send(JSON.stringify(message));
+    }
+}
+
+// 关闭webSocket
+function closeWebSocket() {
+
+    webSocket.close();
+
+}
