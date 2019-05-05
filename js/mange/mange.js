@@ -654,19 +654,11 @@ $(function () {
         for(var i = 0;i< result.length;i++){
             var layer = new L.marker([ result[i].lat, result[i].lng ]);
             layers.push(layer);
+            layer.bindPopup(result[i].address);
         }
         var myGroup=L.layerGroup(layers);
         map.addLayer(myGroup);
 
-        
-        
-        // var marker1 = new L.marker([39.1410912411,117.0073575633]);
-        // marker1.addTo(map);
-        // marker1.bindPopup("<b>天津</b><br>西青区.");
-
-        // var marker2 = new L.marker([39.0850853357,117.1993482089]);
-        // marker2.addTo(map);
-        // marker2.bindPopup("<b>天津</b>");
         $('.layui-body').css('bottom','0');
 
         // 绑定事件,点击编辑可拖拽点
@@ -679,15 +671,18 @@ $(function () {
         
         // 绑定事件,点击保存不可拖拽点
         $('.Identification').on('click','.layui-icon-ok',function(){
-            myGroup.dragging = false;
+            var LatLng_Arr = [];
             for(x in myGroup._layers){
                 myGroup._layers[x].dragging.disable();
-                console.log(myGroup._layers[x].getLatLng());
+                
+                var LatLng_Str = myGroup._layers[x].getLatLng().lat + ',' + myGroup._layers[x].getLatLng().lng;
+
+                LatLng_Arr.push(LatLng_Str);
             }
-            
+            console.log(LatLng_Arr);
         })
 
-        // // 绑定事件,点击添加可拖拽点
+        // 绑定事件,点击添加可拖拽点
         $('.Identification').on('click','.layui-icon-add-1',function(){
             var marker3 = new L.marker([39.003313,117.218349], { draggable: true });
             layers.push(marker3);
