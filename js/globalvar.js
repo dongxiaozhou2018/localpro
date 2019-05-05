@@ -125,6 +125,7 @@ function menutree(a){
     }
     return a;
 }
+// webSocket 链接
 function initSocket(message) {
     var webSocket = null;
     if (!window.WebSocket) {
@@ -155,9 +156,10 @@ function initSocket(message) {
         alert("链接异常");
     };
 
-}
+    // 发送数据
+    function send(message) {
+        webSocket.send(JSON.stringify(message));
+    }
 
-function send(message) {
-    webSocket.send(JSON.stringify(message));
 }
 
