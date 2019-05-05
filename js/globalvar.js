@@ -125,28 +125,39 @@ function menutree(a){
     }
     return a;
 }
-function websocket(idName,message,fn){
-    var msg = document.getElementById(idName);
-    var wsServer = 'ws://192.168.1.185:80';
-    var ws = "client";
-    var websocket = new WebSocket(wsServer);
-    //监听连接打开
-    websocket.onopen = function (evt) {
-        msg.innerHTML = "The connection is open";
+function initSocket(message) {
+    var webSocket = null;
+    if (!window.WebSocket) {
+        alert("您的浏览器不支持ws");
+        return false;
+    }
+
+    webSocket = new WebSocket('ws://192.168.1.185:80');
+
+    // 建立连接
+    webSocket.onopen = function(event) {
+        send(message);
+        console.log("建立连接成功");
     };
 
-    //监听服务器数据推送
-    websocket.onmessage = fn;
-
-    //监听连接关闭
-    websocket.onclose = function (evt) {
-        alert("连接关闭");
+    // 收到服务端消息
+    webSocket.onmessage = function(msg) {
+        console.log("收到消息 : " + msg.data);
     };
 
-    function send() {
-        websocket.send(JSON.stringify(message));
+    // 断线重连
+    webSocket.onclose = function() {
+        initSocket();
     };
-    websocket.onerror = function(evt) {
-        
+
+    // 异常
+    webSocket.onerror = function(event) {
+        alert("链接异常");
     };
+
 }
+
+function send(message) {
+    webSocket.send(JSON.stringify(message));
+}
+

@@ -1,4 +1,5 @@
 $(function () {
+    initSocket();
     // 删除暂存session数据
     var HTlogin = sessionStorage.getItem('HTlogin');
     if(HTlogin){

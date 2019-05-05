@@ -75,14 +75,14 @@
             // var passwd = $.md5(password);
             var username = $('.input_username').val();
             var role = $('#layui-form-select').val();
-            var captcha = $('#captcha').val();
+            var captchaVal = $('#captcha').val();
             if(role == ''){
                 alert('请选择用户类型');
             }else if(username == ''){
                 alert('请输入用户名');
             }else if(password == ''){
                 alert('请输入密码');
-            }else if(captcha == ''){
+            }else if(captchaVal == ''){
                 alert('请输入验证码');
             }
             else{
@@ -90,7 +90,7 @@
                     'username':username,
                     'password':$.md5(password),
                     'role':role,
-                    'captcha':captcha,
+                    'captcha':captchaVal,
                     'isDel':0
                 }
                 var url = global_path + "/dologin";
