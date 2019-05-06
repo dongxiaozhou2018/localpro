@@ -702,7 +702,7 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#police',
-                url: global_path + '/alarmlevel/select_all_alarmlevel', //数据接口
+                url: global_path + '/oper/alarmRecord/listPage', //数据接口
                 method: 'post',
                 headers: {
                     'at': at
@@ -721,15 +721,15 @@ $(function () {
                 page: false,
                 parseData: function (res) {
                     if(res.code == 0){
-                        // for(var i=0;i<res.data.list.length;i++){
-                        //     if(res.data.list[i].alarmLevel == 1){       //  低
-                        //         res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-normal">低</span>';
-                        //     }else if(res.data.list[i].alarmLevel == 2){        // 中
-                        //         res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-warm">中</span>';
-                        //     }else if(res.data.list[i].alarmLevel == 3){         //高
-                        //         res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-danger">高</span>';
-                        //     }
-                        // }
+                        for(var i=0;i<res.data.list.length;i++){
+                            if(res.data.list[i].alarmLevel == 1){       //  低
+                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-normal">低</span>';
+                            }else if(res.data.list[i].alarmLevel == 2){        // 中
+                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-warm">中</span>';
+                            }else if(res.data.list[i].alarmLevel == 3){         //高
+                                res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-danger">高</span>';
+                            }
+                        }
                         return {
                             'code': res.code,
                             'msg': res.msg,

@@ -66,12 +66,14 @@
         .bottom .layui-inline select{
             width: 60%;
         }
-        .bottom .layui-inline input::-webkit-input-placeholder {
-            text-align: center;
-        }
         .layui-table-tool-panel{
             height: 500px;
             overflow: auto;
+        }
+        #police_box .select_type{
+            width: 38%;
+            display: inline-block;
+            margin-right: 0!important;
         }
     </style>
 </head>
@@ -224,15 +226,15 @@
                         <div class="bottom" style="margin-top: 20px;">
                             <div class="layui-inline left">
                                 <label class="select_type">起始时间：</label>
-                                <input type="text" class="layui-input" id="beginTime" placeholder="yyyy-MM-dd HH:mm:ss"e style="width: 70%;display: inline-block;height: 30px;border: none;">
+                                <input type="text" class="layui-input" id="beginTime" placeholder="yyyy-MM-dd HH:mm:ss"e style="width: 59%;display: inline-block;height: 30px;border: none;">
                             </div>
                             <div class="layui-inline left">
                                 <label class="select_type">截止时间：</label>
-                                <input type="text" class="layui-input" id="Deadline" placeholder="yyyy-MM-dd HH:mm:ss" style="width: 70%;display: inline-block;height: 30px;border: none;">
+                                <input type="text" class="layui-input" id="Deadline" placeholder="yyyy-MM-dd HH:mm:ss" style="width: 59%;display: inline-block;height: 30px;border: none;">
                             </div>
                             <div class="layui-inline left">
                                 <label class="select_type">终端名称：</label>
-                                <input name="deviceId" class="layui-input deviceId" placeholder="请输入终端名称" style="width: 70%;display: inline-block;height: 30px;border: none;">
+                                <input name="deviceId" class="layui-input deviceId" placeholder="请输入终端名称" style="width: 59%;display: inline-block;height: 30px;border: none;">
                             </div>
                             <div class="layui-inline left select_type_box">
                                 <label class="select_type">处理状态：</label>
