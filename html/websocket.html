@@ -12,13 +12,10 @@
 <body class="layui-bg-cyan">
  
     <script>
-        if(sessionStorage.getItem('HTlogin')){
-            initSocket();
-        }else{
-            closeWebSocket()
-        }
+        
         // webSocket 链接
         var webSocket = null;
+        initSocket();
         function initSocket(message) {
             
             if (!window.WebSocket) {
@@ -58,10 +55,9 @@
                 webSocket.send(JSON.stringify(message));
             }
         }
-
         // 关闭webSocket
         function closeWebSocket() {
-
+            
             webSocket.close();
 
         }

@@ -1,4 +1,5 @@
 $(function () {
+    
     // 删除暂存session数据
     var HTlogin = sessionStorage.getItem('HTlogin');
     if(HTlogin){
@@ -94,6 +95,7 @@ $(function () {
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
+                $('#websocket')[0].contentWindow.closeWebSocket();
                 window.location.href = "../../login.html";
             }
         })
