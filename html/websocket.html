@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*.ttlsa.com">
+    <title>websocket</title> 
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../js/globalvar.js"></script>
+</head>
+<body class="layui-bg-cyan">
+ 
+    <script>
+        if(sessionStorage.getItem('HTlogin')){
+            initSocket();
+        }else{
+            closeWebSocket()
+        }
+        // webSocket 链接
+        var webSocket = null;
+        function initSocket(message) {
+            
+            if (!window.WebSocket) {
+                alert("您的浏览器不支持ws");
+                return false;
+            }
+
+            webSocket = new WebSocket('ws://192.168.1.185:80');
+
+            // 建立连接
+            webSocket.onopen = function(event) {
+                send(message);
+                console.log("建立连接成功" + event);
+
+            };
+
+            // 收到服务端消息
+            webSocket.onmessage = function(msg) {
+                console.log("收到消息 : " + msg.data);
+            };
+
+            // 断线重连
+            webSocket.onclose = function() {
+                // initSocket();
+            };
+
+            // 异常
+            webSocket.onerror = function(event) {
+                alert("链接异常");
+                // return;
+            };
+        }
+
+        // 发送数据
+        function send(message) {
+            if(message&&message!=null&&message!=undefined){
+                webSocket.send(JSON.stringify(message));
+            }
+        }
+
+        // 关闭webSocket
+        function closeWebSocket() {
+
+            webSocket.close();
+
+        }
+    </script>
+</body>
+</html>        
+        

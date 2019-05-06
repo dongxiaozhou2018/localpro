@@ -1,5 +1,4 @@
 $(function () {
-    // initSocket();
     // 删除暂存session数据
     var HTlogin = sessionStorage.getItem('HTlogin');
     if(HTlogin){
@@ -94,7 +93,6 @@ $(function () {
         $('.loginOut').hide();
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
-                closeWebSocket();
                 sessionStorage.removeItem('HTlogin');
                 window.location.href = "../../login.html";
             }

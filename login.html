@@ -97,6 +97,7 @@
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         sessionStorage.setItem('HTlogin',JSON.stringify(data));
+                        $('body').append('<iframe src="../websocket.html" style="display: none;"></iframe>');
                         if(data.data.role == '0'){
                             window.location.href = "html/mange/mange.html";
                         }else if(data.data.role == '1'){
