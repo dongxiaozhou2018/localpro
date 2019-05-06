@@ -17,14 +17,12 @@ function commonAjax(a, e, j, g) {
         type: "post",
         dataType: "json",
         success: j,
-        crossDomain: true,  
         xhrFields: {
             withCredentials: false
         },
         beforeSend: function (XMLHttpRequest) {
             XMLHttpRequest.setRequestHeader("at",at);
         },
-        crossDomain: true,
         mimeType:"multipart/form-data",
         error: function (n, m) {
             var o = this;
@@ -49,15 +47,13 @@ function getAjax(a, j, g) {
         crossDomain: true,
         type: "get",
         dataType: "json",
-        success: j,
-        crossDomain: true,  
+        success: j,  
         xhrFields: {
             withCredentials: false
         },
         beforeSend: function (XMLHttpRequest) {
             XMLHttpRequest.setRequestHeader("at",at);
         },
-        crossDomain: true,
         mimeType:"multipart/form-data",
         error: function (n, m) {
             var o = this;
