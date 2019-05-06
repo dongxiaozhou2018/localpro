@@ -1,5 +1,5 @@
 $(function () {
-    
+
     // 删除暂存session数据
     var HTlogin = sessionStorage.getItem('HTlogin');
     if(HTlogin){
@@ -722,6 +722,8 @@ $(function () {
                 parseData: function (res) {
                     if(res.code == 0){
                         for(var i=0;i<res.data.list.length;i++){
+
+                            // 报警等级
                             if(res.data.list[i].alarmLevel == 1){       //  低
                                 res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-normal">低</span>';
                             }else if(res.data.list[i].alarmLevel == 2){        // 中
@@ -729,6 +731,25 @@ $(function () {
                             }else if(res.data.list[i].alarmLevel == 3){         //高
                                 res.data.list[i].alarmLevel = '<span class="layui-btn layui-btn-danger">高</span>';
                             }
+
+                            // 处理状态
+                            if(res.data.list[i].dealStatus == 0){       //  低
+                                res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-danger">未处理</span>';
+                            }else if(res.data.list[i].dealStatus == 1){       //  低
+                                res.data.list[i].dealStatus = '<span class="layui-btn">已派工</span>';
+                            }else if(res.data.list[i].dealStatus == 2){        // 中
+                                res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-normal">已解决</span>';
+                            }else if(res.data.list[i].dealStatus == 3){         //高
+                                res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-warm">已忽略</span>';
+                            }
+                            
+                            // 报警时间
+                            var alarmTime = new Date(res.data.list[i].alarmTime);
+                            res.data.list[i].alarmTime = alarmTime.toLocaleDateString().replace(/\//g, "-") + " " + alarmTime.toTimeString().substr(0, 8);
+
+                            // 处理时间
+                            var dealTime = new Date(res.data.list[i].dealTime);
+                            res.data.list[i].dealTime = dealTime.toLocaleDateString().replace(/\//g, "-") + " " + dealTime.toTimeString().substr(0, 8);
                         }
                         return {
                             'code': res.code,
@@ -745,47 +766,62 @@ $(function () {
                 },
                 cols: [[ //表头
                     {
-                        field: 'alarmType',
-                        title: '终端名称'
+                        field: 'deviceId',
+                        title: '设备ID'
                     }
                     ,{
-                        field: 'alarmName',
-                        title: '所属区域'
+                        field: 'deviceName',
+                        title: '设备名称'
+                    }
+                    ,{
+                        field: 'alarmType',
+                        title: '报警类型'
+                    }
+                    ,{
+                        field: 'alarmLevel',
+                        title: '报警等级',
+                        align: 'center'
                     }
                     , {
-                        field: 'alarmLevel',
+                        field: 'alarmTime',
                         title: '报警时间'
                     }
-                    ,{
-                        field: 'alarmName',
-                        title: '等级'
-                    }
-                    
                     , {
-                        field: 'alarmLevel',
+                        field: 'alarmContent',
                         title: '报警内容'
                     }
                     , {
-                        field: 'alarmLevel',
-                        title: '处理状态'
+                        field: 'dealStatus',
+                        title: '处理状态',
+                        align: 'center'
                     }
                     ,{
-                        field: 'alarmName',
+                        field: 'dealRname',
                         title: '处理人'
                     }
                     
                     , {
-                        field: 'alarmLevel',
+                        field: 'dealTime',
                         title: '处理时间'
                     }
                     ,{
-                        field: 'alarmName',
+                        field: 'repairRname',
                         title: '指派人员'
                     }
                     
                     , {
-                        field: 'alarmLevel',
+                        field: 'remarks',
                         title: '派工备注'
+                    }
+                    , {
+                        field: 'groupName',
+                        title: '地址'
+                    }
+                    , {
+                        fixed: 'right',
+                        title: '操作',
+                        align: 'center',
+                        toolbar: '#dispatched'
                     }
                 ]],
                 done: function(res, curr, count){
