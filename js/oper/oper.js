@@ -224,6 +224,100 @@ $(function () {
         // marker.bindPopup("<b>天津</b>");
         $('.layui-body').css('bottom','0');
 
+
+        function SquareOverlay(color, x, y,title) {
+            // this._center = center;
+            // this._length = length;
+            this._length = 20;
+            this._color = color;
+            this._x = x;
+            this._y = y;
+            this._title = title;
+        }
+        // 继承API的BMap.Overlay
+        SquareOverlay.prototype = new BMap.Overlay();
+        // 实现初始化方法
+        SquareOverlay.prototype.initialize = function (map) {
+            // 保存map对象实例
+            this._map = map;
+            // 创建div元素，作为自定义覆盖物的容器
+            var div = document.createElement("canvas");
+            div.style.position = "absolute";
+            // 可以根据参数设置元素外观
+            div.style.width = this._length + "px";
+            div.style.height = this._length + "px";
+            div.style.background = this._color;
+            div.style.borderRadius = this._length / 2 + "px";
+            div.style.border = "solid rgb(" + this._length + "," + this._length + "," + this._length + ") 1px";
+            if (this._color == "red") {
+                div.className = "btn-twinkle";
+            }
+            div.onclick = function (e, a) {
+                // map.openInfoWindow(new BMap.InfoWindow("地址：济南邦德激光股份公司", opts), new BMap.Point('117.684667', '36.233654')); //开启信息窗口
+                debugger;
+                var p = new BMap.Point(this._x, this._y);
+                //var p1 = map.overlayPixelToPoint(e.screenX, e.screenY);
+                //var p2 = map.pixelToPoint(e.pageX, e.pageY);
+                map.openInfoWindow(new BMap.InfoWindow(this._title, opts), p); //开启信息窗口
+            };
+            // 将div添加到覆盖物容器中
+            map.getPanes().markerPane.appendChild(div);
+            // 保存div实例
+            this._div = div;
+            // 需要将div元素作为方法的返回值，当调用该覆盖物的show、
+            // hide方法，或者对覆盖物进行移除时，API都将操作此元素。
+            return div;
+        }
+        //实现绘制方法
+        SquareOverlay.prototype.draw = function () {
+            // 根据地理坐标转换为像素坐标，并设置给容器
+            // var position = this._map.pointToOverlayPixel(this._center);
+            var position = this._map.pointToOverlayPixel(new BMap.Point(this._x, this._y));
+            this._div.style.left = position.x - this._length / 2 + "px";
+            this._div.style.top = position.y - this._length / 2 + "px";
+        }
+        // 实现显示方法
+        SquareOverlay.prototype.show = function () {
+            if (this._div) {
+                this._div.style.display = "";
+            }
+        }
+        // 实现隐藏方法
+        SquareOverlay.prototype.hide = function () {
+            if (this._div) {
+                this._div.style.display = "none";
+            }
+        }
+        // 添加自定义方法
+        SquareOverlay.prototype.toggle = function () {
+            if (this._div) {
+                if (this._div.style.display == "") {
+                    this.hide();
+                }
+                else {
+                    this.show();
+                }
+            }
+        }
+        // 百度地图API功能
+        var map = new BMap.Map("mapid", {
+            enableMapClick: false
+        });    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(117.190182,39.125596), 10);  // 初始化地图,设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+//        map.setMapStyle({
+//            style: 'midnight'
+//        });
+        debugger;
+        var opts = {
+            width: 200,     // 信息窗口宽度
+            height: 100,     // 信息窗口高度
+            title: "XXXXXXXXX", // 信息窗口标题
+            enableMessage: true,//设置允许信息窗发送短息
+            message: "XXXXXXXX"
+        };
+        // 添加自定义覆盖物
+
         // var spotAddress = '',lngLat = '';
 
         var markerArr = [{
@@ -251,67 +345,16 @@ $(function () {
                 tel: "18500000000"
             }];
 
-        var map; //Map实例  
-        function map_init() {
-            map = new BMap.Map("mapid",{enableMapClick:false});
-            //第1步：设置地图中心点，天津市 
-            var point = new BMap.Point(117.190182,39.125596);
-            //第2步：初始化地图,设置中心点坐标和地图级别。  
-            map.centerAndZoom(point, 10);
-            //第3步：启用滚轮放大缩小  
-            map.enableScrollWheelZoom(true);
+        for(var i = 0;i<markerArr.length;i++){
 
-            //第4步：绘制点    
-            for (var i = 0; i < markerArr.length; i++) {
-                var p0 = markerArr[i].point.split(",")[0];
-                var p1 = markerArr[i].point.split(",")[1];
-                var maker = addMarker(new window.BMap.Point(p0, p1), i);
-                addInfoWindow(maker, markerArr[i], i);
+            var p0 = markerArr[i].point.split(",")[0];
+            var p1 = markerArr[i].point.split(",")[1];
+            if(i == 0){
+                map.addOverlay(new SquareOverlay("red", p0, p1,markerArr[i].title));
+            }else{
+                map.addOverlay(new SquareOverlay("yellow", p0, p1,markerArr[i].title));
             }
         }
-
-        // 添加标注  
-        function addMarker(point, index) {
-            var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png",
-                new BMap.Size(19, 25), {
-                    offset: new BMap.Size(10, 25),
-                    imageOffset: new BMap.Size(0, 0 - index * 25)
-                });
-            var marker = new BMap.Marker(point, {
-                icon: myIcon
-            });
-            map.addOverlay(marker);
-            return marker;
-        }
-
-        // 添加信息窗口  
-        function addInfoWindow(marker, poi) {
-            //pop弹窗标题  
-            var title = '<div style="font-weight:bold;color:#CE5521;font-size:14px">' + poi.title + '</div>';
-            //pop弹窗信息  
-            var html = [];
-            html.push('<table cellspacing="0" style="table-layout:fixed;width:100%;font:12px arial,simsun,sans-serif"><tbody>');
-            html.push('<tr>');
-            html.push('<td style="vertical-align:top;line-height:16px;width:38px;white-space:nowrap;word-break:keep-all">地址:</td>');
-            html.push('<td style="vertical-align:top;line-height:16px">' + poi.address + ' </td>');
-            html.push('</tr>');
-            html.push('<td style="vertical-align:top;line-height:16px;width:38px;white-space:nowrap;word-break:keep-all">坐标:</td>');
-            html.push('<td style="vertical-align:top;line-height:16px">' + poi.point + ' </td>');
-            html.push('</tr>');
-            html.push('</tbody></table>');
-            var infoWindow = new BMap.InfoWindow(html.join(""), {
-                title: title,
-                width: 200
-            });
-
-            var openInfoWinFun = function() {
-                marker.openInfoWindow(infoWindow);
-            };
-            marker.addEventListener("click", openInfoWinFun);
-            return openInfoWinFun;
-        }
-
-        map_init();
         
         // 分组树
         layui.use(['table','tree','laypage','laydate'], function () {

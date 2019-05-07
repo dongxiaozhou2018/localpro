@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="../../leaflet/dist/leaflet.css">
+    <link rel="stylesheet" type="text/css" href="../../css/ol.css">
     <script type="text/javascript" src="../../leaflet/dist/leaflet.js"></script>
     <script type="text/javascript" src="../../layui/layui.js"></script>
     <script type="text/javascript" src="../../js/layui-xtree.js"></script>
@@ -18,6 +19,7 @@
     <script type="text/javascript" src="../../js/oper/oper.js"></script>
     <script type="text/javascript" src="../../js/jQuery.md5.js"></script>
     <script type="text/javascript" src="../../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../../js/ol.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1yjsTRrm5ZSBrrM3z7mRNiuSM1PneVmG"></script>
     <style type="text/css">
         .layui-nav-bar {
@@ -75,11 +77,31 @@
             display: inline-block;
             margin-right: 0!important;
         }
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .btn-twinkle {
+            color: #fff;
+            border: none;
+            animation: twinkle 0.1s alternate infinite;
+        }
+        @keyframes twinkle {
+            from {
+                background: #F3F1EC;
+            }
+            to {
+                background: #FF0000;
+            }
+        }
     </style>
 </head>
 
 <body class="layui-layout-body">
-    <iframe id="websocket" src="../websocket.html" style="display: none;"></iframe>
+    <!-- <iframe id="websocket" src="../websocket.html" style="display: none;"></iframe> -->
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
             <div class="layui-logo">
@@ -139,7 +161,11 @@
                     <div class="Identification">
                         <div class="Identification3" style="width: 100%;"><img src="../../img/map_default.png" alt="地图刷新" title="地图刷新" width="80%" height="auto"></div>
                     </div>
+                    <!-- 故障指示器的闪烁 -->
+                    <!-- <div id="css_animation"></div> -->
+
                     <div id="mapid"></div>
+
                     <div id="terminal_tree" style="position: absolute;top: 0;left: 0;z-index: 1000;width: 18%;height:100%;background: #fff;display: none;">
                         <div style="display: inline-block; width: 90%; height: auto; padding: 10px; overflow: auto;">
                             <div style="margin-bottom: 10px">
