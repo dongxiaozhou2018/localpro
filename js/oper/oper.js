@@ -867,6 +867,17 @@ $(function () {
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
+
+            //监听行工具事件
+            table.on('tool(police)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,
+                    layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'dispatched') {
+                    var winUrl = 'dispatched.html?deviceId=' + data.id;
+                    frame('派工',winUrl,'dispatched');
+                }
+            });
         });
         //日期时间选择器
         layui.use('laydate', function () {
