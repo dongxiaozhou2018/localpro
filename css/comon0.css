@@ -285,7 +285,7 @@ a:hover {
 
 .barbox li,
 .barbox2 li {
-    width: 50%;
+    width: 100%;
     text-align: center;
     position: relative;
     z-index: 100;
@@ -312,7 +312,7 @@ a:hover {
     border-bottom: 2px solid #02a6b5;
 }
 
-.barbox li:first-child:before {
+/*.barbox li:first-child:before {
     position: absolute;
     content: "";
     height: 50%;
@@ -320,7 +320,7 @@ a:hover {
     background: rgba(255, 255, 255, .2);
     right: 0;
     top: 25%;
-}
+}*/
 
 .barbox {
     border: 1px solid rgba(25, 186, 139, .17);

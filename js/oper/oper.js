@@ -40,12 +40,15 @@ $(function () {
         frame('编辑个人信息',url);
     });
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
+        
         pageNum = 1; pageSize = 10;
         sessionStorage.removeItem('oper');
         $('.layui-body').css('bottom','44px');
         $('.content_box').css('padding','15px');
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if ($(this).attr('name') == 'zl') {
+            var v = Math.random();
+            $('.overview iframe').attr('src','overview.html?v=' + v);
             $('.overview').show().siblings().hide();
             $('.layui-body').css('bottom','0');
             $('.content_box').css('padding','0');
@@ -148,6 +151,8 @@ $(function () {
     $('.full_btn').on('click',function(){
         $('.overview').hide();
         $('.full_overview').show();
+        var v = Math.random();
+        $('.full_overview iframe').attr('src','overview.html?v=10');
         var full_width = $(window).width();
         var full_height = $(window).height();
         $('.full_overview').css({
@@ -167,6 +172,7 @@ $(function () {
     $('.full_outbtn').on('click',function(){
         $('.overview').show();
         $('.full_overview').hide();
+        $('.overview iframe').attr('src','overview.html?v=20');
     })
 
     // 地图查询、分组树显示
@@ -199,9 +205,9 @@ $(function () {
     user();
 
     // 数据总览
-    overview()
+    overview();
     function overview(){
-
+        // $('.overview iframe').attr('src','overview.html');
     }
     // 运维地图
     function mapFn() {
@@ -305,9 +311,9 @@ $(function () {
         });    // 创建Map实例
         map.centerAndZoom(new BMap.Point(117.190182,39.125596), 10);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-//        map.setMapStyle({
-//            style: 'midnight'
-//        });
+       map.setMapStyle({
+           style: 'midnight'
+       });
         debugger;
         var opts = {
             width: 200,     // 信息窗口宽度
