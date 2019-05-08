@@ -252,12 +252,12 @@ $(function () {
             // 可以根据参数设置元素外观
             div.style.width = this._length + "px";
             div.style.height = this._length + "px";
-            div.style.background = this._color;
+            div.style.background = 'url(../../img/marker-icon0.png) no-repeat';
             div.style.borderRadius = this._length / 2 + "px";
             div.style.border = "solid rgb(" + this._length + "," + this._length + "," + this._length + ") 1px";
-            if (this._color == "red") {
-                div.className = "btn-twinkle";
-            }
+            // if (this._color == "red") {
+            //     div.className = "btn-twinkle";
+            // }
             div.onclick = function (e, a) {
                 // map.openInfoWindow(new BMap.InfoWindow("地址：济南邦德激光股份公司", opts), new BMap.Point('117.684667', '36.233654')); //开启信息窗口
                 debugger;
@@ -311,9 +311,9 @@ $(function () {
         });    // 创建Map实例
         map.centerAndZoom(new BMap.Point(117.190182,39.125596), 10);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-       map.setMapStyle({
-           style: 'midnight'
-       });
+        // map.setMapStyle({
+        //     style: 'bluish'
+        // });
         debugger;
         var opts = {
             width: 200,     // 信息窗口宽度
