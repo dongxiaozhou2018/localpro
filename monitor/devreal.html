@@ -115,6 +115,14 @@
 .runredBorder{
 	border-color: #E25A59 !important;
 }
+/*.icon-bolt:before {
+    content: "\f0e7";
+}
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    text-decoration: inherit;
+    display: inline-block;
+    speak: none;
+}*/
 </style>
 
 <script src="./devreal_files/jquery-1.9.1.min.js"></script>
@@ -679,11 +687,11 @@ function POECtrlIO(tag,objtext,logtext){
 <body>
 <div class="container-fluid-full">
 	<div class="row-fluid">
-		<div id="sPOE1" name="sPOE1" class="span2 statbox gray">
+		<div id="sPOE1" name="sPOE1" class="span2 statbox gray" style="background: #99b433!important;">
 			<div id="cPOE1" class="boxchart"></div>
-			<div class="number"><span id="fPOE1" name="fPOE1">---</span> <span style="font-size:20px;">Kbps</span></div>
+			<div class="number"><span id="fPOE1" name="fPOE1">0</span> <span style="font-size:20px;">Kbps</span></div>
 			<div class="title" style="font-size:14px;right:5px;" id="bPOE1" name="bPOE1">0 ms</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 				<span id="footETH1" name="footETH1">ETH_1 网络</span> 
 			</div>	
 		</div>
@@ -691,7 +699,7 @@ function POECtrlIO(tag,objtext,logtext){
 			<div id="cPOE2" class="boxchart"></div>
 			<div class="number"><span id="fPOE2" name="fPOE2">---</span> <span style="font-size:20px;">Kbps</span></div>
 			<div class="title" style="font-size:14px;right:5px;" id="bPOE2" name="bPOE2">0 ms</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: #c1c1c1;">
 				<span id="footETH2" name="footETH2">ETH_2 网络</span>
 			</div>	
 		</div>
@@ -699,7 +707,7 @@ function POECtrlIO(tag,objtext,logtext){
 			<div id="cPOE3" class="boxchart"></div>
 			<div class="number"><span id="fPOE3" name="fPOE3">---</span> <span style="font-size:20px;">Kbps</span></div>
 			<div class="title" style="font-size:14px;right:5px;" id="bPOE3" name="bPOE3">0 ms</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: #c1c1c1;">
 				<span id="footETH3" name="footETH3">ETH_3 网络</span>
 			</div>	
 		</div>
@@ -707,7 +715,7 @@ function POECtrlIO(tag,objtext,logtext){
 			<div id="cPOE4" class="boxchart"></div>
 			<div class="number"><span id="fPOE4" name="fPOE4">---</span> <span style="font-size:20px;">Kbps</span></div>
 			<div class="title" style="font-size:14px;right:5px;" id="bPOE4" name="bPOE4">0 ms</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: #c1c1c1;">
 				<span id="footETH4" name="footETH4">ETH_4 网络</span>
 			</div>	
 		</div>
@@ -715,57 +723,58 @@ function POECtrlIO(tag,objtext,logtext){
 			<div id="cPOE5" class="boxchart"></div>
 			<div class="number"><span id="fPOE5" name="fPOE5">---</span> <span style="font-size:20px;">Kbps</span></div>
 			<div class="title" style="font-size:14px;right:5px;" id="bPOE5" name="bPOE5">0 ms</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: #c1c1c1;">
 				<span id="footETH5" name="footETH5">ETH_5 网络</span>
 			</div>	
 		</div>
 		<div id="sPOE6" name="sPOE6" class="span2 statbox gray">
-			<div id="cPOE6" class="boxchart"></div>
+			<div id="cPOE6" class="boxchart">
+			</div>
 			<div class="number"><span id="fPOE6" name="fPOE6">---</span> <span style="font-size:20px;">Kbps</span></div>
 			<div class="title" style="font-size:14px;right:5px;" id="bPOE6" name="bPOE6">0 ms</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: #c1c1c1;">
 				<span id="footETH6" name="footETH6">ETH_6 网络</span>
 			</div>	
 		</div>
 	</div>
 	<div class="row-fluid">
-		<div id="sPOEA1" name="sPOEA1" class="span2 statbox gray" onclick="POECtrlIO(&#39;2&#39;,&#39;POEA1&#39;,&#39;ETH_1&#39;)" style="cursor:hand;">
+		<div id="sPOEA1" name="sPOEA1" class="span2 statbox gray" onclick="POECtrlIO(&#39;2&#39;,&#39;POEA1&#39;,&#39;ETH_1&#39;)" style="cursor:hand;background: #588ebd!important;">
 			<div id="cPOEA1" class="boxchart"></div>
-			<div class="number"><span id="fPOEA1" name="fPOEA1">---</span> <i class="icon-bolt"></i></div>
+			<div class="number"><span id="fPOEA1" name="fPOEA1">0.14</span> <i class="icon-bolt"></i></div>
 			<div class="title">A</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 				<span id="footPOE1" name="footPOE1">ETH_1 电流</span>
 			</div>	
 		</div>
-		<div id="sPOEA2" name="sPOEA2" class="span2 statbox gray" onclick="POECtrlIO(&#39;3&#39;,&#39;POEA2&#39;,&#39;ETH_2&#39;)" style="cursor:hand;">
+		<div id="sPOEA2" name="sPOEA2" class="span2 statbox gray" onclick="POECtrlIO(&#39;3&#39;,&#39;POEA2&#39;,&#39;ETH_2&#39;)" style="cursor:hand;background: #588ebd!important;">
 			<div id="cPOEA2" class="boxchart"></div>
-			<div class="number"><span id="fPOEA2" name="fPOEA2">---</span> <i class="icon-bolt"></i></div>
+			<div class="number"><span id="fPOEA2" name="fPOEA2">0.16</span> <i class="icon-bolt"></i></div>
 			<div class="title">A</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 				<span id="footPOE2" name="footPOE2">ETH_2 电流</span>
 			</div>	
 		</div>
-		<div id="sPOEA3" name="sPOEA3" class="span2 statbox gray" onclick="POECtrlIO(&#39;4&#39;,&#39;POEA3&#39;,&#39;ETH_3&#39;)" style="cursor:hand;">
+		<div id="sPOEA3" name="sPOEA3" class="span2 statbox gray" onclick="POECtrlIO(&#39;4&#39;,&#39;POEA3&#39;,&#39;ETH_3&#39;)" style="cursor:hand;background: #588ebd!important;">
 			<div id="cPOEA3" class="boxchart"></div>
-			<div class="number"><span id="fPOEA3" name="fPOEA3">---</span> <i class="icon-bolt"></i></div>
+			<div class="number"><span id="fPOEA3" name="fPOEA3">0.17</span> <i class="icon-bolt"></i></div>
 			<div class="title">A</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 				<span id="footPOE3" name="footPOE3">ETH_3 电流</span>
 			</div>	
 		</div>
-		<div id="sPOEA4" name="sPOEA4" class="span2 statbox gray" onclick="POECtrlIO(&#39;5&#39;,&#39;POEA4&#39;,&#39;ETH_4&#39;)" style="cursor:hand;">
+		<div id="sPOEA4" name="sPOEA4" class="span2 statbox gray" onclick="POECtrlIO(&#39;5&#39;,&#39;POEA4&#39;,&#39;ETH_4&#39;)" style="cursor:hand;background: #588ebd!important;">
 			<div id="cPOEA4" class="boxchart"></div>
-			<div class="number"><span id="fPOEA4" name="fPOEA4">---</span> <i class="icon-bolt"></i></div>
+			<div class="number"><span id="fPOEA4" name="fPOEA4">0.17</span> <i class="icon-bolt"></i></div>
 			<div class="title">A</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 				<span id="footPOE4" name="footPOE4">ETH_4 电流</span>
 			</div>	
 		</div>
-		<div id="sPOEA5" name="sPOEA5" class="span2 statbox gray" onclick="POECtrlIO(&#39;6&#39;,&#39;POEA5&#39;,&#39;ETH_5&#39;)" style="cursor:hand;">
+		<div id="sPOEA5" name="sPOEA5" class="span2 statbox gray" onclick="POECtrlIO(&#39;6&#39;,&#39;POEA5&#39;,&#39;ETH_5&#39;)" style="cursor:hand;background: #588ebd!important;">
 			<div id="cPOEA5" class="boxchart"></div>
-			<div class="number"><span id="fPOEA5" name="fPOEA5">---</span> <i class="icon-bolt"></i></div>
+			<div class="number"><span id="fPOEA5" name="fPOEA5">0.18</span> <i class="icon-bolt"></i></div>
 			<div class="title">A</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 				<span id="footPOE5" name="footPOE5">ETH_5 电流</span>
 			</div>	
 		</div>
@@ -773,7 +782,7 @@ function POECtrlIO(tag,objtext,logtext){
 			<div id="cPOEA6" class="boxchart"></div>
 			<div class="number"><span id="fPOEA6" name="fPOEA6">---</span> <i class="icon-bolt"></i></div>
 			<div class="title">A</div>
-			<div class="footerNone">
+			<div class="footerNone" style="background: #c1c1c1;">
 				<span id="footPOE6" name="footPOE6">ETH_6 电流</span>
 			</div>	
 		</div>
@@ -794,11 +803,11 @@ function POECtrlIO(tag,objtext,logtext){
              </div>
 		</div>
 		<div id="bACIN" class="box span4 grayBorder">
-			<div id="sACIN" class="box-header gray">
+			<div id="sACIN" class="box-header gray" style="background: #588ebd!important;">
 				<h2><i class="halflings-icon white list-alt"></i><span class="break"></span>市电</h2>
 			</div>
 			<div class="box-content">
-				 <div id="realtimeACC" style="height: 155px; padding: 0px; position: relative;"><canvas class="base" width="412" height="155"></canvas><canvas class="overlay" width="412" height="155" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="yAxis y1Axis" style="color:#545454"><div class="tickLabel" style="position:absolute;text-align:right;top:141px;right:391px;width:21px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:104px;right:391px;width:21px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:68px;right:391px;width:21px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:31px;right:391px;width:21px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-6px;right:391px;width:21px">1.0</div></div></div></div>
+				<div id="realtimeNet" style="height: 155px; padding: 0px; position: relative;"><canvas class="base" width="397" height="155" style="width: 397px;"></canvas><canvas class="overlay" width="397" height="155" style="position: absolute; left: 0px; top: 0px; width: 397px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="yAxis y1Axis" style="color:#545454"><div class="tickLabel" style="position:absolute;text-align:right;top:141px;right:376px;width:21px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:104px;right:376px;width:21px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:68px;right:376px;width:21px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:31px;right:376px;width:21px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-6px;right:376px;width:21px">1.0</div></div></div></div>
 			</div>
 		</div>
 		<div id="bFC" class="box span4 grayBorder">
@@ -806,11 +815,12 @@ function POECtrlIO(tag,objtext,logtext){
 				<h2><i class="halflings-icon white list-alt"></i><span class="break"></span>主干网延时</h2>
 			</div>
 			<div class="box-content">
-				 <div id="realtimeNet" style="height: 155px; padding: 0px; position: relative;"><canvas class="base" width="412" height="155"></canvas><canvas class="overlay" width="412" height="155" style="position: absolute; left: 0px; top: 0px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="yAxis y1Axis" style="color:#545454"><div class="tickLabel" style="position:absolute;text-align:right;top:141px;right:391px;width:21px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:104px;right:391px;width:21px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:68px;right:391px;width:21px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:31px;right:391px;width:21px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-6px;right:391px;width:21px">1.0</div></div></div></div>
+
+				<div id="realtimeNet" style="height: 155px; padding: 0px; position: relative;"><canvas class="base" width="397" height="155" style="width: 397px;"></canvas><canvas class="overlay" width="397" height="155" style="position: absolute; left: 0px; top: 0px; width: 397px;"></canvas><div class="tickLabels" style="font-size:smaller"><div class="yAxis y1Axis" style="color:#545454"><div class="tickLabel" style="position:absolute;text-align:right;top:141px;right:376px;width:21px">-1.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:104px;right:376px;width:21px">-0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:68px;right:376px;width:21px">0.0</div><div class="tickLabel" style="position:absolute;text-align:right;top:31px;right:376px;width:21px">0.5</div><div class="tickLabel" style="position:absolute;text-align:right;top:-6px;right:376px;width:21px">1.0</div></div></div></div>
 			</div>
 		</div>
 		<div class="span2">
-            <div id="sTemp" name="sTemp" class="circleStatsItemBox gray">
+            <div id="sTemp" name="sTemp" class="circleStatsItemBox gray" style="background: #8674a6!important;">
 			<div class="header">系统温度</div>
 			<span class="percent">℃</span>
 			<div class="circleStat">
@@ -826,7 +836,7 @@ function POECtrlIO(tag,objtext,logtext){
 	</div>
 	<div class="row-fluid">
 		<div class="span2 circleStats">
-             <div id="sSIM" name="sSIM" class="circleStatsItemBox gray">
+             <div id="sSIM" name="sSIM" class="circleStatsItemBox gray" style="background: #e25a5a!important;">
 			<div class="header">SIM卡</div>
 			<span class="percent">%</span>
 			<div class="circleStat">
@@ -834,68 +844,68 @@ function POECtrlIO(tag,objtext,logtext){
 			</div>		
 			<div class="footer">
 				<span class="value">
-					<span id="tSIM" name="tSIM" class="number">正常</span>
+					<span id="tSIM" name="tSIM" class="number">故障</span>
 				</span>	
 			</div>
              </div>
 		</div>
 		<div class="span8" style="margin-top: -1.5%;">
 			<div class="row-fluid">
-				<div id="sDC12V1" name="sDC12V1" class="span3 statbox gray" onclick="POECtrlIO(&#39;8&#39;,&#39;DC12V1&#39;,&#39;DC12V_1&#39;)" style="cursor:hand;">
+				<div id="sDC12V1" name="sDC12V1" class="span3 statbox gray" onclick="POECtrlIO(&#39;8&#39;,&#39;DC12V1&#39;,&#39;DC12V_1&#39;)" style="cursor:hand;background: #588ebd!important;">
 					<div id="cDC12V1" class="boxchart"></div>
-					<div class="number"><span id="fDC12V1" name="fDC12V1">---</span> <i class="icon-bolt"></i></div>
+					<div class="number"><span id="fDC12V1" name="fDC12V1">0.05</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 						<span id="footDC12V1" name="footDC12V1">DC12V_1 电流</span>
 					</div>	
 				</div>
-				<div id="sDC12V2" name="sDC12V2" class="span3 statbox gray" onclick="POECtrlIO(&#39;9&#39;,&#39;DC12V2&#39;,&#39;DC12V_2&#39;)" style="cursor:hand;">
+				<div id="sDC12V2" name="sDC12V2" class="span3 statbox gray" onclick="POECtrlIO(&#39;9&#39;,&#39;DC12V2&#39;,&#39;DC12V_2&#39;)" style="cursor:hand;background: #588ebd!important;">
 					<div id="cDC12V2" class="boxchart"></div>
-					<div class="number"><span id="fDC12V2" name="fDC12V2">---</span> <i class="icon-bolt"></i></div>
+					<div class="number"><span id="fDC12V2" name="fDC12V2">0.29</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 						<span id="footDC12V2" name="footDC12V2">DC12V_2 电流</span>
 					</div>	
 				</div>
-				<div id="sDC12V3" name="sDC12V3" class="span3 statbox gray" onclick="POECtrlIO(&#39;10&#39;,&#39;DC12V3&#39;,&#39;DC12V_3&#39;)" style="cursor:hand;">
+				<div id="sDC12V3" name="sDC12V3" class="span3 statbox gray" onclick="POECtrlIO(&#39;10&#39;,&#39;DC12V3&#39;,&#39;DC12V_3&#39;)" style="cursor:hand;background: #588ebd!important;">
 					<div id="cDC12V3" class="boxchart"></div>
-					<div class="number"><span id="fDC12V3" name="fDC12V3">---</span> <i class="icon-bolt"></i></div>
+					<div class="number"><span id="fDC12V3" name="fDC12V3">0.44</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 						<span id="footDC12V3" name="footDC12V3">DC12V_3 电流</span>
 					</div>	
 				</div>
-				<div id="sDC48V" name="sDC48V" class="span3 statbox gray" onclick="POECtrlIO(&#39;11&#39;,&#39;DC48V&#39;,&#39;DC48V&#39;)" style="cursor:hand;">  
+				<div id="sDC48V" name="sDC48V" class="span3 statbox gray" onclick="POECtrlIO(&#39;11&#39;,&#39;DC48V&#39;,&#39;DC48V&#39;)" style="cursor:hand;background: #588ebd!important;">  
 					<div id="cDC48V" class="boxchart"></div>
-					<div class="number"><span id="fDC48V" name="fDC48V">---</span> <i class="icon-bolt"></i></div>
+					<div class="number"><span id="fDC48V" name="fDC48V">0.59</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 						<span id="footDC48V" name="footDC48V">DC48V 电流</span>
 					</div>	
 				</div>
 			</div>
 			<div class="row-fluid">
-				<div id="sAC24V1" name="sAC24V1" class="span3 statbox gray" onclick="POECtrlIO(&#39;12&#39;,&#39;AC24V1&#39;,&#39;AC24V_1&#39;)" style="cursor:hand;">
+				<div id="sAC24V1" name="sAC24V1" class="span3 statbox gray" onclick="POECtrlIO(&#39;12&#39;,&#39;AC24V1&#39;,&#39;AC24V_1&#39;)" style="cursor:hand;background: #588ebd!important;">
 					<div id="cAC24V1" class="boxchart"></div>
-					<div class="number"><span id="fAC24V1" name="fAC24V1">---</span> <i class="icon-bolt"></i></div>
+					<div class="number"><span id="fAC24V1" name="fAC24V1">0.33</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 						<span id="footAC24V1" name="footAC24V1">AC24V_1 电流</span>
 					</div>	
 				</div>
-				<div id="sAC24V2" name="sAC24V2" class="span3 statbox gray" onclick="POECtrlIO(&#39;13&#39;,&#39;AC24V2&#39;,&#39;AC24V_2&#39;)" style="cursor:hand;">
+				<div id="sAC24V2" name="sAC24V2" class="span3 statbox gray" onclick="POECtrlIO(&#39;13&#39;,&#39;AC24V2&#39;,&#39;AC24V_2&#39;)" style="cursor:hand;background: #588ebd!important;">
 					<div id="cAC24V2" class="boxchart"></div>
-					<div class="number"><span id="fAC24V2" name="fAC24V2">---</span> <i class="icon-bolt"></i></div>
+					<div class="number"><span id="fAC24V2" name="fAC24V2">0.00</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 						<span id="footAC24V2" name="footAC24V2">AC24V_2 电流</span>
 					</div>	
 				</div>
-				<div id="sAC24V3" name="sAC24V3" class="span3 statbox gray" onclick="POECtrlIO(&#39;14&#39;,&#39;AC24V3&#39;,&#39;AC24V_3&#39;)" style="cursor:hand;">
+				<div id="sAC24V3" name="sAC24V3" class="span3 statbox gray" onclick="POECtrlIO(&#39;14&#39;,&#39;AC24V3&#39;,&#39;AC24V_3&#39;)" style="cursor:hand;background: #588ebd!important;">
 					<div id="cAC24V3" class="boxchart"></div>
-					<div class="number"><span id="fAC24V3" name="fAC24V3">---</span> <i class="icon-bolt"></i></div>
+					<div class="number"><span id="fAC24V3" name="fAC24V3">0.00</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: rgba(255,255,255,0.5);">
 						<span id="footAC24V3" name="footAC24V3">AC24V_3 电流</span>
 					</div>	
 				</div>
@@ -903,14 +913,14 @@ function POECtrlIO(tag,objtext,logtext){
 					<div id="cAC220V" class="boxchart"></div>
 					<div class="number"><span id="fAC220V" name="fAC220V">---</span> <i class="icon-bolt"></i></div>
 					<div class="title">A</div>
-					<div class="footerNone">
+					<div class="footerNone" style="background: #c1c1c1;">
 						<span id="footAC220V" name="footAC220V">AC220V 电流</span>
 					</div>	
 				</div>
 			</div>			
 		</div>
 		<div id="dDoor" class="box span2 grayBorder">
-			<div id="hDoor" class="box-header gray">
+			<div id="hDoor" class="box-header gray" style="background: #e45a58!important;">
 				<h2><i class="halflings-icon white white hand-top"></i><span class="break"></span>门禁&amp;对讲</h2>
 			</div>
 			<div class="box-content" style="margin-top:15px;margin-bottom:15px;height:92px !important;">
@@ -928,10 +938,10 @@ function POECtrlIO(tag,objtext,logtext){
 				<div class="span12"></div>
 			</div>
 			<div class="footer">
-				<div id="fDoor" class="span12 gray" style="text-align:center;">
-					<span id="sDoor" name="sDoor" style="font-size:14px;line-height:30px;">未知</span>
+				<div id="fDoor" class="span12 gray" style="text-align:center;background: #e4595c!important;">
+					<span id="sDoor" name="sDoor" style="font-size:14px;line-height:30px;">打开</span>
 					<span class="sep"> / </span>
-					<span id="sDuty" name="sDuty" style="font-size:14px;line-height:30px;font-weight:700;">未知</span>	
+					<span id="sDuty" name="sDuty" style="font-size:14px;line-height:30px;font-weight:700;">布防</span>	
                 </div>
       		</div>
 		</div>
