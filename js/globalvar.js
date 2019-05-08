@@ -97,15 +97,15 @@ function loginName(){
         $('.loginName').html(HTlogin.data.username);
         $('.layui-nav-img').attr('src',HTlogin.data.url);
     }else{
-        // window.location.href = '../../login.html';
+        window.location.href = '../../login.html';
     }
 }
 // 登录超时
 function unauthorized(code){
     if(code == -1){
         sessionStorage.removeItem('HTlogin');
-        // alert('登录超时，请重新登陆');
-        // window.location.href = '../../login.html';
+        alert('登录超时，请重新登陆');
+        window.location.href = '../../login.html';
     }
 }
 // 树形菜单
