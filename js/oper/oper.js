@@ -968,8 +968,20 @@ $(function () {
             };
               
             $('.police_query').on('click', function(){
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
+                var beginTime = $('#beginTime').val();
+                var endTime = $('#Deadline').val();
+                
+                if(beginTime!=''&&endTime==''){
+                    alert('请选择截止时间');
+                }else if(beginTime==''&&endTime!=''){
+                    alert('请选择起始时间');
+                }else if(endTime<beginTime){
+                    alert('截止时间需晚于起始时间');
+                }else{
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                }
+                
             });
             $('.empty').on('click', function(){
                 $('.alarmLevel').val('');
