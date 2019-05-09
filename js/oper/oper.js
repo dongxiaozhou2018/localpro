@@ -283,12 +283,14 @@ $(function () {
                 html.push('<td style="vertical-align:top;line-height:16px">' + markerArr[index].point + ' </td>');
                 html.push('</tr>');
                 html.push('</tbody></table>');
-
-                var infoWindow = new BMap.InfoWindow(html.join(""), {
-                    title: title,
-                    width: 200
-                });
-                map.openInfoWindow(new BMap.InfoWindow(markerArr[index].title, infoWindow), p);
+                console.log(html)
+                var opts = {
+                    width : 200,     // 信息窗口宽度
+                    height: 100,     // 信息窗口高度
+                    title : title , // 信息窗口标题
+                }
+                var infoWindow = new BMap.InfoWindow(html.join(""), opts);
+                map.openInfoWindow(infoWindow,p);
 
             };
             // 将div添加到覆盖物容器中
