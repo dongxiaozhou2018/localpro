@@ -304,7 +304,7 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#service',
-                url: global_path + '/accsvr/selectAll', //数据接口
+                url: global_path + '/accsvr/getAll', //数据接口
                 method:'post',
                 headers: {
                     'at': at
@@ -328,7 +328,7 @@ $(function () {
                             'code': res.code,
                             'msg': res.msg,
                             "count": res.data.total,
-                            'data': res.data
+                            'data': res.data.list
                         }
                     }else if(res.code == -1){
                         unauthorized(res.code);
