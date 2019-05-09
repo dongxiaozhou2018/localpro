@@ -98,7 +98,7 @@ $(function () {
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
-                $('#websocket')[0].contentWindow.closeWebSocket();
+                // $('#websocket')[0].contentWindow.closeWebSocket();
                 window.location.href = "../../login.html";
             }
         })
@@ -231,14 +231,13 @@ $(function () {
         $('.layui-body').css('bottom','0');
 
 
-        function SquareOverlay(color, x, y,title) {
+        function SquareOverlay(color, x, y,markerArr) {
             // this._center = center;
             // this._length = length;
             this._length = 20;
             this._color = color;
             this._x = x;
             this._y = y;
-            this._title = title;
         }
         // 继承API的BMap.Overlay
         SquareOverlay.prototype = new BMap.Overlay();
@@ -258,13 +257,39 @@ $(function () {
             // if (this._color == "red") {
             //     div.className = "btn-twinkle";
             // }
+            
             div.onclick = function (e, a) {
-                // map.openInfoWindow(new BMap.InfoWindow("地址：济南邦德激光股份公司", opts), new BMap.Point('117.684667', '36.233654')); //开启信息窗口
-                debugger;
-                var p = new BMap.Point(this._x, this._y);
+                // map.openInfoWindow(new BMap.InfoWindow(this._title, opts), new BMap.Point(this._x, this._y)); //开启信息窗口
+                // debugger;
+
+                var index = $(this).index();
+                var p0 = markerArr[index].point.split(",")[0];
+                var p1 = markerArr[index].point.split(",")[1];
+
+                var p = new BMap.Point(p0,p1);
                 //var p1 = map.overlayPixelToPoint(e.screenX, e.screenY);
                 //var p2 = map.pixelToPoint(e.pageX, e.pageY);
-                map.openInfoWindow(new BMap.InfoWindow(this._title, opts), p); //开启信息窗口
+                
+                //pop弹窗标题  
+                var title = '<div style="font-weight:bold;color:#CE5521;font-size:14px">' + markerArr[index].title + '</div>';
+                //pop弹窗信息  
+                var html = [];
+                html.push('<table cellspacing="0" style="table-layout:fixed;width:100%;font:12px arial,simsun,sans-serif"><tbody>');
+                html.push('<tr>');
+                html.push('<td style="vertical-align:top;line-height:16px;width:38px;white-space:nowrap;word-break:keep-all">地址:</td>');
+                html.push('<td style="vertical-align:top;line-height:16px">' + markerArr[index].address + ' </td>');
+                html.push('</tr>');
+                html.push('<td style="vertical-align:top;line-height:16px;width:38px;white-space:nowrap;word-break:keep-all">坐标:</td>');
+                html.push('<td style="vertical-align:top;line-height:16px">' + markerArr[index].point + ' </td>');
+                html.push('</tr>');
+                html.push('</tbody></table>');
+
+                var infoWindow = new BMap.InfoWindow(html.join(""), {
+                    title: title,
+                    width: 200
+                });
+                map.openInfoWindow(new BMap.InfoWindow(markerArr[index].title, infoWindow), p);
+
             };
             // 将div添加到覆盖物容器中
             map.getPanes().markerPane.appendChild(div);
@@ -314,14 +339,9 @@ $(function () {
         // map.setMapStyle({
         //     style: 'bluish'
         // });
-        debugger;
-        var opts = {
-            width: 200,     // 信息窗口宽度
-            height: 100,     // 信息窗口高度
-            title: "XXXXXXXXX", // 信息窗口标题
-            enableMessage: true,//设置允许信息窗发送短息
-            message: "XXXXXXXX"
-        };
+
+        // debugger;
+
         // 添加自定义覆盖物
 
         // var spotAddress = '',lngLat = '';
@@ -356,9 +376,9 @@ $(function () {
             var p0 = markerArr[i].point.split(",")[0];
             var p1 = markerArr[i].point.split(",")[1];
             if(i == 0){
-                map.addOverlay(new SquareOverlay("red", p0, p1,markerArr[i].title));
+                map.addOverlay(new SquareOverlay("red", p0, p1,markerArr[i]));
             }else{
-                map.addOverlay(new SquareOverlay("yellow", p0, p1,markerArr[i].title));
+                map.addOverlay(new SquareOverlay("yellow", p0, p1,markerArr[i]));
             }
         }
         
