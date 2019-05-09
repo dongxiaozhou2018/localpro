@@ -41,7 +41,7 @@ $(function () {
                     $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
                 }
             })
-            terminalConfigure(pageNum,pageSize);
+            terminalConfigure();
         }else if(modular == 'upgrade'){         //升级维护
             $('#upgradeMaintenance').show().siblings().hide();
             $('.btn').each(function(){
@@ -74,9 +74,16 @@ $(function () {
             $('.map_box').show().siblings().hide();
             map();
         }
-        if ($(this).attr('name') == 'zdpz') {
+        if ($(this).attr('name') == 'zdpz'||$(this).attr('name') == 'sbqy') {
             $('#terminalConfigure').show().siblings().hide();
-            terminalConfigure(pageNum,pageSize);
+            if($(this).attr('name') == 'sbqy'){
+                terminalConfigure('sbqy');
+                $('.demoTable').hide();
+            }else{
+                terminalConfigure();
+                $('.demoTable').show();
+            }
+            
         }
         if ($(this).attr('name') == 'zdzl') {
             $('#terminalData').show().siblings().hide();
@@ -718,9 +725,12 @@ $(function () {
                     layui.tree({
                         elem: '#map_demo' //指定元素
                         ,click: function(item){ //点击最里层节点回调
-                            // if(item.children.length == 0){
-                            //     terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
-                            // }
+                            if(item.point&&item.point!=''){
+                                //第1步：设置地图中心点
+                                var point = new BMap.Point(item.point);
+                                //第2步：初始化地图,设置中心点坐标和地图级别。  
+                                map.centerAndZoom(point, 12);
+                            }
                         }
                         ,nodes: menutree(newTree)
                     });
@@ -734,8 +744,8 @@ $(function () {
 
     }
 
-    // 终端配置
-    function terminalConfigure(){
+    // 终端配置、设备区域
+    function terminalConfigure(name){
 
 
         layui.use(['table','tree','laypage','laydate'], function () {
@@ -767,23 +777,113 @@ $(function () {
             })
 
             // 分组树
-            $('#terminal_demo').html('');
-            var newTree = [];
-            getAjax(global_path + "/manage/group/groupTree",function(res){
-                if(res.code == 0){
-                    newTree.push(res.data);
-                    layui.tree({
-                        elem: '#terminal_demo' //指定元素
-                        ,click: function(item){ //点击最里层节点回调
-                            if(item.children.length == 0){
-                                terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
+            function groupTree(){
+                $('#terminal_demo').html('');
+                var newTree = [];
+                getAjax(global_path + "/manage/group/groupTree",function(res){
+                    if(res.code == 0){
+                        newTree.push(res.data);
+                        layui.tree({
+                            elem: '#terminal_demo' //指定元素
+                            ,click: function(item){ //点击最里层节点回调
+                                if(item.children.length == 0){
+                                    if(name == 'sbqy'){
+                                        equipmentArea('','',pageNum,pageSize);
+                                    }else{
+                                        terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
+                                    }
+                                }
+                            }
+                            ,nodes: menutree(newTree)
+                        });
+                    }
+                })
+            }
+            groupTree();
+            if(name == 'sbqy'){
+                equipmentArea('','',pageNum,pageSize);
+            }else{
+                terminalTab('','',pageNum,pageSize);
+            }
+            function equipmentArea(url,id,pageNum,pageSize){
+                if(!url){
+                    url = global_path + '/manage/device/findAllPage';
+                }
+                table.render({
+                    elem: '#terminal',
+                    url: url, //数据接口
+                    title: '终端配置',
+                    page: false, //开启分页
+                    method: 'post',
+                    headers: {
+                        'at': at
+                    },
+                    contentType : "application/json",
+                    request: {
+                        pageName: 'pageNum' //页码的参数名称，默认：page
+                        ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where:{
+                        'pageNum':pageNum,
+                        'pageSize':pageSize,
+                        'id':id
+                    },
+                    parseData: function (res) {
+                        if(res.code == 0){
+                            for (var i = 0; i < res.data.list.length; i++) {
+                                if (res.data.list[i].status == 0) {
+                                    res.data.list[i].status = '<button class="layui-btn layui-btn-warm layui-btn-xs">不在线</button>';
+                                } else if (res.data.list[i].status == 1) {
+                                    res.data.list[i].status = '<button class="layui-btn layui-btn-normal layui-btn-xs">在线</button>';
+                                }
+                            }
+                            return {
+                                'code': res.code,
+                                'msg': res.msg,
+                                "count": res.data.total,
+                                'data': res.data.list
                             }
                         }
-                        ,nodes: menutree(newTree)
-                    });
-                }
-            })
-            terminalTab('','',pageNum,pageSize);
+                        
+                    },
+                    cols: [[ //表头
+                        {
+                            field: 'deviceId',
+                            title: '设备ID'
+                        }
+                        , {
+                            field: 'deviceName',
+                            title: '设备地址'
+                        }
+                        , {
+                            fixed: 'right',
+                            title: '操作',
+                            align: 'center',
+                            toolbar: '#equipmentArea'
+                        }
+                    ]],
+                    done: function(res, curr, count){
+                        //如果是异步请求数据方式，res即为你接口返回的信息。
+                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                        laypage.render({
+                            elem:'terminal_laypage'
+                            ,count:count
+                            ,curr:pageNum
+                            ,limit:pageSize
+                            ,layout: ['prev', 'page', 'next', 'skip','count']
+                            ,jump:function (obj,first) {
+                                if(!first){
+                                    pageNum = obj.curr;
+                                    pageSize = obj.limit;
+                                    terminalTab('','',pageNum,pageSize);
+                                }
+                            }
+                        })
+                    },
+                    id: 'testReload'
+                });
+
+            }
 
             function terminalTab(url,id,pageNum,pageSize){
                 if(!url){
