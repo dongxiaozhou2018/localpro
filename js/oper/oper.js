@@ -386,7 +386,6 @@ $(function () {
                 }
             })
         })
-
     }
     // 系统巡检
     function inspection(pageNum,pageSize,groupName,alarm) {
@@ -733,6 +732,66 @@ $(function () {
     }
     // 报警记录
     function police(pageNum,pageSize) {
+
+        // 所属区域
+        $('.police_groupName').html('');
+        var url = global_path + '/manage/group/groupOption';
+        getAjax(url, function(res) {
+            if (res.code == 0) {
+                var firstmodel = '<option value="0">天津市</option>';
+                $('.police_groupName').append(firstmodel);
+                for(var i = 0;i<res.data.length;i++){
+                    var groupName = '<option value="'+res.data[i].id+'">'+res.data[i].groupName+'</option>';
+                    $('.police_groupName').append(groupName);
+                }
+            } else if(res.code == -1){
+                unauthorized(res.code);
+            } else {
+                alert(res.msg);
+            }
+        })
+
+        // 报警类型
+        $('.alarmType').html('');
+        var url = global_path + '/oper/alarmlevel/findAllAlarmType';
+        getAjax(url, function(res) {
+            if (res.code == 0) {
+                var firstmodel = '<option value="">请选择报警类型</option>';
+                $('.alarmType').append(firstmodel);
+                if(res.data.length>0){
+                    for(var i = 0;i<res.data.length;i++){
+                        var mode = '<option value="'+res.data[i].alarmType+'">'+res.data[i].alarmName+'</option>';
+                        $('.alarmType').append(mode);
+                    }
+                }
+
+            } else if(res.code == -1){
+                unauthorized(res.code);
+            } else {
+                alert(res.msg);
+            }
+        })
+
+        // 指派人员
+        $('.repairRname').html('');
+        var url = global_path + '/manage/user/findFixer';
+        getAjax(url, function(res) {
+            if (res.code == 0) {
+                var firstmodel = '<option value="">请选择指派人员</option>';
+                $('.repairRname').append(firstmodel);
+                if(res.data.length>0){
+                    for(var i = 0;i<res.data.length;i++){
+                        var mode = '<option value="'+res.data[i].id+'">'+res.data[i].realName+'</option>';
+                        $('.repairRname').append(mode);
+                    }
+                }
+
+            } else if(res.code == -1){
+                unauthorized(res.code);
+            } else {
+                alert(res.msg);
+            }
+        })
         
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
@@ -797,8 +856,6 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else if(res.code == -1){
-                        unauthorized(res.code);
                     }else{
                         alert(res.msg);
                     }
@@ -855,7 +912,7 @@ $(function () {
                     }
                     , {
                         field: 'groupName',
-                        title: '地址'
+                        title: '所属区域'
                     }
                     , {
                         fixed: 'right',
@@ -886,13 +943,25 @@ $(function () {
             });
             var $ = layui.$, active = {
                 reload: function(){
-                    var police_role = $('.police_role');
-                  
+                    var alarmLevel = $('.alarmLevel');
+                    var police_groupName = $('.police_groupName');
+                    var alarmType = $('.alarmType');
+                    var repairRname = $('.repairRname');
+                    var beginTime = $('#beginTime');
+                    var endTime = $('#Deadline');
+                    var deviceName = $('.deviceName');
+                    var dealStatus = $('.dealStatus');
                   //执行重载
                     table.reload('testReload', {
-                        url: global_path + '/alarmlevel/getAllByAlarmLevel',
                         where: {
-                            'alarmLevel': police_role.val(),
+                            'alarmLevel': alarmLevel.val(),
+                            'groupName': police_groupName.val(),
+                            'alarmType':alarmType.val(),
+                            'repairRname':repairRname.val(),
+                            'startTime':beginTime.val(),
+                            'endTime':endTime.val(),
+                            'deviceName':deviceName.val(),
+                            'dealStatus':dealStatus.val(),
                         }
                     });
                 }
@@ -903,7 +972,14 @@ $(function () {
                 active[type] ? active[type].call(this) : '';
             });
             $('.empty').on('click', function(){
-                $('.police_role').val('');
+                $('.alarmLevel').val('');
+                $('.police_groupName').val('0');
+                $('.alarmType').val('');
+                $('.repairRname').val('');
+                $('#beginTime').val('');
+                $('#Deadline').val('');
+                $('.deviceName').val('');
+                $('.dealStatus').val('');
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
@@ -939,225 +1015,6 @@ $(function () {
     // 设备监控
     function terminalConfigure(){
 
-
-        layui.use(['table','tree','laypage','laydate'], function () {
-            var table = layui.table,
-                laydate=layui.laydate,
-                laypage = layui.laypage,
-                tree = layui.tree,
-                $ = layui.jquery;
-
-            // 设备型号
-            $('.modelId').html('');
-            var url = global_path + '/manage/model/queryAllModel';
-            getAjax(url, function(res) {
-                if (res.code == 0) {
-                    var firstmodel = '<option value="">请选择</option>';
-                    $('.modelId').append(firstmodel);
-                    if(res.data.length>0){
-                        for(var i = 0;i<res.data.length;i++){
-                            var mode = '<option value="'+res.data[i].id+'">'+res.data[i].modelName+'</option>';
-                            $('.modelId').append(mode);
-                        }
-                    }
-
-                } else if(res.code == -1){
-                    unauthorized(res.code);
-                } else {
-                    alert(res.msg);
-                }
-            })
-
-            // 分组树
-            $('#terminal_demo').html('');
-            var newTree = [];
-            getAjax(global_path + "/manage/group/groupTree",function(res){
-                if(res.code == 0){
-                    newTree.push(res.data);
-                    layui.tree({
-                        elem: '#terminal_demo' //指定元素
-                        ,click: function(item){ //点击最里层节点回调
-                            if(item.children.length == 0){
-                                terminalTab(global_path + '/manage/device/listPage',item.id,pageNum,pageSize);
-                            }
-                        }
-                        ,nodes: menutree(newTree)
-                    });
-                }
-            })
-            terminalTab('','',pageNum,pageSize);
-
-            function terminalTab(url,id,pageNum,pageSize){
-                if(!url){
-                    url = global_path + '/manage/device/findAllPage';
-                }
-                table.render({
-                    elem: '#terminal',
-                    url: url, //数据接口
-                    title: '终端配置',
-                    page: false, //开启分页
-                    method: 'post',
-                    headers: {
-                        'at': at
-                    },
-                    contentType : "application/json",
-                    request: {
-                        pageName: 'pageNum' //页码的参数名称，默认：page
-                        ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
-                    },
-                    where:{
-                        'pageNum':pageNum,
-                        'pageSize':pageSize,
-                        'id':id
-                    },
-                    parseData: function (res) {
-                        if(res.code == 0){
-                            for (var i = 0; i < res.data.list.length; i++) {
-                                if (res.data.list[i].status == 0) {
-                                    res.data.list[i].status = '<button class="layui-btn layui-btn-warm layui-btn-xs">不在线</button>';
-                                } else if (res.data.list[i].status == 1) {
-                                    res.data.list[i].status = '<button class="layui-btn layui-btn-normal layui-btn-xs">在线</button>';
-                                }
-                            }
-                            return {
-                                'code': res.code,
-                                'msg': res.msg,
-                                "count": res.data.total,
-                                'data': res.data.list
-                            }
-                        }
-                        
-                    },
-                    cols: [[ //表头
-                        {
-                            field: 'deviceId',
-                            title: '设备ID',
-                            width: '16.6%'
-                        }
-                        , {
-                            field: 'deviceName',
-                            title: '设备名称',
-                            width: '10.6%'
-                        }
-                        , {
-                            field: 'deviceIP',
-                            title: '设备IP',
-                            width: '10.6%'
-                        }
-                        , {
-                            field: 'devicePort',
-                            title: '端口号',
-                            width: '10.6%'
-                        }
-                        , {
-                            field: 'modelName',
-                            title: '设备型号',
-                            width: '16.6%'
-                        }
-                        , {
-                            field: 'status',
-                            title: '状态',
-                            width: '10%',
-                            align: 'center',
-                        }
-                        , {
-                            fixed: 'right',
-                            title: '操作',
-                            width: '22.6%',
-                            align: 'center',
-                            toolbar: '#terminal_operation'
-                        }
-                    ]],
-                    done: function(res, curr, count){
-                        //如果是异步请求数据方式，res即为你接口返回的信息。
-                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-                        laypage.render({
-                            elem:'terminal_laypage'
-                            ,count:count
-                            ,curr:pageNum
-                            ,limit:pageSize
-                            ,layout: ['prev', 'page', 'next', 'skip','count']
-                            ,jump:function (obj,first) {
-                                if(!first){
-                                    pageNum = obj.curr;
-                                    pageSize = obj.limit;
-                                    terminalTab('','',pageNum,pageSize);
-                                }
-                            }
-                        })
-                    },
-                    id: 'testReload'
-                });
-
-            }
-            var $ = layui.$, active = {
-                reload: function(){
-                    var deviceId = $('.deviceId').val();
-                    var deviceName = $('.deviceName').val();
-                    var deviceIP = $('.deviceIP').val();
-                    var modelId = $('.modelId').val();
-                    //执行重载
-                    table.reload('testReload', {
-                        url: global_path + '/manage/device/listPage',
-                        where: {
-                            'deviceId': deviceId,
-                            'deviceName': deviceName,
-                            'deviceIP': deviceIP,
-                            'modelId':modelId,
-                            'id':''
-                        }
-                    });
-                }
-            };
-              
-            $('.terminal').on('click', function(){
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
-            });
-            $('.empty').on('click', function(){
-                $('.deviceId').val('');
-                $('.deviceName').val('');
-                $('.deviceIP').val('');
-                $('.modelId').val('');
-                deviceId = '';
-                deviceName = '';
-                deviceIP = '';
-                modelId = '';
-                terminalTab('','',pageNum,pageSize);
-            });
-            table.on('tool(terminal)', function (obj) { 
-                var data = obj.data //获得当前行数据
-                    ,
-                    layEvent = obj.event; //获得 lay-event 对应的值
-                if(layEvent === 'control'){
-                    var maxWidth = $('.layui-body').width();
-                    var maxHeight = $('.layui-body').height();
-                    layui.use('layer', function(){ //独立版的layer无需执行这一句
-                        var $ = layui.jquery, layer = layui.layer;
-                        layer.open({
-                            type: 2 //此处以iframe举例
-                                ,
-                            title: '数据监控展示',
-                            area: ['1120px', '800px'],
-                            shade: 0,
-                            resize: true,
-                            tipsMore: false,
-                            maxmin:true,
-                            scrollbar:true,
-                            content: '../../aa/devset.jsp.html',
-                            zIndex: layer.zIndex, //重点1
-                            success: function (layero) {
-                                sessionStorage.setItem('oper','equipment');
-                                layer.setTop(layero); //重点2
-                            },
-                            cancel: function(){ 
-                                layer.closeAll();
-                            }
-                        });
-                    })
-                }
-            });
-        });
     }
 
     

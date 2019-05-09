@@ -51,8 +51,8 @@ $(function () {
             })
             upgradeMaintenance(pageNum,pageSize);
         }else{
-            $('#terminalData').show().siblings().hide();
-            echart();
+            $('#terminalConfigure').show().siblings().hide();
+            terminalConfigure();
         }
     }
     showModular();
@@ -85,10 +85,10 @@ $(function () {
             }
             
         }
-        if ($(this).attr('name') == 'zdzl') {
-            $('#terminalData').show().siblings().hide();
-            echart();
-        }
+        // if ($(this).attr('name') == 'zdzl') {
+        //     $('#terminalData').show().siblings().hide();
+        //     echart();
+        // }
         if ($(this).attr('name') == 'czrz') {
             $('#oplog').show().siblings().hide();
             oplog();
@@ -291,7 +291,7 @@ $(function () {
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
     }
-    echart();
+    // echart();
 
     // 服务配置---------------接入服务器配置
     function server(pageNum,pageSize) {

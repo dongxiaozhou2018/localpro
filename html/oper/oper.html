@@ -110,10 +110,23 @@
                 filter: alpha(opacity=0);
             }
         }
+        #police_alert{
+            position: fixed;
+            bottom: : 0!important;
+            right: 0;
+            z-index: 10000;
+            width: 20%;
+            height: 10%;
+            background: #fff;
+        }
     </style>
 </head>
 
-<body class="layui-layout-body">
+<body class="">
+    <!-- 报警提醒框 -->
+    <!-- <div id="police_alert">
+        bfefbwfew
+    </div> -->
     <!-- <iframe id="websocket" src="../websocket.html" style="display: none;"></iframe> -->
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
@@ -162,7 +175,9 @@
             <iframe src="overview.html" style="width: 100%;height: 100%"></iframe>
             <button class="layui-btn layui-btn-primary full_outbtn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i>退出全屏</button>
         </div>
+
         <div class="layui-body" style="bottom: 0;">
+            
             <div class="overview" style="width: 100%;height: 100%;">
                 <iframe src="overview.html" style="width: 100%;height: 100%;"></iframe>
                 <button class="layui-btn layui-btn-primary layui-btn-sm full_btn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i>全屏展示</button>
@@ -232,8 +247,8 @@
                     <div class="demoTable">
                         <div class="top">
                             <div class="layui-inline left select_type_box">
-                                <label class="select_type">报警级别：</label>
-                                <select name="role" class="police_role right">
+                                <label class="select_type">报警等级：</label>
+                                <select name="alarmLevel" class="police_role alarmLevel right">
                                     <option value="">请选择报警级别</option>
                                     <option value="3">高</option>
                                     <option value="2">中</option>
@@ -242,20 +257,18 @@
                             </div>
                             <div class="layui-inline left select_type_box">
                                 <label class="select_type">所属区域：</label>
-                                <select name="role" class="police_role right">
-                                    <option value="">全部</option>
-                                    <option value="1">天津市</option>
+                                <select name="police_groupName" class="police_role police_groupName right">
+                                    
                                 </select>
                             </div>
                             <div class="layui-inline left select_type_box">
                                 <label class="select_type">报警类型：</label>
-                                <select name="role" class="police_role right">
-                                    <option value="">请选择报警类型</option>
+                                <select name="alarmType" class="police_role alarmType right">
                                 </select>
                             </div>
                             <div class="layui-inline left select_type_box">
                                 <label class="select_type">指派人员：</label>
-                                <select name="role" class="police_role right">
+                                <select name="repairRname" class="police_role repairRname right">
                                     <option value="">请选择指派人员</option>
                                 </select>
                             </div>
@@ -274,12 +287,12 @@
                             </div>
                             <div class="layui-inline left">
                                 <label class="select_type">终端名称：</label>
-                                <input name="deviceId" class="layui-input deviceId" placeholder="请输入终端名称" style="width: 59%;display: inline-block;height: 30px;border: none;">
+                                <input name="deviceName" class="layui-input deviceName" placeholder="请输入终端名称" style="width: 59%;display: inline-block;height: 30px;border: none;">
                             </div>
                             <div class="layui-inline left select_type_box">
                                 <label class="select_type">处理状态：</label>
-                                <select name="role" class="police_role right">
-                                    <option value="0">全部</option>
+                                <select name="dealStatus" class="police_role dealStatus right">
+                                    <option value="">全部</option>
                                     <option value="1">未处理</option>
                                     <option value="2">已忽略</option>
                                     <option value="3">已派工</option>
