@@ -232,12 +232,12 @@ $(function () {
             // 可以根据参数设置元素外观
             div.style.width = this._length + "px";
             div.style.height = this._length + "px";
-            div.style.background = 'url(../../img/marker-icon0.png) no-repeat';
-            div.style.borderRadius = this._length / 2 + "px";
-            div.style.border = "solid rgb(" + this._length + "," + this._length + "," + this._length + ") 1px";
-            // if (this._color == "red") {
-            //     div.className = "btn-twinkle";
-            // }
+
+            if (this._color == "red") {
+                div.className = "btn-twinkle";
+            }else{
+                div.style.background = 'url(../../img/marker-icon0.png) no-repeat';
+            }
             
             div.onclick = function (e, a) {
 
