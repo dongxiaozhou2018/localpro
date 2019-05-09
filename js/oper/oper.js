@@ -211,29 +211,10 @@ $(function () {
     }
     // 运维地图
     function mapFn() {
-        // var map = new L.Map("mapid", {
-        //     zoom: 9,
-        //     center: [39.0850853357,117.1993482089],
-        //     boxZoom: true, 
-        // });
-        // var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
-        // var layer = new L.TileLayer(url, {
-        //     subdomains:"1234"
-        // });
-        // map.addLayer(layer);
-        // var marker = new L.marker([39.1410912411,117.0073575633]);
-        // marker.addTo(map);
-        // marker.bindPopup("<b>天津</b><br>西青区.");
-
-        // var marker = new L.marker([39.0850853357,117.1993482089]);
-        // marker.addTo(map);
-        // marker.bindPopup("<b>天津</b>");
         $('.layui-body').css('bottom','0');
 
 
         function SquareOverlay(color, x, y,markerArr) {
-            // this._center = center;
-            // this._length = length;
             this._length = 20;
             this._color = color;
             this._x = x;
@@ -259,16 +240,12 @@ $(function () {
             // }
             
             div.onclick = function (e, a) {
-                // map.openInfoWindow(new BMap.InfoWindow(this._title, opts), new BMap.Point(this._x, this._y)); //开启信息窗口
-                // debugger;
 
                 var index = $(this).index();
                 var p0 = markerArr[index].point.split(",")[0];
                 var p1 = markerArr[index].point.split(",")[1];
 
                 var p = new BMap.Point(p0,p1);
-                //var p1 = map.overlayPixelToPoint(e.screenX, e.screenY);
-                //var p2 = map.pixelToPoint(e.pageX, e.pageY);
                 
                 //pop弹窗标题  
                 var title = '<div style="font-weight:bold;color:#CE5521;font-size:14px">' + markerArr[index].title + '</div>';
@@ -283,7 +260,6 @@ $(function () {
                 html.push('<td style="vertical-align:top;line-height:16px">' + markerArr[index].point + ' </td>');
                 html.push('</tr>');
                 html.push('</tbody></table>');
-                console.log(html)
                 var opts = {
                     width : 200,     // 信息窗口宽度
                     height: 100,     // 信息窗口高度
@@ -304,7 +280,6 @@ $(function () {
         //实现绘制方法
         SquareOverlay.prototype.draw = function () {
             // 根据地理坐标转换为像素坐标，并设置给容器
-            // var position = this._map.pointToOverlayPixel(this._center);
             var position = this._map.pointToOverlayPixel(new BMap.Point(this._x, this._y));
             this._div.style.left = position.x - this._length / 2 + "px";
             this._div.style.top = position.y - this._length / 2 + "px";
@@ -341,12 +316,6 @@ $(function () {
         // map.setMapStyle({
         //     style: 'bluish'
         // });
-
-        // debugger;
-
-        // 添加自定义覆盖物
-
-        // var spotAddress = '',lngLat = '';
 
         var markerArr = [{
                 title: "名称：天津市西青区",
