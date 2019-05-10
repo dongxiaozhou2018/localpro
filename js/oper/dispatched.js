@@ -8,8 +8,7 @@
             ,upload = layui.upload
             ,element = layui.element
             ,tree = layui.tree;
-        
-        var id = getQueryString('deviceId');
+
         getAjax(global_path + "/manage/user/findFixer",function(res){
             if (res.code == 0) {
                 var firstmodel = '<option value="">请选择指派人员</option>';
@@ -30,7 +29,7 @@
         })
 
         form.on('submit(demo1)', function (data) {
-            var dealStatus = getQueryString('dealStatus');
+            var id = getQueryString('deviceId');
             var repairRname = $('.repairRname').val();
             var remarks = $('.remarks').val();
             if(repairRname == ''){
@@ -41,7 +40,6 @@
                 var parms = {
                     'id':id,
                     'repairManId':repairRname,
-                    'dealStatus':dealStatus,
                     'remarks':remarks
                 }
                 var url = global_path + "/oper/alarmRecord/dealAlarm";

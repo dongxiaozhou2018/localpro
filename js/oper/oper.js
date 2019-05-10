@@ -823,16 +823,12 @@ $(function () {
                             // 处理状态
                             if(res.data.list[i].dealStatus == 0){       
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-danger">未处理</span>';
-                                res.data.list[i].processState = 0;
                             }else if(res.data.list[i].dealStatus == 1){     
                                 res.data.list[i].dealStatus = '<span class="layui-btn">已派工</span>';
-                                res.data.list[i].processState = 1;
                             }else if(res.data.list[i].dealStatus == 2){      
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-normal">已解决</span>';
-                                res.data.list[i].processState = 2;
                             }else if(res.data.list[i].dealStatus == 3){        
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-warm">已忽略</span>';
-                                res.data.list[i].processState = 3;
                             }
                             
                             // 报警时间
@@ -995,7 +991,7 @@ $(function () {
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'dispatched') {
-                    var winUrl = 'dispatched.html?deviceId=' + data.id + '&dealStatus=' + data.processState;
+                    var winUrl = 'dispatched.html?deviceId=' + data.id;
                     frame('派工',winUrl,'dispatched');
                 }
             });
