@@ -731,7 +731,7 @@ $(function () {
         var url = global_path + '/manage/group/groupOption';
         getAjax(url, function(res) {
             if (res.code == 0) {
-                var firstmodel = '<option value="0">天津市</option>';
+                var firstmodel = '<option value="">天津市</option>';
                 $('.police_groupName').append(firstmodel);
                 for(var i = 0;i<res.data.length;i++){
                     var groupName = '<option value="'+res.data[i].id+'">'+res.data[i].groupName+'</option>';
@@ -821,16 +821,16 @@ $(function () {
                             }
 
                             // 处理状态
-                            if(res.data.list[i].dealStatus == 0){       //  低
+                            if(res.data.list[i].dealStatus == 0){       
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-danger">未处理</span>';
                                 res.data.list[i].processState = 0;
-                            }else if(res.data.list[i].dealStatus == 1){       //  低
+                            }else if(res.data.list[i].dealStatus == 1){     
                                 res.data.list[i].dealStatus = '<span class="layui-btn">已派工</span>';
                                 res.data.list[i].processState = 1;
-                            }else if(res.data.list[i].dealStatus == 2){        // 中
+                            }else if(res.data.list[i].dealStatus == 2){      
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-normal">已解决</span>';
                                 res.data.list[i].processState = 2;
-                            }else if(res.data.list[i].dealStatus == 3){         //高
+                            }else if(res.data.list[i].dealStatus == 3){        
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-warm">已忽略</span>';
                                 res.data.list[i].processState = 3;
                             }
@@ -948,7 +948,7 @@ $(function () {
                     table.reload('testReload', {
                         where: {
                             'alarmLevel': alarmLevel.val(),
-                            'groupName': police_groupName.val(),
+                            'groupId': police_groupName.val(),
                             'alarmType':alarmType.val(),
                             'repairRname':repairRname.val(),
                             'startTime':beginTime.val(),
@@ -978,7 +978,7 @@ $(function () {
             });
             $('.empty').on('click', function(){
                 $('.alarmLevel').val('');
-                $('.police_groupName').val('0');
+                $('.police_groupName').val('');
                 $('.alarmType').val('');
                 $('.repairRname').val('');
                 $('#beginTime').val('');
