@@ -841,12 +841,18 @@ $(function () {
                             }
                             
                             // 报警时间
-                            var alarmTime = new Date(res.data.list[i].alarmTime);
-                            res.data.list[i].alarmTime = alarmTime.toLocaleDateString().replace(/\//g, "-") + " " + alarmTime.toTimeString().substr(0, 8);
+                            if(res.data.list[i].alarmTime!=null){
+                                var alarmTime = new Date(res.data.list[i].alarmTime);
+                                res.data.list[i].alarmTime = alarmTime.toLocaleDateString().replace(/\//g, "-") + " " + alarmTime.toTimeString().substr(0, 8);
+                            }
+                            
 
                             // 处理时间
-                            var dealTime = new Date(res.data.list[i].dealTime);
-                            res.data.list[i].dealTime = dealTime.toLocaleDateString().replace(/\//g, "-") + " " + dealTime.toTimeString().substr(0, 8);
+                            if(res.data.list[i].dealTime!=null){
+                                var dealTime = new Date(res.data.list[i].dealTime);
+                                res.data.list[i].dealTime = dealTime.toLocaleDateString().replace(/\//g, "-") + " " + dealTime.toTimeString().substr(0, 8);
+                            }
+                            
                         }
                         return {
                             'code': res.code,
