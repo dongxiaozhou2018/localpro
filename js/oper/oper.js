@@ -929,6 +929,7 @@ $(function () {
                         fixed: 'right',
                         title: '操作',
                         align: 'center',
+                        width: '10%',
                         toolbar: '#dispatched'
                     }
                 ]],
@@ -1032,6 +1033,50 @@ $(function () {
                 if (layEvent === 'dispatched') {
                     var winUrl = 'dispatched.html?deviceId=' + data.id + '&dealStatus=' + data.processState;
                     frame('派工',winUrl,'dispatched');
+                }else if(layEvent === 'solve'){
+                    layer.confirm('确认解决？', function (index) {
+                        var parms = {
+                            'id':data.id,
+                            'dealStatus':2
+                        }
+                        commonAjax(global_path + "/oper/alarmRecord/dealAlarm",parms,function(res){
+                            if(res.code == 0){
+                                alert(res.msg);
+                                var where = {
+                                    'pageNum':pageNum,
+                                    'pageSize':pageSize
+                                }
+                                police(where);
+                            }else if(res.code == -1){
+                                unauthorized(res.code);
+                            }else{
+                                alert(res.msg);
+                            }
+                        })
+                        layer.close(index);
+                    });
+                }else if(layEvent === 'ignore'){
+                    layer.confirm('确认忽略？', function (index) {
+                        var parms = {
+                            'id':data.id,
+                            'dealStatus':3
+                        }
+                        commonAjax(global_path + "/oper/alarmRecord/dealAlarm",parms,function(res){
+                            if(res.code == 0){
+                                alert(res.msg);
+                                var where = {
+                                    'pageNum':pageNum,
+                                    'pageSize':pageSize
+                                }
+                                police(where);
+                            }else if(res.code == -1){
+                                unauthorized(res.code);
+                            }else{
+                                alert(res.msg);
+                            }
+                        })
+                        layer.close(index);
+                    });
                 }
             });
         });

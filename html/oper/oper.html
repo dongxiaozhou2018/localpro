@@ -122,7 +122,7 @@
     </style>
 </head>
 
-<body class="">
+<body class="layui-layout-body">
     <!-- 报警提醒框 -->
     <!-- <div id="police_alert">
         bfefbwfew
@@ -310,7 +310,9 @@
                     <table class="layui-hide" id="police" lay-filter="police"></table>
                     <div id="police_laypage"></div>
                     <script type="text/html" id="dispatched">
-                        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="dispatched">派工</a>
+                        <a class="layui-btn layui-btn-xs" lay-event="dispatched">派工</a>
+                        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="solve">解决</a>
+                        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="ignore">忽略</a>
                     </script>
                 </div>
                 
