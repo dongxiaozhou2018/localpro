@@ -1404,7 +1404,7 @@ $(function () {
                     page: false, //开启分页
                     cellMinWidth: 80,
                     parseData: function (res) {
-                        if(res.code == 0&&res.data.list.length>0){
+                        if(res.code == 0){
                             for(var i = 0;i<res.data.list.length;i++){
                                 var timestamp4 = new Date(res.data.list[i].createTime);
                                 res.data.list[i].createTime = timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8);
