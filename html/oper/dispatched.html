@@ -26,17 +26,18 @@
 <body class="layui-layout-body" style="overflow: auto;">
     <div class="content" style="margin: 20px 20px;">
         <form class="layui-form layui-form-pane" action="" enctype="multipart/form-data" lay-filter="example">
-
-            <div class="layui-form-item" style="width: 70%;margin: 0 auto;">
+            <div class="layui-form-item">
                 <label class="layui-form-label"><span style="color: red;">*</span> 派工</label>
-                <div class="layui-input-block choice_power">
-                    <div id="xtree" class="xtree_contianer" style="margin-left: 15px;"></div>
+                <div class="layui-input-block">
+                    <select name="repairRname" lay-filter="aihao" class="repairRname">
+                        
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label"><span style="color: red;">*</span> 派工备注</label>
                 <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea remarks" name="remarks" style="resize:none;"></textarea>
+                    <textarea placeholder="请输入派工备注" class="layui-textarea remarks" name="remarks" style="resize:none;"></textarea>
                 </div>
             </div>
             <div class="layui-form-item" style="margin-left: 43%;margin-top: 40px;">

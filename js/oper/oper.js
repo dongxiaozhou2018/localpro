@@ -11,8 +11,10 @@ $(function () {
         pageNum = 1; pageSize = 10;
         var oper = sessionStorage.getItem('oper');
         $('.layui-body').css('bottom','44px');
-        if(oper == 'police'){     //报警级别
+        if(oper == 'dispatched'){     //报警记录
+            $('.overview').hide();
             $('#police_box').show().siblings().hide();
+            $('#police_box').parent('div').show();
             $('.btn').each(function(){
                 if($(this).attr('name') == 'bjjl'){
                     $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
@@ -20,20 +22,12 @@ $(function () {
             })
             police(pageNum,pageSize); 
            
-        }else if(oper == 'equipment'){         //设备监控
-            $('#terminalConfigure').show().siblings().hide();
-            $('.btn').each(function(){
-                if($(this).attr('name') == 'sbjk'){
-                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
-                }
-            })
-            // terminalConfigure(pageNum,pageSize);
         }else{
-            $('.map_box').show().siblings().hide();
-            mapFn();
+            $('.overview').show().siblings().hide();
+            overview();
         }
     }
-    // showOper();
+    showOper();
     // 点击事件
     $('.personal').on('click',function(){
         var url = "../personal.html";
@@ -205,7 +199,6 @@ $(function () {
     user();
 
     // 数据总览
-    overview();
     function overview(){
         // $('.overview iframe').attr('src','overview.html');
     }
@@ -765,9 +758,7 @@ $(function () {
                     }
                 }
 
-            } else if(res.code == -1){
-                unauthorized(res.code);
-            } else {
+            }else {
                 alert(res.msg);
             }
         })
@@ -786,9 +777,7 @@ $(function () {
                     }
                 }
 
-            } else if(res.code == -1){
-                unauthorized(res.code);
-            } else {
+            }else {
                 alert(res.msg);
             }
         })
@@ -834,12 +823,16 @@ $(function () {
                             // 处理状态
                             if(res.data.list[i].dealStatus == 0){       //  低
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-danger">未处理</span>';
+                                res.data.list[i].processState = 0;
                             }else if(res.data.list[i].dealStatus == 1){       //  低
                                 res.data.list[i].dealStatus = '<span class="layui-btn">已派工</span>';
+                                res.data.list[i].processState = 1;
                             }else if(res.data.list[i].dealStatus == 2){        // 中
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-normal">已解决</span>';
+                                res.data.list[i].processState = 2;
                             }else if(res.data.list[i].dealStatus == 3){         //高
                                 res.data.list[i].dealStatus = '<span class="layui-btn layui-btn-warm">已忽略</span>';
+                                res.data.list[i].processState = 3;
                             }
                             
                             // 报警时间
@@ -1002,7 +995,7 @@ $(function () {
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'dispatched') {
-                    var winUrl = 'dispatched.html?deviceId=' + data.id;
+                    var winUrl = 'dispatched.html?deviceId=' + data.id + '&dealStatus=' + data.processState;
                     frame('派工',winUrl,'dispatched');
                 }
             });
