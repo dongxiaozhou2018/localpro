@@ -78,10 +78,10 @@ $(function () {
             $('#terminalConfigure').show().siblings().hide();
             if($(this).attr('name') == 'sbqy'){
                 terminalConfigure('sbqy');
-                $('.demoTable').hide();
+                $('.terminal_search').hide();
             }else{
                 terminalConfigure();
-                $('.demoTable').show();
+                $('.terminal_search').show();
             }
             
         }
