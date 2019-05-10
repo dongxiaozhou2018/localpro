@@ -1039,20 +1039,7 @@ $(function () {
                             'id':data.id,
                             'dealStatus':2
                         }
-                        commonAjax(global_path + "/oper/alarmRecord/dealAlarm",parms,function(res){
-                            if(res.code == 0){
-                                alert(res.msg);
-                                var where = {
-                                    'pageNum':pageNum,
-                                    'pageSize':pageSize
-                                }
-                                police(where);
-                            }else if(res.code == -1){
-                                unauthorized(res.code);
-                            }else{
-                                alert(res.msg);
-                            }
-                        })
+                        dealAlarm(parms);
                         layer.close(index);
                     });
                 }else if(layEvent === 'ignore'){
@@ -1061,20 +1048,7 @@ $(function () {
                             'id':data.id,
                             'dealStatus':3
                         }
-                        commonAjax(global_path + "/oper/alarmRecord/dealAlarm",parms,function(res){
-                            if(res.code == 0){
-                                alert(res.msg);
-                                var where = {
-                                    'pageNum':pageNum,
-                                    'pageSize':pageSize
-                                }
-                                police(where);
-                            }else if(res.code == -1){
-                                unauthorized(res.code);
-                            }else{
-                                alert(res.msg);
-                            }
-                        })
+                        dealAlarm(parms);
                         layer.close(index);
                     });
                 }
@@ -1092,6 +1066,22 @@ $(function () {
                 type: 'datetime'
             });
         });
+        function dealAlarm(parms){
+            commonAjax(global_path + "/oper/alarmRecord/dealAlarm",parms,function(res){
+                if(res.code == 0){
+                    alert(res.msg);
+                    var where = {
+                        'pageNum':pageNum,
+                        'pageSize':pageSize
+                    }
+                    police(where);
+                }else if(res.code == -1){
+                    unauthorized(res.code);
+                }else{
+                    alert(res.msg);
+                }
+            })
+        }
     }
 
 
