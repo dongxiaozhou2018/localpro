@@ -389,6 +389,8 @@ $(function () {
         })
     }
     // 系统巡检
+
+    var groupName = '天津市',alarm = false;
     function inspection(pageNum,pageSize,groupName,alarm) {
         $('.groupName').html('');
         var url = global_path + '/manage/group/groupOption';
@@ -397,9 +399,10 @@ $(function () {
                 var firstmodel = '<option value="天津市">天津市</option>';
                 $('.groupName').append(firstmodel);
                 for(var i = 0;i<res.data.length;i++){
-                    var groupName = '<option value="'+res.data[i].groupName+'">'+res.data[i].groupName+'</option>';
-                    $('.groupName').append(groupName);
+                    var groupNameOpt = '<option value="'+res.data[i].groupName+'">'+res.data[i].groupName+'</option>';
+                    $('.groupName').append(groupNameOpt);
                 }
+                $('.groupName').val(groupName);
             } else if(res.code == -1){
                 unauthorized(res.code);
             } else {
@@ -693,7 +696,11 @@ $(function () {
                             if(!first){
                                 pageNum = obj.curr;
                                 pageSize = obj.limit;
-                                inspection(pageNum,pageSize);
+                                if(alarm){
+                                    $(".alarm").attr('checked');
+                                }
+                                inspection(pageNum,pageSize,groupName,alarm);
+                                return;
                             }
                         }
                     })
@@ -702,17 +709,17 @@ $(function () {
             });
             var $ = layui.$, active = {
                 reload: function(){
-                    var groupName = $('.groupName');
+                    groupName = $('.groupName').val();
                     var alarmcheck = $(".alarm").is(':checked');
                     if(alarmcheck){
-                        var alarm = true;
+                        alarm = true;
                     }else{
-                        var alarm = false;
+                        alarm = false;
                     }
                     //执行重载
                     table.reload('testReload', {
                         where: {
-                            'groupName': groupName.val(),
+                            'groupName': groupName,
                             'alarm':alarm
                         }
                     });
@@ -1107,7 +1114,7 @@ $(function () {
                     page: false, //开启分页
                     cellMinWidth: 80,
                     parseData: function (res) {
-                        if(res.code == 0&&res.data.list.length>0){
+                        if(res.code == 0){
                             for(var i = 0;i<res.data.list.length;i++){
                                 var timestamp4 = new Date(res.data.list[i].createTime);
                                 res.data.list[i].createTime = timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8);
