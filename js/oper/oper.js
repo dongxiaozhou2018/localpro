@@ -20,7 +20,11 @@ $(function () {
                     $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
                 }
             })
-            police(pageNum,pageSize); 
+            var where = {
+                'pageNum':pageNum,
+                'pageSize':pageSize
+            }
+            police(where); 
            
         }else{
             $('.overview').show().siblings().hide();
@@ -72,7 +76,11 @@ $(function () {
             $('.overview').hide();
             $('#police_box').show().siblings().hide();
             $('#police_box').parent('div').show();
-            police(pageNum,pageSize);
+            var where = {
+                'pageNum':pageNum,
+                'pageSize':pageSize
+            }
+            police(where);
         }
         if ($(this).attr('name') == 'czrz') {
             $('.overview').hide();
@@ -724,7 +732,10 @@ $(function () {
         });
     }
     // 报警记录
-    function police(pageNum,pageSize) {
+
+    // 定义查询变量
+    var alarmLevel,police_groupName,alarmType,repairRname,beginTime,endTime,deviceName,dealStatus;
+    function police(where) {
 
         // 所属区域
         $('.police_groupName').html('');
@@ -737,6 +748,7 @@ $(function () {
                     var groupName = '<option value="'+res.data[i].id+'">'+res.data[i].groupName+'</option>';
                     $('.police_groupName').append(groupName);
                 }
+                $('.police_groupName').val(police_groupName);
             } else if(res.code == -1){
                 unauthorized(res.code);
             } else {
@@ -757,7 +769,7 @@ $(function () {
                         $('.alarmType').append(mode);
                     }
                 }
-
+                $('.alarmType').val(alarmType);
             }else {
                 alert(res.msg);
             }
@@ -776,7 +788,7 @@ $(function () {
                         $('.repairRname').append(mode);
                     }
                 }
-
+                $('.repairRname').val(repairRname);
             }else {
                 alert(res.msg);
             }
@@ -801,10 +813,7 @@ $(function () {
                     pageName: 'pageNum' //页码的参数名称，默认：page
                     ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
                 },
-                where:{
-                    'pageNum':pageNum,
-                    'pageSize':pageSize
-                },
+                where:where,
                 title: '报警记录',
                 page: false,
                 parseData: function (res) {
@@ -923,7 +932,24 @@ $(function () {
                             if(!first){
                                 pageNum = obj.curr;
                                 pageSize = obj.limit;
-                                police(pageNum,pageSize);
+                                var where = {
+                                    'pageNum':pageNum,
+                                    'pageSize':pageSize,
+                                    'alarmLevel': alarmLevel,
+                                    'groupId': police_groupName,
+                                    'alarmType':alarmType,
+                                    'repairManId':repairRname,
+                                    'startTime':beginTime,
+                                    'endTime':endTime,
+                                    'deviceName':deviceName,
+                                    'dealStatus':dealStatus,
+                                }
+                                police(where);
+                                $('.alarmLevel').val(alarmLevel);
+                                $('#beginTime').val(beginTime);
+                                $('#Deadline').val(endTime);
+                                $('.deviceName').val(deviceName);
+                                $('.dealStatus').val(dealStatus);
                             }
                         }
                     })
@@ -932,25 +958,25 @@ $(function () {
             });
             var $ = layui.$, active = {
                 reload: function(){
-                    var alarmLevel = $('.alarmLevel');
-                    var police_groupName = $('.police_groupName');
-                    var alarmType = $('.alarmType');
-                    var repairRname = $('.repairRname');
-                    var beginTime = $('#beginTime');
-                    var endTime = $('#Deadline');
-                    var deviceName = $('.deviceName');
-                    var dealStatus = $('.dealStatus');
+                    alarmLevel = $('.alarmLevel').val();
+                    police_groupName = $('.police_groupName').val();
+                    alarmType = $('.alarmType').val();
+                    repairRname = $('.repairRname').val();
+                    beginTime = $('#beginTime').val();
+                    endTime = $('#Deadline').val();
+                    deviceName = $('.deviceName').val();
+                    dealStatus = $('.dealStatus').val();
                   //执行重载
                     table.reload('testReload', {
                         where: {
-                            'alarmLevel': alarmLevel.val(),
-                            'groupId': police_groupName.val(),
-                            'alarmType':alarmType.val(),
-                            'repairManId':repairRname.val(),
-                            'startTime':beginTime.val(),
-                            'endTime':endTime.val(),
-                            'deviceName':deviceName.val(),
-                            'dealStatus':dealStatus.val(),
+                            'alarmLevel': alarmLevel,
+                            'groupId': police_groupName,
+                            'alarmType':alarmType,
+                            'repairManId':repairRname,
+                            'startTime':beginTime,
+                            'endTime':endTime,
+                            'deviceName':deviceName,
+                            'dealStatus':dealStatus,
                         }
                     });
                 }
