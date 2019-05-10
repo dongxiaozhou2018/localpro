@@ -984,7 +984,7 @@ $(function () {
                             }
                         })
                     },
-                    id: 'testReload'
+                    id: 'testReload1'
                 });
 
             }
@@ -995,7 +995,7 @@ $(function () {
                     var deviceIP = $('.deviceIP').val();
                     var modelId = $('.modelId').val();
                     //执行重载
-                    table.reload('testReload', {
+                    table.reload('testReload1', {
                         url: global_path + '/manage/device/listPage',
                         where: {
                             'deviceId': deviceId,
@@ -1237,7 +1237,7 @@ $(function () {
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
-            $('.empty').on('click', function(){
+            $('.user_empty').on('click', function(){
                 $('.realName').val('');
                 $('.select_role').val('');
                 $('.telephone').val('');
