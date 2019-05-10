@@ -950,7 +950,7 @@ $(function () {
                             'alarmLevel': alarmLevel.val(),
                             'groupId': police_groupName.val(),
                             'alarmType':alarmType.val(),
-                            'repairRname':repairRname.val(),
+                            'repairManId':repairRname.val(),
                             'startTime':beginTime.val(),
                             'endTime':endTime.val(),
                             'deviceName':deviceName.val(),
