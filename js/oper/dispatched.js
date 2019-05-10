@@ -10,13 +10,13 @@
             ,tree = layui.tree;
         
         var id = getQueryString('deviceId');
-        commonAjax(global_path + "/manage/user/getOperRealName",{'id':id},function(res){
+        getAjax(global_path + "/manage/user/findFixer",function(res){
             if (res.code == 0) {
                 var firstmodel = '<option value="">请选择指派人员</option>';
                 $('.repairRname').append(firstmodel);
-                if(res.data.list.length>0){
-                    for(var i = 0;i<res.data.list.length;i++){
-                        var mode = '<option value="'+res.data.list[i].id+'">'+res.data.list[i].realName+'</option>';
+                if(res.data.length>0){
+                    for(var i = 0;i<res.data.length;i++){
+                        var mode = '<option value="'+res.data[i].id+'">'+res.data[i].realName+'</option>';
                         $('.repairRname').append(mode);
                     }
                     form.render();
@@ -34,7 +34,7 @@
             var repairRname = $('.repairRname').val();
             var remarks = $('.remarks').val();
             if(repairRname == ''){
-                alert('请选择要分派的人员');
+                alert('请选择维修员');
             }else if(remarks == ''){
                 alert('请填写派工备注');
             }else{
