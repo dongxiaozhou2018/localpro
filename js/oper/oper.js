@@ -869,10 +869,6 @@ $(function () {
                         title: '设备名称'
                     }
                     ,{
-                        field: 'alarmType',
-                        title: '报警类型'
-                    }
-                    ,{
                         field: 'alarmLevel',
                         title: '报警等级',
                         align: 'center'
