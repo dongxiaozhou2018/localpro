@@ -747,6 +747,8 @@ $(function () {
             });
         });
     }
+
+
     // 报警记录
 
     // 定义查询变量
@@ -786,8 +788,6 @@ $(function () {
                     }
                 }
                 $('.alarmType').val(alarmType);
-            }else {
-                alert(res.msg);
             }
         })
 
@@ -805,8 +805,6 @@ $(function () {
                     }
                 }
                 $('.repairRname').val(repairRname);
-            }else {
-                alert(res.msg);
             }
         })
         
@@ -880,8 +878,6 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                    }else{
-                        alert(res.msg);
                     }
                     
                 },
