@@ -11,6 +11,7 @@ $(function () {
         pageNum = 1; pageSize = 10;
         var oper = sessionStorage.getItem('oper');
         $('.layui-body').css('bottom','44px');
+        $('.layui-body').css('height','auto');
         if(oper == 'dispatched'){     //报警记录
             $('.overview').hide();
             $('#police_box').show().siblings().hide();
@@ -42,6 +43,7 @@ $(function () {
         pageNum = 1; pageSize = 10;
         sessionStorage.removeItem('oper');
         $('.layui-body').css('bottom','44px');
+        $('.layui-body').css('height','auto');
         $('.content_box').css('padding','15px');
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if ($(this).attr('name') == 'zl') {
@@ -198,6 +200,11 @@ $(function () {
     $('.Identification3').on('click','img',function(){
         mapFn();
     })
+
+    // 报警弹框关闭按钮
+    $('.close').on('click','i',function(){
+        $('.police_alt').hide();
+    })
     // 管理界面渲染
     function user() {
         layui.use('element', function () {
@@ -209,6 +216,8 @@ $(function () {
     // 数据总览
     function overview(){
         // $('.overview iframe').attr('src','overview.html');
+        $('.layui-body').css('height','105%');
+        $('.layui-body').css('bottom','0');
     }
     // 运维地图
     function mapFn() {
