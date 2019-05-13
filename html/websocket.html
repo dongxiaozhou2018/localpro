@@ -16,6 +16,9 @@
         // webSocket 链接
         var webSocket = null;
         initSocket();
+        // 关闭父级界面报警弹框
+        $('#police_alert', parent.document).hide();
+
         function initSocket(message) {
             
             if (!window.WebSocket) {
