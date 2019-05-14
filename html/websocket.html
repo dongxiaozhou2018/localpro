@@ -15,6 +15,10 @@
         
         // webSocket 链接
         var webSocket = null;
+        if(sessionStorage.getItem('First')){
+            initSocket();
+            sessionStorage.setItem('First',false);
+        }
         // initSocket();
 
         // 获取父页面中的元素
@@ -61,7 +65,6 @@
         // 发送数据
         function send(message) {
             if(message&&message!=null&&message!=undefined){
-                message.cmd = 1;
                 message.result = 0;
                 webSocket.send(JSON.stringify(message));
             }

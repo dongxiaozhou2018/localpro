@@ -14,6 +14,7 @@
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
 </head>
 <body class="layui-bg-cyan">
+    <iframe id="websocket" src="html/websocket.html" style="display: none;"></iframe>
     <div class="login">
         <img class="btitle" src="img/btitle.png">
         <!-- 下拉框   管理员、运维管理 -->
@@ -60,6 +61,7 @@
         sessionStorage.removeItem('checkUser');
         sessionStorage.removeItem('checkServer');
         sessionStorage.removeItem('file');
+        sessionStorage.removeItem('First');
         function captcha(){
             $.getJSON(global_path + "/rand", function(data) {
                 $('#captcha_img_true').attr('src',data.data);
@@ -97,15 +99,16 @@
                 commonAjax(url,parms,function(data){
                     if(data.code == 0){
                         sessionStorage.setItem('HTlogin',JSON.stringify(data));
-                        // $('body').append('<iframe id="websocket" src="html/websocket.html" style="display: none;"></iframe>');
-                        // var message = {
-                        //     "data": {
-                        //         "user": username,
-                        //         "psw": $.md5(password)
-                        //     }
-                        // }
-                        // $('#websocket')[0].contentWindow.send(message);
-                        // $('#websocket')[0].contentWindow.initSocket();
+                        sessionStorage.setItem('First',true);
+                        var message = {
+                            "devid":'',
+                            "cmd": 1,
+                            "data": {
+                                "user": username,
+                                "psw": $.md5(password)
+                            }
+                        }
+                        $('#websocket')[0].contentWindow.initSocket(message);
                         if(data.data.role == '0'){
                             window.location.href = "html/mange/mange.html";
                         }else if(data.data.role == '1'){

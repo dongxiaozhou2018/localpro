@@ -1,4 +1,6 @@
 $(function () {
+    // websocket 连接参数
+    var message = '';
 
     // 删除暂存session数据
     var HTlogin = sessionStorage.getItem('HTlogin');
@@ -99,10 +101,17 @@ $(function () {
     });
     $('.loginOut').on('click', '.left', function () { //退出登录弹框确认按钮
         $('.loginOut').hide();
+        message = {
+            "devid":"",
+            "cmd":2,
+            "result":0,
+            "data":null
+        }
+        $('#websocket')[0].contentWindow.initSocket(message);
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
-                // $('#websocket')[0].contentWindow.closeWebSocket();
+                $('#websocket')[0].contentWindow.closeWebSocket();
                 window.location.href = "../../login.html";
             }
         })
