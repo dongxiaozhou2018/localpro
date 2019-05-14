@@ -7,6 +7,7 @@
     <title>操作员---运维箱安全监控平台</title>
     <link rel="stylesheet" type="text/css" href="../../css/mange.css">
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="../../leaflet/dist/leaflet.css">
     <script type="text/javascript" src="../../leaflet/dist/leaflet.js"></script>
@@ -140,7 +141,7 @@
 
 <body class="layui-layout-body">
     
-    <!-- <iframe id="websocket" src="../websocket.html" style="display: none;"></iframe> -->
+    <iframe id="websocket" src="../websocket.html" style="display: none;"></iframe>
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
             <div class="layui-logo">
@@ -400,8 +401,8 @@
         </div>
     </div>
     <!-- 报警提醒框 -->
-    <div class="police_alt" style="width: 100%;height: 100%;">
-        <div id="police_alert">
+    <div class="police_alt" style="width: 100%;height: 100%;display: none;">
+        <div id="police_alert" class="animated fadeIn">
             <div class="content left">
                 bfefbwfew防腐剂BGV就炯炯窘境付多多多多多多多多多多多反反复复付付付付付付付付付付付
             </div>
@@ -421,5 +422,6 @@
     //     // console.log("我是父页面中的方法，在子页面中调用的");
     //     return iframe2;
     // }
+    // console.log($("#iframe2")[0].contentWindow.echarts_1());
 </script>
 </html>

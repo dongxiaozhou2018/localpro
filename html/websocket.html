@@ -15,9 +15,7 @@
         
         // webSocket 链接
         var webSocket = null;
-        initSocket();
-        // 关闭父级界面报警弹框
-        // $('#police_alert', parent.document).hide();
+        // initSocket();
 
         // 获取父页面中的元素
         // parent.frames["dataOverview"];
@@ -40,7 +38,7 @@
             webSocket.onopen = function(event) {
                 send(message);
                 console.log("建立连接成功" + event.isTrusted);
-
+                $('.police_alt', parent.document).show();           // 显示父级界面报警弹框
             };
 
             // 收到服务端消息
@@ -63,6 +61,8 @@
         // 发送数据
         function send(message) {
             if(message&&message!=null&&message!=undefined){
+                message.cmd = 1;
+                message.result = 0;
                 webSocket.send(JSON.stringify(message));
             }
         }

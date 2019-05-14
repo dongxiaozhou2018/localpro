@@ -1,5 +1,5 @@
 .layui-bg-cyan {
-  background-color: #2F4056!important;
+  background: url(../img/b2.jpg) no-repeat;
 }
 .login {
   height: 300px;
@@ -12,10 +12,8 @@
   margin: -150px 0 0 -150px;
   z-index: 99;
 }
-.login h1 {
-  text-align: center;
-  color: #fff;
-  font-size: 24px;
+.login .btitle {
+  margin-left: -85%;
   margin-bottom: 20px;
 }
 .login .layui-input {
@@ -28,8 +26,20 @@
   line-height: 1.3;
   border-width: 1px;
   border-style: solid;
-  background-color: #fff;
+  background-color: #000d30;
   border-radius: 2px;
+  color: #36ffff;
+  border: 1px solid #08aed8;
+}
+.login input:-webkit-autofill,
+.login textarea:-webkit-autofill,
+.login select:-webkit-autofill {
+  -webkit-text-fill-color: #36ffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px #000d30  inset !important;
+}
+.login ::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #36ffff;
 }
 .login .layui-form-item {
   margin-bottom: 15px;
@@ -43,9 +53,7 @@
   font-size: 13px;
   line-height: normal;
   height: 40px;
-  color: #333;
-  border: 0;
-  box-shadow: 1000px 1000px 0 0 #fff inset;
+  color: #36ffff;
 }
 .login .cpatcha-img {
   position: absolute;
@@ -82,14 +90,14 @@
   height: 38px;
   line-height: 38px;
   padding: 0 18px;
-  background-color: #009688;
-  color: #fff;
+  background-color: #48fbff;
   white-space: nowrap;
   text-align: center;
   font-size: 14px;
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  letter-spacing: 10px;
 }
 .login .userName {
   padding-left: 10px;
