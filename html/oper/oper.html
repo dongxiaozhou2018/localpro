@@ -94,6 +94,7 @@
             animation-iteration-count: infinite; /*无穷反复*/
             animation-delay: 1.1s;
         }
+        /*   故障指示器的闪烁  */
         @keyframes twinkle {
             0% {
                 transform: scale(0.1, 0.1);
@@ -137,6 +138,12 @@
             font-size: 18px;
         }
     </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            // var iframe2=parent.test2();
+            console.log(overview);
+        }
+    </script>
 </head>
 
 <body class="layui-layout-body">
@@ -186,14 +193,14 @@
             </div>
         </div>
         <div class="full_overview" style="position: absolute;top: 0;left: 0;z-index: 1000;display: none;">
-            <iframe src="overview.html" style="width: 100%;height: 100%"></iframe>
+            <iframe name="dataOverview" src="overview.html" style="width: 100%;height: 100%;border: none;"></iframe>
             <button class="layui-btn layui-btn-primary full_outbtn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i>退出全屏</button>
         </div>
 
         <div class="layui-body" style="bottom: 0;">
             
             <div class="overview" style="width: 100%;height: 105%;">
-                <iframe id="iframe2" src="overview.html" style="width: 100%;height: 100%;"></iframe>
+                <iframe name="dataOverview" id="iframe2" src="overview.html" style="width: 100%;height: 100%;border: none;"></iframe>
                 <button class="layui-btn layui-btn-primary layui-btn-sm full_btn" style="position: absolute;top: 10px;left: 10px;"><i class="layui-icon layui-icon-layer"></i>全屏展示</button>
             </div>
             <!-- 内容主体区域 -->
@@ -203,8 +210,6 @@
                     <div class="Identification">
                         <div class="Identification3" style="width: 100%;"><img src="../../img/map_default.png" alt="地图刷新" title="地图刷新" width="80%" height="auto"></div>
                     </div>
-                    <!-- 故障指示器的闪烁 -->
-                    <!-- <div id="css_animation"></div> -->
 
                     <div id="mapid"></div>
 
@@ -418,10 +423,11 @@
 </body>
 <script type="text/javascript">
     loginName();
-    var iframe2 = $('#iframe2');
-    function test2() {
-        // console.log("我是父页面中的方法，在子页面中调用的");
-        return iframe2;
-    }
+    
+    // var iframe2 = $('#iframe2');
+    // function test2() {
+    //     // console.log("我是父页面中的方法，在子页面中调用的");
+    //     return iframe2;
+    // }
 </script>
 </html>

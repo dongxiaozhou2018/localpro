@@ -344,7 +344,7 @@
                             borderWidth: 12
                         }
                     },
-                    data: [1, 2, 3, 3, 2, 1, 2, 1, 3, 4, 5, 3]
+                    data: [3, 4, 3, 4, 3, 4, 3, 6, 3, 4, 3, 6]
 
             }]
 
@@ -521,7 +521,7 @@
                             borderWidth: 12
                         }
                     },
-                    data: [2, 2, 3, 3, 2, 3, 4, 2, 3, 4, 3, 3]
+                    data: [3, 4, 3, 4, 3, 4, 3, 6, 3, 4, 3, 6]
 
             }]
 
@@ -544,7 +544,7 @@
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize: '16'
+                    fontSize: '0.2rem'
                 }
 
             }],
@@ -610,7 +610,7 @@
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize: '16'
+                    fontSize: '0.2rem'
                 }
 
             }],

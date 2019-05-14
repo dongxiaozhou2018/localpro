@@ -18,11 +18,15 @@
         initSocket();
         // 关闭父级界面报警弹框
         // $('#police_alert', parent.document).hide();
-        
-        var iframe2=window.parent.test2();
-        console.log(iframe2[0].contentWindow.echarts);
-        
 
+        // 获取父页面中的元素
+        // parent.frames["dataOverview"];
+
+        // 根据父页面中的方法获取父页面中的元素
+        // var iframe2=parent.test2();
+
+        // 获取父页面中的方法
+        // console.log(parent.overview());
         function initSocket(message) {
             
             if (!window.WebSocket) {
