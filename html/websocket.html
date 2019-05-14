@@ -39,7 +39,7 @@
             // 建立连接
             webSocket.onopen = function(event) {
                 send(message);
-                console.log("建立连接成功" + event);
+                console.log("建立连接成功" + event.isTrusted);
 
             };
 
