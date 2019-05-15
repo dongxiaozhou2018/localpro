@@ -1,15 +1,131 @@
 ﻿$(function () {
-    // initSocket();
-    echarts_1();
-    echarts_2();
-    echarts_4();
-    echarts_31();
-    echarts_32();
-    // echarts_33();
+
+    // var dateType = 'date';
+
+    var dateType = 'month';
+
+    function overView(searchTime){
+        var url = global_path + '/getOverViewInfo';
+        if(dateType == 'month'){
+            var parms = {
+                "range": "1"
+            }
+            parms.month = searchTime;
+        }else if(dateType == 'date'){
+            var parms = {
+                "range": "0"
+            }
+            parms.searchTime = searchTime;
+        }
+        
+        
+
+        commonAjax(url,parms,function(res){
+            if(res.code == 0){
+                // 在线率
+                var onLineRateStr = res.data.onLineRateStr||res.data.avrOnlineRate;
+                var data = [
+                    {
+                        value: onLineRateStr.split('%')[0] - 0,
+                        name: '在线'
+                    },
+                    {
+                        value: (100 - onLineRateStr.split('%')[0]).toFixed(1),
+                        name: '不在线'
+                    }
+                ]
+
+                echarts_31(data);
+
+                // 设备故障类型占比
+                var data1 = [],data2 = [];
+                var alarmRecordByType = res.data.alarmRecordByType||res.data.alarmRecordByTypeList
+                for(var i = 0;i<alarmRecordByType.length;i++){
+                    data1.push(alarmRecordByType[i].alarmName);
+                    var alarmRecord = {
+                        value: alarmRecordByType[i].count||alarmRecordByType[i].alarmType,
+                        name: alarmRecordByType[i].alarmName
+                    };
+                    data2.push(alarmRecord);
+                }
+                echarts_32(data1,data2);
+
+                // 故障总量趋势
+                var data3 = [],data4 = [];
+                for(var i = 0;i<res.data.alarmRecordByMonths.length;i++){
+
+                    data3.push(res.data.alarmRecordByMonths[i].alarmTime);
+                    data4.push(res.data.alarmRecordByMonths[i].count);
+                }
+                echarts_1(data3,data4);
+
+                // 故障区域分布
+                var data5 = [],data6 = [];
+                for(var i = 0;i<res.data.alarmRecordByGroupList.length;i++){
+
+                    data5.push(res.data.alarmRecordByGroupList[i].groupName);
+                    data6.push(res.data.alarmRecordByGroupList[i].count);
+                }
+                echarts_2(data5,data6);
+
+
+                // 故障处理自复率
+                var data7 = [],data8 = [];
+                var alarmRecordByGroup = res.data.alarmRecordSelfcures || res.data.alarmRecordSelfcures;
+                for(var i = 0;i<alarmRecordByGroup.length;i++){
+                    if(alarmRecordByGroup[i].selfcure == 0){
+
+                        alarmRecordByGroup[i].selfcure = '故障自动修复率'
+
+                    }else if(alarmRecordByGroup[i].selfcure == 1){
+
+                        alarmRecordByGroup[i].selfcure = '人工修复率'
+                    }
+                    data7.push(alarmRecordByGroup[i].selfcure);
+                    var alarmRecordByGroupList = {
+                        value: alarmRecordByGroup[i].count,
+                        name: alarmRecordByGroup[i].selfcure
+                    };
+                    data8.push(alarmRecordByGroupList);
+                }
+                console.log(data7)
+                echarts_4(data7,data8);
+
+            }else if(res.code == -1){
+                unauthorized(res.code);
+            }else{
+                alert(res.msg);
+            }
+        })
+    }
+    var timeMonth = new Date().getMonth() + 1;
+    
+    if(timeMonth < 10) {
+        timeMonth = '0' + timeMonth;
+    }
+    var timeYear = new Date().getFullYear();
+
+    // var timeDate = new Date().getDate();
+
+    // var times = timeYear + '-' + timeMonth + '-' + timeDate;
+
+    var times = timeYear + '-' + timeMonth;
+    overView(times);
+
+
+
+
+
+
+
+
+
+    
+    
     echarts_5();
     echarts_6();
 
-    function echarts_1() {
+    function echarts_1(data3,data4) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
 
@@ -54,7 +170,7 @@
 
                 },
 
-                data: ['01-02','01-10','01-12','01-21','01-30','02-05','02-20','03-05','03-11','03-24','04-12','04-30']
+                data: data3
 
             }, {
 
@@ -94,7 +210,6 @@
             }],
             series: [
                 {
-                    name: '2019故障',
                     type: 'line',
                     smooth: true,
                     symbol: 'circle',
@@ -126,7 +241,7 @@
                             borderWidth: 12
                         }
                     },
-                    data: [3, 4, 3, 4, 3, 4, 3, 6, 3, 4, 3, 6]
+                    data: data4
 
                 }]
 
@@ -139,7 +254,7 @@
         });
     }
 
-    function echarts_2() {
+    function echarts_2(data5,data6) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart2'));
 
@@ -159,7 +274,7 @@
             },
             xAxis: [{
                 type: 'category',
-                data: ['河东区', '河西区', '西青区', '南开区', '红桥区', '和平区', '东丽区'],
+                data: data5,
                 axisLine: {
                     show: true,
                     lineStyle: {
@@ -213,7 +328,7 @@
                 {
 
                     type: 'bar',
-                    data: [500, 200, 600, 200, 300, 300, 900],
+                    data: data6,
                     barWidth: '35%', //柱子宽度
                     // barGap: 1, //柱子之间间距
                     itemStyle: {
@@ -357,19 +472,9 @@
         });
     }
 
-    function echarts_4() {
+    function echarts_4(data7,data8) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart4'));
-        var aaa = [
-            {
-                value: 335,
-                name: '故障自动修复率'
-            },
-            {
-                value: 310,
-                name: '人工修复率'
-            }
-        ];
         option = {
             tooltip: {
                 trigger: 'item',
@@ -381,7 +486,7 @@
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['故障自动修复率', '人工修复率'],
+                data: data7,
                 textStyle: {
                     color: 'rgba(255,255,255,.5)',
                     fontSize: '12',
@@ -401,7 +506,7 @@
                     labelLine: {
                         show: false
                     },
-                    data: aaa,
+                    data: data8,
                 }
             ]
         };
@@ -534,7 +639,7 @@
         });
     }
 
-    function echarts_31() {
+    function echarts_31(data) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb1'));
         option = {
@@ -544,7 +649,7 @@
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize: '0.2rem'
+                    fontSize: '16'
                 }
 
             }],
@@ -579,16 +684,7 @@
                     labelLine: {
                         show: false
                     },
-                    data: [
-                        {
-                            value: 5,
-                            name: '在线'
-                        },
-                        {
-                            value: 9,
-                            name: '不在线'
-                        }
-                    ]
+                    data: data
                 }
             ]
         };
@@ -600,7 +696,7 @@
         });
     }
 
-    function echarts_32() {
+    function echarts_32(data1,data2) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb2'));
         option = {
@@ -610,7 +706,7 @@
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize: '0.2rem'
+                    fontSize: '16'
                 }
 
             }],
@@ -626,7 +722,7 @@
                 top: '70%',
                 itemWidth: 10,
                 itemHeight: 10,
-                data: ['主干网络质量预警', '主干网络中断报警', '设备网络质量预警', '设备网络中断报警', 'ETH电流超限报警', 'DC12V电流超限报警','DC48V电流超限报警','非授权开箱报警','温度异常报警','风扇故障报警','短信发送失败报警','AC24V电流超限报警','AC220V电流超限报警','市电故障报警'],
+                data: data1,
                 textStyle: {
                     color: 'rgba(255,255,255,.5)',
                     fontSize: '12',
@@ -645,64 +741,7 @@
                     labelLine: {
                         show: false
                     },
-                    data: [
-                        {
-                            value: 5,
-                            name: '主干网络质量预警'
-                        },
-                        {
-                            value: 3,
-                            name: '主干网络中断报警'
-                        },
-                        {
-                            value: 4,
-                            name: '设备网络质量预警'
-                        },
-                        {
-                            value: 2,
-                            name: '设备网络中断报警'
-                        },
-                        {
-                            value: 3,
-                            name: 'ETH电流超限报警'
-                        },
-                        {
-                            value: 2,
-                            name: 'DC12V电流超限报警'
-                        },
-                        {
-                            value: 5,
-                            name: 'DC48V电流超限报警'
-                        },
-                        {
-                            value: 5,
-                            name: '非授权开箱报警'
-                        },
-                        {
-                            value: 4,
-                            name: '温度异常报警'
-                        },
-                        {
-                            value: 2,
-                            name: '风扇故障报警'
-                        },
-                        {
-                            value: 3,
-                            name: '短信发送失败报警'
-                        },
-                        {
-                            value: 2,
-                            name: 'AC24V电流超限报警'
-                        },
-                        {
-                            value: 4,
-                            name: 'AC220V电流超限报警'
-                        },
-                        {
-                            value: 3,
-                            name: '市电故障报警'
-                        },
-                    ]
+                    data: data2
                 }
             ]
         };
@@ -714,85 +753,7 @@
         });
     }
 
-    function echarts_33() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('fb3'));
-        option = {
-            title: [{
-                text: '兴趣分布',
-                left: 'center',
-                textStyle: {
-                    color: '#fff',
-                    fontSize: '16'
-                }
 
-            }],
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)",
-                position: function (p) { //其中p为当前鼠标的位置
-                    return [p[0] + 10, p[1] - 10];
-                }
-            },
-            legend: {
-                top: '70%',
-                itemWidth: 10,
-                itemHeight: 10,
-                data: ['汽车', '旅游', '财经', '教育', '软件', '其他'],
-                textStyle: {
-                    color: 'rgba(255,255,255,.5)',
-                    fontSize: '12',
-                }
-            },
-            series: [
-                {
-                    name: '兴趣分布',
-                    type: 'pie',
-                    center: ['50%', '42%'],
-                    radius: ['40%', '60%'],
-                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab', '#06b4ab', '#06c8ab', '#06dcab', '#06f0ab'],
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false
-                    },
-                    data: [
-                        {
-                            value: 2,
-                            name: '汽车'
-                        },
-                        {
-                            value: 3,
-                            name: '旅游'
-                        },
-                        {
-                            value: 1,
-                            name: '财经'
-                        },
-                        {
-                            value: 4,
-                            name: '教育'
-                        },
-                        {
-                            value: 8,
-                            name: '软件'
-                        },
-                        {
-                            value: 1,
-                            name: '其他'
-                        },
-                    ]
-                }
-            ]
-        };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize", function () {
-            myChart.resize();
-        });
-    }
 
 
 })

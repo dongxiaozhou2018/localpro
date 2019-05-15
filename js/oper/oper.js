@@ -107,11 +107,11 @@ $(function () {
             "result":0,
             "data":null
         }
-        $('#websocket')[0].contentWindow.initSocket(message);
+        // $('#websocket')[0].contentWindow.initSocket(message);
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
-                $('#websocket')[0].contentWindow.closeWebSocket();
+                // $('#websocket')[0].contentWindow.closeWebSocket();
                 window.location.href = "../../login.html";
             }
         })
@@ -162,6 +162,7 @@ $(function () {
 
     //   总览数据
     $('.full_btn').on('click',function(){
+        $('.full_overview iframe').attr('src','overview.html');
         $('.overview').hide();
         $('.full_overview').show();
         var v = Math.random();
