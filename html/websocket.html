@@ -19,6 +19,7 @@
             initSocket();
             sessionStorage.setItem('First',false);
         }
+        var onmessageData;
         // initSocket();
 
         // 获取父页面中的元素
@@ -36,7 +37,7 @@
                 return false;
             }
 
-            webSocket = new WebSocket('ws://192.168.3.121:80');
+            webSocket = new WebSocket('ws://192.168.1.185:80');
 
             // 建立连接
             webSocket.onopen = function(event) {
@@ -51,22 +52,7 @@
                     $('.police_alt', parent.document).show();           // 显示父级界面报警弹框
                 }
                 if(msgData.cmd == '29'){
-                    $('.layui-side-scroll .btn', parent.document).each(function (){
-                        if($(this).attr('name') == 'sbjk'){
-                            $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
-                            $(this).addClass('click_btn').parents('li').siblings().removeClass('layui-this');
-                        }
-                    })
-                    
-                    $('.overview', parent.document).hide();
-                    $('#terminalConfigure', parent.document).show().siblings().hide();
-                    $('#terminalConfigure', parent.document).parent('div').show();
-                    $('.layui-body', parent.document).css('bottom','0');
-                    $('.content_box', parent.document).css('padding','0');
-                    $('.unsubscribe', parent.document).hide();
-                    $('.subscribe', parent.document).show();
-                    $('.subscribe', parent.document)[parent.inspectionIndex].hide();
-                    $('.unsubscribe', parent.document)[parent.inspectionIndex].show();
+                    onmessageData = msgData;
                 }
                 
             };

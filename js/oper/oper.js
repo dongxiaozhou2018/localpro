@@ -613,40 +613,56 @@ $(function () {
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'subscribe') {             // 订阅
 
+                    //  判断是否有已订阅，如果有先取消订阅
                     for(var i = 0;i<systemList.length;i++){
                         if(systemList[i].subStatus == 1){
                             var message = {
-                                "devid":systemList[i]..deviceId,
+                                "devid":systemList[i].deviceId,
                                 "cmd": 30,
                                 "data": null
                             }
                             $('#websocket')[0].contentWindow.send(message);
-                            
+
                             break;
                         }
                     }
+                    // 订阅
                     var message = {
                         "devid":data.deviceId,
                         "cmd": 29,
                         "data": null
                     }
                     $('#websocket')[0].contentWindow.send(message);
-                    // $('.layui-side-scroll .btn').each(function (){
-                    //     if($(this).attr('name') == 'sbjk'){
-                    //         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
-                    //         $(this).addClass('click_btn').parents('li').siblings().removeClass('layui-this');
-                    //     }
-                    // })
-                    
-                    // $('.overview').hide();
-                    // $('#terminalConfigure').show().siblings().hide();
-                    // $('#terminalConfigure').parent('div').show();
-                    // $('.layui-body').css('bottom','0');
-                    // $('.content_box').css('padding','0');
-                    // $('.unsubscribe').hide();
-                    // $('.subscribe').show();
-                    inspectionIndex = $(this).parents('tr').index();
-                    
+
+                    // 限时10秒，如果10秒内websocket未有返回值，弹框提示
+                    var a = setInterval(time, 1000); 
+                    var num = 0;
+                    function time() {
+                        num++;
+                        var onmessageData = $('#websocket')[0].contentWindow.onmessageData;
+                        if(onmessageData&&onmessageData!=''){
+                            $('.layui-side-scroll .btn').each(function (){
+                                if($(this).attr('name') == 'sbjk'){
+                                    $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
+                                    $(this).addClass('click_btn').parents('li').siblings().removeClass('layui-this');
+                                }
+                            })
+                            
+                            $('.overview').hide();
+                            $('#terminalConfigure').show().siblings().hide();
+                            $('#terminalConfigure').parent('div').show();
+                            $('.layui-body').css('bottom','0');
+                            $('.content_box').css('padding','0');
+                            $('.unsubscribe').hide();
+                            $('.subscribe').show();
+                            $(this).hide();
+                            $(this).siblings().show();
+                        }
+                        if(num > 10 && !onmessageData){
+                            clearTimeout(a);
+                            alert('订阅失败，请重试。');
+                        }
+                    }
 
                 }else if (layEvent === 'unsubscribe') {     // 取消订阅
                     var message = {
