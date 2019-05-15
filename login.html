@@ -16,7 +16,7 @@
 <body class="layui-bg-cyan">
     <iframe id="websocket" src="html/websocket.html" style="display: none;"></iframe>
     <div class="login">
-        <img class="btitle" src="img/btitle.png">
+        <!-- <img class="btitle" src="img/btitle.png"> -->
         <!-- 下拉框   管理员、运维管理 -->
         <form class="layui-form">
             <div class="layui-form-item">
@@ -35,13 +35,13 @@
                 <input class="layui-input input_password" name="password" placeholder="密码" lay-verify="password" type="password" autocomplete="on" value="">
             </div>
             <!-- 验证码 -->
-            <div class="login-captcha-innerbox layui-form-item">
+            <!-- <div class="login-captcha-innerbox layui-form-item">
                 <input autocomplete="off" id="captcha" class="layui-input" type="tel" placeholder="输入图片验证码" maxlength="6">
                 <div id="captcha_img" class="cpatcha-img">
                     <img id="captcha_img_true" src="" alt="" width="110%" height="auto">
                 </div>
                 <a id="aptcha_refresh" href="#" style="cursor: pointer;">换一张</a>
-            </div>
+            </div> -->
             <div class="bottom_login_btn layui-form-item">
                 <span class="layui-btn login_btn login_in_btn">登录</span>
                 <!-- <span class="layui-btn login_btn login_out_btn">取消</span> -->
@@ -62,37 +62,40 @@
         sessionStorage.removeItem('checkServer');
         sessionStorage.removeItem('file');
         sessionStorage.removeItem('First');
-        function captcha(){
-            $.getJSON(global_path + "/rand", function(data) {
-                $('#captcha_img_true').attr('src',data.data);
-            })
-        }
-        captcha();
-        $('#aptcha_refresh').on('click',function(){
-            captcha();
-        })
+
+        $(window).resize(function(){  
+            $(".layui-bg-cyan").width($(window).width());
+            $(".layui-bg-cyan").height($(window).height());
+        }) 
+        // function captcha(){
+        //     $.getJSON(global_path + "/rand", function(data) {
+        //         $('#captcha_img_true').attr('src',data.data);
+        //     })
+        // }
+        // captcha();
+        // $('#aptcha_refresh').on('click',function(){
+        //     captcha();
+        // })
         $('.login_in_btn').on('click',function(){
             var password = $('.input_password').val();
             //密码加密成md5
             // var passwd = $.md5(password);
             var username = $('.input_username').val();
             var role = $('#layui-form-select').val();
-            var captchaVal = $('#captcha').val();
+            // var captchaVal = $('#captcha').val();
             if(role == ''){
                 alert('请选择用户类型');
             }else if(username == ''){
                 alert('请输入用户名');
             }else if(password == ''){
                 alert('请输入密码');
-            }else if(captchaVal == ''){
-                alert('请输入验证码');
             }
             else{
                 var parms = {
                     'username':username,
                     'password':$.md5(password),
                     'role':role,
-                    'captcha':captchaVal,
+                    // 'captcha':captchaVal,
                     'isDel':0
                 }
                 var url = global_path + "/dologin";
@@ -116,7 +119,7 @@
                         }
                     }else{
                         alert(data.msg);
-                        captcha();
+                        // captcha();
                     }
                 })
             }
