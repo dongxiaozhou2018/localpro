@@ -1,5 +1,5 @@
 .layui-bg-cyan {
-  background: url(../img/bg3.jpg) no-repeat;
+  background: url(../img/b2.jpg);
   background-size: cover;
 }
 .login {
@@ -9,13 +9,12 @@
   border-radius: 4px;
   position: absolute;
   left: 50%;
-  top: 65%;
+  top: 40%;
   margin: -150px 0 0 -150px;
   z-index: 99;
 }
 .login .btitle {
-  margin-left: -85%;
-  margin-bottom: 20px;
+  margin-left: -105%;
 }
 .login .layui-input {
   display: block;
