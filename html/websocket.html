@@ -36,18 +36,39 @@
                 return false;
             }
 
-            webSocket = new WebSocket('ws://192.168.1.185:80');
+            webSocket = new WebSocket('ws://192.168.3.121:80');
 
             // 建立连接
             webSocket.onopen = function(event) {
                 send(message);
-                console.log("建立连接成功" + event.isTrusted);
-                $('.police_alt', parent.document).show();           // 显示父级界面报警弹框
             };
 
             // 收到服务端消息
             webSocket.onmessage = function(msg) {
-                console.log("收到消息 : " + msg.data);
+                // console.log("收到消息 : " + msg.data);
+                var msgData = JSON.parse(msg.data);
+                if(msgData.cmd == '29'){
+                    $('.police_alt', parent.document).show();           // 显示父级界面报警弹框
+                }
+                if(msgData.cmd == '29'){
+                    $('.layui-side-scroll .btn', parent.document).each(function (){
+                        if($(this).attr('name') == 'sbjk'){
+                            $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
+                            $(this).addClass('click_btn').parents('li').siblings().removeClass('layui-this');
+                        }
+                    })
+                    
+                    $('.overview', parent.document).hide();
+                    $('#terminalConfigure', parent.document).show().siblings().hide();
+                    $('#terminalConfigure', parent.document).parent('div').show();
+                    $('.layui-body', parent.document).css('bottom','0');
+                    $('.content_box', parent.document).css('padding','0');
+                    $('.unsubscribe', parent.document).hide();
+                    $('.subscribe', parent.document).show();
+                    $('.subscribe', parent.document)[parent.inspectionIndex].hide();
+                    $('.unsubscribe', parent.document)[parent.inspectionIndex].show();
+                }
+                
             };
 
             // 断线重连
@@ -64,11 +85,13 @@
 
         // 发送数据
         function send(message) {
+            webSocketMsg = '';
             if(message&&message!=null&&message!=undefined){
                 message.result = 0;
                 webSocket.send(JSON.stringify(message));
             }
         }
+        
         // 关闭webSocket
         function closeWebSocket() {
             

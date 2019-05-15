@@ -1,7 +1,7 @@
 $(function () {
     // websocket 连接参数
     var message = '';
-
+    // var inspectionIndex;
     // 删除暂存session数据
     var HTlogin = sessionStorage.getItem('HTlogin');
     if(HTlogin){
@@ -107,11 +107,11 @@ $(function () {
             "result":0,
             "data":null
         }
-        // $('#websocket')[0].contentWindow.initSocket(message);
+        $('#websocket')[0].contentWindow.send(message);
         getAjax(global_path + "/logout", function (data) {
             if (data.code == 0) {
                 sessionStorage.removeItem('HTlogin');
-                // $('#websocket')[0].contentWindow.closeWebSocket();
+                $('#websocket')[0].contentWindow.closeWebSocket();
                 window.location.href = "../../login.html";
             }
         })
@@ -409,7 +409,6 @@ $(function () {
     }
     // 系统巡检
 
-    // var groupName = '1',alarm = false;
     function inspection(pageNum,pageSize,id) {
         // 巡检区域
         $('.groupName').html('');
@@ -449,7 +448,7 @@ $(function () {
                     alert(res.msg);
                 }
             })
-
+        var systemList;
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
                 laydate=layui.laydate,
@@ -485,11 +484,21 @@ $(function () {
                                 res.data.list[i].status = '<button class="layui-btn layui-btn-normal layui-btn-xs">在线</button>';
                             }
                         }
+                        systemList = res.data.list;
                         return {
                             'code': res.code,
                             'msg': res.msg,
                             "count": res.data.total,
                             'data': res.data.list
+                        }
+                        for(var i = 0;i<systemList.length;i++){
+                            if(systemList[i].subStatus == 0){
+                                $('.subscribe')[i].show();
+                                $('.unsubscribe')[i].hide();
+                            }else if(systemList[i].subStatus == 1){
+                                $('.subscribe')[i].hide();
+                                $('.unsubscribe')[i].show();
+                            }
                         }
                     }else if(res.code == -1){
                         unauthorized(res.code);
@@ -598,14 +607,56 @@ $(function () {
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
-            table.on('tool(terminal)', function (obj) {
+            table.on('tool(inspection)', function (obj) {
                 var data = obj.data //获得当前行数据
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'subscribe') {             // 订阅
+
+                    for(var i = 0;i<systemList.length;i++){
+                        if(systemList[i].subStatus == 1){
+                            var message = {
+                                "devid":systemList[i]..deviceId,
+                                "cmd": 30,
+                                "data": null
+                            }
+                            $('#websocket')[0].contentWindow.send(message);
+                            
+                            break;
+                        }
+                    }
+                    var message = {
+                        "devid":data.deviceId,
+                        "cmd": 29,
+                        "data": null
+                    }
+                    $('#websocket')[0].contentWindow.send(message);
+                    // $('.layui-side-scroll .btn').each(function (){
+                    //     if($(this).attr('name') == 'sbjk'){
+                    //         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
+                    //         $(this).addClass('click_btn').parents('li').siblings().removeClass('layui-this');
+                    //     }
+                    // })
                     
+                    // $('.overview').hide();
+                    // $('#terminalConfigure').show().siblings().hide();
+                    // $('#terminalConfigure').parent('div').show();
+                    // $('.layui-body').css('bottom','0');
+                    // $('.content_box').css('padding','0');
+                    // $('.unsubscribe').hide();
+                    // $('.subscribe').show();
+                    inspectionIndex = $(this).parents('tr').index();
+                    
+
                 }else if (layEvent === 'unsubscribe') {     // 取消订阅
-                    
+                    var message = {
+                        "devid":data.deviceId,
+                        "cmd": 30,
+                        "data": null
+                    }
+                    $('#websocket')[0].contentWindow.send(message);
+                    $(this).siblings().show();
+                    $(this).hide();
                 }
             });
         });
