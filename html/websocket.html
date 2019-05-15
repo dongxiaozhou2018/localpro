@@ -48,7 +48,12 @@
             webSocket.onmessage = function(msg) {
                 // console.log("收到消息 : " + msg.data);
                 var msgData = JSON.parse(msg.data);
-                if(msgData.cmd == '29'){
+                if(msgData.cmd == '26'){
+                    var policeCont = '内容：' + msgData.data.alarmContent + '<br>' + 
+                                     '设备名称：' + msgData.data.devName + '<br>' + 
+                                     '区域：' + msgData.data.groupName;
+
+                    $('.police_alt .content', parent.document).html(policeCont);
                     $('.police_alt', parent.document).show();           // 显示父级界面报警弹框
                 }
                 if(msgData.cmd == '29'){
