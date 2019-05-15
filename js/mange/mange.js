@@ -1023,7 +1023,7 @@ $(function () {
                 modelId = '';
                 terminalTab('','',pageNum,pageSize);
             });
-            table.on('tool(terminal)', function (obj) { 
+            table.on('tool(terminal)', function (obj) {
                 var data = obj.data //获得当前行数据
                     ,
                     layEvent = obj.event; //获得 lay-event 对应的值

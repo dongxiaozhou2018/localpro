@@ -74,7 +74,7 @@ $(function () {
             $('.overview').hide();
             $('#inspection_box').show().siblings().hide();
             $('#inspection_box').parent('div').show();
-            inspection(pageNum,pageSize,'天津市',false);
+            inspection(pageNum,pageSize,'');
         }
         if ($(this).attr('name') == 'bjjl') {
             $('.overview').hide();
@@ -409,25 +409,46 @@ $(function () {
     }
     // 系统巡检
 
-    var groupName = '天津市',alarm = false;
-    function inspection(pageNum,pageSize,groupName,alarm) {
+    // var groupName = '1',alarm = false;
+    function inspection(pageNum,pageSize,id) {
+        // 巡检区域
         $('.groupName').html('');
         var url = global_path + '/manage/group/groupOption';
         getAjax(url, function(res) {
             if (res.code == 0) {
-                var firstmodel = '<option value="天津市">天津市</option>';
+                var firstmodel = '<option value="">天津市</option>';
                 $('.groupName').append(firstmodel);
                 for(var i = 0;i<res.data.length;i++){
-                    var groupNameOpt = '<option value="'+res.data[i].groupName+'">'+res.data[i].groupName+'</option>';
+                    var groupNameOpt = '<option value="'+res.data[i].id+'">'+res.data[i].groupName+'</option>';
                     $('.groupName').append(groupNameOpt);
                 }
-                $('.groupName').val(groupName);
             } else if(res.code == -1){
                 unauthorized(res.code);
             } else {
                 alert(res.msg);
             }
         })
+
+        // 设备型号
+        $('.modelId').html('');
+            var url = global_path + '/manage/model/queryAllModel';
+            getAjax(url, function(res) {
+                if (res.code == 0) {
+                    var firstmodel = '<option value="">请选择</option>';
+                    $('.modelId').append(firstmodel);
+                    if(res.data.length>0){
+                        for(var i = 0;i<res.data.length;i++){
+                            var mode = '<option value="'+res.data[i].id+'">'+res.data[i].modelName+'</option>';
+                            $('.modelId').append(mode);
+                        }
+                    }
+
+                } else if(res.code == -1){
+                    unauthorized(res.code);
+                } else {
+                    alert(res.msg);
+                }
+            })
 
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
@@ -437,11 +458,13 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#inspection',
-                url: global_path + '/systeminspectioncontroller/selectAll', //数据接口
+                url: global_path + '/systeminspectioncontroller/OperSelectAll', //数据接口
+                method: 'post',
                 headers: {
                     'at': at
                 },
                 loading:true,
+                contentType : "application/json",
                 request: {
                     pageName: 'pageNum' //页码的参数名称，默认：page
                     ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
@@ -449,55 +472,17 @@ $(function () {
                 where:{
                     'pageNum':pageNum,
                     'pageSize':pageSize,
-                    'groupName':groupName,
-                    'alarm':alarm
+                    'id':id
                 },
                 title: '系统巡检',
                 page: false,
-                toolbar: '#toolbarDemo', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
                 parseData: function (res) {
                     if(res.code == 0){
-                        for(var i = 0;i<res.data.list.length;i++){
-                            // P0E电流
-                            var poeAlist = res.data.list[i].poeAlist[0].split(',');
-                            for(var j = 0;j<poeAlist.length;j++){
-                                res.data.list[i]['poeAlist'+(j+1)] = poeAlist[j];
-                            }
-                            // DC12V输出电流
-                            var dc12vAlist = res.data.list[i].dc12vAlist[0].split(',');
-                            for(var j = 0;j<dc12vAlist.length;j++){
-                                res.data.list[i]['dc12vAlist'+(j+1)] = dc12vAlist[j];
-                            }
-                            
-                            // AC24V输出电流
-                            var ac24vAlist = res.data.list[i].ac24vAlist[0].split(',');
-                            for(var j = 0;j<ac24vAlist.length;j++){
-                                res.data.list[i]['ac24vAlist'+(j+1)] = ac24vAlist[j];
-                            }
-                            // 网络延时数据
-                            var netdelayList = res.data.list[i].netdelayList[0].split(',');
-                            for(var j = 0;j<netdelayList.length;j++){
-                                res.data.list[i]['netdelayList'+(j+1)] = netdelayList[j];
-                            }
-                            // 带宽占用
-                            var netbandList = res.data.list[i].netbandList[0].split(',');
-                            for(var j = 0;j<netbandList.length;j++){
-                                res.data.list[i]['netbandList'+(j+1)] = netbandList[j] + ' kbps';
-                            }
-
-                            // 设备状态
-                            if(res.data.list[i].status == '0'){
-                                res.data.list[i].status = '<span class="layui-btn">关闭</span>'
-                            }else if(res.data.list[i].status == '1'){
-                                res.data.list[i].status = '<span class="layui-btn layui-btn-normal">启用</span>'
-                            }else if(res.data.list[i].status == '2'){
-                                res.data.list[i].status = '<span class="layui-btn layui-btn-danger">报警</span>'
-                            }else if(res.data.list[i].status == '3'){
-                                res.data.list[i].status = '<span class="layui-btn layui-btn-warm">预警</span>'
-                            }
-                            // 撤防延时时间
-                            if(res.data.list[i].doorduty == '0'){
-                                res.data.list[i].doorduty = '<span class="layui-btn">布防</span>'
+                        for (var i = 0; i < res.data.list.length; i++) {
+                            if (res.data.list[i].status == 0) {
+                                res.data.list[i].status = '<button class="layui-btn layui-btn-warm layui-btn-xs">不在线</button>';
+                            } else if (res.data.list[i].status == 1) {
+                                res.data.list[i].status = '<button class="layui-btn layui-btn-normal layui-btn-xs">在线</button>';
                             }
                         }
                         return {
@@ -515,191 +500,35 @@ $(function () {
                 },
                 cols: [[ //表头
                     {
+                        field: 'deviceId',
+                        title: '设备ID'
+                    }
+                    , {
+                        field: 'deviceName',
+                        title: '设备名称'
+                    }
+                    , {
+                        field: 'deviceIP',
+                        title: '设备IP'
+                    }
+                    , {
+                        field: 'devicePort',
+                        title: '端口号'
+                    }
+                    , {
+                        field: 'modelName',
+                        title: '设备型号'
+                    }
+                    , {
                         field: 'status',
-                        title: '设备状态'
-                    }
-                    ,{
-                        field: 'temp',
-                        title: '机箱内温度'
-                    }
-                    ,{
-                        field: 'groupName',
-                        title: '地区'
+                        title: '状态',
+                        align: 'center',
                     }
                     , {
-                        field: 'poeAlist1',
-                        title: 'ETH_1电流'
-                    }
-                    ,{
-                        field: 'poeAlist2',
-                        title: 'ETH_2电流'
-                    }
-                    ,{
-                        field: 'poeAlist3',
-                        title: 'ETH_3电流'
-                    }
-                    , {
-                        field: 'poeAlist4',
-                        title: 'ETH_4电流'
-                    }
-                    ,{
-                        field: 'poeAlist5',
-                        title: 'ETH_5电流'
-                    }
-                    ,{
-                        field: 'poeAlist6',
-                        title: 'ETH_6电流'
-                    }
-                    , {
-                        field: 'dc12vAlist1',
-                        title: 'DC12V_1输出电流'
-                    }
-                    ,{
-                        field: 'dc12vAlist2',
-                        title: 'DC12V_2输出电流'
-                    }
-                    ,{
-                        field: 'dc12vAlist3',
-                        title: 'DC12V_3输出电流'
-                    }
-                    , {
-                        field: 'dc48vA',
-                        title: 'DC48V输出电流'
-                    }
-                    , {
-                        field: 'dc48vinV',
-                        title: 'DC48V输入电流'
-                    }
-                    , {
-                        field: 'ac220vinV',
-                        title: 'AC220V输出电压',
-                        hide: true
-                    }
-                    , {
-                        field: 'ac24vAlist1',
-                        title: 'AC24V_1电流',
-                        hide: true
-                    }
-                    , {
-                        field: 'ac24vAlist2',
-                        title: 'AC24V_2电流',
-                        hide: true
-                    }
-                    , {
-                        field: 'ac24vAlist3',
-                        title: 'AC24V_3电流',
-                        hide: true
-                    }
-                    , {
-                        field: 'ac220vA',
-                        title: 'AC220V输出电流',
-                        hide: true
-                    }
-                    , {
-                        field: 'ac220vA',
-                        title: 'AC220V输出电流',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netdelayList1',
-                        title: 'ETH_1网络延迟',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netdelayList2',
-                        title: 'ETH_2网络延迟 ',
-                        hide: true
-                    }
-                    , {
-                        field: 'netdelayList3',
-                        title: 'ETH_3网络延迟',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netdelayList4',
-                        title: 'ETH_4网络延迟',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netdelayList5',
-                        title: 'ETH_5网络延迟',
-                        hide: true
-                    }
-                    
-                    , {
-                        field: 'netdelayList6',
-                        title: 'ETH_6网络延迟',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netdelayList7',
-                        title: 'FC网络延迟',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netbandList1',
-                        title: 'ETH_1宽带占用',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netbandList2',
-                        title: 'ETH_2宽带占用 ',
-                        hide: true
-                    }
-                    , {
-                        field: 'netbandList3',
-                        title: 'ETH_3宽带占用',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netbandList4',
-                        title: 'ETH_4宽带占用',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netbandList5',
-                        title: 'ETH_5宽带占用',
-                        hide: true
-                    }
-                    , {
-                        field: 'netbandList6',
-                        title: 'ETH_6宽带占用',
-                        hide: true
-                    }
-                    ,{
-                        field: 'netbandList7',
-                        title: 'FC宽带占用',
-                        hide: true
-                    }
-                    ,{
-                        field: 'fanspeed',
-                        title: '风扇转速',
-                        hide: true
-                    }
-                    , {
-                        field: 'qkwh',
-                        title: '用电总量',
-                        hide: true
-                    }
-                    ,{
-                        field: 'qkw',
-                        title: '当前功率',
-                        hide: true
-                    }
-                    ,{
-                        field: 'type',
-                        title: '设备类型',
-                        hide: true
-                    }
-                    , {
-                        field: 'simcsq',
-                        title: 'sim卡信号质量',
-                        hide: true
-                    }
-                    , {
-                        field: 'doorduty',
-                        title: '撤防延时时间',
-                        hide: true
+                        fixed: 'right',
+                        title: '操作',
+                        align: 'center',
+                        toolbar: '#toolbarDemo'
                     }
                 ]],
                 done: function(res, curr, count){
@@ -718,7 +547,7 @@ $(function () {
                                 if(alarm){
                                     $(".alarm").attr('checked');
                                 }
-                                inspection(pageNum,pageSize,groupName,alarm);
+                                inspection(pageNum,pageSize,'');
                                 return;
                             }
                         }
@@ -728,7 +557,11 @@ $(function () {
             });
             var $ = layui.$, active = {
                 reload: function(){
-                    groupName = $('.groupName').val();
+                    var groupId = $('.groupName').val();
+                    var deviceId = $('.deviceId').val();
+                    var deviceName = $('.deviceName').val();
+                    var deviceIP = $('.deviceIP').val();
+                    var modelId = $('.modelId').val();
                     var alarmcheck = $(".alarm").is(':checked');
                     if(alarmcheck){
                         alarm = true;
@@ -738,8 +571,11 @@ $(function () {
                     //执行重载
                     table.reload('testReload', {
                         where: {
-                            'groupName': groupName,
-                            'alarm':alarm
+                            'id': groupId,
+                            'deviceId': deviceId,
+                            'deviceName': deviceName,
+                            'deviceIP': deviceIP,
+                            'modelId':modelId
                         }
                     });
                 }
@@ -750,10 +586,27 @@ $(function () {
                 active[type] ? active[type].call(this) : '';
             });
             $('.empty').on('click', function(){
-                $('.groupName').val('天津市');
-                $(".alarm_box").html('<input class="alarm" type="checkbox" name="alarm" value="只显示故障终端" />只显示故障终端');
+                $('.groupName').val('');
+                $('.deviceId').val('');
+                $('.deviceName').val('');
+                $('.deviceIP').val('');
+                $('.modelId').val('');
+                deviceId = '';
+                deviceName = '';
+                deviceIP = '';
+                modelId = '';
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
+            });
+            table.on('tool(terminal)', function (obj) {
+                var data = obj.data //获得当前行数据
+                    ,
+                    layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'subscribe') {             // 订阅
+                    
+                }else if (layEvent === 'unsubscribe') {     // 取消订阅
+                    
+                }
             });
         });
     }
