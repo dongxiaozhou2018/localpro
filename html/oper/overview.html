@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../../js/jquery.js"></script>
     <script type="text/javascript" src="../../js/globalvar.js"></script>
     <link rel="stylesheet" href="../../css/comon0.css">
+    <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
     <script>
         $(window).load(function() {
             $(".loading").fadeOut()
@@ -40,25 +41,15 @@
     <div class="head">
         <h1>态势总览</h1>
         <div class="weather">
-            <span id="showTime">2019年4月23-11时23分49秒</span></div>
-
-        <script>
-            var t = null;
-            t = setTimeout(time, 1000);
-
-            function time() {
-                clearTimeout(t);
-                dt = new Date();
-                var y = dt.getFullYear();
-                var mt = dt.getMonth() + 1;
-                var day = dt.getDate();
-                var h = dt.getHours();
-                var m = dt.getMinutes();
-                var s = dt.getSeconds();
-                document.getElementById("showTime").innerHTML = y + "年" + mt + "月" + day + "-" + h + "时" + m + "分" + s + "秒";
-                t = setTimeout(time, 1000);
-            }
-        </script>
+            <div class="layui-inline left select_type_box">
+                <label class="select_type" style="color: #fff">统计区间：</label>
+                <select name="role" class="select_role right">
+                    <option value="7">最近7天</option>
+                    <option value="15">最近15天</option>
+                    <option value="30" selected = "selected" >最近30天</option>
+                    <option value="90">最近90天</option>
+                </select>
+            </div>
 
 
     </div>
@@ -106,7 +97,7 @@
                     </div>
                     <div class="barbox2">
                         <ul class="clearfix">
-                            <li class="pulll_left">数据总量显示</li>
+                            <li class="pulll_left">终端设备数量</li>
                         </ul>
                     </div>
                 </div>
