@@ -1255,7 +1255,7 @@ $(function () {
                         break;
                     case 'update':
                         if (data.length === 0) {
-                            layer.msg('请选择一行');
+                            layer.msg('请勾选要操作的记录');
                         } else if (data.length > 1) {
                             layer.msg('只能同时编辑一个');
                         } else {
@@ -1264,7 +1264,7 @@ $(function () {
                         break;
                     case 'delete':
                         if (data.length === 0) {
-                            layer.msg('请选择一行');
+                            layer.msg('请勾选要操作的记录');
                         } else if (data.length > 1) {
                             layer.confirm('真的删除行么', function (index) {
                                 var userId = [];

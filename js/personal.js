@@ -111,7 +111,9 @@
                         HTlogin.data.password = parms.password;
                         HTlogin.data.dept = parms.dept;
                         HTlogin.data.telephone = parms.telephone;
-                        HTlogin.data.url = file.url;
+                        if(file){
+                            HTlogin.data.url = file.url;
+                        }
                         sessionStorage.setItem('HTlogin',JSON.stringify(HTlogin));
 
                         parent.layer.msg(data.msg);
