@@ -160,35 +160,6 @@ $(function () {
         }
     });
 
-    //   总览数据
-    $('.full_btn').on('click',function(){
-        $('.full_overview iframe').attr('src','overview.html');
-        $('.overview').hide();
-        $('.full_overview').show();
-        var v = Math.random();
-        $('.full_overview iframe').attr('src','overview.html?v=10');
-        var full_width = $(window).width();
-        var full_height = $(window).height();
-        $('.full_overview').css({
-            'width':full_width+'px',
-            'height':full_height+'px'
-        });
-        window.onresize = function() {
-            var full_width = $(window).width();
-            var full_height = $(window).height();
-            $('.full_overview').css({
-                'width':full_width+'px',
-                'height':full_height+'px'
-            });
-        }
-    })
-
-    $('.full_outbtn').on('click',function(){
-        $('.overview').show();
-        $('.full_overview').hide();
-        $('.overview iframe').attr('src','overview.html?v=20');
-    })
-
     // 地图查询、分组树显示
     $('.map_box').on('click','.show_list',function(){
         
