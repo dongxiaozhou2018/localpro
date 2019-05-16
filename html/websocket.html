@@ -15,7 +15,7 @@
         
         // webSocket 链接
         var webSocket = null;
-        if(sessionStorage.getItem('First')){
+        if(sessionStorage.getItem('First')||getQueryString('web') == 'overview'){
             initSocket();
             sessionStorage.setItem('First',false);
         }

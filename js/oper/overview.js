@@ -1,9 +1,8 @@
 ﻿$(function () {
 
-    // var dateType = 'date';
-
-    var dateType = 'month';
-
+    if(!getQueryString('webOp')){
+        $('body').append('<iframe id="websocket" src="../websocket.html" style="display: none;"></iframe>');
+    }
     function overView(searchTime){
         var url = global_path + '/getOverViewInfo';
         var parms = {
