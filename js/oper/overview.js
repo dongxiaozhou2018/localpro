@@ -6,16 +6,8 @@
 
     function overView(searchTime){
         var url = global_path + '/getOverViewInfo';
-        if(dateType == 'month'){
-            var parms = {
-                "range": "1"
-            }
-            parms.month = searchTime;
-        }else if(dateType == 'date'){
-            var parms = {
-                "range": "0"
-            }
-            parms.searchTime = searchTime;
+        var parms = {
+            "searchTime": searchTime
         }
         
         
@@ -23,72 +15,129 @@
         commonAjax(url,parms,function(res){
             if(res.code == 0){
                 // 在线率
-                var onLineRateStr = res.data.onLineRateStr||res.data.avrOnlineRate;
-                var data = [
-                    {
-                        value: onLineRateStr.split('%')[0] - 0,
-                        name: '在线'
-                    },
-                    {
-                        value: (100 - onLineRateStr.split('%')[0]).toFixed(1),
-                        name: '掉线'
-                    }
-                ]
+                // var onLineRateStr = res.data.onLineRateStr||res.data.avrOnlineRate;
+                // var data = [
+                //     {
+                //         value: onLineRateStr.split('%')[0] - 0,
+                //         name: '在线'
+                //     },
+                //     {
+                //         value: (100 - onLineRateStr.split('%')[0]).toFixed(1),
+                //         name: '掉线'
+                //     }
+                // ]
 
-                echarts_31(data,'fb1');
+                // echarts_31(data,'fb1');
 
                 // 故障处理自复率
-                var data7 = [],data8 = [];
-                var alarmRecordByGroup = res.data.alarmRecordSelfcures || res.data.alarmRecordSelfcures;
-                for(var i = 0;i<alarmRecordByGroup.length;i++){
-                    if(alarmRecordByGroup[i].selfcure == 0){
-
-                        alarmRecordByGroup[i].selfcure = '故障自动修复率'
-
-                    }else if(alarmRecordByGroup[i].selfcure == 1){
-
-                        alarmRecordByGroup[i].selfcure = '人工修复率'
-                    }
-                    data7.push(alarmRecordByGroup[i].selfcure);
-                    var alarmRecordByGroupList = {
-                        value: alarmRecordByGroup[i].count,
-                        name: alarmRecordByGroup[i].selfcure
-                    };
-                    data8.push(alarmRecordByGroupList);
-                }
-
-                echarts_32(data7,data8,'fb2','修复方式');
-
-                // 设备故障类型占比
                 var data1 = [],data2 = [];
-                var alarmRecordByType = res.data.alarmRecordByType||res.data.alarmRecordByTypeList
-                for(var i = 0;i<alarmRecordByType.length;i++){
-                    data1.push(alarmRecordByType[i].alarmName);
-                    var alarmRecord = {
-                        value: alarmRecordByType[i].count||alarmRecordByType[i].alarmType,
-                        name: alarmRecordByType[i].alarmName
+                var alarmRecordRepairMethods = res.data.alarmRecordRepairMethods;
+
+                for(var i = 0;i<alarmRecordRepairMethods.length;i++){
+                    if(alarmRecordRepairMethods[i].dealStatus == 1){
+
+                        alarmRecordRepairMethods[i].dealStatus = '人工派单'
+
+                    }else if(alarmRecordRepairMethods[i].dealStatus == 2){
+
+                        alarmRecordRepairMethods[i].dealStatus = '远程修复'
+
+                    }else if(alarmRecordRepairMethods[i].dealStatus == 3){
+
+                        alarmRecordRepairMethods[i].dealStatus = '自动修复'
+                    }
+                    data1.push(alarmRecordRepairMethods[i].dealStatus);
+                    var alarmRecordByGroupList = {
+
+                        value: alarmRecordRepairMethods[i].count,
+                        name: alarmRecordRepairMethods[i].dealStatus
                     };
-                    data2.push(alarmRecord);
+                    data2.push(alarmRecordByGroupList);
                 }
-                echarts_32(data1,data2,'fb3','故障处理比率');
 
-                // 故障总量趋势
+                echarts_32(data1,data2,'fb2','修复方式');
+
+                // 故障处理比率
                 var data3 = [],data4 = [];
-                for(var i = 0;i<res.data.alarmRecordByMonths.length;i++){
+                var alarmRecordDealStatuses = res.data.alarmRecordDealStatuses;
 
-                    data3.push(res.data.alarmRecordByMonths[i].alarmTime);
-                    data4.push(res.data.alarmRecordByMonths[i].count);
+                for(var i = 0;i<alarmRecordDealStatuses.length;i++){
+
+                    if(alarmRecordDealStatuses[i].dealStatus != 3){
+                        if(alarmRecordDealStatuses[i].dealStatus == 0){
+
+                            alarmRecordDealStatuses[i].dealStatus = '待处理数量'
+
+                        }else if(alarmRecordDealStatuses[i].dealStatus == 1){
+
+                            alarmRecordDealStatuses[i].dealStatus = '处理中数量'
+
+                        }else if(alarmRecordDealStatuses[i].dealStatus == 2){
+
+                            alarmRecordDealStatuses[i].dealStatus = '已处理数量'
+                        }
+                        data3.push(alarmRecordDealStatuses[i].dealStatus);
+                        var alarmRecord = {
+
+                            value: alarmRecordDealStatuses[i].count,
+                            name: alarmRecordDealStatuses[i].dealStatus
+                        };
+                        data4.push(alarmRecord);
+                    }
                 }
-                echarts_1(data3,data4);
+                echarts_32(data3,data4,'fb3','故障处理比率');
+
+
+                // 故障类型
+                var data5 = [];
+                for(var i = 0;i<res.data.alarmRecordByTypes.length;i++){
+
+                    var alarmRecordByTypesData = {
+
+                        value: res.data.alarmRecordByTypes[i].count,
+                        name: res.data.alarmRecordByTypes[i].alarmName
+                    };
+                    data5.push(alarmRecordByTypesData);
+                }
+                echarts_33(data5,'fb4','故障类型');
+
+                // 故障趋势
+                var data6 = [],data7 = [];
+                for(var i = 0;i<res.data.alarmRecordCountByTimes.length;i++){
+
+                    res.data.alarmRecordCountByTimes[i].alarmTime = res.data.alarmRecordCountByTimes[i].alarmTime.split(' ')[0];
+
+                    data6.push(res.data.alarmRecordCountByTimes[i].alarmTime);
+
+                    var alarmRecordCountByTimesData = {
+
+                        value: res.data.alarmRecordCountByTimes[i].count || 0,
+                        name: res.data.alarmRecordCountByTimes[i].alarmName
+                    };
+                    data7.push(alarmRecordCountByTimesData);
+                }
+                echarts_1(data6,data7);
+
 
                 // 故障区域分布
-                var data5 = [],data6 = [];
-                for(var i = 0;i<res.data.alarmRecordByGroupList.length;i++){
+                var data8 = [],data9 = [],data10 = [];
+                for(var i = 0;i<res.data.alarmRecordByGroups.length;i++){
 
-                    data5.push(res.data.alarmRecordByGroupList[i].groupName);
-                    data6.push(res.data.alarmRecordByGroupList[i].count);
+                    if(data8.indexOf(res.data.alarmRecordByGroups[i].groupName) == -1){
+
+                        data8.push(res.data.alarmRecordByGroups[i].groupName);
+                    }
+
+                    if(res.data.alarmRecordByGroups[i].dealStatus == 0){
+
+                        data10.push(res.data.alarmRecordByGroups[i].count);
+
+                    }else if(res.data.alarmRecordByGroups[i].dealStatus == 2){
+
+                        data9.push(res.data.alarmRecordByGroups[i].count);
+                    }
                 }
-                echarts_3(data5,data6);
+                echarts_3(data8,data9,data10);
 
 
             }else if(res.code == -1){
@@ -98,21 +147,12 @@
             }
         })
     }
-    var timeMonth = new Date().getMonth() + 1;
-    
-    if(timeMonth < 10) {
-        timeMonth = '0' + timeMonth;
-    }
-    var timeYear = new Date().getFullYear();
+    overView('30');
 
-    // var timeDate = new Date().getDate();
+    $('.searchTime').on('change',function(){
 
-    // var times = timeYear + '-' + timeMonth + '-' + timeDate;
-
-    var times = timeYear + '-' + timeMonth;
-    // overView(times);
-
-
+        overView($('.searchTime').val());
+    })
 
 
 
@@ -122,15 +162,14 @@
 
     
     
-    echarts_33('fb4','故障类型');
-    echarts_2();
-    echarts_3();
-    echarts_33('fb7','网略攻击类型分析');
+    echarts_6();
+    // echarts_33('fb7','网略攻击类型分析');
     echarts_4();
 
     function echarts_31(data,id) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById(id));
+        myChart.clear();
         option = {
 
             title: [{
@@ -188,6 +227,7 @@
     function echarts_32(data1,data2,id,txt) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById(id));
+        myChart.clear();
         option = {
 
             title: [{
@@ -242,9 +282,9 @@
         });
     }
 
-    function echarts_33(id,txt){
+    function echarts_33(data3,id,txt){
         var myChart = echarts.init(document.getElementById(id));
-
+        myChart.clear();
         option = {
             tooltip : {
                 trigger: 'item',
@@ -253,15 +293,6 @@
                     return [p[0] + 10, p[1] - 10];
                 }
             },
-            // legend: {
-            //     orient: 'vertical',
-            //     left: 'left',
-            //     data: ['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8'],
-            //     textStyle: {
-            //         color: 'rgba(255,255,255,.5)',
-            //         fontSize: '12',
-            //     }
-            // },
             series : [
                 {
                     name:txt,
@@ -270,32 +301,7 @@
                     radius: ['15%', '80%'],
                     center: ['50%', '55%'],
                     roseType : 'radius',
-                    // label: {
-                    //     normal: {
-                    //         show: false
-                    //     },
-                    //     emphasis: {
-                    //         show: true
-                    //     }
-                    // },
-                    // lableLine: {
-                    //     normal: {
-                    //         show: false
-                    //     },
-                    //     emphasis: {
-                    //         show: true
-                    //     }
-                    // },
-                    data:[
-                        {value:10, name:'rose1'},
-                        {value:5, name:'rose2'},
-                        {value:15, name:'rose3'},
-                        {value:25, name:'rose4'},
-                        {value:20, name:'rose5'},
-                        {value:35, name:'rose6'},
-                        {value:30, name:'rose7'},
-                        {value:40, name:'rose8'}
-                    ]
+                    data:data3
                 }
             ]
         };
@@ -307,10 +313,10 @@
         });
     }
 
-    function echarts_1(data3,data4) {
+    function echarts_1(data4,data5) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
-
+        myChart.clear();
         option = {
             tooltip: {
                 trigger: 'axis',
@@ -323,12 +329,38 @@
                     return [pt[0], '10%'];
                 }
             },
+            grid: {
+                left: '0%',
+                top: '0',
+                right: '0%',
+                bottom: '20%',
+                containLabel: true
+            },
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
-                
+                data: data4,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                        width: 1,
+                        type: "solid"
+                    },
+                },
 
-                data: data3
+                axisTick: {
+                    show: false,
+                },
+                axisLabel: {
+                    interval: 0,
+                    show: true,
+                    splitNumber: 15,
+                    textStyle: {
+                        color: "rgba(255,255,255,.6)",
+                        fontSize: '12',
+                    },
+                },
 
             }, {
 
@@ -417,7 +449,7 @@
                             // borderWidth: 12
                         }
                     },
-                    data: data4
+                    data: data5
 
                 }]
 
@@ -433,7 +465,7 @@
     function echarts_2() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb5'));
-
+        myChart.clear();
         option = {
             title: [{
                 text: '能耗统计',
@@ -523,10 +555,158 @@
         });
     }
 
-    function echarts_3() {
+    function echarts_6() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('fb5'));
+        myChart.clear();
+        var dataStyle = {
+            normal: {
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                },
+                borderWidth:3,
+                borderColor:'#0e1d56'
+            }
+        };
+        var placeHolderStyle = {
+            normal: {
+                color: 'rgba(255,255,255,.05)',
+                label: {
+                    show: false,
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+        option = {
+            title: [{
+                text: '能耗统计',
+                left: 'center',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '16'
+                }
+
+            }],
+            color: ['#0f63d6', '#0f78d6', '#0f8cd6', '#0fa0d6', '#0fb4d6'],
+            tooltip: {
+                show: true,
+                formatter: "{a} : {c} "
+            },
+            legend: {
+                itemWidth: 10,
+                itemHeight: 10,
+                itemGap: 12,
+                bottom: '3%',
+
+                data: ['浙江', '上海', '广东', '北京'],
+                textStyle: {
+                    color: 'rgba(255,255,255,.6)',
+                }
+            },
+
+            series: [
+                {
+                    name: '浙江',
+                    type: 'pie',
+                    clockWise: false,
+                    center: ['50%', '50%'],
+                    radius: ['59%', '70%'],
+                    itemStyle: dataStyle,
+                    hoverAnimation: false,
+                    data: [{
+                        value: 80,
+                        name: '01'
+                    }, {
+                        value: 20,
+                        name: 'invisible',
+                        tooltip: {
+                            show: false
+                        },
+                        itemStyle: placeHolderStyle
+                    }]
+                },
+                {
+                    name: '上海',
+                    type: 'pie',
+                    clockWise: false,
+                    center: ['50%', '50%'],
+                    radius: ['50%', '60%'],
+                    itemStyle: dataStyle,
+                    hoverAnimation: false,
+                    data: [{
+                        value: 70,
+                        name: '02'
+                    }, {
+                        value: 30,
+                        name: 'invisible',
+                        tooltip: {
+                            show: false
+                        },
+                        itemStyle: placeHolderStyle
+                    }]
+                },
+                {
+                    name: '广东',
+                    type: 'pie',
+                    clockWise: false,
+                    hoverAnimation: false,
+                    center: ['50%', '50%'],
+                    radius: ['39%', '50%'],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 65,
+                        name: '03'
+                }, {
+                        value: 35,
+                        name: 'invisible',
+                        tooltip: {
+                            show: false
+                        },
+                        itemStyle: placeHolderStyle
+                    }]
+                },
+                {
+                    name: '北京',
+                    type: 'pie',
+                    clockWise: false,
+                    hoverAnimation: false,
+                    center: ['50%', '50%'],
+                    radius: ['29%', '40%'],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 60,
+                        name: '04'
+                }, {
+                        value: 40,
+                        name: 'invisible',
+                        tooltip: {
+                            show: false
+                        },
+                        itemStyle: placeHolderStyle
+                    }]
+                }
+                ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    }
+
+    function echarts_3(data8,data9,data10) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb6'));
-
+        myChart.clear();
         option = {
             title: [{
                 text: '故障区域分布',
@@ -552,7 +732,7 @@
             },
             xAxis: [{
                 type: 'category',
-                data: ['周一','周二','周三','周四','周五','周六','周日'],
+                data: data8,
                 axisLine: {
                     show: true,
                     lineStyle: {
@@ -567,7 +747,7 @@
                 },
                 axisLabel: {
                     interval: 0,
-                    // rotate:50,
+                    rotate:45,
                     show: true,
                     splitNumber: 15,
                     textStyle: {
@@ -604,7 +784,7 @@
             }],
             series: [
                 {
-                    name: '直接访问',
+                    name: '已处理',
                     type: 'bar',
                     stack: '总量',
                     barWidth: '35%', //柱子宽度
@@ -615,10 +795,10 @@
                             opacity: 1,
                         }
                     },
-                    data: [150, 212, 201, 154, 190, 330, 410],
+                    data: data9,
                 },
                 {
-                    name: '邮件营销',
+                    name: '未处理',
                     type: 'bar',
                     stack: '总量',
                     barWidth: '35%', //柱子宽度
@@ -628,7 +808,7 @@
                             opacity: 1,
                         }
                     },
-                    data: [120, 132, 101, 134, 90, 230, 210]
+                    data: data10
                 },
 
             ]
@@ -645,7 +825,7 @@
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart6'));
         var colors = ['#065aab', '#066eab', '#06a0ab'];
-
+        myChart.clear();
         option = {
             color: colors,
 
@@ -721,11 +901,11 @@
                     type:'bar',
                     data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
                 },
-                {
-                    name:'降水量',
-                    type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-                },
+                // {
+                //     name:'降水量',
+                //     type:'bar',
+                //     data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                // },
                 {
                     name:'平均温度',
                     type:'line',
