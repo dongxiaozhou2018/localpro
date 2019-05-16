@@ -330,9 +330,9 @@
                 }
             },
             grid: {
-                left: '0%',
-                top: '0',
-                right: '0%',
+                left: '5%',
+                top: '5%',
+                right: '2%',
                 bottom: '20%',
                 containLabel: true
             },
@@ -355,6 +355,7 @@
                 axisLabel: {
                     interval: 0,
                     show: true,
+                    rotate:45,
                     splitNumber: 15,
                     textStyle: {
                         color: "rgba(255,255,255,.6)",
