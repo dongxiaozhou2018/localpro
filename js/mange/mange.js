@@ -1329,8 +1329,8 @@ $(function () {
         layui.use('layer', function(){ //独立版的layer无需执行这一句
             var $ = layui.jquery, layer = layui.layer;
             layer.open({
-                type: 2 //此处以iframe举例
-                    ,
+                type: 2, //此处以iframe举例
+                id:'111',
                 title: tit,
                 area: ['800px', '600px'],
                 shade: 0,
