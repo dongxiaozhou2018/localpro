@@ -304,9 +304,9 @@ $(function () {
         });    // 创建Map实例
         map.centerAndZoom(new BMap.Point(117.190182,39.125596), 10);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-        // map.setMapStyle({
-        //     style: 'bluish'
-        // });
+        map.setMapStyle({
+            style: 'midnight'
+        });
 
         var markerArr = [{
                 title: "名称：天津市西青区",
