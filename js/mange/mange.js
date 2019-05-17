@@ -50,6 +50,14 @@ $(function () {
                 }
             })
             upgradeMaintenance(pageNum,pageSize);
+        }else if(modular == 'groupManage'){         //分组管理
+            $('#groupManage').show().siblings().hide();
+            $('.btn').each(function(){
+                if($(this).attr('name') == 'fzgl'){
+                    $(this).addClass('click_btn').parent('.layui-nav-item').siblings().find('a').removeClass('click_btn');
+                }
+            })
+            upgradeMaintenance(pageNum,pageSize);
         }else{
             $('#terminalConfigure').show().siblings().hide();
             terminalConfigure();
@@ -100,6 +108,10 @@ $(function () {
         if ($(this).attr('name') == 'sjwh') {
             $('#upgradeMaintenance').show().siblings().hide();
             upgradeMaintenance(pageNum,pageSize);
+        }
+        if($(this).attr('name') == 'fzgl'){
+            $('#groupManage').show().siblings().hide();
+            groupManage(pageNum,pageSize);
         }
     });
     $('.server').on('click', function () { // 接入服务器配置
@@ -304,7 +316,7 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#service',
-                url: global_path + '/accsvr/getAll', //数据接口
+                url: global_path + '/manage/accsvr/getAll', //数据接口
                 method:'post',
                 headers: {
                     'at': at
@@ -415,7 +427,7 @@ $(function () {
                 // var checkStatus = table.checkStatus(obj.config.id)
                 if (layEvent === 'del') {
                     layer.confirm('真的删除行么', function (index) {
-                        var server_url = global_path + '/accsvr/delAccsvrById?id=' + data.id;
+                        var server_url = global_path + '/manage/accsvr/delAccsvrById?id=' + data.id;
                         getAjax(server_url,function(res){
                             if(res.code == 0){
                                 server(pageNum,pageSize);
@@ -429,7 +441,7 @@ $(function () {
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    var server_url = global_path + '/accsvr/getUpdateOrDelAccsvr';
+                    var server_url = global_path + '/manage/accsvr/getUpdateOrDelAccsvr';
                     var server_parms = {
                         'id':data.id
                     }
@@ -467,7 +479,7 @@ $(function () {
             //执行一个 table 实例
             table.render({
                 elem: '#police',
-                url: global_path + '/alarmlevel/select_all_alarmlevel', //数据接口
+                url: global_path + '/manage/alarmlevel/select_all_alarmlevel', //数据接口
                 method: 'post',
                 headers: {
                     'at': at
@@ -563,7 +575,7 @@ $(function () {
                   
                   //执行重载
                     table.reload('testReload', {
-                        url: global_path + '/alarmlevel/getAllByAlarmLevel',
+                        url: global_path + '/manage/alarmlevel/getAllByAlarmLevel',
                         where: {
                             'alarmLevel': police_role.val(),
                         }
@@ -590,7 +602,7 @@ $(function () {
                             "alarmName":data.alarmName,
                             'alarmType':data.alarmType
                         }
-                        var url = global_path + "/alarmlevel/delete_alarmltype";
+                        var url = global_path + "/manage/alarmlevel/delete_alarmltype";
                         commonAjax(url,parms, function(res) {
                             alert(res.msg);
                             if(res.code == 0){
@@ -604,7 +616,7 @@ $(function () {
                         layer.close(index); //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') {
-                    var police_url = global_path + '/alarmlevel/select_update_alarmllevel';
+                    var police_url = global_path + '/manage/alarmlevel/select_update_alarmllevel';
                     var police_parms = {
                         'alarmType':data.alarmType
                     }
@@ -1598,6 +1610,175 @@ $(function () {
         $('#equipment_btn').on('click','.layui-btn',function(){
             var url = "add_equipment.html";
             frame('添加升级设备信息',url,'upgrade');
+        })
+    }
+
+
+    // 分组管理
+    function groupManage(){
+
+
+        layui.use(['table','tree','laypage','laydate'], function () {
+            var table = layui.table,
+                laydate=layui.laydate,
+                laypage = layui.laypage,
+                tree = layui.tree,
+                $ = layui.jquery;
+
+
+            // 分组树
+            $('#group_demo').html('');
+            var newTree = [];
+            getAjax(global_path + "/manage/group/groupTree",function(res){
+                if(res.code == 0){
+                    newTree.push(res.data);
+                    layui.tree({
+                        elem: '#group_demo' //指定元素
+                        ,click: function(item){ //点击最里层节点回调
+                            // if(item.children.length == 0){
+                            terminalTab(global_path + '/manage/group/selectSubGroup',item.id,pageNum,pageSize);
+                            // }
+                        }
+                        ,nodes: menutree(newTree)
+                    });
+                }
+            })
+            terminalTab('','',pageNum,pageSize);
+
+            function terminalTab(url,id,pageNum,pageSize){
+                if(!url){
+                    url = global_path + '/manage/group/listPage';
+                }
+                table.render({
+                    elem: '#group',
+                    url: url, //数据接口
+                    title: '终端配置',
+                    page: false, //开启分页
+                    method: 'post',
+                    headers: {
+                        'at': at
+                    },
+                    contentType : "application/json",
+                    request: {
+                        pageName: 'pageNum' //页码的参数名称，默认：page
+                        ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where:{
+                        'pageNum':pageNum,
+                        'pageSize':pageSize,
+                        'id':id
+                    },
+                    parseData: function (res) {
+                        if(res.code == 0){
+                            return {
+                                'code': res.code,
+                                'msg': res.msg,
+                                "count": res.data.total,
+                                'data': res.data.list
+                            }
+                        }
+
+                    },
+                    cols: [[ //表头
+                        {
+                            field: 'id',
+                            title: '编号',
+                            align: 'center',
+                            width: '20%'
+                        }
+                        , {
+                            field: 'groupName',
+                            title: '组别名称',
+                            align: 'center',
+                            width: '40%'
+                        }
+                        , {
+                            fixed: 'right',
+                            title: '操作',
+                            width: '30%',
+                            align: 'center',
+                            toolbar: '#group_operation'
+                        }
+                    ]],
+                    done: function(res, curr, count){
+                        //如果是异步请求数据方式，res即为你接口返回的信息。
+                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                        laypage.render({
+                            elem:'group_laypage'
+                            ,count:count
+                            ,curr:pageNum
+                            ,limit:pageSize
+                            ,layout: ['prev', 'page', 'next', 'skip','count']
+                            ,jump:function (obj,first) {
+                                if(!first){
+                                    pageNum = obj.curr;
+                                    pageSize = obj.limit;
+                                    terminalTab('','',pageNum,pageSize);
+                                }
+                            }
+                        })
+                    },
+                    id: 'testReload'
+                });
+
+            }
+            var $ = layui.$, active = {
+                reload: function(){
+                    var id = $('.id').val();
+                    var groupName = $('.groupName').val();
+                    var parentId = $('.parentId').val();
+                    //执行重载
+                    table.reload('testReload', {
+                        url: global_path + '/manage/group/listPage',
+                        where: {
+                            'groupName': groupName,
+                            'parentId': parentId,
+                            'id':''
+                        }
+                    });
+                }
+            };
+
+            $('.group').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('.empty').on('click', function(){
+                $('.id').val('');
+                $('.groupName').val('');
+                $('.parentId').val('');
+                id = '';
+                groupName = '';
+                parentId = '';
+                terminalTab('','',pageNum,pageSize);
+            });
+            table.on('tool(group)', function (obj) {
+                var data = obj.data //获得当前行数据
+                    ,
+                    layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'edit') {
+                    update('/manage/group/selectOne',data.id,'添加分组','add_group.html','group');
+                }else if (layEvent === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        var url = global_path + "/manage/group/deleteGroupList/"+data.id;
+                        getAjax(url, function(data) {
+                            if(data.code == 0){
+                                alert(data.msg);
+                                terminalTab('','',pageNum,pageSize);
+                            }else if(data.code == -1){
+                                unauthorized(data.code);
+                            }else{
+                                alert(data.msg);
+                            }
+                        })
+                        layer.close(index); //向服务端发送删除指令
+                    });
+                }
+            });
+        });
+        $('#group_btn_add').on('click',function(){
+            var url = "add_topgroup.html?type=add";
+            frame('添加分组信息',url,'groupManage');
         })
     }
 })

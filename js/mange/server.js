@@ -44,9 +44,9 @@
                     "devId": data.field.devId
                 }
                 if(getQueryString('type') == 'add'){
-                    var url = global_path + "/accsvr/addService";
+                    var url = global_path + "/manage/accsvr/addService";
                 }else if(getQueryString('type') == 'update'){
-                    var url = global_path + "/accsvr/updateService";
+                    var url = global_path + "/manage/accsvr/updateService";
                     parms.id = getQueryString('ID');
                 }
                 

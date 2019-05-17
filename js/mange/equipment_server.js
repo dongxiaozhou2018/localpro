@@ -9,7 +9,7 @@
             //执行一个 table 实例
             table.render({
                 elem: '#equipment',
-                url: global_path + '/accsvr/selectDevIdListByServerIp', //数据接口
+                url: global_path + '/manage/accsvr/selectDevIdListByServerIp', //数据接口
                 method: 'post',
                 headers: {
                     'at': at
