@@ -1,5 +1,32 @@
 ﻿$(function () {
 
+    var dataStyle = {
+        normal: {
+            label: {
+                show: false
+            },
+            labelLine: {
+                show: false
+            },
+            borderWidth:3,
+            borderColor:'#0e1d56'
+        }
+    };
+    var placeHolderStyle = {
+        normal: {
+            color: 'rgba(255,255,255,.05)',
+            label: {
+                show: false,
+            },
+            labelLine: {
+                show: false
+            }
+        },
+        emphasis: {
+            color: 'rgba(0,0,0,0)'
+        }
+    };
+        
     if(!getQueryString('webOp')){
         $('body').append('<iframe id="websocket" src="../websocket.html" style="display: none;"></iframe>');
     }
@@ -649,32 +676,6 @@
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb5'));
         myChart.clear();
-        var dataStyle = {
-            normal: {
-                label: {
-                    show: false
-                },
-                labelLine: {
-                    show: false
-                },
-                borderWidth:3,
-                borderColor:'#0e1d56'
-            }
-        };
-        var placeHolderStyle = {
-            normal: {
-                color: 'rgba(255,255,255,.05)',
-                label: {
-                    show: false,
-                },
-                labelLine: {
-                    show: false
-                }
-            },
-            emphasis: {
-                color: 'rgba(0,0,0,0)'
-            }
-        };
         option = {
             title: [{
                 text: '能耗统计',
