@@ -28,7 +28,7 @@
 
                 // echarts_31(data,'fb1');
 
-                // 故障处理自复率
+                // 修复方式
                 var data1 = [],data2 = [];
                 var alarmRecordRepairMethods = res.data.alarmRecordRepairMethods;
                 if(alarmRecordRepairMethods){
@@ -216,11 +216,11 @@
 
                         if(res.data.alarmRecordByGroups[i].dealStatus == 0){
 
-                            data10.push(res.data.alarmRecordByGroups[i].count);
+                            data10.push(res.data.alarmRecordByGroups[i].count || 0);
 
                         }else if(res.data.alarmRecordByGroups[i].dealStatus == 2){
 
-                            data9.push(res.data.alarmRecordByGroups[i].count);
+                            data9.push(res.data.alarmRecordByGroups[i].count || 0);
                         }
                     }
                     echarts_3(data8,data9,data10);
