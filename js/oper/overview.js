@@ -31,112 +31,203 @@
                 // 故障处理自复率
                 var data1 = [],data2 = [];
                 var alarmRecordRepairMethods = res.data.alarmRecordRepairMethods;
+                if(alarmRecordRepairMethods){
+                    for(var i = 0;i<alarmRecordRepairMethods.length;i++){
+                        if(alarmRecordRepairMethods[i].dealStatus == 1){
 
-                for(var i = 0;i<alarmRecordRepairMethods.length;i++){
-                    if(alarmRecordRepairMethods[i].dealStatus == 1){
+                            alarmRecordRepairMethods[i].dealStatus = '人工派单'
 
-                        alarmRecordRepairMethods[i].dealStatus = '人工派单'
+                        }else if(alarmRecordRepairMethods[i].dealStatus == 2){
 
-                    }else if(alarmRecordRepairMethods[i].dealStatus == 2){
+                            alarmRecordRepairMethods[i].dealStatus = '远程修复'
 
-                        alarmRecordRepairMethods[i].dealStatus = '远程修复'
+                        }else if(alarmRecordRepairMethods[i].dealStatus == 3){
 
-                    }else if(alarmRecordRepairMethods[i].dealStatus == 3){
+                            alarmRecordRepairMethods[i].dealStatus = '自动修复'
+                        }
+                        data1.push(alarmRecordRepairMethods[i].dealStatus);
+                        var alarmRecordByGroupList = {
 
-                        alarmRecordRepairMethods[i].dealStatus = '自动修复'
+                            value: alarmRecordRepairMethods[i].count,
+                            name: alarmRecordRepairMethods[i].dealStatus
+                        };
+                        data2.push(alarmRecordByGroupList);
                     }
-                    data1.push(alarmRecordRepairMethods[i].dealStatus);
-                    var alarmRecordByGroupList = {
 
-                        value: alarmRecordRepairMethods[i].count,
-                        name: alarmRecordRepairMethods[i].dealStatus
-                    };
-                    data2.push(alarmRecordByGroupList);
+                    echarts_32(data1,data2,'fb2','修复方式',"{a} <br/>{b}: {c} ({d}%)");
+                }else{
+                    data1 = ['人工派单','远程修复','自动修复'];
+                    data2 = [{
+                        value : 5,
+                        name : '人工派单'
+                    },{
+                        value : 5,
+                        name : '远程修复'
+                    },{
+                        value : 5,
+                        name : '自动修复'
+                    }]
+                    echarts_32(data1,data2,'fb2','修复方式',"{a} <br/>{b}");
                 }
-
-                echarts_32(data1,data2,'fb2','修复方式');
+                
 
                 // 故障处理比率
                 var data3 = [],data4 = [];
                 var alarmRecordDealStatuses = res.data.alarmRecordDealStatuses;
+                if(alarmRecordDealStatuses){
+                    for(var i = 0;i<alarmRecordDealStatuses.length;i++){
 
-                for(var i = 0;i<alarmRecordDealStatuses.length;i++){
+                        if(alarmRecordDealStatuses[i].dealStatus != 3){
+                            if(alarmRecordDealStatuses[i].dealStatus == 0){
 
-                    if(alarmRecordDealStatuses[i].dealStatus != 3){
-                        if(alarmRecordDealStatuses[i].dealStatus == 0){
+                                alarmRecordDealStatuses[i].dealStatus = '待处理数量'
 
-                            alarmRecordDealStatuses[i].dealStatus = '待处理数量'
+                            }else if(alarmRecordDealStatuses[i].dealStatus == 1){
 
-                        }else if(alarmRecordDealStatuses[i].dealStatus == 1){
+                                alarmRecordDealStatuses[i].dealStatus = '处理中数量'
 
-                            alarmRecordDealStatuses[i].dealStatus = '处理中数量'
+                            }else if(alarmRecordDealStatuses[i].dealStatus == 2){
 
-                        }else if(alarmRecordDealStatuses[i].dealStatus == 2){
+                                alarmRecordDealStatuses[i].dealStatus = '已处理数量'
+                            }
+                            data3.push(alarmRecordDealStatuses[i].dealStatus);
+                            var alarmRecord = {
 
-                            alarmRecordDealStatuses[i].dealStatus = '已处理数量'
+                                value: alarmRecordDealStatuses[i].count,
+                                name: alarmRecordDealStatuses[i].dealStatus
+                            };
+                            data4.push(alarmRecord);
                         }
-                        data3.push(alarmRecordDealStatuses[i].dealStatus);
-                        var alarmRecord = {
-
-                            value: alarmRecordDealStatuses[i].count,
-                            name: alarmRecordDealStatuses[i].dealStatus
-                        };
-                        data4.push(alarmRecord);
                     }
+                    echarts_32(data3,data4,'fb3','故障处理比率',"{a} <br/>{b}: {c} ({d}%)");
+                }else{
+
+                    data3 = ['待处理数量','处理中数量','已处理数量'];
+                    data4 = [{
+                        value : 5,
+                        name : '待处理数量'
+                    },{
+                        value : 5,
+                        name : '处理中数量'
+                    },{
+                        value : 5,
+                        name : '已处理数量'
+                    }]
+                    echarts_32(data3,data4,'fb3','修复方式',"{a} <br/>{b}");
                 }
-                echarts_32(data3,data4,'fb3','故障处理比率');
+                
 
 
                 // 故障类型
                 var data5 = [];
-                for(var i = 0;i<res.data.alarmRecordByTypes.length;i++){
+                if(res.data.alarmRecordByTypes){
+                    for(var i = 0;i<res.data.alarmRecordByTypes.length;i++){
 
-                    var alarmRecordByTypesData = {
+                        var alarmRecordByTypesData = {
 
-                        value: res.data.alarmRecordByTypes[i].count,
-                        name: res.data.alarmRecordByTypes[i].alarmName
-                    };
-                    data5.push(alarmRecordByTypesData);
+                            value: res.data.alarmRecordByTypes[i].count,
+                            name: res.data.alarmRecordByTypes[i].alarmName
+                        };
+                        data5.push(alarmRecordByTypesData);
+                    }
+                    echarts_33(data5,'fb4','故障类型',"{a} <br/>{b} : {c} ({d}%)");
+                }else{
+                    data5 = [{
+                        value : 5,
+                        name : '主干网络质量预警'
+                    },{
+                        value : 5,
+                        name : '主干网络中断报警'
+                    },{
+                        value : 5,
+                        name : '设备网络质量预警'
+                    },{
+                        value : 5,
+                        name : '设备网络中断报警'
+                    },{
+                        value : 5,
+                        name : 'ETH电流超限报警'
+                    },{
+                        value : 5,
+                        name : 'DC12V电流超限报警'
+                    },{
+                        value : 5,
+                        name : 'DC48V电流超限报警'
+                    },{
+                        value : 5,
+                        name : '非授权开箱报警'
+                    },{
+                        value : 5,
+                        name : '温度异常报警'
+                    },{
+                        value : 5,
+                        name : '风扇故障报警'
+                    },{
+                        value : 5,
+                        name : '短信发送失败报警'
+                    },{
+                        value : 5,
+                        name : 'AC24V电流超限报警'
+                    },{
+                        value : 5,
+                        name : 'AC220V电流超限报警'
+                    },{
+                        value : 5,
+                        name : '接入供电故障报警'
+                    }]
+                    echarts_33(data5,'fb4','修复方式',"{a} <br/>{b}");
                 }
-                echarts_33(data5,'fb4','故障类型');
+                
 
                 // 故障趋势
                 var data6 = [],data7 = [];
-                for(var i = 0;i<res.data.alarmRecordCountByTimes.length;i++){
+                if(res.data.alarmRecordCountByTimes){
 
-                    res.data.alarmRecordCountByTimes[i].alarmTime = res.data.alarmRecordCountByTimes[i].alarmTime.split(' ')[0];
+                    for(var i = 0;i<res.data.alarmRecordCountByTimes.length;i++){
 
-                    data6.push(res.data.alarmRecordCountByTimes[i].alarmTime);
+                        res.data.alarmRecordCountByTimes[i].alarmTime = res.data.alarmRecordCountByTimes[i].alarmTime.split(' ')[0];
 
-                    var alarmRecordCountByTimesData = {
+                        data6.push(res.data.alarmRecordCountByTimes[i].alarmTime);
 
-                        value: res.data.alarmRecordCountByTimes[i].count || 0,
-                        name: res.data.alarmRecordCountByTimes[i].alarmName
-                    };
-                    data7.push(alarmRecordCountByTimesData);
+                        var alarmRecordCountByTimesData = {
+
+                            value: res.data.alarmRecordCountByTimes[i].count || 0,
+                            name: res.data.alarmRecordCountByTimes[i].alarmName
+                        };
+                        data7.push(alarmRecordCountByTimesData);
+                    }
+                    echarts_1(data6,data7);
+                }else{
+
                 }
-                echarts_1(data6,data7);
+                
 
 
                 // 故障区域分布
                 var data8 = [],data9 = [],data10 = [];
-                for(var i = 0;i<res.data.alarmRecordByGroups.length;i++){
 
-                    if(data8.indexOf(res.data.alarmRecordByGroups[i].groupName) == -1){
+                if(res.data.alarmRecordByGroups){
+                    for(var i = 0;i<res.data.alarmRecordByGroups.length;i++){
 
-                        data8.push(res.data.alarmRecordByGroups[i].groupName);
+                        if(data8.indexOf(res.data.alarmRecordByGroups[i].groupName) == -1){
+
+                            data8.push(res.data.alarmRecordByGroups[i].groupName);
+                        }
+
+                        if(res.data.alarmRecordByGroups[i].dealStatus == 0){
+
+                            data10.push(res.data.alarmRecordByGroups[i].count);
+
+                        }else if(res.data.alarmRecordByGroups[i].dealStatus == 2){
+
+                            data9.push(res.data.alarmRecordByGroups[i].count);
+                        }
                     }
+                    echarts_3(data8,data9,data10);
+                }else{
 
-                    if(res.data.alarmRecordByGroups[i].dealStatus == 0){
-
-                        data10.push(res.data.alarmRecordByGroups[i].count);
-
-                    }else if(res.data.alarmRecordByGroups[i].dealStatus == 2){
-
-                        data9.push(res.data.alarmRecordByGroups[i].count);
-                    }
                 }
-                echarts_3(data8,data9,data10);
+                
 
 
             }else if(res.code == -1){
@@ -162,7 +253,6 @@
     
     
     echarts_6();
-    // echarts_33('fb7','网略攻击类型分析');
     echarts_4();
 
     function echarts_31(data,id) {
@@ -223,7 +313,7 @@
         });
     }
 
-    function echarts_32(data1,data2,id,txt) {
+    function echarts_32(data1,data2,id,txt,formatter) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById(id));
         myChart.clear();
@@ -240,7 +330,7 @@
             }],
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)",
+                formatter: formatter,
                 position: function (p) { //其中p为当前鼠标的位置
                     return [p[0] + 10, p[1] - 10];
                 }
@@ -281,13 +371,13 @@
         });
     }
 
-    function echarts_33(data3,id,txt){
+    function echarts_33(data3,id,txt,formatter){
         var myChart = echarts.init(document.getElementById(id));
         myChart.clear();
         option = {
             tooltip : {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)",
+                formatter: formatter,
                 position: function (p) { //其中p为当前鼠标的位置
                     return [p[0] + 10, p[1] - 10];
                 }
@@ -462,98 +552,98 @@
         });
     }
 
-    function echarts_2() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('fb5'));
-        myChart.clear();
-        option = {
-            title: [{
-                text: '能耗统计',
-                left: 'center',
-                textStyle: {
-                    color: '#fff',
-                    fontSize: '16'
-                }
+    // function echarts_2() {
+    //     // 基于准备好的dom，初始化echarts实例
+    //     var myChart = echarts.init(document.getElementById('fb5'));
+    //     myChart.clear();
+    //     option = {
+    //         title: [{
+    //             text: '能耗统计',
+    //             left: 'center',
+    //             textStyle: {
+    //                 color: '#fff',
+    //                 fontSize: '16'
+    //             }
 
-            }],
-            angleAxis: {
-                axisLine: {
-                    show: true,
-                    lineStyle: {
-                        color: "rgba(255,255,255,.1)",
-                        width: 1,
-                        type: "solid"
-                    },
-                },
-                axisLabel: {
-                    interval: 0,
-                    // rotate:50,
-                    show: true,
-                    splitNumber: 15,
-                    textStyle: {
-                        color: "rgba(255,255,255,.6)",
-                        fontSize: '12',
-                    },
-                },
-            },
-            radiusAxis: {
-                type: 'category',
-                data: ['周一', '周二', '周三', '周四'],
-                axisLine: {
-                    show: true,
-                    lineStyle: {
-                        color: "rgba(255,255,255,.1)",
-                        width: 1,
-                        type: "solid"
-                    },
-                },
-                axisLabel: {
-                    interval: 0,
-                    // rotate:50,
-                    show: true,
-                    splitNumber: 15,
-                    textStyle: {
-                        color: "rgba(255,255,255,.6)",
-                        fontSize: '12',
-                    },
-                },
-                z: 10
-            },
-            polar: {
-                center: ['50%', '57%'],
-            },
-            series: [{
-                type: 'bar',
-                data: [1, 2, 3, 4],
-                coordinateSystem: 'polar',
-                name: 'A',
-                stack: 'a',
-                itemStyle:{
-                    color:'#065aab'
-                }
-            }, {
-                type: 'bar',
-                data: [2, 4, 6, 8],
-                coordinateSystem: 'polar',
-                name: 'B',
-                stack: 'a',
-                color: '#0682ab'
-            }, {
-                type: 'bar',
-                data: [1, 2, 3, 4],
-                coordinateSystem: 'polar',
-                name: 'C',
-                stack: 'a',
-                color: '#06b4ab'
-            }]
-        };
+    //         }],
+    //         angleAxis: {
+    //             axisLine: {
+    //                 show: true,
+    //                 lineStyle: {
+    //                     color: "rgba(255,255,255,.1)",
+    //                     width: 1,
+    //                     type: "solid"
+    //                 },
+    //             },
+    //             axisLabel: {
+    //                 interval: 0,
+    //                 // rotate:50,
+    //                 show: true,
+    //                 splitNumber: 15,
+    //                 textStyle: {
+    //                     color: "rgba(255,255,255,.6)",
+    //                     fontSize: '12',
+    //                 },
+    //             },
+    //         },
+    //         radiusAxis: {
+    //             type: 'category',
+    //             data: ['周一', '周二', '周三', '周四'],
+    //             axisLine: {
+    //                 show: true,
+    //                 lineStyle: {
+    //                     color: "rgba(255,255,255,.1)",
+    //                     width: 1,
+    //                     type: "solid"
+    //                 },
+    //             },
+    //             axisLabel: {
+    //                 interval: 0,
+    //                 // rotate:50,
+    //                 show: true,
+    //                 splitNumber: 15,
+    //                 textStyle: {
+    //                     color: "rgba(255,255,255,.6)",
+    //                     fontSize: '12',
+    //                 },
+    //             },
+    //             z: 10
+    //         },
+    //         polar: {
+    //             center: ['50%', '57%'],
+    //         },
+    //         series: [{
+    //             type: 'bar',
+    //             data: [1, 2, 3, 4],
+    //             coordinateSystem: 'polar',
+    //             name: 'A',
+    //             stack: 'a',
+    //             itemStyle:{
+    //                 color:'#065aab'
+    //             }
+    //         }, {
+    //             type: 'bar',
+    //             data: [2, 4, 6, 8],
+    //             coordinateSystem: 'polar',
+    //             name: 'B',
+    //             stack: 'a',
+    //             color: '#0682ab'
+    //         }, {
+    //             type: 'bar',
+    //             data: [1, 2, 3, 4],
+    //             coordinateSystem: 'polar',
+    //             name: 'C',
+    //             stack: 'a',
+    //             color: '#06b4ab'
+    //         }]
+    //     };
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize", function () {
-            myChart.resize();
-        });
-    }
+    //     // 使用刚指定的配置项和数据显示图表。
+    //     myChart.setOption(option);
+    //     window.addEventListener("resize", function () {
+    //         myChart.resize();
+    //     });
+    // }
 
     function echarts_6() {
         // 基于准备好的dom，初始化echarts实例
@@ -622,10 +712,10 @@
                     itemStyle: dataStyle,
                     hoverAnimation: false,
                     data: [{
-                        value: 80,
+                        value: 60,
                         name: '01'
                     }, {
-                        value: 20,
+                        value: 40,
                         name: 'invisible',
                         tooltip: {
                             show: false
@@ -642,10 +732,10 @@
                     itemStyle: dataStyle,
                     hoverAnimation: false,
                     data: [{
-                        value: 70,
+                        value: 60,
                         name: '02'
                     }, {
-                        value: 30,
+                        value: 40,
                         name: 'invisible',
                         tooltip: {
                             show: false
@@ -662,10 +752,10 @@
                     radius: ['39%', '50%'],
                     itemStyle: dataStyle,
                     data: [{
-                        value: 65,
+                        value: 60,
                         name: '03'
-                }, {
-                        value: 35,
+                    }, {
+                        value: 40,
                         name: 'invisible',
                         tooltip: {
                             show: false
@@ -684,7 +774,7 @@
                     data: [{
                         value: 60,
                         name: '04'
-                }, {
+                    }, {
                         value: 40,
                         name: 'invisible',
                         tooltip: {
