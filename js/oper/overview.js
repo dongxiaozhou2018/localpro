@@ -264,7 +264,7 @@
             }
         })
     }
-    overView('30');
+    overView('28');
 
     $('.searchTime').on('change',function(){
 

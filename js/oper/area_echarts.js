@@ -107,7 +107,9 @@ $(function () {
                     },
                     itemStyle: {
                         normal: {
-                            color: '#ffeb7b'
+                            color: '#ffeb7b',
+                            borderWidth: 5,
+                            borderColor: '#dbcf95',
                         }
                     }
                 }
