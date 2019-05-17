@@ -1,4 +1,11 @@
 $(function () {
+
+    // 选择时间默认一天
+    var nowTime = new Date().getTime();
+    nowTime = new Date(nowTime);
+    var startTime2 = nowTime.toLocaleDateString().replace(/\//g, "-") + ' ' + '00:00:00';
+    var endTime2 = nowTime.toLocaleDateString().replace(/\//g, "-") + ' ' + '23:59:59';
+    
     // 删除暂存session数据
     sessionStorage.removeItem('file');
     sessionStorage.removeItem('checkUser');
@@ -1477,11 +1484,13 @@ $(function () {
             var laydate = layui.laydate;
             laydate.render({
                 elem: '#startTime',
-                type: 'datetime'
+                type: 'datetime',
+                value: startTime2
             });
             laydate.render({
                 elem: '#endTime',
-                type: 'datetime'
+                type: 'datetime',
+                value: endTime2
             });
         });
         $('.query').on('click', function () {

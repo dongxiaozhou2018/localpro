@@ -1,6 +1,12 @@
 $(function () {
     // websocket 连接参数
     var message = '';
+
+    // 选择时间默认一天
+    var nowTime = new Date().getTime();
+    nowTime = new Date(nowTime);
+    var startTime2 = nowTime.toLocaleDateString().replace(/\//g, "-") + ' ' + '00:00:00';
+    var endTime2 = nowTime.toLocaleDateString().replace(/\//g, "-") + ' ' + '23:59:59';
     // var inspectionIndex;
     // 删除暂存session数据
     var HTlogin = sessionStorage.getItem('HTlogin');
@@ -965,11 +971,13 @@ $(function () {
             var laydate = layui.laydate;
             laydate.render({
                 elem: '#beginTime',
-                type: 'datetime'
+                type: 'datetime',
+                value: startTime2
             });
             laydate.render({
                 elem: '#Deadline',
-                type: 'datetime'
+                type: 'datetime',
+                value: endTime2
             });
         });
         function dealAlarm(parms){
@@ -1030,7 +1038,7 @@ $(function () {
     }
     // 操作日志
     function oplog() {
-        var startTime = '', endTime = '';
+        var startTime = '',endTime = '';
         function showLog(startTime1, endTime1,pageNum,pageSize) {
             layui.use(['table','laypage','laydate'], function () {
                 var table = layui.table,
@@ -1120,11 +1128,13 @@ $(function () {
             var laydate = layui.laydate;
             laydate.render({
                 elem: '#startTime',
-                type: 'datetime'
+                type: 'datetime',
+                value: startTime2
             });
             laydate.render({
                 elem: '#endTime',
-                type: 'datetime'
+                type: 'datetime',
+                value: endTime2
             });
         });
         $('.query').on('click', function () {
