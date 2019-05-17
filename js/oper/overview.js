@@ -26,7 +26,7 @@
             color: 'rgba(0,0,0,0)'
         }
     };
-        
+
     if(!getQueryString('webOp')){
         $('body').append('<iframe id="websocket" src="../websocket.html" style="display: none;"></iframe>');
     }
@@ -41,19 +41,19 @@
         commonAjax(url,parms,function(res){
             if(res.code == 0){
                 // 在线率
-                // var onLineRateStr = res.data.onLineRateStr||res.data.avrOnlineRate;
-                // var data = [
-                //     {
-                //         value: onLineRateStr.split('%')[0] - 0,
-                //         name: '在线'
-                //     },
-                //     {
-                //         value: (100 - onLineRateStr.split('%')[0]).toFixed(1),
-                //         name: '掉线'
-                //     }
-                // ]
+                var onLineRateStr = res.data.onLineRateStr;
+                var data = [
+                    {
+                        value: onLineRateStr.split('%')[0] - 0,
+                        name: '在线'
+                    },
+                    {
+                        value: (100 - onLineRateStr.split('%')[0]).toFixed(1),
+                        name: '掉线'
+                    }
+                ]
 
-                // echarts_31(data,'fb1');
+                echarts_31(data,'fb1');
 
                 // 修复方式
                 var data1 = [],data2 = [];
@@ -229,6 +229,64 @@
                 }
                 
 
+                // 能耗统计
+                var radius = [['59%', '70%'],['50%', '60%'],['39%', '50%'],['29%', '40%'],['19%', '30%'],['9%', '20%'],]
+
+
+
+                var res1 = [],res2 = [],res3 = [],sum = 0,num = 0;
+                if(searchTime == '7'){
+
+                }else{
+                    if(searchTime == '28'){
+
+                        res2 = ['第四周','第三周','第二周','第一周'];
+                        res1.push(res.data.resultList.fourthWeek);
+                        res1.push(res.data.resultList.thirdWeek);
+                        res1.push(res.data.resultList.secondWeek);
+                        res1.push(res.data.resultList.firstWeek);
+
+                    }else if(searchTime == '180'){
+
+                        res2 = ['第六个月','第五个月','第四个月','第三个月','第二个月','第一个月'];
+
+                        res1.push(res.data.resultList.sixthMonth);
+                        res1.push(res.data.resultList.fifthMonth);
+                        res1.push(res.data.resultList.fourthMonth);
+                        res1.push(res.data.resultList.thirdMonth);
+                        res1.push(res.data.resultList.secondMonth);
+                        res1.push(res.data.resultList.firstMonth);
+                    }
+
+                    for(var i = 0;i<res1.length;i++){
+                        sum += res1[i];
+                    }
+                    for(var i = 0;i<res1.length;i++){
+                        num++;
+                        var  seriesObj= {
+                                name: res2[i],
+                                type: 'pie',
+                                clockWise: false,
+                                center: ['50%', '40%'],
+                                radius: radius[i],
+                                itemStyle: dataStyle,
+                                hoverAnimation: false,
+                                data: [{
+                                    value: res1[i],
+                                    name: '0' + num
+                                }, {
+                                    value: sum - res1[i],
+                                    name: 'invisible',
+                                    tooltip: {
+                                        show: false
+                                    },
+                                    itemStyle: placeHolderStyle
+                                }]
+                            }
+                        res3.push(seriesObj);
+                    }
+                }
+                echarts_6(res2,res3);
 
                 // 故障区域分布
                 var data8 = [],data9 = [],data10 = [];
@@ -279,7 +337,6 @@
 
     
     
-    echarts_6();
     echarts_4();
 
     function echarts_31(data,id) {
@@ -672,7 +729,7 @@
     //     });
     // }
 
-    function echarts_6() {
+    function echarts_6(res1,series) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb5'));
         myChart.clear();
@@ -697,94 +754,13 @@
                 itemGap: 12,
                 bottom: '3%',
 
-                data: ['浙江', '上海', '广东', '北京'],
+                data: res1,
                 textStyle: {
                     color: 'rgba(255,255,255,.6)',
                 }
             },
 
-            series: [
-                {
-                    name: '浙江',
-                    type: 'pie',
-                    clockWise: false,
-                    center: ['50%', '50%'],
-                    radius: ['59%', '70%'],
-                    itemStyle: dataStyle,
-                    hoverAnimation: false,
-                    data: [{
-                        value: 60,
-                        name: '01'
-                    }, {
-                        value: 40,
-                        name: 'invisible',
-                        tooltip: {
-                            show: false
-                        },
-                        itemStyle: placeHolderStyle
-                    }]
-                },
-                {
-                    name: '上海',
-                    type: 'pie',
-                    clockWise: false,
-                    center: ['50%', '50%'],
-                    radius: ['50%', '60%'],
-                    itemStyle: dataStyle,
-                    hoverAnimation: false,
-                    data: [{
-                        value: 60,
-                        name: '02'
-                    }, {
-                        value: 40,
-                        name: 'invisible',
-                        tooltip: {
-                            show: false
-                        },
-                        itemStyle: placeHolderStyle
-                    }]
-                },
-                {
-                    name: '广东',
-                    type: 'pie',
-                    clockWise: false,
-                    hoverAnimation: false,
-                    center: ['50%', '50%'],
-                    radius: ['39%', '50%'],
-                    itemStyle: dataStyle,
-                    data: [{
-                        value: 60,
-                        name: '03'
-                    }, {
-                        value: 40,
-                        name: 'invisible',
-                        tooltip: {
-                            show: false
-                        },
-                        itemStyle: placeHolderStyle
-                    }]
-                },
-                {
-                    name: '北京',
-                    type: 'pie',
-                    clockWise: false,
-                    hoverAnimation: false,
-                    center: ['50%', '50%'],
-                    radius: ['29%', '40%'],
-                    itemStyle: dataStyle,
-                    data: [{
-                        value: 60,
-                        name: '04'
-                    }, {
-                        value: 40,
-                        name: 'invisible',
-                        tooltip: {
-                            show: false
-                        },
-                        itemStyle: placeHolderStyle
-                    }]
-                }
-                ]
+            series: series
         };
 
         // 使用刚指定的配置项和数据显示图表。

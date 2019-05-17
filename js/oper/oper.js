@@ -47,14 +47,16 @@ $(function () {
         frame('编辑个人信息',url);
     });
     $('.layui-side-scroll').on('click', '.btn', function () { //左侧导航栏
-        
-        pageNum = 1; pageSize = 10;
+        if(!sessionStorage.getItem('examine')){
+            pageNum = 1; pageSize = 10;
+        }
         sessionStorage.removeItem('oper');
         $('.layui-body').css('bottom','44px');
         $('.layui-body').css('height','auto');
         $('.content_box').css('padding','15px');
         $(this).addClass('click_btn').parents('li').siblings().find('.btn').removeClass('click_btn');
         if ($(this).attr('name') == 'zl') {
+            sessionStorage.removeItem('examine');
             var v = Math.random();
             $('.overview iframe').attr('src','overview.html?v=' + v);
             $('.overview').show().siblings().hide();
@@ -63,6 +65,7 @@ $(function () {
             overview();
         }
         if ($(this).attr('name') == 'ywdt') {
+            sessionStorage.removeItem('examine');
             $('.overview').hide();
             $('.map_box').show().siblings().hide();
             $('.map_box').parent('div').show();
@@ -83,6 +86,7 @@ $(function () {
             inspection(pageNum,pageSize,'');
         }
         if ($(this).attr('name') == 'bjjl') {
+            sessionStorage.removeItem('examine');
             $('.overview').hide();
             $('#police_box').show().siblings().hide();
             $('#police_box').parent('div').show();
@@ -93,6 +97,7 @@ $(function () {
             police(where);
         }
         if ($(this).attr('name') == 'czrz') {
+            sessionStorage.removeItem('examine');
             $('.overview').hide();
             $('#oplog').show().siblings().hide();
             $('#oplog').parent('div').show();
@@ -406,25 +411,25 @@ $(function () {
         })
 
         // 设备型号
-        $('.modelId').html('');
-            var url = global_path + '/manage/model/queryAllModel';
-            getAjax(url, function(res) {
-                if (res.code == 0) {
-                    var firstmodel = '<option value="">请选择</option>';
-                    $('.modelId').append(firstmodel);
-                    if(res.data.length>0){
-                        for(var i = 0;i<res.data.length;i++){
-                            var mode = '<option value="'+res.data[i].id+'">'+res.data[i].modelName+'</option>';
-                            $('.modelId').append(mode);
-                        }
-                    }
+        // $('.modelId').html('');
+        // var url = global_path + '/manage/model/queryAllModel';
+        // getAjax(url, function(res) {
+        //     if (res.code == 0) {
+        //         var firstmodel = '<option value="">请选择</option>';
+        //         $('.modelId').append(firstmodel);
+        //         if(res.data.length>0){
+        //             for(var i = 0;i<res.data.length;i++){
+        //                 var mode = '<option value="'+res.data[i].id+'">'+res.data[i].modelName+'</option>';
+        //                 $('.modelId').append(mode);
+        //             }
+        //         }
 
-                } else if(res.code == -1){
-                    unauthorized(res.code);
-                } else {
-                    alert(res.msg);
-                }
-            })
+        //     } else if(res.code == -1){
+        //         unauthorized(res.code);
+        //     } else {
+        //         alert(res.msg);
+        //     }
+        // })
         var systemList;
         layui.use(['table','laypage','laydate'], function () {
             var table = layui.table,
@@ -468,15 +473,15 @@ $(function () {
                             "count": res.data.total,
                             'data': res.data.list
                         }
-                        for(var i = 0;i<systemList.length;i++){
-                            if(systemList[i].subStatus == 0){
-                                $('.subscribe')[i].show();
-                                $('.unsubscribe')[i].hide();
-                            }else if(systemList[i].subStatus == 1){
-                                $('.subscribe')[i].hide();
-                                $('.unsubscribe')[i].show();
-                            }
-                        }
+                        // for(var i = 0;i<systemList.length;i++){
+                        //     if(systemList[i].subStatus == 0){
+                        //         $('.subscribe')[i].show();
+                        //         // $('.unsubscribe')[i].hide();
+                        //     }else if(systemList[i].subStatus == 1){
+                        //         $('.subscribe')[i].hide();
+                        //         // $('.unsubscribe')[i].show();
+                        //     }
+                        // }
                     }else if(res.code == -1){
                         unauthorized(res.code);
                     }else{
@@ -530,9 +535,9 @@ $(function () {
                             if(!first){
                                 pageNum = obj.curr;
                                 pageSize = obj.limit;
-                                if(alarm){
-                                    $(".alarm").attr('checked');
-                                }
+                                // if(alarm){
+                                //     $(".alarm").attr('checked');
+                                // }
                                 inspection(pageNum,pageSize,'');
                                 return;
                             }
@@ -630,27 +635,29 @@ $(function () {
                             $('#terminalConfigure').parent('div').show();
                             $('.layui-body').css('bottom','0');
                             $('.content_box').css('padding','0');
-                            $('.unsubscribe').hide();
-                            $('.subscribe').show();
-                            $(this).hide();
-                            $(this).siblings().show();
+                            sessionStorage.setItem('examine','examine');
+                            // $('.unsubscribe').hide();
+                            // $('.subscribe').show();
+                            // $(this).hide();
+                            // $(this).siblings().show();
                         }
                         if(num > 10 && !onmessageData){
                             clearTimeout(a);
-                            alert('订阅失败，请重试。');
+                            alert('查看失败，请重试。');
                         }
                     }
 
-                }else if (layEvent === 'unsubscribe') {     // 取消订阅
-                    var message = {
-                        "devid":data.deviceId,
-                        "cmd": 30,
-                        "data": null
-                    }
-                    $('#websocket')[0].contentWindow.send(message);
-                    $(this).siblings().show();
-                    $(this).hide();
                 }
+                // else if (layEvent === 'unsubscribe') {     // 取消订阅
+                //     var message = {
+                //         "devid":data.deviceId,
+                //         "cmd": 30,
+                //         "data": null
+                //     }
+                //     $('#websocket')[0].contentWindow.send(message);
+                //     $(this).siblings().show();
+                //     $(this).hide();
+                // }
             });
         });
     }
