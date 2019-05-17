@@ -44,9 +44,9 @@
                     'alarmLevel':data.field.alarmLevel,
                 }
                 if(getQueryString('type') == 'add'){
-                    var url = global_path + "/alarmlevel/add_alarmlevel";
+                    var url = global_path + "/manage/alarmlevel/add_alarmlevel";
                 }else if(getQueryString('type') == 'update'){
-                    var url = global_path + "/alarmlevel/update_alarmllevel";
+                    var url = global_path + "/manage/alarmlevel/update_alarmllevel";
                 }
                 
                 commonAjax(url,parms,function(data){
